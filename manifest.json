@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Farsi Knowledge Assistant",
+  "version": "3.0",
+  "description": "A smart assistant for Persian typing, translation, and knowledge.",
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "scripting",
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "https://*.wikipedia.org/"
+  ],
+  "background": { "service_worker": "background.js" },
+  "options_page": "options.html",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": { "16": "icon16.png", "48": "icon48.png", "128": "icon128.png" }
+  },
+  "icons": { "16": "icon16.png", "48": "icon48.png", "128": "icon128.png" }
+}

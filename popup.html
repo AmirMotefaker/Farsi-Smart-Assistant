@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Farsi Smart Assistant</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <h3>دستیار هوشمند فارسی</h3>
+        <a href="#" id="settingsLink" title="تنظیمات">⚙️</a>
+    </div>
+
+    <textarea id="inputText" placeholder="متن خود را اینجا وارد کنید..."></textarea>
+    
+    <input type="text" id="correctedText" class="corrected-text-box" readonly placeholder="اصلاح شده...">
+
+    <div id="knowledgePanel" class="knowledge-panel"></div>
+
+    <button id="mainButton">بررسی هوشمند</button>
+    
+    <div id="confirmation" class="confirmation"></div>
+
+    <script src="logic.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>
