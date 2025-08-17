@@ -1,23 +1,33 @@
 {
   "manifest_version": 3,
-  "name": "Farsi Knowledge Assistant",
-  "version": "3.0",
-  "description": "A smart assistant for Persian typing, translation, and knowledge.",
+  "name": "Farsi Smart Assistant",
+  "version": "2.0",
+  "description": "Smartly converts Finglish/typos and provides knowledge from Wikipedia/Google.",
   "permissions": [
     "storage",
     "contextMenus",
     "scripting",
-    "clipboardWrite"
+    "tabs"
   ],
   "host_permissions": [
-    "<all_urls>",
-    "https://*.wikipedia.org/"
+    "https://*.wikipedia.org/",
+    "https://*.google.com/"
   ],
-  "background": { "service_worker": "background.js" },
+  "background": {
+    "service_worker": "background.js"
+  },
   "options_page": "options.html",
   "action": {
     "default_popup": "popup.html",
-    "default_icon": { "16": "icon16.png", "48": "icon48.png", "128": "icon128.png" }
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
   },
-  "icons": { "16": "icon16.png", "48": "icon48.png", "128": "icon128.png" }
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
 }

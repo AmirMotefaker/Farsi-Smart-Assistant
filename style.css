@@ -1,3 +1,16 @@
+/* Define color variables for the flat design */
+:root {
+  --background-color: #f7f9fc;
+  --primary-text-color: #2c3e50;
+  --secondary-text-color: #7f8c8d;
+  --accent-color: #3498db;
+  --accent-color-hover: #2980b9;
+  --border-color: #e1e5e8;
+  --panel-background: #ffffff;
+  --corrected-text-bg: #eaf2f8;
+}
+
+/* Define the local Vazirmatn font */
 @font-face {
   font-family: 'Vazirmatn';
   src: url('fonts/Vazirmatn.woff2') format('woff2');
@@ -5,130 +18,141 @@
   font-style: normal;
   font-display: swap;
 }
+
+/* General style for the popup body */
 body {
-  width: 320px;
-  font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background-color: #f4f7f9;
+  width: 340px;
+  font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--background-color);
   margin: 0;
-  padding: 16px;
+  padding: 20px;
   box-sizing: border-box;
   direction: rtl;
   text-align: right;
 }
+
+/* Header section */
 .header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 16px;
-  color: #333;
+  gap: 12px;
+  margin-bottom: 20px;
+  color: var(--primary-text-color);
 }
-.header svg { width: 24px; height: 24px; flex-shrink: 0; }
-.header h3 { margin: 0; font-size: 18px; flex-grow: 1; }
-.header a { text-decoration: none; font-size: 20px; color: #555; transition: transform 0.2s; }
-.header a:hover { transform: rotate(45deg); }
+.header svg { width: 28px; height: 28px; fill: var(--accent-color); flex-shrink: 0; }
+.header h3 { margin: 0; font-size: 18px; font-weight: 600; flex-grow: 1; font-family: 'Vazirmatn', sans-serif; }
+.header a { text-decoration: none; font-size: 22px; color: var(--secondary-text-color); transition: transform 0.2s, color 0.2s; }
+.header a:hover { transform: rotate(45deg); color: var(--accent-color); }
+
+/* Main text input area */
 textarea#inputText {
   width: 100%;
   min-height: 80px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
+  padding: 12px;
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  font-size: 15px;
   font-family: 'Vazirmatn', sans-serif;
   box-sizing: border-box;
   resize: vertical;
+  background-color: var(--panel-background);
+  color: var(--primary-text-color);
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 textarea#inputText:focus {
   outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
 }
-#mainButton {
+
+/* Corrected text display box */
+.corrected-text-box {
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   margin-top: 10px;
   border: none;
   border-radius: 8px;
-  background-image: linear-gradient(to right, #007bff, #0056b3);
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  font-family: 'Vazirmatn', sans-serif;
-  cursor: pointer;
-  transition: transform 0.1s, box-shadow 0.2s;
-}
-#mainButton:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-.knowledge-panel {
-  margin-top: 15px;
-  background-color: #fff;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  padding: 12px;
-  display: none;
-}
-.disambiguation-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid #eee;
-}
-.disambiguation-item:last-child { border-bottom: none; }
-.disambiguation-title { font-size: 14px; color: #333; }
-.disambiguation-search-button {
-  padding: 4px 10px;
-  border: 1px solid #007bff;
-  border-radius: 5px;
-  background-color: #fff;
-  color: #007bff;
-  font-size: 12px;
-  font-family: 'Vazirmatn', sans-serif;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background-color 0.2s, color 0.2s;
-}
-.disambiguation-search-button:hover { background-color: #007bff; color: #fff; }
-#knowledgeTitle { font-weight: bold; font-size: 16px; color: #0056b3; margin-bottom: 8px; }
-#knowledgeSummary { font-size: 14px; line-height: 1.6; color: #333; }
-.secondary-button {
-  width: 100%;
-  padding: 8px;
-  margin-top: 12px;
-  border: 1px solid #007bff;
-  border-radius: 8px;
-  background-color: #fff;
-  color: #007bff;
-  font-size: 14px;
-  font-family: 'Vazirmatn', sans-serif;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
-}
-.secondary-button:hover { background-color: #007bff; color: #fff; }
-.confirmation {
-  text-align: center;
-  margin-top: 10px;
-  color: #28a745;
-  font-weight: bold;
-  opacity: 0;
-  transition: opacity 0.5s;
-}
-
-/* استایل باکس نمایش متن اصلاح‌شده */
-.corrected-text-box {
-  width: 100%;
-  padding: 8px;
-  margin-top: 8px;
-  border: 1px solid #ced4da;
-  border-radius: 8px;
-  background-color: #e9ecef;
-  color: #495057;
+  background-color: var(--corrected-text-bg);
+  color: var(--primary-text-color);
   font-family: 'Vazirmatn', sans-serif;
   font-size: 14px;
   box-sizing: border-box;
-  text-align: right; /* برای نمایش صحیح متن فارسی */
-  display: none; /* در حالت عادی مخفی است */
+  text-align: right;
+  display: none;
+  border-left: 4px solid var(--accent-color);
+}
+
+/* Main "Smart Search" Button */
+#mainButton {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--accent-color);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Vazirmatn', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.2s, transform 0.1s;
+}
+#mainButton:hover {
+  background-color: var(--accent-color-hover);
+  transform: translateY(-2px);
+}
+#mainButton:active {
+  transform: translateY(0);
+}
+
+/* Knowledge display panel */
+.knowledge-panel {
+  margin-top: 20px;
+  background-color: var(--panel-background);
+  border-radius: 10px;
+  padding: 15px;
+  border: 1px solid var(--border-color);
+  display: none;
+}
+.knowledge-panel h4 {
+  margin: 0 0 10px 0;
+  font-weight: 600;
+  font-size: 16px;
+  font-family: 'Vazirmatn', sans-serif;
+  color: var(--primary-text-color);
+}
+#knowledgeSummary {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #555;
+}
+#knowledgeSummary p, #knowledgeSummary li {
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+/* --- Footer Styles --- */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-color);
+  font-size: 12px;
+}
+.footer a {
+  color: var(--secondary-text-color);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer a:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+.footer span {
+  color: #bdc3c7; /* A lighter gray for the version */
 }
