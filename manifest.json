@@ -1,13 +1,14 @@
 {
   "manifest_version": 3,
   "name": "Farsi Smart Assistant",
-  "version": "2.0",
-  "description": "Smartly converts Finglish/typos and provides knowledge from Wikipedia/Google.",
+  "version": "3.0",
+  "description": "Automatically corrects Persian keyboard mistakes in Google searches.",
   "permissions": [
     "storage",
     "contextMenus",
     "scripting",
-    "tabs"
+    "tabs",
+    "webNavigation"
   ],
   "host_permissions": [
     "https://*.wikipedia.org/",
@@ -17,17 +18,6 @@
     "service_worker": "background.js"
   },
   "options_page": "options.html",
-  "action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "icon16.png",
-      "48": "icon48.png",
-      "128": "icon128.png"
-    }
-  },
-  "icons": {
-    "16": "icon16.png",
-    "48": "icon48.png",
-    "128": "icon128.png"
-  }
+  "action": { "default_popup": "popup.html" },
+  "icons": { "16": "icon16.png", "48": "icon48.png", "128": "icon128.png" }
 }
