@@ -1,0 +1,6 @@
+.farsi-sugg-icon { position: absolute; width: 22px; height: 22px; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="%233498db"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg>'); background-size: contain; background-repeat: no-repeat; cursor: pointer; z-index: 99999; opacity: 0.8; transition: opacity 0.2s, transform 0.2s; }
+.farsi-sugg-icon:hover { opacity: 1; transform: scale(1.1); }
+.farsi-sugg-tooltip { position: absolute; background-color: #fff; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); padding: 8px; z-index: 100000; font-family: 'Vazirmatn', sans-serif; direction: rtl; min-width: 150px; }
+.farsi-sugg-tooltip button { display: block; width: 100%; padding: 8px 12px; background: none; border: none; text-align: right; border-radius: 5px; cursor: pointer; font-family: 'Vazirmatn', sans-serif; font-size: 14px; }
+.farsi-sugg-tooltip button:hover { background-color: #f1f1f1; }
+.farsi-sugg-tooltip button strong { font-weight: 600; color: #007bff; }

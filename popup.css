@@ -1,0 +1,24 @@
+:root { --background-color: #f7f9fc; --primary-text-color: #2c3e50; --secondary-text-color: #7f8c8d; --accent-color: #3498db; --accent-color-hover: #2980b9; --border-color: #e1e5e8; --panel-background: #ffffff; --corrected-text-bg: #eaf2f8; }
+@font-face { font-family: 'Vazirmatn'; src: url('fonts/Vazirmatn.woff2') format('woff2'); font-weight: 300 900; font-style: normal; font-display: swap; }
+body { width: 340px; font-family: 'Vazirmatn', sans-serif; background-color: var(--background-color); margin: 0; padding: 20px; box-sizing: border-box; direction: rtl; text-align: right; }
+.header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; color: var(--primary-text-color); }
+.header svg { width: 28px; height: 28px; fill: var(--accent-color); flex-shrink: 0; }
+.header h3 { margin: 0; font-size: 18px; font-weight: 600; flex-grow: 1; }
+.header a { text-decoration: none; font-size: 22px; color: var(--secondary-text-color); transition: transform 0.2s, color 0.2s; }
+.header a:hover { transform: rotate(45deg); color: var(--accent-color); }
+textarea#inputText { width: 100%; min-height: 80px; padding: 12px; border: 2px solid var(--border-color); border-radius: 10px; font-size: 15px; font-family: 'Vazirmatn', sans-serif; box-sizing: border-box; resize: vertical; background-color: var(--panel-background); color: var(--primary-text-color); transition: border-color 0.2s, box-shadow 0.2s; }
+textarea#inputText:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1); }
+textarea#correctedTextBox { width: 100%; min-height: 40px; padding: 10px; margin-top: 10px; border: 2px solid var(--border-color); border-radius: 10px; font-size: 14px; font-family: 'Vazirmatn', sans-serif; box-sizing: border-box; resize: vertical; background-color: var(--corrected-text-bg); color: var(--primary-text-color); border-left: 4px solid var(--accent-color); display: none; }
+textarea#correctedTextBox:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1); }
+.save-button { width: 100%; padding: 8px; margin-top: 5px; border: none; border-radius: 8px; background-color: #28a745; color: white; font-size: 14px; font-family: 'Vazirmatn', sans-serif; font-weight: bold; cursor: pointer; transition: background-color 0.2s; display: none; }
+.save-button:hover { background-color: #218838; }
+#mainButton { width: 100%; padding: 12px; margin-top: 15px; border: none; border-radius: 10px; background-color: var(--accent-color); color: white; font-size: 16px; font-weight: 600; font-family: 'Vazirmatn', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background-color 0.2s, transform 0.1s; }
+#mainButton:hover { background-color: var(--accent-color-hover); transform: translateY(-2px); }
+#mainButton:active { transform: translateY(0); }
+.knowledge-panel { margin-top: 20px; background-color: var(--panel-background); border-radius: 10px; padding: 15px; border: 1px solid var(--border-color); display: none; }
+.knowledge-panel h4 { margin: 0 0 10px 0; font-weight: 600; font-size: 16px; color: var(--primary-text-color); }
+#knowledgeSummary { font-size: 14px; line-height: 1.7; color: #555; }
+.footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 10px; border-top: 1px solid var(--border-color); font-size: 12px; }
+.footer a { color: var(--secondary-text-color); text-decoration: none; transition: color 0.2s; }
+.footer a:hover { color: var(--accent-color); text-decoration: underline; }
+.footer span { color: #bdc3c7; }
