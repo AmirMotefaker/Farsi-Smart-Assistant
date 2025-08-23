@@ -4,13 +4,26 @@
     <title>تنظیمات مبدل هوشمند</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .setting-section { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-color); }
+        .setting-section h4 { margin-top: 0; }
+        .api-key-input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; direction: ltr; text-align: left; }
+    </style>
 </head>
 <body style="width: 500px;">
     <div class="header"><h3>دیکشنری شخصی شما</h3></div>
     <p>در هر خط، یک تبدیل را به فرمت `فینگلیش = فارسی` وارد کنید.</p>
-    <textarea id="customDictionary" style="height: 300px;"></textarea>
-    <button id="saveOptionsButton">ذخیره تغییرات</button>
-    <div id="confirmation" class="confirmation">تنظیمات ذخیره شد!</div>
+    <textarea id="customDictionary" style="height: 200px;"></textarea>
+    <button id="saveDictionaryButton">ذخیره دیکشنری</button>
+    <div id="confirmation" class="confirmation"></div>
+
+    <div class="setting-section">
+        <h4>تنظیمات هوش مصنوعی (OpenAI)</h4>
+        <p>کلید API خود را که با `sk-` شروع می‌شود، در کادر زیر وارد کنید.</p>
+        <input type="password" id="apiKeyInput" class="api-key-input" placeholder="sk-...">
+        <button id="saveApiKeyButton">ذخیره کلید</button>
+    </div>
+
     <script src="options.js"></script>
 </body>
 </html>

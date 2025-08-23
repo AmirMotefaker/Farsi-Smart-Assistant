@@ -8,7 +8,8 @@ body { width: 340px; font-family: 'Vazirmatn', sans-serif; background-color: var
 .header a:hover { transform: rotate(45deg); color: var(--accent-color); }
 textarea#inputText { width: 100%; min-height: 80px; padding: 12px; border: 2px solid var(--border-color); border-radius: 10px; font-size: 15px; font-family: 'Vazirmatn', sans-serif; box-sizing: border-box; resize: vertical; background-color: var(--panel-background); color: var(--primary-text-color); transition: border-color 0.2s, box-shadow 0.2s; }
 textarea#inputText:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1); }
-.corrected-text-box { width: 100%; padding: 10px; margin-top: 10px; border: none; border-radius: 8px; background-color: var(--corrected-text-bg); color: var(--primary-text-color); font-family: 'Vazirmatn', sans-serif; font-size: 14px; box-sizing: border-box; text-align: right; display: none; border-left: 4px solid var(--accent-color); }
+.corrected-text-box { width: 100%; padding: 10px; margin-top: 10px; border: 2px solid var(--border-color); border-radius: 10px; font-size: 14px; font-family: 'Vazirmatn', sans-serif; box-sizing: border-box; text-align: right; display: none; border-left: 4px solid var(--accent-color); background-color: var(--corrected-text-bg); color: var(--primary-text-color); }
+.corrected-text-box:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1); }
 #mainButton { width: 100%; padding: 12px; margin-top: 15px; border: none; border-radius: 10px; background-color: var(--accent-color); color: white; font-size: 16px; font-weight: 600; font-family: 'Vazirmatn', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background-color 0.2s, transform 0.1s; }
 #mainButton:hover { background-color: var(--accent-color-hover); transform: translateY(-2px); }
 #mainButton:active { transform: translateY(0); }

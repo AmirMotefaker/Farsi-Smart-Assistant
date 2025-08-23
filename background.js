@@ -1,11 +1,10 @@
-// background.js (نسخه نهایی با اصلاح خودکار)
 try {
   importScripts('logic.js');
 } catch (e) {
   console.error(e);
 }
 
-// --- منطق منوی راست‌کلیک (موجود) ---
+// --- Context Menu Logic ---
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     id: "smartFarsiAction",
@@ -14,7 +13,7 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
-chrome.contextMenus.onClicked.addListener((info, tab) => {
+chrome.contextMenus.onClicked.addListener((info) => {
   if (info.menuItemId === "smartFarsiAction" && info.selectionText) {
     const correctedText = smart_farsi_converter(info.selectionText);
     const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(correctedText)}`;
@@ -22,8 +21,12 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   }
 });
 
-// --- جدید: منطق اصلاح خودکار جستجو ---
+// --- NEW: Automatic Search Correction Logic ---
 chrome.webNavigation.onBeforeNavigate.addListener((details) => {
+  // این کد تنها برای صفحاتی که در حال بارگذاری هستند اجرا می‌شود
+  if (details.frameId !== 0) {
+    return;
+  }
   const url = new URL(details.url);
 
   // فقط روی جستجوهای گوگل اجرا شود
@@ -36,7 +39,6 @@ chrome.webNavigation.onBeforeNavigate.addListener((details) => {
       // اگر اصلاحی انجام شده بود، به آدرس جدید هدایت کن
       if (query !== correctedText) {
         const newUrl = `https://www.google.com/search?q=${encodeURIComponent(correctedText)}`;
-        // تب را به آدرس جدید به‌روزرسانی کن
         chrome.tabs.update(details.tabId, { url: newUrl });
       }
     }
