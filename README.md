@@ -1,23 +1,3 @@
-Of course, here is the full Persian translation of the README file.
-
------
-
-# 🇮🇷 دستیار هوشمند فارسی (Farsi Smart Assistant)
-
-\<p align="center"\>
-\<a href="[https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/latest](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/latest)"\>\<img src="[https://img.shields.io/github/v/release/AmirMotefaker/Farsi-Smart-Assistant](https://img.shields.io/github/v/release/AmirMotefaker/Farsi-Smart-Assistant)" alt="Latest Release"\>\</a\>
-\<a href="[https://github.com/AmirMotefaker/Farsi-Smart-Assistant/blob/main/LICENSE](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/blob/main/LICENSE)"\>\<img src="[https://img.shields.io/github/license/AmirMotefaker/Farsi-Smart-Assistant](https://img.shields.io/github/license/AmirMotefaker/Farsi-Smart-Assistant)" alt="License"\>\</a\>
-\<img src="[https://img.shields.io/badge/PRs-welcome-brightgreen.svg](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)" alt="PRs Welcome"\>
-\</p\>
-
-\<p align="center"\>
-\<strong\>یک افزونه کروم همه‌کاره برای اصلاح هوشمند انواع خطاهای تایپی فارسی، همراه با دستیار دانش مبتنی بر ویکی‌پدیا و گوگل.\</strong\>
-\</p\>
-
-\<p align="center"\>
-\<img src="link/to/your/final\_demo.gif" alt="دموی افزونه دستیار هوشمند فارسی"\>
-\</p\>
-
 ## ✨ بزرگترین چالش فارسی‌زبانان: حل مشکل کیبورد انگلیسی
 
 > [\!IMPORTANT]
