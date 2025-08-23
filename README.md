@@ -81,7 +81,7 @@
 
 خلاصه‌ای از مهم‌ترین تغییرات در هر نسخه. برای جزئیات کامل، به صفحه **[Releases](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases)** مراجعه کنید.
 
-**[نسخه ۳.۲ - اصلاحات نهایی و پایداری](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/tag/v3.2)**
+**[نسخه ۳.۲ - اصلاحات و پایداری](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/tag/v3.2)**
 * رفع باگ‌های اساسی در منطق تشخیص و تبدیل کلمات صحیح فارسی و انگلیسی.
 * بهبود پایداری و عملکرد قابلیت‌های real-time.
 * اصلاح نمایش لیست معانی برای کلمات چندمعنایی.
