@@ -71,7 +71,7 @@
 
 #### ۲. نصب به صورت دستی (برای توسعه‌دهندگان)
 1.  به صفحه **[Releases](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases)** بروید.
-2.  آخرین نسخه (مثلاً `Farsi-Smart-Assistant-v3.2.zip`) را دانلود کنید.
+2.  آخرین نسخه (مثلاً `Farsi-Smart-Assistant-v3.3.zip`) را دانلود کنید.
 3.  فایل `.zip` را از حالت فشرده خارج کنید.
 4.  در کروم به آدرس `chrome://extensions` بروید.
 5.  **Developer mode** (حالت توسعه‌دهنده) را فعال کنید.
@@ -81,7 +81,12 @@
 
 خلاصه‌ای از مهم‌ترین تغییرات در هر نسخه. برای جزئیات کامل، به صفحه **[Releases](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases)** مراجعه کنید.
 
-**[نسخه ۳.۲ - اصلاحات و پایداری](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/tag/v3.2)**
+**[نسخه ۳.۳ - بهبودهای نهایی رابط کاربری](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/tag/v3.3)**
+* **اصلاح فوتر:** لوگوی گیت‌هاب کنار نام توسعه‌دهنده و هم‌تراز با آن قرار گرفت.
+* **بهبود صفحه تنظیمات:** رابط کاربری صفحه تنظیمات به طور کامل بازطراحی شد.
+* **آیکون جدید:** آیکون اصلی افزونه با طرح لامپ جایگزین شد.
+
+**[نسخه ۳.۲ - اصلاحات نهایی و پایداری](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/tag/v3.2)**
 * رفع باگ‌های اساسی در منطق تشخیص و تبدیل کلمات صحیح فارسی و انگلیسی.
 * بهبود پایداری و عملکرد قابلیت‌های real-time.
 * اصلاح نمایش لیست معانی برای کلمات چندمعنایی.
