@@ -75,3 +75,64 @@ textarea#correctedTextBox:focus { outline: none; border-color: var(--save-color)
  color: var(--accent-color);
  text-decoration: underline;
 }
+
+/* --- استایل‌های جدید فوتر برای آیکون‌ها --- */
+.author-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.author-name {
+  color: var(--secondary-text-color);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.author-name:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+.footer-icon-link {
+  display: flex;
+  align-items: center;
+  color: var(--secondary-text-color);
+}
+.icon {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  transition: color 0.2s;
+}
+.footer-icon-link:hover {
+  color: var(--accent-color);
+}
+#version-display {
+  color: var(--secondary-text-color);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+#version-display:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+
+/* --- استایل دکمه‌های صفحه تنظیمات --- */
+.main-button-style {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--accent-color);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Vazirmatn', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+.main-button-style:hover {
+  background-color: var(--accent-color-hover);
+  transform: translateY(-2px);
+}
+.main-button-style:active {
+  transform: translateY(0);
+}
