@@ -19,4 +19,89 @@ textarea#inputText:focus { outline: none; border-color: var(--accent-color); box
 .footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 10px; border-top: 1px solid var(--border-color); font-size: 12px; }
 .footer a { color: var(--secondary-text-color); text-decoration: none; transition: color 0.2s; }
 .footer a:hover { color: var(--accent-color); text-decoration: underline; }
-.footer span { color: #bdc3c7; }
+
+
+.github-icon {
+  width: 16px;
+  height: 16px;
+  fill: currentColor; /* رنگ آیکون از لینک ارث‌بری می‌کند */
+}
+
+/* --- استایل‌های جدید فوتر با لینک‌های جداگانه --- */
+.author-links {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* فاصله بین آیکون و متن */
+}
+.author-name {
+  color: var(--secondary-text-color);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.author-name:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+.github-icon {
+  width: 16px;
+  height: 16px;
+  fill: var(--secondary-text-color);
+  transition: fill 0.2s;
+}
+.github-icon:hover {
+  fill: var(--accent-color);
+}
+
+/* --- استایل جدید برای لینک ورژن --- */
+#version-display {
+  color: #bdc3c7;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+#version-display:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+
+/* --- استایل‌های جدید فوتر --- */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-color);
+  font-size: 12px;
+}
+.author-links {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* فاصله بین آیکون و متن */
+}
+.author-name {
+  color: var(--secondary-text-color);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.author-name:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+.github-icon {
+  width: 16px;
+  height: 16px;
+  fill: var(--secondary-text-color);
+  transition: fill 0.2s;
+}
+.author-links a:hover .github-icon {
+  fill: var(--accent-color);
+}
+#version-display {
+  color: var(--secondary-text-color);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+#version-display:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+}

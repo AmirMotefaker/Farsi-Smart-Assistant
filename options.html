@@ -1,29 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>تنظیمات مبدل هوشمند</title>
+    <title>تنظیمات دستیار هوشمند</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .setting-section { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-color); }
-        .setting-section h4 { margin-top: 0; }
-        .api-key-input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; direction: ltr; text-align: left; }
+    <link rel="stylesheet" href="style.css"> <style>
+        /* استایل‌های اختصاصی صفحه تنظیمات */
+        body {
+            width: 600px;
+            padding: 20px;
+        }
+        .container {
+            max-width: 560px;
+            margin: 0 auto;
+        }
+        .setting-section {
+            background-color: var(--panel-background);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        .setting-section h4 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            color: var(--primary-text-color);
+        }
+        .setting-section p {
+            font-size: 14px;
+            color: var(--secondary-text-color);
+            margin-top: 0;
+        }
+        textarea, input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Vazirmatn', sans-serif;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        textarea {
+            min-height: 250px;
+        }
+        input[type="password"] {
+            direction: ltr;
+            text-align: left;
+        }
+        button {
+            margin-top: 10px;
+        }
     </style>
 </head>
-<body style="width: 500px;">
-    <div class="header"><h3>دیکشنری شخصی شما</h3></div>
-    <p>در هر خط، یک تبدیل را به فرمت `فینگلیش = فارسی` وارد کنید.</p>
-    <textarea id="customDictionary" style="height: 200px;"></textarea>
-    <button id="saveDictionaryButton">ذخیره دیکشنری</button>
-    <div id="confirmation" class="confirmation"></div>
+<body>
+    <div class="container">
+        <div class="header">
+            <h3>تنظیمات دستیار هوشمند</h3>
+        </div>
 
-    <div class="setting-section">
-        <h4>تنظیمات هوش مصنوعی (OpenAI)</h4>
-        <p>کلید API خود را که با `sk-` شروع می‌شود، در کادر زیر وارد کنید.</p>
-        <input type="password" id="apiKeyInput" class="api-key-input" placeholder="sk-...">
-        <button id="saveApiKeyButton">ذخیره کلید</button>
+        <div class="setting-section">
+            <h4>دیکشنری شخصی شما</h4>
+            <p>اصلاحات سفارشی خود را در هر خط به فرمت `فینگلیش = فارسی` وارد کنید.</p>
+            <textarea id="customDictionary"></textarea>
+            <button id="saveDictionaryButton" class="main-button-style">ذخیره دیکشنری</button>
+        </div>
+
+        <div class="setting-section">
+            <h4>اتصال به هوش مصنوعی (OpenAI)</h4>
+            <p>برای استفاده از قابلیت‌های پیشرفته، کلید API خود را که با `sk-` شروع می‌شود، وارد کنید.</p>
+            <input type="password" id="apiKeyInput" placeholder="sk-...">
+            <button id="saveApiKeyButton" class="main-button-style">ذخیره کلید API</button>
+        </div>
+        
+        <div id="confirmation" class="confirmation" style="text-align: center;"></div>
     </div>
-
     <script src="options.js"></script>
 </body>
 </html>
