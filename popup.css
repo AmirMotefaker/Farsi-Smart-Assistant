@@ -8,131 +8,83 @@ body { width: 340px; font-family: 'Vazirmatn', sans-serif; background-color: var
 .header a:hover { transform: rotate(45deg); color: var(--accent-color); }
 textarea#inputText { width: 100%; min-height: 80px; padding: 12px; border: 2px solid var(--border-color); border-radius: 10px; font-size: 15px; font-family: 'Vazirmatn', sans-serif; box-sizing: border-box; resize: vertical; background-color: var(--panel-background); color: var(--primary-text-color); transition: border-color 0.2s, box-shadow 0.2s; }
 textarea#inputText:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1); }
-textarea#correctedTextBox { width: 100%; min-height: 40px; padding: 10px; margin-top: 10px; border: 2px solid var(--border-color); border-radius: 10px; font-size: 14px; font-family: 'Vazirmatn', sans-serif; box-sizing: border-box; resize: vertical; background-color: var(--corrected-text-bg); color: var(--primary-text-color); border-left: 4px solid var(--accent-color); display: none; }
+.result-container { position: relative; }
+textarea#correctedTextBox { width: 100%; min-height: 40px; padding: 10px 10px 10px 50px; margin-top: 10px; border: 2px solid var(--border-color); border-radius: 10px; font-size: 14px; font-family: 'Vazirmatn', sans-serif; box-sizing: border-box; resize: vertical; background-color: var(--corrected-text-bg); color: var(--primary-text-color); border-left: 4px solid var(--accent-color); display: none; }
 textarea#correctedTextBox:focus { outline: none; border-color: var(--save-color); box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.1); }
-.save-button { width: 100%; padding: 8px; margin-top: 5px; margin-bottom: 10px; border: none; border-radius: 8px; background-color: var(--save-color); color: white; font-size: 14px; font-family: 'Vazirmatn', sans-serif; font-weight: bold; cursor: pointer; transition: background-color 0.2s; display: none; }
+.feedback-container { position: absolute; top: 18px; left: 8px; display: none; gap: 5px; }
+.feedback-container button { background: #fff; border: 1px solid var(--border-color); border-radius: 5px; padding: 2px 6px; cursor: pointer; font-size: 14px; transition: background-color 0.2s; }
+.feedback-container button:hover { background-color: #eaf2f8; }
+.save-button { width: 100%; padding: 8px; margin-top: 5px; border: none; border-radius: 8px; background-color: var(--save-color); color: white; font-size: 14px; font-family: 'Vazirmatn', sans-serif; font-weight: bold; cursor: pointer; transition: background-color 0.2s; display: none; }
 .save-button:hover { background-color: var(--save-color-hover); }
-#mainButton { width: 100%; padding: 12px; margin-top: 15px; border: none; border-radius: 10px; background-color: var(--accent-color); color: white; font-size: 16px; font-weight: 600; font-family: 'Vazirmatn', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background-color 0.2s, transform 0.1s; }
+#mainButton { width: 100%; padding: 12px; margin-top: 15px; border: none; border-radius: 10px; background-color: var(--accent-color); color: white; font-size: 16px; font-weight: 600; font-family: 'Vazirmatn', sans-serif; cursor: pointer; transition: background-color 0.2s, transform 0.1s; }
 #mainButton:hover { background-color: var(--accent-color-hover); transform: translateY(-2px); }
 #mainButton:active { transform: translateY(0); }
 .knowledge-panel { margin-top: 15px; background-color: var(--panel-background); border-radius: 10px; padding: 15px; border: 1px solid var(--border-color); display: none; }
 .knowledge-panel h4 { margin: 0 0 10px 0; font-weight: 600; font-size: 16px; color: var(--primary-text-color); }
 #knowledgeSummary { font-size: 14px; line-height: 1.7; color: #555; }
+.confirmation { text-align: center; margin-top: 10px; color: var(--save-color); font-weight: bold; opacity: 0; transition: opacity 0.5s; }
 .footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 10px; border-top: 1px solid var(--border-color); font-size: 12px; }
-.footer a { color: var(--secondary-text-color); text-decoration: none; transition: color 0.2s; }
-.footer a:hover { color: var(--accent-color); text-decoration: underline; }
-.footer span { color: #bdc3c7; }
+.author-links { display: flex; align-items: center; gap: 8px; }
+.author-name, #version-display { color: var(--secondary-text-color); text-decoration: none; transition: color 0.2s; }
+.author-name:hover, #version-display:hover { color: var(--accent-color); text-decoration: underline; }
+.footer-icon-link { display: flex; align-items: center; color: var(--secondary-text-color); }
+.icon { width: 16px; height: 16px; fill: currentColor; transition: color 0.2s; }
+.footer-icon-link:hover { color: var(--accent-color); }
 
-.footer {
- display: flex;
- justify-content: space-between;
- align-items: center;
- margin-top: 20px;
- padding-top: 10px;
- border-top: 1px solid var(--border-color);
- font-size: 12px;
+/* --- New Styles for Learning Feature --- */
+.result-container {
+    position: relative;
+    display: none; /* Hidden by default */
 }
-
-.author-links {
- display: flex;
- align-items: center;
- gap: 6px; /* کاهش فاصله برای تراز بهتر */
+.feedback-container {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    display: flex;
+    gap: 5px;
 }
-
-.author-name {
- color: var(--secondary-text-color);
- text-decoration: none;
- font-size: 12px; /* هم‌اندازه کردن فونت */
- line-height: 1; /* برای تراز عمودی بهتر */
+.feedback-container button {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 2px 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
 }
-
-.author-name:hover {
- color: var(--accent-color);
- text-decoration: underline;
+.feedback-container button:hover {
+    background-color: #eaf2f8;
 }
-
-.github-icon {
- width: 12px; /* کاهش سایز آیکون */
- height: 12px; /* کاهش سایز آیکون */
- fill: var(--secondary-text-color);
- transition: fill 0.2s;
- margin-right: 2px; /* کمی فاصله از سمت راست */
- vertical-align: middle; /* تراز عمودی با متن */
+.save-button {
+    width: 100%;
+    margin-top: 5px;
 }
 
-.author-links a:hover .github-icon {
- fill: var(--accent-color);
+/* --- استایل‌های جدید برای قابلیت یادگیری --- */
+.result-container {
+    position: relative;
+    display: none; /* در حالت عادی مخفی است */
 }
-
-#version-display {
- color: var(--secondary-text-color);
- text-decoration: none;
- font-size: 12px; /* هم‌اندازه کردن فونت */
- line-height: 1; /* برای تراز عمودی بهتر */
+.feedback-container {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    display: none; /* در حالت عادی مخفی است */
+    gap: 5px;
 }
-
-#version-display:hover {
- color: var(--accent-color);
- text-decoration: underline;
+.feedback-container button {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 2px 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
 }
-
-/* --- استایل‌های جدید فوتر برای آیکون‌ها --- */
-.author-links {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.feedback-container button:hover {
+    background-color: #eaf2f8;
 }
-.author-name {
-  color: var(--secondary-text-color);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.author-name:hover {
-  color: var(--accent-color);
-  text-decoration: underline;
-}
-.footer-icon-link {
-  display: flex;
-  align-items: center;
-  color: var(--secondary-text-color);
-}
-.icon {
-  width: 16px;
-  height: 16px;
-  fill: currentColor;
-  transition: color 0.2s;
-}
-.footer-icon-link:hover {
-  color: var(--accent-color);
-}
-#version-display {
-  color: var(--secondary-text-color);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-#version-display:hover {
-  color: var(--accent-color);
-  text-decoration: underline;
-}
-
-/* --- استایل دکمه‌های صفحه تنظیمات --- */
-.main-button-style {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  background-color: var(--accent-color);
-  color: white;
-  font-size: 16px;
-  font-weight: 600;
-  font-family: 'Vazirmatn', sans-serif;
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
-}
-.main-button-style:hover {
-  background-color: var(--accent-color-hover);
-  transform: translateY(-2px);
-}
-.main-button-style:active {
-  transform: translateY(0);
+.save-button {
+    width: 100%;
+    margin-top: 5px;
 }
