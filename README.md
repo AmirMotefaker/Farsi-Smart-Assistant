@@ -1,9 +1,9 @@
 # 🇮🇷 دستیار هوشمند فارسی (Farsi Smart Assistant)
 
 <p align="center">
-  <a href="https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/latest"><img src="https://img.shields.io/github/v/release/AmirMotefaker/Farsi-Smart-Assistant" alt="Latest Release"></a>
-  <a href="https://github.com/AmirMotefaker/Farsi-Smart-Assistant/blob/main/LICENSE"><img src="https://img.shields.io/github/license/AmirMotefaker/Farsi-Smart-Assistant" alt="License"></a>
-  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome">
+  <a href="https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/latest"><img src="https://img.shields.io/github/v/release/AmirMotefaker/Farsi-Smart-Assistant" alt="آخرین نسخه"></a>
+  <a href="https://github.com/AmirMotefaker/Farsi-Smart-Assistant/blob/main/LICENSE"><img src="https://img.shields.io/github/license/AmirMotefaker/Farsi-Smart-Assistant" alt="مجوز"></a>
+  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="مشارکت آزاد است">
 </p>
 
 <p align="center">
@@ -71,7 +71,7 @@
 
 #### ۲. نصب به صورت دستی (برای توسعه‌دهندگان)
 1.  به صفحه **[Releases](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases)** بروید.
-2.  آخرین نسخه (مثلاً `Farsi-Smart-Assistant-v3.4.zip`) را دانلود کنید.
+2.  آخرین نسخه (مثلاً `Farsi-Smart-Assistant-v3.5.zip`) را دانلود کنید.
 3.  فایل `.zip` را از حالت فشرده خارج کنید.
 4.  در کروم به آدرس `chrome://extensions` بروید.
 5.  **Developer mode** (حالت توسعه‌دهنده) را فعال کنید.
@@ -81,11 +81,14 @@
 
 خلاصه‌ای از مهم‌ترین تغییرات در هر نسخه. برای جزئیات کامل، به صفحه **[Releases](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases)** مراجعه کنید.
 
+**[نسخه ۳.۵ - یادگیری پیشرفته از کاربر](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/tag/v3.5)**
+* **رابط کاربری یادگیری هوشمند:** دکمه‌های تایید (👍) و رد (👎) برای تجربه یادگیری سریع‌تر و شهودی‌تر اضافه شد.
+* **ویرایش در پاپ‌آپ:** کاربران اکنون می‌توانند اصلاحات را مستقیماً در پاپ‌آپ ویرایش کرده و در دیکشنری شخصی خود ذخیره کنند.
+
 **[نسخه ۳.۴ - اصلاحات نهایی و پایداری](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/tag/v3.4)**
 * **اصلاح فوتر:** لوگوی گیت‌هاب کنار نام توسعه‌دهنده و هم‌تراز با آن قرار گرفت.
 * **بهبود صفحه تنظیمات:** رابط کاربری صفحه تنظیمات به طور کامل بازطراحی شد.
 * **آیکون جدید:** آیکون اصلی افزونه با طرح لامپ جایگزین شد.
-* **اصلاحات در منطق اصلی:** مشکلات مربوط به تشخیص کلمات صحیح و پایداری در عملکرد برطرف شد.
 
 **[نسخه ۳.۳ - بهبودهای نهایی رابط کاربری](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/tag/v3.3)**
 * **اصلاح فوتر:** لوگوی گیت‌هاب کنار نام توسعه‌دهنده و هم‌تراز با آن قرار گرفت.
@@ -104,7 +107,7 @@
 
 **[نسخه ۳.۰ - دستیار یکپارچه وب](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/tag/v3.0)**
 * **ادغام با نوار آدرس (Omnibox):** قابلیت جستجوی هوشمند با استفاده از کلیدواژه `fa`.
-* **قابلیت تبدیل متن درجا (Inline):** افزودن آیکون شناور در تمام سایت‌ها.
+* **قابلیت تبدیل متن درجا (Inline):** افزودن آیکون شناور برای تمام سایت‌ها.
 * **افزوده شدن منوی راست‌کلیک** برای جستجوی سریع.
 * **پیاده‌سازی صفحه تنظیمات** و دیکشنری شخصی کاربر.
 
