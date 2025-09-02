@@ -8,13 +8,13 @@ body { width: 340px; font-family: 'Vazirmatn', sans-serif; background-color: var
 .header a:hover { transform: rotate(45deg); color: var(--accent-color); }
 textarea#inputText { width: 100%; min-height: 80px; padding: 12px; border: 2px solid var(--border-color); border-radius: 10px; font-size: 15px; font-family: 'Vazirmatn', sans-serif; box-sizing: border-box; resize: vertical; background-color: var(--panel-background); color: var(--primary-text-color); transition: border-color 0.2s, box-shadow 0.2s; }
 textarea#inputText:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1); }
-.result-container { position: relative; }
-textarea#correctedTextBox { width: 100%; min-height: 40px; padding: 10px 10px 10px 50px; margin-top: 10px; border: 2px solid var(--border-color); border-radius: 10px; font-size: 14px; font-family: 'Vazirmatn', sans-serif; box-sizing: border-box; resize: vertical; background-color: var(--corrected-text-bg); color: var(--primary-text-color); border-left: 4px solid var(--accent-color); display: none; }
+.result-container { position: relative; margin-top: 10px; display: none; }
+textarea#correctedTextBox { width: 100%; min-height: 40px; padding: 10px 55px 10px 10px; border: 2px solid var(--border-color); border-radius: 10px; font-size: 14px; font-family: 'Vazirmatn', sans-serif; box-sizing: border-box; resize: vertical; background-color: var(--corrected-text-bg); color: var(--primary-text-color); border-left: 4px solid var(--accent-color); }
 textarea#correctedTextBox:focus { outline: none; border-color: var(--save-color); box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.1); }
-.feedback-container { position: absolute; top: 18px; left: 8px; display: none; gap: 5px; }
+.feedback-container { position: absolute; top: 8px; left: 8px; display: none; gap: 5px; z-index: 10; }
 .feedback-container button { background: #fff; border: 1px solid var(--border-color); border-radius: 5px; padding: 2px 6px; cursor: pointer; font-size: 14px; transition: background-color 0.2s; }
 .feedback-container button:hover { background-color: #eaf2f8; }
-.save-button { width: 100%; padding: 8px; margin-top: 5px; border: none; border-radius: 8px; background-color: var(--save-color); color: white; font-size: 14px; font-family: 'Vazirmatn', sans-serif; font-weight: bold; cursor: pointer; transition: background-color 0.2s; display: none; }
+.save-button { width: 100%; margin-top: 5px; padding: 8px; border: none; border-radius: 8px; background-color: var(--save-color); color: white; font-size: 14px; font-family: 'Vazirmatn', sans-serif; font-weight: bold; cursor: pointer; transition: background-color 0.2s; display: none; }
 .save-button:hover { background-color: var(--save-color-hover); }
 #mainButton { width: 100%; padding: 12px; margin-top: 15px; border: none; border-radius: 10px; background-color: var(--accent-color); color: white; font-size: 16px; font-weight: 600; font-family: 'Vazirmatn', sans-serif; cursor: pointer; transition: background-color 0.2s, transform 0.1s; }
 #mainButton:hover { background-color: var(--accent-color-hover); transform: translateY(-2px); }
@@ -30,61 +30,3 @@ textarea#correctedTextBox:focus { outline: none; border-color: var(--save-color)
 .footer-icon-link { display: flex; align-items: center; color: var(--secondary-text-color); }
 .icon { width: 16px; height: 16px; fill: currentColor; transition: color 0.2s; }
 .footer-icon-link:hover { color: var(--accent-color); }
-
-/* --- New Styles for Learning Feature --- */
-.result-container {
-    position: relative;
-    display: none; /* Hidden by default */
-}
-.feedback-container {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    display: flex;
-    gap: 5px;
-}
-.feedback-container button {
-    background: #fff;
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    padding: 2px 6px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.2s;
-}
-.feedback-container button:hover {
-    background-color: #eaf2f8;
-}
-.save-button {
-    width: 100%;
-    margin-top: 5px;
-}
-
-/* --- استایل‌های جدید برای قابلیت یادگیری --- */
-.result-container {
-    position: relative;
-    display: none; /* در حالت عادی مخفی است */
-}
-.feedback-container {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    display: none; /* در حالت عادی مخفی است */
-    gap: 5px;
-}
-.feedback-container button {
-    background: #fff;
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    padding: 2px 6px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.2s;
-}
-.feedback-container button:hover {
-    background-color: #eaf2f8;
-}
-.save-button {
-    width: 100%;
-    margin-top: 5px;
-}

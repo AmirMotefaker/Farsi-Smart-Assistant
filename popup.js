@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const settingsLink = document.getElementById('settingsLink');
     const versionDisplay = document.getElementById('version-display');
     const resultContainer = document.getElementById('resultContainer');
-    // عناصر جدید
     const feedbackContainer = document.getElementById('feedbackContainer');
     const confirmButton = document.getElementById('confirmButton');
     const rejectButton = document.getElementById('rejectButton');
@@ -29,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.customDictionary) { customDictionary = data.customDictionary; }
         } catch (e) { console.error("Error loading custom dictionary:", e); }
 
-        // فعال‌سازی Event Listener ها
         mainButton.addEventListener('click', () => searchGoogle(currentTermForSearch));
         inputText.addEventListener('input', () => {
             clearTimeout(debounceTimer);
@@ -40,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
             chrome.runtime.openOptionsPage();
         });
         
-        // --- منطق جدید برای دکمه‌های تایید/رد/ذخیره ---
         confirmButton.addEventListener('click', saveCurrentCorrection);
         rejectButton.addEventListener('click', enableManualCorrection);
         saveManualCorrectionButton.addEventListener('click', saveCurrentCorrection);
@@ -93,23 +90,21 @@ document.addEventListener('DOMContentLoaded', function() {
         knowledgePanel.style.display = 'block';
         knowledgePanel.innerHTML = '<p>در حال پردازش...</p>';
         try {
-            let termForSearch = query;
-            let summaryData = await getWikipediaData(query);
-            if (!summaryData) {
-                const correctedText = smart_farsi_converter(query, customDictionary);
-                if (query.toLowerCase() !== correctedText.toLowerCase()) {
-                    termForSearch = correctedText;
-                    correctedTextBox.value = correctedText;
-                    resultContainer.style.display = 'block';
-                    feedbackContainer.style.display = 'flex'; // نمایش دکمه‌های تایید/رد
-                    summaryData = await getWikipediaData(correctedText);
-                }
-            } else {
-                 resultContainer.style.display = 'block';
-                 correctedTextBox.value = query;
+            // مرحله ۱: همیشه ابتدا متن را اصلاح کن
+            const correctedText = smart_farsi_converter(query, customDictionary);
+            currentTermForSearch = correctedText;
+
+            // مرحله ۲: اگر اصلاحی انجام شده بود، باکس و دکمه‌ها را نمایش بده
+            if (query.toLowerCase() !== correctedText.toLowerCase()) {
+                correctedTextBox.value = correctedText;
+                resultContainer.style.display = 'block';
+                feedbackContainer.style.display = 'flex';
             }
-            currentTermForSearch = termForSearch;
-            renderResult(summaryData, termForSearch);
+            
+            // مرحله ۳: با متن اصلاح‌شده در ویکی‌پدیا جستجو کن
+            const summaryData = await getWikipediaData(correctedText);
+            renderResult(summaryData, correctedText);
+
         } catch (error) {
             console.error("An error occurred in handleRealtimeUpdate:", error);
             renderResult(null, query);
