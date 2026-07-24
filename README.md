@@ -1,4 +1,4 @@
-# دسیار هوشمند فارسی (Fasi Smart Assistant)
+# دسیار هوشمند فارسی (Farsi Smart Assistant)
 
 <p align="center">
   <a href="https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/latest"><img src="https://img.shields.io/github/v/release/AmirMotefaker/Farsi-Smart-Assistant" alt="آخرین نسخه"></a>
