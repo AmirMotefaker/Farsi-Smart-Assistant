@@ -77,7 +77,10 @@ function showTooltip(correctedText, originalText) {
     
     // Create the suggestion button
     const button = document.createElement('button');
-    button.innerHTML = `جایگزین با: <strong>${correctedText}</strong>`;
+    button.textContent = 'جایگزین با: ';
+    const strong = document.createElement('strong');
+    strong.textContent = correctedText;
+    button.appendChild(strong);
     
     button.onclick = () => {
         if (activeInput) {
