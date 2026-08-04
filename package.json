@@ -1,10 +1,12 @@
 {
   "name": "farsi-smart-assistant",
-  "version": "3.6.0",
+  "version": "3.7.0",
   "private": true,
   "description": "Dependency-free quality gates for the Farsi Smart Assistant extension.",
   "scripts": {
-    "check": "node --check inline_checker.js && node --check popup.js && node --check background.js && node --check content_script.js && node --check logic.js && node --check options.js",
-    "test": "node --test tests/*.test.mjs"
+    "check": "node --check inline_checker.js && node --check popup.js && node --check background.js && node --check content_script.js && node --check logic.js && node --check options.js && node --check evaluation/load-converter.mjs && node --check evaluation/run-evaluation.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "eval": "node evaluation/run-evaluation.mjs",
+    "test:product": "npm run check && npm test && npm run eval"
   }
 }

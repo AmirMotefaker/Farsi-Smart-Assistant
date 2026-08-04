@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "corpusVersion": "0.1.0",
+  "language": "fa",
+  "purpose": "Deterministic baseline for Persian correction quality, false-positive review and latency measurement.",
+  "categories": [
+    "keyboard-layout",
+    "unicode-normalization",
+    "spacing",
+    "transliteration",
+    "ambiguity",
+    "no-change"
+  ],
+  "thresholds": {
+    "enforcedExactMatchRate": 1.0,
+    "maximumFalsePositiveRate": 0.0,
+    "maximumP95LatencyMs": 100.0
+  },
+  "cases": [
+    {
+      "id": "no-change-001",
+      "category": "no-change",
+      "input": "سلام دنیا",
+      "expected": "سلام دنیا",
+      "enforcement": "required",
+      "note": "Correct Persian must remain unchanged."
+    },
+    {
+      "id": "no-change-002",
+      "category": "no-change",
+      "input": "این یک متن فارسی است.",
+      "expected": "این یک متن فارسی است.",
+      "enforcement": "required",
+      "note": "A normal sentence must not receive a false correction."
+    },
+    {
+      "id": "no-change-003",
+      "category": "no-change",
+      "input": "۱۲۳۴۵",
+      "expected": "۱۲۳۴۵",
+      "enforcement": "required",
+      "note": "Persian digits must remain stable."
+    },
+    {
+      "id": "ambiguity-001",
+      "category": "ambiguity",
+      "input": "شیر",
+      "expected": "شیر",
+      "enforcement": "required",
+      "note": "Ambiguous valid words must not be changed without context."
+    },
+    {
+      "id": "ambiguity-002",
+      "category": "ambiguity",
+      "input": "من شیر خوردم.",
+      "expected": "من شیر خوردم.",
+      "enforcement": "required",
+      "note": "Contextually valid ambiguous content must remain unchanged."
+    },
+    {
+      "id": "keyboard-layout-001",
+      "category": "keyboard-layout",
+      "input": "sghl",
+      "expected": "سلام",
+      "enforcement": "manual-review",
+      "note": "Expected Persian output for an English-keyboard layout mistake."
+    },
+    {
+      "id": "unicode-normalization-001",
+      "category": "unicode-normalization",
+      "input": "علي",
+      "expected": "علی",
+      "enforcement": "manual-review",
+      "note": "Arabic Yeh should normalize to Persian Yeh."
+    },
+    {
+      "id": "spacing-001",
+      "category": "spacing",
+      "input": "می روم",
+      "expected": "می‌روم",
+      "enforcement": "manual-review",
+      "note": "Half-space behavior requires explicit product approval."
+    },
+    {
+      "id": "transliteration-001",
+      "category": "transliteration",
+      "input": "salam",
+      "expected": "سلام",
+      "enforcement": "manual-review",
+      "note": "Transliteration behavior is measured but is not release-blocking in M0."
+    }
+  ]
+}

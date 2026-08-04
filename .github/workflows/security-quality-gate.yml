@@ -25,5 +25,8 @@ jobs:
       - name: Run JavaScript syntax checks
         run: npm run check
 
-      - name: Run deterministic security tests
+      - name: Run deterministic security and product tests
         run: npm test
+
+      - name: Run Persian evaluation metrics
+        run: npm run eval
