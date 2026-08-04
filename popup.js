@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const rejectButton = document.getElementById('rejectButton');
     const saveManualCorrectionButton = document.getElementById('saveManualCorrectionButton');
     const saveConfirmation = document.getElementById('saveConfirmation');
-    
+
     // --- متغیرهای مدیریتی ---
     let debounceTimer;
     const DEBOUNCE_DELAY = 500;
@@ -37,14 +37,14 @@ document.addEventListener('DOMContentLoaded', function() {
             event.preventDefault();
             chrome.runtime.openOptionsPage();
         });
-        
+
         confirmButton.addEventListener('click', saveCurrentCorrection);
         rejectButton.addEventListener('click', enableManualCorrection);
         saveManualCorrectionButton.addEventListener('click', saveCurrentCorrection);
     }
 
     init();
-    
+
     // --- توابع جدید برای قابلیت یادگیری ---
     function saveCurrentCorrection() {
         const originalText = inputText.value.trim().toLowerCase();
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
         feedbackContainer.style.display = 'none';
         saveManualCorrectionButton.style.display = 'block';
     }
-    
+
     function showConfirmation(message) {
         if(saveConfirmation) {
             saveConfirmation.textContent = message;
@@ -82,13 +82,13 @@ document.addEventListener('DOMContentLoaded', function() {
         correctedTextBox.readOnly = true;
         feedbackContainer.style.display = 'none';
         saveManualCorrectionButton.style.display = 'none';
-        
+
         if (!query) {
             knowledgePanel.style.display = 'none';
             return;
         }
         knowledgePanel.style.display = 'block';
-        knowledgePanel.innerHTML = '<p>در حال پردازش...</p>';
+        const loadingMessage = document.createElement('p'); loadingMessage.textContent = "در حال پردازش..."; knowledgePanel.replaceChildren(loadingMessage);
         try {
             // مرحله ۱: همیشه ابتدا متن را اصلاح کن
             const correctedText = smart_farsi_converter(query, customDictionary);
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 resultContainer.style.display = 'block';
                 feedbackContainer.style.display = 'flex';
             }
-            
+
             // مرحله ۳: با متن اصلاح‌شده در ویکی‌پدیا جستجو کن
             const summaryData = await getWikipediaData(correctedText);
             renderResult(summaryData, correctedText);
@@ -110,12 +110,12 @@ document.addEventListener('DOMContentLoaded', function() {
             renderResult(null, query);
         }
     };
-    
+
     // --- تمام توابع کمکی دیگر بدون تغییر باقی می‌مانند ---
     const getWikipediaData = async (term) => { if (!term) return null; const cachedData = await getFromCache(term); if (cachedData) return cachedData; const apiData = await fetchWikipediaSummary(term); if (apiData) saveToCache(term, apiData); return apiData; };
-    const renderResult = (result, term) => { knowledgePanel.innerHTML = ''; if (!result) { knowledgePanel.innerHTML = `<p>نتیجه‌ای برای «${term}» یافت نشد.</p>`; return; } const title = document.createElement('h4'); title.textContent = result.title; knowledgePanel.appendChild(title); const summary = document.createElement('div'); summary.id = 'knowledgeSummary'; summary.innerHTML = result.summary; knowledgePanel.appendChild(summary); };
+    const renderResult = (result, term) => { knowledgePanel.replaceChildren(); if (!result) { const noResultMessage = document.createElement('p'); noResultMessage.textContent = `نتیجه‌ای برای «${term}» یافت نشد.`; knowledgePanel.replaceChildren(noResultMessage); return; } const title = document.createElement('h4'); title.textContent = result.title; knowledgePanel.appendChild(title); const summary = document.createElement('div'); summary.id = 'knowledgeSummary'; summary.textContent = result.summary; knowledgePanel.appendChild(summary); };
     const searchGoogle = (term) => { if (term) { const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(term)}`; chrome.tabs.create({ url: searchUrl }); } };
     function saveToCache(key, value) { const cacheData = { data: value, timestamp: Date.now() }; chrome.storage.local.set({ [key.toLowerCase()]: cacheData }); }
     async function getFromCache(key) { const result = await chrome.storage.local.get(key.toLowerCase()); const cacheItem = result[key.toLowerCase()]; if (cacheItem && (Date.now() - (cacheItem.timestamp || 0) < (24*60*60*1000))) { return cacheItem.data; } return null; }
-    async function fetchWikipediaSummary(term) { const lang = /[\u0600-\u06FF]/.test(term) ? 'fa' : 'en'; const url = `https://${lang}.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(term)}`; try { const response = await fetch(url); if (!response.ok) return null; const data = await response.json(); if (data.type.includes('disambiguation')) { return { type: 'disambiguation', title: `"${data.title}" چند معنی دارد:`, summary: data.extract_html }; } const langlinks = data.langlinks || []; const otherLang = lang === 'fa' ? 'en' : 'fa'; const link = langlinks.find(l => l.lang === otherLang); const translation = link ? ` (${link.title})` : ''; return { type: 'summary', title: `${data.title}${translation}`, summary: data.extract_html, searchTerm: data.title }; } catch (error) { console.error("Wikipedia API Error:", error); return null; } }
+    async function fetchWikipediaSummary(term) { const lang = /[\u0600-\u06FF]/.test(term) ? 'fa' : 'en'; const url = `https://${lang}.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(term)}`; try { const response = await fetch(url); if (!response.ok) return null; const data = await response.json(); if (data.type.includes('disambiguation')) { return { type: 'disambiguation', title: `"${data.title}" چند معنی دارد:`, summary: data.extract }; } const langlinks = data.langlinks || []; const otherLang = lang === 'fa' ? 'en' : 'fa'; const link = langlinks.find(l => l.lang === otherLang); const translation = link ? ` (${link.title})` : ''; return { type: 'summary', title: `${data.title}${translation}`, summary: data.extract, searchTerm: data.title }; } catch (error) { console.error("Wikipedia API Error:", error); return null; } }
 });
