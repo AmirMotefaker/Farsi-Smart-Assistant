@@ -24,12 +24,13 @@ chrome.storage.sync.get('customDictionary', (data) => {
 function checkForCorrection() {
     if (!activeInput) return;
 
-    const text = activeInput.isContentEditable ? activeInput.textContent : activeInput.value;
+    const inputElement = activeInput;
+    const text = inputElement.isContentEditable ? inputElement.textContent : inputElement.value;
     // We check the entire text to handle multi-word phrases from the dictionary.
     const correctedText = smart_farsi_converter(text, customDictionary);
 
     if (correctedText && correctedText.toLowerCase() !== text.toLowerCase()) {
-        showSuggestion(correctedText, text);
+        showSuggestion(correctedText, text, inputElement);
     } else {
         hideSuggestion();
     }
@@ -44,7 +45,7 @@ function checkForCorrection() {
  * @param {string} correctedText - The corrected version of the text.
  * @param {string} originalText - The original text that was corrected.
  */
-function showSuggestion(correctedText, originalText) {
+function showSuggestion(correctedText, originalText, inputElement) {
     hideSuggestion(); // Remove any previous suggestions first.
 
     // Create and position the icon
@@ -52,14 +53,14 @@ function showSuggestion(correctedText, originalText) {
     icon.className = 'farsi-sugg-icon';
     document.body.appendChild(icon);
     
-    const inputRect = activeInput.getBoundingClientRect();
+    const inputRect = inputElement.getBoundingClientRect();
     icon.style.top = `${window.scrollY + inputRect.top + (inputRect.height / 2) - 11}px`;
     icon.style.left = `${window.scrollX + inputRect.right + 5}px`;
 
     // When the icon is clicked, show the tooltip.
     icon.onclick = (e) => {
         e.stopPropagation();
-        showTooltip(correctedText, originalText);
+        showTooltip(correctedText, originalText, inputElement);
     };
     
     suggestionElements.icon = icon;
@@ -70,7 +71,7 @@ function showSuggestion(correctedText, originalText) {
  * @param {string} correctedText - The corrected version of the text.
  * @param {string} originalText - The original text that was corrected.
  */
-function showTooltip(correctedText, originalText) {
+function showTooltip(correctedText, originalText, inputElement) {
     // Create the tooltip container
     const tooltip = document.createElement('div');
     tooltip.className = 'farsi-sugg-tooltip';
@@ -83,20 +84,20 @@ function showTooltip(correctedText, originalText) {
     button.appendChild(strong);
     
     button.onclick = () => {
-        if (activeInput) {
+        if (inputElement) {
             // Replace the text in the input field
-            if (activeInput.isContentEditable) {
-                activeInput.textContent = correctedText;
+            if (inputElement.isContentEditable) {
+                inputElement.textContent = correctedText;
             } else {
-                activeInput.value = correctedText;
+                inputElement.value = correctedText;
             }
             
             // Dispatch an event to let the website know the input has changed
-            activeInput.dispatchEvent(new Event('input', { bubbles: true }));
-            activeInput.focus();
+            inputElement.dispatchEvent(new Event('input', { bubbles: true }));
+            inputElement.focus();
 
             // Try to submit the form (most reliable way to trigger a search)
-            const form = activeInput.closest('form');
+            const form = inputElement.closest('form');
             if (form) {
                 form.submit();
             }
