@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Farsi Smart Assistant",
-  "version": "4.3.0",
-  "description": "Smartly converts Finglish/typos and provides knowledge from Wikipedia/Google.",
+  "version": "4.4.0",
+  "description": "Universal smart typing correction for Persian and English across the web.",
   "permissions": [
     "storage", "contextMenus", "scripting", "tabs", "webNavigation"
   ],
