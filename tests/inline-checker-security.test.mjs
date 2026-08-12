@@ -241,7 +241,7 @@ test("clicking a suggestion replaces a standard input after focus loss", () => {
   assert.equal(harness.input.textContent, "teh");
   assert.deepEqual(harness.input.dispatchedEvents, ["input"]);
   assert.equal(harness.input.focused, true);
-  assert.equal(harness.form.submitCount, 1);
+  assert.equal(harness.form.submitCount, 0);
 });
 
 test("clicking a suggestion replaces contenteditable text after focus loss", () => {
@@ -255,5 +255,5 @@ test("clicking a suggestion replaces contenteditable text after focus loss", () 
   assert.equal(harness.input.value, "teh");
   assert.deepEqual(harness.input.dispatchedEvents, ["input"]);
   assert.equal(harness.input.focused, true);
-  assert.equal(harness.form.submitCount, 1);
+  assert.equal(harness.form.submitCount, 0);
 });

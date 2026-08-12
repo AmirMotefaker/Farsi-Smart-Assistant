@@ -7,8 +7,11 @@ const moduleDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(moduleDirectory, '..');
 
 export async function loadConverter() {
+  const keyboardLayoutPath = path.join(repositoryRoot, 'keyboard_layout.js');
   const logicPath = path.join(repositoryRoot, 'logic.js');
-  const source = await fs.readFile(logicPath, 'utf8');
+
+  const keyboardLayoutSource = await fs.readFile(keyboardLayoutPath, 'utf8');
+  const logicSource = await fs.readFile(logicPath, 'utf8');
 
   const context = {
     console,
@@ -23,7 +26,8 @@ export async function loadConverter() {
 
   vm.createContext(context);
 
-  const instrumentedSource = `${source}
+  const instrumentedSource = `${keyboardLayoutSource}
+${logicSource}
 ;globalThis.__farsiSmartConverter =
   typeof smart_farsi_converter === 'function'
     ? smart_farsi_converter

@@ -1,7 +1,7 @@
 // background.js (نسخه نهایی و پایدار)
 
 try {
-  importScripts('logic.js');
+  importScripts('keyboard_layout.js', 'logic.js');
 } catch (e) {
   console.error(e);
 }

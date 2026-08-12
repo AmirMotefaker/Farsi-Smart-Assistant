@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Farsi Smart Assistant",
-  "version": "3.7.2",
+  "version": "4.0.0",
   "description": "Smartly converts Finglish/typos and provides knowledge from Wikipedia/Google.",
   "permissions": [
     "storage", "contextMenus", "scripting", "tabs", "webNavigation"
@@ -34,9 +34,13 @@
         "inline_styles.css"
       ],
       "js": [
+        "keyboard_layout.js",
         "logic.js",
         "inline_checker.js"
       ],
+      "all_frames": true,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true,
       "run_at": "document_idle"
     }
   ],
