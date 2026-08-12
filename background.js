@@ -1,17 +1,34 @@
 // background.js (نسخه نهایی و پایدار)
 
-try {
-  importScripts('keyboard_layout.js', 'logic.js');
-} catch (e) {
-  console.error(e);
+if (typeof importScripts === 'function') {
+  try {
+    importScripts('keyboard_layout.js', 'logic.js');
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 let customDictionary = {};
 
 // تابع کمکی برای بارگذاری دیکشنری شخصی از حافظه
+function getSyncStorage(keys) {
+  return new Promise((resolve, reject) => {
+    chrome.storage.sync.get(keys, (data) => {
+      const runtimeError = chrome.runtime.lastError;
+
+      if (runtimeError) {
+        reject(new Error(runtimeError.message));
+        return;
+      }
+
+      resolve(data || {});
+    });
+  });
+}
+
 async function loadCustomDictionary() {
   try {
-    const data = await chrome.storage.sync.get('customDictionary');
+    const data = await getSyncStorage('customDictionary');
     customDictionary = data.customDictionary || {};
     console.log("Custom dictionary loaded in background.");
   } catch (e) {

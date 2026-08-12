@@ -3,7 +3,7 @@
 // =================================================================================
 
 let activeInput = null;
-let suggestionElements = { icon: null, tooltip: null };
+let suggestionElements = { host: null, action: null };
 let customDictionary = {};
 const trackedInputs = new WeakSet();
 const inputTimers = new WeakMap();
@@ -500,6 +500,156 @@ function checkForCorrection(inputElement) {
     }
 }
 
+function clampViewportCoordinate(value, minimum, maximum) {
+    if (maximum < minimum) return minimum;
+    return Math.max(minimum, Math.min(maximum, value));
+}
+
+function getViewportSize() {
+    const visualViewport = window.visualViewport;
+
+    return {
+        width:
+            visualViewport?.width ||
+            document.documentElement?.clientWidth ||
+            window.innerWidth ||
+            0,
+        height:
+            visualViewport?.height ||
+            document.documentElement?.clientHeight ||
+            window.innerHeight ||
+            0
+    };
+}
+
+function styleOverlayHost(host) {
+    host.style.all = 'initial';
+    host.style.position = 'fixed';
+    host.style.inset = '0';
+    host.style.width = '100vw';
+    host.style.height = '100vh';
+    host.style.pointerEvents = 'none';
+    host.style.zIndex = '2147483647';
+    host.style.contain = 'layout style';
+    host.style.isolation = 'isolate';
+}
+
+function styleSuggestionAction(action) {
+    action.style.all = 'initial';
+    action.style.position = 'fixed';
+    action.style.display = 'inline-flex';
+    action.style.alignItems = 'center';
+    action.style.gap = '7px';
+    action.style.boxSizing = 'border-box';
+    action.style.maxWidth = 'min(280px, calc(100vw - 8px))';
+    action.style.minHeight = '36px';
+    action.style.padding = '7px 11px';
+    action.style.border = '1px solid #0b57d0';
+    action.style.borderRadius = '999px';
+    action.style.background = '#ffffff';
+    action.style.color = '#0b57d0';
+    action.style.boxShadow =
+        '0 4px 16px rgba(0, 0, 0, 0.18)';
+    action.style.fontFamily =
+        'Arial, Tahoma, sans-serif';
+    action.style.fontSize = '14px';
+    action.style.fontWeight = '600';
+    action.style.lineHeight = '20px';
+    action.style.direction = 'rtl';
+    action.style.whiteSpace = 'nowrap';
+    action.style.overflow = 'hidden';
+    action.style.textOverflow = 'ellipsis';
+    action.style.cursor = 'pointer';
+    action.style.pointerEvents = 'auto';
+    action.style.userSelect = 'none';
+    action.style.zIndex = '2147483647';
+}
+
+function createSuggestionSurface() {
+    const documentRoot =
+        document.documentElement || document.body;
+
+    if (!documentRoot) return null;
+
+    const host = document.createElement('div');
+    host.className = 'farsi-smart-assistant-overlay-host';
+    host.setAttribute?.(
+        'data-farsi-smart-assistant-overlay',
+        'true'
+    );
+
+    styleOverlayHost(host);
+    documentRoot.appendChild(host);
+
+    let root = host;
+
+    if (typeof host.attachShadow === 'function') {
+        try {
+            root = host.attachShadow({ mode: 'closed' });
+        } catch (_error) {
+            root = host;
+        }
+    }
+
+    return { host, root };
+}
+
+function getSuggestionActionViewportPosition(
+    inputElement,
+    action,
+    gap = 6,
+    margin = 4
+) {
+    const inputRect = inputElement.getBoundingClientRect();
+    const viewport = getViewportSize();
+    const width =
+        Number(action.offsetWidth) > 0
+            ? Number(action.offsetWidth)
+            : 190;
+    const height =
+        Number(action.offsetHeight) > 0
+            ? Number(action.offsetHeight)
+            : 36;
+
+    const maxLeft = Math.max(
+        margin,
+        viewport.width - width - margin
+    );
+    const maxTop = Math.max(
+        margin,
+        viewport.height - height - margin
+    );
+
+    const inputLeft = Number.isFinite(inputRect.left)
+        ? inputRect.left
+        : 0;
+    const inputRight = Number.isFinite(inputRect.right)
+        ? inputRect.right
+        : inputLeft;
+
+    const preferredLeft = inputRight - width;
+    const below = inputRect.bottom + gap;
+    const above = inputRect.top - height - gap;
+
+    const top =
+        below + height <= viewport.height - margin
+            ? below
+            : above;
+
+    return {
+        left: clampViewportCoordinate(
+            preferredLeft,
+            margin,
+            maxLeft
+        ),
+        top: clampViewportCoordinate(
+            top,
+            margin,
+            maxTop
+        )
+    };
+}
+
 function showSuggestion(
     correctedText,
     originalText,
@@ -508,50 +658,61 @@ function showSuggestion(
 ) {
     hideSuggestion();
 
-    const icon = document.createElement('div');
-    icon.className = 'farsi-sugg-icon';
-    icon.setAttribute?.('role', 'button');
-    icon.setAttribute?.(
+    const surface = createSuggestionSurface();
+
+    if (!surface) return;
+
+    const action = document.createElement('button');
+    action.type = 'button';
+    action.className = 'farsi-smart-suggestion-action';
+    action.setAttribute?.(
         'aria-label',
-        'Farsi Smart correction available'
+        `جایگزین با ${correctedText}`
     );
-    document.body.appendChild(icon);
 
-    const inputRect = inputElement.getBoundingClientRect();
-    icon.style.top =
-        `${window.scrollY + inputRect.top + (inputRect.height / 2) - 11}px`;
-    icon.style.left =
-        `${window.scrollX + inputRect.right + 5}px`;
+    styleSuggestionAction(action);
 
-    icon.onclick = (event) => {
-        event.stopPropagation();
-        showTooltip(
-            correctedText,
-            originalText,
-            inputElement,
-            suggestion
-        );
-    };
+    const marker = document.createElement('span');
+    marker.textContent = '✓';
+    marker.style.all = 'initial';
+    marker.style.display = 'inline-grid';
+    marker.style.placeItems = 'center';
+    marker.style.flex = '0 0 auto';
+    marker.style.width = '20px';
+    marker.style.height = '20px';
+    marker.style.borderRadius = '50%';
+    marker.style.background = '#0b57d0';
+    marker.style.color = '#ffffff';
+    marker.style.fontFamily =
+        'Arial, Tahoma, sans-serif';
+    marker.style.fontSize = '13px';
+    marker.style.fontWeight = '700';
+    marker.style.lineHeight = '20px';
 
-    suggestionElements.icon = icon;
-}
+    const prefix = document.createElement('span');
+    prefix.textContent = 'اصلاح:';
+    prefix.style.all = 'initial';
+    prefix.style.color = '#4a4a4a';
+    prefix.style.fontFamily =
+        'Arial, Tahoma, sans-serif';
+    prefix.style.fontSize = '13px';
+    prefix.style.fontWeight = '500';
+    prefix.style.direction = 'rtl';
 
-function showTooltip(
-    correctedText,
-    originalText,
-    inputElement,
-    suggestion = null
-) {
-    const tooltip = document.createElement('div');
-    tooltip.className = 'farsi-sugg-tooltip';
+    const correctionText = document.createElement('strong');
+    correctionText.textContent = correctedText;
+    correctionText.style.all = 'initial';
+    correctionText.style.color = '#0b57d0';
+    correctionText.style.fontFamily =
+        'Arial, Tahoma, sans-serif';
+    correctionText.style.fontSize = '14px';
+    correctionText.style.fontWeight = '700';
+    correctionText.style.direction = 'auto';
 
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.textContent = 'جایگزین با: ';
-
-    const strong = document.createElement('strong');
-    strong.textContent = correctedText;
-    button.appendChild(strong);
+    action.appendChild(marker);
+    action.appendChild(prefix);
+    action.appendChild(correctionText);
+    surface.root.appendChild(action);
 
     const capturedSuggestion = suggestion || {
         fieldText: getEditableText(inputElement),
@@ -562,7 +723,18 @@ function showTooltip(
         mode: 'legacy-test'
     };
 
-    button.onclick = () => {
+    action.onmousedown = (event) => {
+        event.preventDefault?.();
+    };
+
+    action.onpointerdown = (event) => {
+        event.preventDefault?.();
+    };
+
+    action.onclick = (event) => {
+        event.preventDefault?.();
+        event.stopPropagation?.();
+
         if (inputElement) {
             applyEditingSuggestion(
                 inputElement,
@@ -573,34 +745,29 @@ function showTooltip(
         hideSuggestion();
     };
 
-    tooltip.appendChild(button);
-    document.body.appendChild(tooltip);
+    const position =
+        getSuggestionActionViewportPosition(
+            inputElement,
+            action
+        );
 
-    const iconRect =
-        suggestionElements.icon?.getBoundingClientRect();
+    action.style.top = `${position.top}px`;
+    action.style.left = `${position.left}px`;
 
-    if (iconRect) {
-        tooltip.style.top =
-            `${window.scrollY + iconRect.bottom + 5}px`;
-        tooltip.style.left =
-            `${window.scrollX + iconRect.right - (tooltip.offsetWidth || 0)}px`;
-    }
-
-    suggestionElements.tooltip = tooltip;
+    suggestionElements = {
+        host: surface.host,
+        action
+    };
 }
 
 function hideSuggestion() {
-    if (suggestionElements.icon) {
-        suggestionElements.icon.remove();
-    }
-
-    if (suggestionElements.tooltip) {
-        suggestionElements.tooltip.remove();
+    if (suggestionElements.host) {
+        suggestionElements.host.remove();
     }
 
     suggestionElements = {
-        icon: null,
-        tooltip: null
+        host: null,
+        action: null
     };
 }
 
@@ -669,12 +836,24 @@ document.addEventListener('focusout', (event) => {
 });
 
 document.addEventListener('click', (event) => {
-    const clickedIcon =
-        event.target === suggestionElements.icon;
-    const clickedTooltip =
-        suggestionElements.tooltip?.contains?.(event.target) || false;
+    const path =
+        typeof event.composedPath === 'function'
+            ? event.composedPath()
+            : [];
 
-    if (!clickedIcon && !clickedTooltip) {
+    const clickedSuggestion =
+        suggestionElements.host &&
+        (
+            event.target === suggestionElements.host ||
+            path.includes(suggestionElements.host)
+        );
+
+    if (!clickedSuggestion) {
         hideSuggestion();
     }
 });
+
+if (typeof window.addEventListener === 'function') {
+    window.addEventListener('resize', hideSuggestion);
+    window.addEventListener('scroll', hideSuggestion, true);
+}

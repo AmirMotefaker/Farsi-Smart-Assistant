@@ -12,6 +12,7 @@ const inlineSource = await fs.readFile(
   'utf8'
 );
 
+
 const manifest = JSON.parse(
   await fs.readFile(
     path.join(repositoryRoot, 'manifest.json'),
@@ -81,5 +82,55 @@ test('M2 recomputes contenteditable suggestions on selectionchange', () => {
   assert.match(
     inlineSource,
     /activeInput\.isContentEditable/u
+  );
+});
+
+test('M3 suggestion UI is a single isolated action surface', () => {
+  assert.match(
+    inlineSource,
+    /attachShadow\(\{\s*mode:\s*['"]closed['"]\s*\}\)/u
+  );
+  assert.match(
+    inlineSource,
+    /farsi-smart-assistant-overlay-host/u
+  );
+  assert.match(
+    inlineSource,
+    /farsi-smart-suggestion-action/u
+  );
+  assert.match(
+    inlineSource,
+    /styleOverlayHost/u
+  );
+  assert.match(
+    inlineSource,
+    /host\.style\.pointerEvents\s*=\s*['"]none['"]/u
+  );
+  assert.match(
+    inlineSource,
+    /action\.style\.pointerEvents\s*=\s*['"]auto['"]/u
+  );
+  assert.match(
+    inlineSource,
+    /correctionText\.textContent\s*=\s*correctedText/u
+  );
+  assert.match(
+    inlineSource,
+    /getSuggestionActionViewportPosition/u
+  );
+  assert.match(
+    inlineSource,
+    /clampViewportCoordinate/u
+  );
+  assert.doesNotMatch(
+    inlineSource,
+    /function\s+showTooltip\s*\(/u
+  );
+
+  const contentScript = manifest.content_scripts[0];
+
+  assert.equal(
+    Object.hasOwn(contentScript, 'css'),
+    false
   );
 });
