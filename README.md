@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <strong>یک افزونه کروم همه‌کاره برای اصلاح هوشمند انواع خطاهای تایپی فارسی، همراه با دستیار دانش مبتنی بر ویکی‌پدیا و گوگل.</strong>
+  <strong>یک افزونه مرورگر برای اصلاح هوشمند اشتباه‌های کیبورد فارسی و انگلیسی در سراسر وب، همراه با کنترل محلی و ابزارهای جست‌وجو.</strong>
 </p>
 
 <p align="center">
@@ -65,17 +65,42 @@
 
 ## 🛠️ نصب و راه‌اندازی
 
-#### ۱. نصب از طریق فروشگاه وب کروم (به زودی)
-> [!NOTE]
-> پس از انتشار افزونه، لینک نصب از فروشگاه وب کروم در اینجا قرار خواهد گرفت.
+### آخرین بسته‌های انتشار
 
-#### ۲. نصب به صورت دستی (برای توسعه‌دهندگان)
-1.  به صفحه **[Releases](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases)** بروید.
-2.  آخرین نسخه (مثلاً `Farsi-Smart-Assistant-v3.6.zip`) را دانلود کنید.
-3.  فایل `.zip` را از حالت فشرده خارج کنید.
-4.  در کروم به آدرس `chrome://extensions` بروید.
-5.  **Developer mode** (حالت توسعه‌دهنده) را فعال کنید.
-6.  روی **Load unpacked** کلیک کرده و پوشه افزونه را انتخاب کنید.
+از Release نسخه v4.5.0 این فایل‌ها به صورت versioned منتشر می‌شوند:
+
+- `Farsi-Smart-Assistant-v4.5.0-chromium.zip` برای Chrome / Edge / Brave / Opera / Vivaldi
+- `Farsi-Smart-Assistant-v4.5.0-firefox.zip` برای Firefox
+- `SHA256SUMS.txt` برای اعتبارسنجی فایل‌ها
+
+صفحه انتشارها: **[GitHub Releases](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases)**
+
+> [!NOTE]
+> انتشار عمومی در Chrome Web Store / Firefox Add-ons یک مرحله مستقل از آماده‌سازی بسته‌هاست. لینک رسمی Store پس از تکمیل submission و review در همین README اضافه می‌شود.
+
+### نصب دستی در مرورگرهای Chromium برای تست/توسعه
+
+1. بسته `Farsi-Smart-Assistant-v4.5.0-chromium.zip` را از Release دانلود کنید.
+2. SHA256 فایل را با `SHA256SUMS.txt` تطبیق دهید.
+3. ZIP را Extract کنید.
+4. صفحه مدیریت افزونه‌های مرورگر را باز کنید.
+5. **Developer mode** را فعال کنید.
+6. **Load unpacked** را بزنید و پوشه Extract‌شده را انتخاب کنید.
+
+### نصب موقت در Firefox برای تست/توسعه
+
+1. بسته `Farsi-Smart-Assistant-v4.5.0-firefox.zip` را Extract کنید.
+2. `about:debugging` را باز کنید.
+3. **This Firefox** → **Load Temporary Add-on** را انتخاب کنید.
+4. فایل `manifest.json` بسته Firefox را انتخاب کنید.
+
+نصب Temporary پس از restart شدن Firefox حذف می‌شود؛ انتشار عمومی Firefox به signing/submission رسمی Mozilla نیاز دارد.
+
+### حریم خصوصی و توزیع
+
+- **[Privacy / Data Handling](docs/PRIVACY.md)**
+- **[Distribution / Release Artifacts](docs/DISTRIBUTION.md)**
+- **[Store Listing Preparation](docs/STORE-LISTING.md)**
 
 ## 🔄 تاریخچه نسخه‌ها (Changelog)
 

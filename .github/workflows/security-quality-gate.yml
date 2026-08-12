@@ -30,3 +30,16 @@ jobs:
 
       - name: Run Persian evaluation metrics
         run: npm run eval
+
+      - name: Build deterministic release artifacts
+        run: npm run build:release
+
+      - name: Verify release artifacts
+        run: npm run verify:release
+
+      - name: Upload release candidate artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: farsi-smart-assistant-release-candidate
+          path: release/
+          if-no-files-found: error
