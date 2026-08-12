@@ -25,6 +25,7 @@ test('extension manifest and core product entry files are present', async () => 
     'background.js',
     'content_script.js',
     'inline_checker.js',
+    'keyboard_layout.js',
     'logic.js',
     'options.js',
     'popup.js'

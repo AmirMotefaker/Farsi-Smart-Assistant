@@ -34,9 +34,13 @@
         "inline_styles.css"
       ],
       "js": [
+        "keyboard_layout.js",
         "logic.js",
         "inline_checker.js"
       ],
+      "all_frames": true,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true,
       "run_at": "document_idle"
     }
   ],

@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "corpusVersion": "0.1.0",
+  "corpusVersion": "0.2.0",
   "language": "fa",
-  "purpose": "Deterministic baseline for Persian correction quality, false-positive review and latency measurement.",
+  "purpose": "Deterministic baseline for Persian/English keyboard-layout correction quality, false-positive review and latency measurement.",
   "categories": [
     "keyboard-layout",
     "unicode-normalization",
@@ -31,7 +31,7 @@
       "input": "این یک متن فارسی است.",
       "expected": "این یک متن فارسی است.",
       "enforcement": "required",
-      "note": "A normal sentence must not receive a false correction."
+      "note": "A normal Persian sentence must not receive a false correction."
     },
     {
       "id": "no-change-003",
@@ -42,12 +42,28 @@
       "note": "Persian digits must remain stable."
     },
     {
+      "id": "no-change-004",
+      "category": "no-change",
+      "input": "google chrome",
+      "expected": "google chrome",
+      "enforcement": "required",
+      "note": "Known valid English must remain unchanged."
+    },
+    {
+      "id": "no-change-005",
+      "category": "no-change",
+      "input": "PDF npm SQL",
+      "expected": "PDF npm SQL",
+      "enforcement": "required",
+      "note": "Common consonant-heavy technical English must not be misclassified."
+    },
+    {
       "id": "ambiguity-001",
       "category": "ambiguity",
       "input": "شیر",
       "expected": "شیر",
       "enforcement": "required",
-      "note": "Ambiguous valid words must not be changed without context."
+      "note": "Ambiguous valid Persian words must remain unchanged."
     },
     {
       "id": "ambiguity-002",
@@ -55,15 +71,55 @@
       "input": "من شیر خوردم.",
       "expected": "من شیر خوردم.",
       "enforcement": "required",
-      "note": "Contextually valid ambiguous content must remain unchanged."
+      "note": "Contextually valid Persian content must remain unchanged."
     },
     {
       "id": "keyboard-layout-001",
       "category": "keyboard-layout",
       "input": "sghl",
       "expected": "سلام",
-      "enforcement": "manual-review",
-      "note": "Expected Persian output for an English-keyboard layout mistake."
+      "enforcement": "required",
+      "note": "English keyboard active while Persian was intended."
+    },
+    {
+      "id": "keyboard-layout-002",
+      "category": "keyboard-layout",
+      "input": "sghl nkdh",
+      "expected": "سلام دنیا",
+      "enforcement": "required",
+      "note": "Multi-word English-keyboard to Persian correction."
+    },
+    {
+      "id": "keyboard-layout-003",
+      "category": "keyboard-layout",
+      "input": "فثسف",
+      "expected": "test",
+      "enforcement": "required",
+      "note": "Persian keyboard active while English test was intended."
+    },
+    {
+      "id": "keyboard-layout-004",
+      "category": "keyboard-layout",
+      "input": "لخخلمث",
+      "expected": "google",
+      "enforcement": "required",
+      "note": "Persian keyboard active while English google was intended."
+    },
+    {
+      "id": "keyboard-layout-005",
+      "category": "keyboard-layout",
+      "input": "hello sghl",
+      "expected": "hello سلام",
+      "enforcement": "required",
+      "note": "Only the wrong-layout token should change."
+    },
+    {
+      "id": "keyboard-layout-006",
+      "category": "keyboard-layout",
+      "input": "سلام فثسف",
+      "expected": "سلام test",
+      "enforcement": "required",
+      "note": "Reverse mixed-text correction should preserve valid Persian."
     },
     {
       "id": "unicode-normalization-001",
@@ -71,7 +127,7 @@
       "input": "علي",
       "expected": "علی",
       "enforcement": "manual-review",
-      "note": "Arabic Yeh should normalize to Persian Yeh."
+      "note": "Arabic Yeh normalization remains a later quality track."
     },
     {
       "id": "spacing-001",
@@ -79,7 +135,7 @@
       "input": "می روم",
       "expected": "می‌روم",
       "enforcement": "manual-review",
-      "note": "Half-space behavior requires explicit product approval."
+      "note": "Half-space behavior remains a later quality track."
     },
     {
       "id": "transliteration-001",
@@ -87,7 +143,7 @@
       "input": "salam",
       "expected": "سلام",
       "enforcement": "manual-review",
-      "note": "Transliteration behavior is measured but is not release-blocking in M0."
+      "note": "Finglish remains supported but is secondary to wrong-layout correction."
     }
   ]
 }

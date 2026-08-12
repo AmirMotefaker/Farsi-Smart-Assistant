@@ -4,7 +4,7 @@
   "private": true,
   "description": "Dependency-free quality gates for the Farsi Smart Assistant extension.",
   "scripts": {
-    "check": "node --check inline_checker.js && node --check popup.js && node --check background.js && node --check content_script.js && node --check logic.js && node --check options.js && node --check evaluation/load-converter.mjs && node --check evaluation/run-evaluation.mjs",
+    "check": "node --check keyboard_layout.js && node --check inline_checker.js && node --check popup.js && node --check background.js && node --check content_script.js && node --check logic.js && node --check options.js && node --check evaluation/load-converter.mjs && node --check evaluation/run-evaluation.mjs",
     "test": "node --test tests/*.test.mjs",
     "eval": "node evaluation/run-evaluation.mjs",
     "test:product": "npm run check && npm test && npm run eval"
