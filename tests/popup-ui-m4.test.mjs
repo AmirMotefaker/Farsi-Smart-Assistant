@@ -113,9 +113,8 @@ test('M4 site management exposes persistent disabled-site management', () => {
   assert.match(siteManagementJs, /normalizeHostLine/u);
 });
 
-test('M4 metadata is synchronized at v4.4.1', () => {
-  assert.equal(manifest.version, '4.4.1');
-  assert.equal(packageJson.version, '4.4.1');
+test('M4 metadata remains synchronized across release versions', () => {
+  assert.equal(manifest.version, packageJson.version);
   assert.equal(
     manifest.description,
     'Universal smart typing correction for Persian and English across the web.'
