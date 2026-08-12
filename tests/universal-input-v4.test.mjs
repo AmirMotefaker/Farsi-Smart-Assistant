@@ -48,3 +48,38 @@ test('content scripts cover matching frames and related iframe documents', () =>
     ['keyboard_layout.js', 'logic.js', 'inline_checker.js']
   );
 });
+test('M2 contains range-local cursor and native undo paths', () => {
+  assert.match(inlineSource, /findCurrentTokenRange/u);
+  assert.match(inlineSource, /setSelectionRange/u);
+  assert.match(inlineSource, /execCommand/u);
+  assert.match(inlineSource, /['"]insertText['"]/u);
+  assert.match(inlineSource, /isSuggestionCurrent/u);
+});
+
+test('M2 contenteditable path uses Range APIs rather than whole-field assignment', () => {
+  assert.match(inlineSource, /createContentEditableRange/u);
+  assert.match(inlineSource, /deleteContents/u);
+  assert.match(inlineSource, /insertNode/u);
+  assert.doesNotMatch(
+    inlineSource,
+    /element\.textContent\s*=\s*correctedText/u
+  );
+});
+test('M2 recomputes suggestions when standard text selection changes', () => {
+  assert.match(
+    inlineSource,
+    /addEventListener\(\s*['"]select['"]\s*,\s*handleSelectionIntent\s*\)/u
+  );
+  assert.match(inlineSource, /scheduleCorrectionCheck/u);
+});
+
+test('M2 recomputes contenteditable suggestions on selectionchange', () => {
+  assert.match(
+    inlineSource,
+    /document\.addEventListener\(\s*['"]selectionchange['"]/u
+  );
+  assert.match(
+    inlineSource,
+    /activeInput\.isContentEditable/u
+  );
+});
