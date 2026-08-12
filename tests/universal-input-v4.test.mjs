@@ -12,6 +12,11 @@ const inlineSource = await fs.readFile(
   'utf8'
 );
 
+const inlineStyles = await fs.readFile(
+  path.join(repositoryRoot, 'inline_styles.css'),
+  'utf8'
+);
+
 const manifest = JSON.parse(
   await fs.readFile(
     path.join(repositoryRoot, 'manifest.json'),
@@ -81,5 +86,35 @@ test('M2 recomputes contenteditable suggestions on selectionchange', () => {
   assert.match(
     inlineSource,
     /activeInput\.isContentEditable/u
+  );
+});
+test('M3 suggestion overlay is viewport-clamped across host-page layouts', () => {
+  assert.match(
+    inlineSource,
+    /getSuggestionIconViewportPosition/u
+  );
+  assert.match(
+    inlineSource,
+    /window\.visualViewport/u
+  );
+  assert.match(
+    inlineSource,
+    /document\.documentElement\s*\|\|\s*document\.body/u
+  );
+  assert.match(
+    inlineSource,
+    /clampViewportCoordinate/u
+  );
+  assert.match(
+    inlineSource,
+    /window\.addEventListener\(['"]scroll['"],\s*hideSuggestion,\s*true\)/u
+  );
+  assert.match(
+    inlineStyles,
+    /\.farsi-sugg-icon\s*\{[\s\S]*?position:\s*fixed;/u
+  );
+  assert.match(
+    inlineStyles,
+    /\.farsi-sugg-tooltip\s*\{[\s\S]*?position:\s*fixed;/u
   );
 });

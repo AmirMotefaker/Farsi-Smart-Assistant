@@ -1,5 +1,5 @@
 .farsi-sugg-icon {
-    position: absolute;
+    position: fixed;
     width: 22px;
     height: 22px;
     background-color: #fff;
@@ -20,7 +20,7 @@
 }
 
 .farsi-sugg-tooltip {
-    position: absolute;
+    position: fixed;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;

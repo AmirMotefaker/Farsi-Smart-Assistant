@@ -135,7 +135,10 @@ Before M3 can merge, browser evidence must cover every target browser:
 - contenteditable,
 - no automatic submit,
 - sensitive exclusion,
-- real-site input.
+- real-site input,
+- visible and clickable inline suggestion UI on representative real sites.
+
+Suggestion UI must remain inside the viewport even when host-page inputs extend close to a viewport edge. The overlay uses viewport-fixed, clamped placement and is dismissed on scroll/resize to avoid stale positioning.
 
 Firefox also verifies temporary installation, background startup, storage-backed custom dictionary behavior, and no manifest/background errors.
 

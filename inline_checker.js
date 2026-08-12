@@ -500,6 +500,65 @@ function checkForCorrection(inputElement) {
     }
 }
 
+function clampViewportCoordinate(value, minimum, maximum) {
+    if (maximum < minimum) return minimum;
+    return Math.max(minimum, Math.min(maximum, value));
+}
+
+function getViewportSize() {
+    const visualViewport = window.visualViewport;
+
+    return {
+        width:
+            visualViewport?.width ||
+            document.documentElement?.clientWidth ||
+            window.innerWidth ||
+            0,
+        height:
+            visualViewport?.height ||
+            document.documentElement?.clientHeight ||
+            window.innerHeight ||
+            0
+    };
+}
+
+function getSuggestionIconViewportPosition(
+    inputElement,
+    iconSize = 22,
+    gap = 5,
+    margin = 4
+) {
+    const inputRect = inputElement.getBoundingClientRect();
+    const viewport = getViewportSize();
+    const maxLeft = Math.max(margin, viewport.width - iconSize - margin);
+    const maxTop = Math.max(margin, viewport.height - iconSize - margin);
+
+    const preferredRight = inputRect.right + gap;
+    const preferredLeft = inputRect.left - iconSize - gap;
+
+    let left = preferredRight;
+
+    if (preferredRight + iconSize > viewport.width - margin) {
+        left = preferredLeft >= margin
+            ? preferredLeft
+            : inputRect.right - iconSize;
+    }
+
+    const top =
+        inputRect.top +
+        (inputRect.height / 2) -
+        (iconSize / 2);
+
+    return {
+        left: clampViewportCoordinate(left, margin, maxLeft),
+        top: clampViewportCoordinate(top, margin, maxTop)
+    };
+}
+
+function getOverlayHost() {
+    return document.documentElement || document.body;
+}
+
 function showSuggestion(
     correctedText,
     originalText,
@@ -515,13 +574,18 @@ function showSuggestion(
         'aria-label',
         'Farsi Smart correction available'
     );
-    document.body.appendChild(icon);
 
-    const inputRect = inputElement.getBoundingClientRect();
-    icon.style.top =
-        `${window.scrollY + inputRect.top + (inputRect.height / 2) - 11}px`;
-    icon.style.left =
-        `${window.scrollX + inputRect.right + 5}px`;
+    const overlayHost = getOverlayHost();
+
+    if (!overlayHost) return;
+
+    overlayHost.appendChild(icon);
+
+    const iconPosition =
+        getSuggestionIconViewportPosition(inputElement);
+
+    icon.style.top = `${iconPosition.top}px`;
+    icon.style.left = `${iconPosition.left}px`;
 
     icon.onclick = (event) => {
         event.stopPropagation();
@@ -574,16 +638,47 @@ function showTooltip(
     };
 
     tooltip.appendChild(button);
-    document.body.appendChild(tooltip);
+
+    const overlayHost = getOverlayHost();
+
+    if (!overlayHost) return;
+
+    overlayHost.appendChild(tooltip);
 
     const iconRect =
         suggestionElements.icon?.getBoundingClientRect();
 
     if (iconRect) {
+        const viewport = getViewportSize();
+        const margin = 4;
+        const gap = 5;
+        const width = tooltip.offsetWidth || 150;
+        const height = tooltip.offsetHeight || 40;
+        const maxLeft = Math.max(
+            margin,
+            viewport.width - width - margin
+        );
+        const maxTop = Math.max(
+            margin,
+            viewport.height - height - margin
+        );
+
+        const left = clampViewportCoordinate(
+            iconRect.right - width,
+            margin,
+            maxLeft
+        );
+
+        const below = iconRect.bottom + gap;
+        const above = iconRect.top - height - gap;
+        const top =
+            below + height <= viewport.height - margin
+                ? below
+                : above;
+
         tooltip.style.top =
-            `${window.scrollY + iconRect.bottom + 5}px`;
-        tooltip.style.left =
-            `${window.scrollX + iconRect.right - (tooltip.offsetWidth || 0)}px`;
+            `${clampViewportCoordinate(top, margin, maxTop)}px`;
+        tooltip.style.left = `${left}px`;
     }
 
     suggestionElements.tooltip = tooltip;
@@ -678,3 +773,8 @@ document.addEventListener('click', (event) => {
         hideSuggestion();
     }
 });
+
+if (typeof window.addEventListener === 'function') {
+    window.addEventListener('resize', hideSuggestion);
+    window.addEventListener('scroll', hideSuggestion, true);
+}
