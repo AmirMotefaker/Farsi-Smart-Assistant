@@ -12,10 +12,6 @@ const inlineSource = await fs.readFile(
   'utf8'
 );
 
-const inlineStyles = await fs.readFile(
-  path.join(repositoryRoot, 'inline_styles.css'),
-  'utf8'
-);
 
 const manifest = JSON.parse(
   await fs.readFile(
@@ -88,33 +84,53 @@ test('M2 recomputes contenteditable suggestions on selectionchange', () => {
     /activeInput\.isContentEditable/u
   );
 });
-test('M3 suggestion overlay is viewport-clamped across host-page layouts', () => {
+
+test('M3 suggestion UI is a single isolated action surface', () => {
   assert.match(
     inlineSource,
-    /getSuggestionIconViewportPosition/u
+    /attachShadow\(\{\s*mode:\s*['"]closed['"]\s*\}\)/u
   );
   assert.match(
     inlineSource,
-    /window\.visualViewport/u
+    /farsi-smart-assistant-overlay-host/u
   );
   assert.match(
     inlineSource,
-    /document\.documentElement\s*\|\|\s*document\.body/u
+    /farsi-smart-suggestion-action/u
+  );
+  assert.match(
+    inlineSource,
+    /styleOverlayHost/u
+  );
+  assert.match(
+    inlineSource,
+    /host\.style\.pointerEvents\s*=\s*['"]none['"]/u
+  );
+  assert.match(
+    inlineSource,
+    /action\.style\.pointerEvents\s*=\s*['"]auto['"]/u
+  );
+  assert.match(
+    inlineSource,
+    /correctionText\.textContent\s*=\s*correctedText/u
+  );
+  assert.match(
+    inlineSource,
+    /getSuggestionActionViewportPosition/u
   );
   assert.match(
     inlineSource,
     /clampViewportCoordinate/u
   );
-  assert.match(
+  assert.doesNotMatch(
     inlineSource,
-    /window\.addEventListener\(['"]scroll['"],\s*hideSuggestion,\s*true\)/u
+    /function\s+showTooltip\s*\(/u
   );
-  assert.match(
-    inlineStyles,
-    /\.farsi-sugg-icon\s*\{[\s\S]*?position:\s*fixed;/u
-  );
-  assert.match(
-    inlineStyles,
-    /\.farsi-sugg-tooltip\s*\{[\s\S]*?position:\s*fixed;/u
+
+  const contentScript = manifest.content_scripts[0];
+
+  assert.equal(
+    Object.hasOwn(contentScript, 'css'),
+    false
   );
 });

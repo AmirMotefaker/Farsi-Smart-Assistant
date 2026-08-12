@@ -30,9 +30,7 @@
       "matches": [
         "<all_urls>"
       ],
-      "css": [
-        "inline_styles.css"
-      ],
+
       "js": [
         "keyboard_layout.js",
         "logic.js",

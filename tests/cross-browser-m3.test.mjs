@@ -167,6 +167,11 @@ test('M3 Firefox build preserves universal content-script frame coverage', async
         'inline_checker.js'
       ]
     );
+
+    assert.equal(
+      Object.hasOwn(content, 'css'),
+      false
+    );
   });
 });
 
@@ -201,7 +206,8 @@ test('M3 generated packages contain runtime files and exclude dev-only content',
         'evaluation',
         'scripts',
         '.github',
-        'package.json'
+        'package.json',
+        'inline_styles.css'
       ]) {
         assert.equal(
           await exists(

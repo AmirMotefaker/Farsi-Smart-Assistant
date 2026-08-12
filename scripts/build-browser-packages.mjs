@@ -47,6 +47,7 @@ const excludedPrefixes = [
 const excludedFiles = new Set([
   '.gitattributes',
   '.gitignore',
+  'inline_styles.css',
   'package.json'
 ]);
 
@@ -142,7 +143,6 @@ const files = trackedRuntimeFiles();
 for (const requiredFile of [
   'background.js',
   'inline_checker.js',
-  'inline_styles.css',
   'keyboard_layout.js',
   'logic.js',
   'manifest.json',

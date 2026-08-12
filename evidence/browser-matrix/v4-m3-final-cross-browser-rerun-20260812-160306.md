@@ -58,3 +58,20 @@
 ## Gate
 
 M3 Cross-Browser Gate did not pass. PR #17 must not merge until all failed or blocked cases are resolved and the matrix is repeated.
+## Architectural remediation
+
+The two failed REAL cases isolated the remaining M3 defect to the second-stage tooltip UI:
+
+- Opera: functional correction path passed; tooltip visibility failed.
+- Vivaldi: functional correction path passed; tooltip visibility failed.
+- all other setup/local/real functional gates passed.
+
+The implementation response is architectural rather than another tooltip-position patch:
+
+- remove the separate icon → tooltip lifecycle,
+- render the correction itself as one visible action pill,
+- isolate the action in Shadow DOM,
+- use inline component styling instead of host-page CSS injection,
+- apply the captured correction directly from that action.
+
+This evidence remains a valid NOT-PASS record. A new full matrix is required after the architectural change.

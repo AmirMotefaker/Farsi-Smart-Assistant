@@ -160,3 +160,26 @@ Checked 2026-08-12:
   https://help.opera.com/en/extensions/
 - Vivaldi extension compatibility:
   https://help.vivaldi.com/desktop/appearance-customization/extensions/
+## Isolated suggestion action surface
+
+The final six-browser visual matrix exposed a specific interaction failure: Opera and Vivaldi preserved the correction engine and displayed the initial suggestion affordance, but the second-stage tooltip was not reliably visible on Google Search.
+
+M3 removes that fragile two-stage interaction entirely.
+
+The release architecture now uses one self-contained suggestion action:
+
+- one visible pill shows the proposed correction immediately,
+- one click applies the captured range-local correction,
+- there is no icon-to-tooltip transition,
+- the surface is mounted through a closed Shadow DOM when available,
+- a non-Shadow fallback is retained for constrained/test environments,
+- the host surface is viewport-fixed and pointer-transparent,
+- only the action itself accepts pointer input,
+- all action styling is inline and isolated,
+- no global content-script CSS is injected into host pages,
+- position is clamped to the visible viewport,
+- scroll/resize dismiss stale UI.
+
+This changes the browser gate from "icon then tooltip" to "visible correction action, clickable replacement, no automatic submit".
+
+Release Prep remains blocked until the full six-browser matrix passes on the new exact implementation SHA.

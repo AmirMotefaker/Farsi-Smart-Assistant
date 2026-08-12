@@ -30,7 +30,7 @@ test('inline checker contains no HTML injection sink', () => {
 test('suggested text is rendered through textContent', () => {
   assert.match(
     source,
-    /strong\.textContent\s*=\s*correctedText\b/u
+    /correctionText\.textContent\s*=\s*correctedText\b/u
   );
 });
 
@@ -47,7 +47,7 @@ test('M2 contenteditable path does not replace the entire element text', () => {
 test('the replacement click handler remains present', () => {
   assert.match(
     source,
-    /button\.onclick\s*=\s*\(\)\s*=>/u
+    /action\.onclick\s*=\s*\(event\)\s*=>/u
   );
 });
 
@@ -99,8 +99,10 @@ class FakeElement {
   getBoundingClientRect() {
     return {
       top: 10,
+      left: 10,
       right: 110,
       bottom: 30,
+      width: 100,
       height: 20
     };
   }
@@ -129,6 +131,8 @@ class FakeEvent {
   }
 
   stopPropagation() {}
+
+  preventDefault() {}
 }
 
 function buildHarness() {
@@ -136,6 +140,7 @@ function buildHarness() {
 
   const document = {
     body,
+    documentElement: body,
     activeElement: null,
     createElement(tagName) {
       return new FakeElement(tagName);
@@ -181,14 +186,11 @@ function buildHarness() {
   };
 }
 
-test('captured suggestion still targets the input after focus loss', () => {
+test('captured suggestion action still targets the input after focus loss', () => {
   const harness = buildHarness();
 
   vm.runInContext(`
-    suggestionElements.icon = document.createElement('div');
-    document.body.appendChild(suggestionElements.icon);
-
-    showTooltip(
+    showSuggestion(
       'the',
       'teh',
       __input,
@@ -203,17 +205,25 @@ test('captured suggestion still targets the input after focus loss', () => {
     );
   `, harness.context);
 
-  const tooltip = harness.body.children.find(
-    (element) => element.className === 'farsi-sugg-tooltip'
+  const host = harness.body.children.find(
+    (element) =>
+      element.className ===
+      'farsi-smart-assistant-overlay-host'
   );
 
-  assert.ok(tooltip);
+  assert.ok(host);
 
-  const button = tooltip.children[0];
-  assert.equal(typeof button.onclick, 'function');
+  const action = host.children.find(
+    (element) =>
+      element.className ===
+      'farsi-smart-suggestion-action'
+  );
+
+  assert.ok(action);
+  assert.equal(typeof action.onclick, 'function');
 
   vm.runInContext('activeInput = null;', harness.context);
-  button.onclick();
+  action.onclick(new FakeEvent('click'));
 
   assert.equal(harness.input.value, 'the');
   assert.deepEqual(harness.input.dispatchedEvents, ['input']);
