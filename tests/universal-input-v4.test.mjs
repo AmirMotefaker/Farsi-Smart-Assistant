@@ -65,3 +65,21 @@ test('M2 contenteditable path uses Range APIs rather than whole-field assignment
     /element\.textContent\s*=\s*correctedText/u
   );
 });
+test('M2 recomputes suggestions when standard text selection changes', () => {
+  assert.match(
+    inlineSource,
+    /addEventListener\(\s*['"]select['"]\s*,\s*handleSelectionIntent\s*\)/u
+  );
+  assert.match(inlineSource, /scheduleCorrectionCheck/u);
+});
+
+test('M2 recomputes contenteditable suggestions on selectionchange', () => {
+  assert.match(
+    inlineSource,
+    /document\.addEventListener\(\s*['"]selectionchange['"]/u
+  );
+  assert.match(
+    inlineSource,
+    /activeInput\.isContentEditable/u
+  );
+});

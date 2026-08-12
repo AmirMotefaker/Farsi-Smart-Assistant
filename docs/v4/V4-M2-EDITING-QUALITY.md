@@ -21,6 +21,16 @@ For contenteditable:
 2. use the same token/selection planning model,
 3. map the resulting linear offsets back to DOM Range boundaries.
 
+## Selection-only interaction triggers
+
+M2 must recompute a suggestion even when the user changes selection without typing:
+
+- standard `input` / `textarea` fields listen for the native `select` event,
+- active contenteditable fields listen for document `selectionchange`,
+- both paths reuse the same per-element debounce scheduler as normal input events.
+
+This closes the gap between deterministic selection planning and the actual user interaction that invokes it.
+
 ## Replacement model
 
 Preferred path:

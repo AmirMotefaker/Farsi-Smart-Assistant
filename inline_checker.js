@@ -604,9 +604,7 @@ function hideSuggestion() {
     };
 }
 
-function handleInput(event) {
-    const inputElement = event.currentTarget || event.target;
-
+function scheduleCorrectionCheck(inputElement, delay = 450) {
     if (!isSupportedEditable(inputElement)) return;
 
     const previousTimer = inputTimers.get(inputElement);
@@ -618,9 +616,19 @@ function handleInput(event) {
     const timer = setTimeout(() => {
         inputTimers.delete(inputElement);
         checkForCorrection(inputElement);
-    }, 450);
+    }, delay);
 
     inputTimers.set(inputElement, timer);
+}
+
+function handleInput(event) {
+    const inputElement = event.currentTarget || event.target;
+    scheduleCorrectionCheck(inputElement, 450);
+}
+
+function handleSelectionIntent(event) {
+    const inputElement = event.currentTarget || event.target;
+    scheduleCorrectionCheck(inputElement, 80);
 }
 
 document.addEventListener('focusin', (event) => {
@@ -632,8 +640,26 @@ document.addEventListener('focusin', (event) => {
 
     if (!trackedInputs.has(inputElement)) {
         inputElement.addEventListener('input', handleInput);
+
+        if (!inputElement.isContentEditable) {
+            inputElement.addEventListener('select', handleSelectionIntent);
+        }
+
         trackedInputs.add(inputElement);
     }
+});
+
+document.addEventListener('selectionchange', () => {
+    if (!activeInput || !activeInput.isContentEditable) return;
+
+    if (
+        document.activeElement &&
+        document.activeElement !== activeInput
+    ) {
+        return;
+    }
+
+    scheduleCorrectionCheck(activeInput, 80);
 });
 
 document.addEventListener('focusout', (event) => {
