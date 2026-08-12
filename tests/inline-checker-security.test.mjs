@@ -204,7 +204,7 @@ function openSuggestionAndClick(harness, correctedText) {
   harness.context.__originalText = "teh";
 
   vm.runInContext(
-    "showTooltip(__correctedText, __originalText);",
+    "showTooltip(__correctedText, __originalText, __activeInput);",
     harness.context,
   );
 
@@ -221,10 +221,16 @@ function openSuggestionAndClick(harness, correctedText) {
   assert.equal(button.children[0]?.textContent, correctedText);
   assert.equal(typeof button.onclick, "function");
 
+  // Simulate the real browser sequence: clicking the suggestion UI can move
+  // focus away from the original field and clear the mutable global target.
+  // The replacement must still use the element captured when the suggestion
+  // was created.
+  vm.runInContext("activeInput = null;", harness.context);
+
   button.onclick();
 }
 
-test("clicking a suggestion replaces a standard input and dispatches input", () => {
+test("clicking a suggestion replaces a standard input after focus loss", () => {
   const harness = buildInlineCheckerHarness({
     contentEditable: false,
   });
@@ -238,7 +244,7 @@ test("clicking a suggestion replaces a standard input and dispatches input", () 
   assert.equal(harness.form.submitCount, 1);
 });
 
-test("clicking a suggestion replaces contenteditable text and dispatches input", () => {
+test("clicking a suggestion replaces contenteditable text after focus loss", () => {
   const harness = buildInlineCheckerHarness({
     contentEditable: true,
   });
