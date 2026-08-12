@@ -1,5 +1,5 @@
 // =================================================================================
-// Farsi Smart Assistant v4 - Universal Web Input Engine (M0)
+// Farsi Smart Assistant v4 - Universal Web Input Engine (M2 Editing Quality)
 // =================================================================================
 
 let activeInput = null;
@@ -25,8 +25,6 @@ function isSupportedEditable(element) {
 
     const type = String(element.type || 'text').toLowerCase();
 
-    // Deliberately exclude password/email/url/number and other sensitive or
-    // structured fields from automatic correction.
     return type === 'text' || type === 'search';
 }
 
@@ -34,77 +32,516 @@ function getEditableText(element) {
     return element.isContentEditable ? element.textContent : element.value;
 }
 
-function setEditableText(element, correctedText) {
-    if (element.isContentEditable) {
-        element.textContent = correctedText;
-    } else {
-        let nativeSetter = null;
-        const tagName = String(element.tagName || '').toUpperCase();
+function clampOffset(value, length) {
+    const numeric = Number.isFinite(Number(value)) ? Number(value) : length;
+    return Math.max(0, Math.min(length, numeric));
+}
 
-        if (tagName === 'TEXTAREA' && typeof HTMLTextAreaElement !== 'undefined') {
-            nativeSetter = Object
-                .getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value')
-                ?.set || null;
-        } else if (tagName === 'INPUT' && typeof HTMLInputElement !== 'undefined') {
-            nativeSetter = Object
-                .getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')
-                ?.set || null;
-        }
+function findCurrentTokenRange(text, caretOffset) {
+    const value = String(text ?? '');
+    const length = value.length;
 
-        if (nativeSetter) {
-            nativeSetter.call(element, correctedText);
-        } else {
-            element.value = correctedText;
+    if (length === 0) {
+        return { start: 0, end: 0 };
+    }
+
+    let caret = clampOffset(caretOffset, length);
+    let probe = caret;
+
+    if (probe === length || (probe > 0 && /\s/u.test(value[probe]))) {
+        probe -= 1;
+    }
+
+    while (probe >= 0 && /\s/u.test(value[probe])) {
+        probe -= 1;
+    }
+
+    if (probe < 0) {
+        return { start: caret, end: caret };
+    }
+
+    let start = probe;
+    let end = probe + 1;
+
+    while (start > 0 && !/\s/u.test(value[start - 1])) {
+        start -= 1;
+    }
+
+    while (end < length && !/\s/u.test(value[end])) {
+        end += 1;
+    }
+
+    return { start, end };
+}
+
+function findTrailingTwoTokenRange(text, caretOffset) {
+    const value = String(text ?? '');
+    const caret = clampOffset(caretOffset, value.length);
+    const prefix = value.slice(0, caret);
+    const match = prefix.match(/(\S+\s+\S+)\s*$/u);
+
+    if (!match) return null;
+
+    const phrase = match[1];
+    const start = prefix.lastIndexOf(phrase);
+
+    if (start < 0) return null;
+
+    return {
+        start,
+        end: start + phrase.length
+    };
+}
+
+function replaceTextRange(text, start, end, replacement) {
+    const value = String(text ?? '');
+    const safeStart = clampOffset(start, value.length);
+    const safeEnd = Math.max(safeStart, clampOffset(end, value.length));
+
+    return value.slice(0, safeStart) +
+        String(replacement ?? '') +
+        value.slice(safeEnd);
+}
+
+function computeEditingSuggestion(
+    text,
+    selectionStart,
+    selectionEnd,
+    dictionary = customDictionary
+) {
+    const value = String(text ?? '');
+    const start = clampOffset(selectionStart, value.length);
+    const end = Math.max(start, clampOffset(selectionEnd, value.length));
+    const explicitSelection = end > start;
+
+    const primaryRange = explicitSelection
+        ? { start, end }
+        : findCurrentTokenRange(value, start);
+
+    if (primaryRange.end > primaryRange.start) {
+        const originalText = value.slice(primaryRange.start, primaryRange.end);
+        const correctedText = smart_farsi_converter(originalText, dictionary);
+
+        if (correctedText && correctedText !== originalText) {
+            return {
+                fieldText: value,
+                start: primaryRange.start,
+                end: primaryRange.end,
+                originalText,
+                correctedText,
+                mode: explicitSelection ? 'selection' : 'token'
+            };
         }
     }
 
-    const inputEvent = typeof InputEvent === 'function'
+    if (!explicitSelection) {
+        const phraseRange = findTrailingTwoTokenRange(value, start);
+
+        if (phraseRange) {
+            const originalText = value.slice(phraseRange.start, phraseRange.end);
+            const correctedText = smart_farsi_converter(originalText, dictionary);
+
+            if (correctedText && correctedText !== originalText) {
+                return {
+                    fieldText: value,
+                    start: phraseRange.start,
+                    end: phraseRange.end,
+                    originalText,
+                    correctedText,
+                    mode: 'phrase'
+                };
+            }
+        }
+    }
+
+    return null;
+}
+
+function isSuggestionCurrent(element, suggestion) {
+    if (!element || !suggestion) return false;
+
+    const currentText = getEditableText(element);
+
+    if (currentText !== suggestion.fieldText) return false;
+
+    return currentText.slice(suggestion.start, suggestion.end) ===
+        suggestion.originalText;
+}
+
+function getStandardSelection(element, text) {
+    const length = text.length;
+    const start = clampOffset(element.selectionStart, length);
+    const end = Math.max(start, clampOffset(element.selectionEnd, length));
+
+    return { start, end };
+}
+
+function getContentEditableSelection(element, text) {
+    const fallback = { start: text.length, end: text.length };
+
+    if (
+        typeof window.getSelection !== 'function' ||
+        typeof document.createRange !== 'function'
+    ) {
+        return fallback;
+    }
+
+    const selection = window.getSelection();
+
+    if (!selection || selection.rangeCount < 1) {
+        return fallback;
+    }
+
+    const range = selection.getRangeAt(0);
+    const startInside = range.startContainer === element ||
+        element.contains?.(range.startContainer);
+    const endInside = range.endContainer === element ||
+        element.contains?.(range.endContainer);
+
+    if (!startInside || !endInside) {
+        return fallback;
+    }
+
+    try {
+        const startRange = document.createRange();
+        startRange.selectNodeContents(element);
+        startRange.setEnd(range.startContainer, range.startOffset);
+
+        const endRange = document.createRange();
+        endRange.selectNodeContents(element);
+        endRange.setEnd(range.endContainer, range.endOffset);
+
+        const start = clampOffset(startRange.toString().length, text.length);
+        const end = Math.max(
+            start,
+            clampOffset(endRange.toString().length, text.length)
+        );
+
+        return { start, end };
+    } catch (_error) {
+        return fallback;
+    }
+}
+
+function getEditableSelection(element, text = getEditableText(element)) {
+    return element.isContentEditable
+        ? getContentEditableSelection(element, text)
+        : getStandardSelection(element, text);
+}
+
+function resolveContentEditablePosition(element, linearOffset) {
+    const textLength = getEditableText(element).length;
+    const target = clampOffset(linearOffset, textLength);
+
+    if (
+        typeof document.createTreeWalker !== 'function' ||
+        typeof NodeFilter === 'undefined'
+    ) {
+        return { node: element, offset: 0 };
+    }
+
+    const walker = document.createTreeWalker(
+        element,
+        NodeFilter.SHOW_TEXT
+    );
+
+    let traversed = 0;
+    let lastNode = null;
+
+    while (walker.nextNode()) {
+        const node = walker.currentNode;
+        const length = node.nodeValue?.length ?? 0;
+        lastNode = node;
+
+        if (target <= traversed + length) {
+            return {
+                node,
+                offset: target - traversed
+            };
+        }
+
+        traversed += length;
+    }
+
+    if (lastNode) {
+        return {
+            node: lastNode,
+            offset: lastNode.nodeValue?.length ?? 0
+        };
+    }
+
+    return {
+        node: element,
+        offset: 0
+    };
+}
+
+function createContentEditableRange(element, start, end) {
+    if (typeof document.createRange !== 'function') return null;
+
+    const range = document.createRange();
+    const startPosition = resolveContentEditablePosition(element, start);
+    const endPosition = resolveContentEditablePosition(element, end);
+
+    try {
+        range.setStart(startPosition.node, startPosition.offset);
+        range.setEnd(endPosition.node, endPosition.offset);
+        return range;
+    } catch (_error) {
+        return null;
+    }
+}
+
+function createReplacementInputEvent(correctedText) {
+    return typeof InputEvent === 'function'
         ? new InputEvent('input', {
             bubbles: true,
             inputType: 'insertReplacementText',
             data: correctedText
         })
         : new Event('input', { bubbles: true });
+}
 
-    element.dispatchEvent(inputEvent);
+function dispatchReplacementInput(element, correctedText) {
+    element.dispatchEvent(createReplacementInputEvent(correctedText));
+}
+
+function tryNativeInsertText(element, start, end, correctedText) {
+    if (
+        typeof document.execCommand !== 'function' ||
+        typeof element.focus !== 'function'
+    ) {
+        return false;
+    }
+
     element.focus();
+
+    if (!element.isContentEditable) {
+        if (typeof element.setSelectionRange !== 'function') {
+            return false;
+        }
+
+        element.setSelectionRange(start, end);
+    } else {
+        const range = createContentEditableRange(element, start, end);
+
+        if (!range || typeof window.getSelection !== 'function') {
+            return false;
+        }
+
+        const selection = window.getSelection();
+
+        if (!selection) return false;
+
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+
+    try {
+        return document.execCommand(
+            'insertText',
+            false,
+            correctedText
+        ) === true;
+    } catch (_error) {
+        return false;
+    }
+}
+
+function replaceStandardRange(element, suggestion) {
+    const text = getEditableText(element);
+    const newText = replaceTextRange(
+        text,
+        suggestion.start,
+        suggestion.end,
+        suggestion.correctedText
+    );
+    const caret = suggestion.start + suggestion.correctedText.length;
+
+    if (
+        tryNativeInsertText(
+            element,
+            suggestion.start,
+            suggestion.end,
+            suggestion.correctedText
+        )
+    ) {
+        if (typeof element.setSelectionRange === 'function') {
+            element.setSelectionRange(caret, caret);
+        }
+
+        return true;
+    }
+
+    let nativeSetter = null;
+    const tagName = String(element.tagName || '').toUpperCase();
+
+    if (
+        tagName === 'TEXTAREA' &&
+        typeof HTMLTextAreaElement !== 'undefined'
+    ) {
+        nativeSetter = Object
+            .getOwnPropertyDescriptor(
+                HTMLTextAreaElement.prototype,
+                'value'
+            )?.set || null;
+    } else if (
+        tagName === 'INPUT' &&
+        typeof HTMLInputElement !== 'undefined'
+    ) {
+        nativeSetter = Object
+            .getOwnPropertyDescriptor(
+                HTMLInputElement.prototype,
+                'value'
+            )?.set || null;
+    }
+
+    if (nativeSetter) {
+        nativeSetter.call(element, newText);
+    } else {
+        element.value = newText;
+    }
+
+    dispatchReplacementInput(element, suggestion.correctedText);
+
+    if (typeof element.focus === 'function') {
+        element.focus();
+    }
+
+    if (typeof element.setSelectionRange === 'function') {
+        element.setSelectionRange(caret, caret);
+    }
+
+    return true;
+}
+
+function replaceContentEditableRange(element, suggestion) {
+    if (
+        tryNativeInsertText(
+            element,
+            suggestion.start,
+            suggestion.end,
+            suggestion.correctedText
+        )
+    ) {
+        return true;
+    }
+
+    const range = createContentEditableRange(
+        element,
+        suggestion.start,
+        suggestion.end
+    );
+
+    if (
+        !range ||
+        typeof document.createTextNode !== 'function' ||
+        typeof window.getSelection !== 'function'
+    ) {
+        return false;
+    }
+
+    const replacementNode = document.createTextNode(
+        suggestion.correctedText
+    );
+
+    range.deleteContents();
+    range.insertNode(replacementNode);
+    range.setStartAfter(replacementNode);
+    range.collapse(true);
+
+    const selection = window.getSelection();
+
+    if (selection) {
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+
+    dispatchReplacementInput(element, suggestion.correctedText);
+
+    if (typeof element.focus === 'function') {
+        element.focus();
+    }
+
+    return true;
+}
+
+function applyEditingSuggestion(element, suggestion) {
+    if (!isSuggestionCurrent(element, suggestion)) {
+        return false;
+    }
+
+    return element.isContentEditable
+        ? replaceContentEditableRange(element, suggestion)
+        : replaceStandardRange(element, suggestion);
 }
 
 function checkForCorrection(inputElement) {
     if (!isSupportedEditable(inputElement)) return;
 
     const text = getEditableText(inputElement);
-    const correctedText = smart_farsi_converter(text, customDictionary);
+    const selection = getEditableSelection(inputElement, text);
+    const suggestion = computeEditingSuggestion(
+        text,
+        selection.start,
+        selection.end,
+        customDictionary
+    );
 
-    if (correctedText && correctedText !== text) {
-        showSuggestion(correctedText, text, inputElement);
+    if (suggestion) {
+        showSuggestion(
+            suggestion.correctedText,
+            suggestion.originalText,
+            inputElement,
+            suggestion
+        );
     } else {
         hideSuggestion();
     }
 }
 
-function showSuggestion(correctedText, originalText, inputElement) {
+function showSuggestion(
+    correctedText,
+    originalText,
+    inputElement,
+    suggestion = null
+) {
     hideSuggestion();
 
     const icon = document.createElement('div');
     icon.className = 'farsi-sugg-icon';
     icon.setAttribute?.('role', 'button');
-    icon.setAttribute?.('aria-label', 'Farsi Smart correction available');
+    icon.setAttribute?.(
+        'aria-label',
+        'Farsi Smart correction available'
+    );
     document.body.appendChild(icon);
 
     const inputRect = inputElement.getBoundingClientRect();
-    icon.style.top = `${window.scrollY + inputRect.top + (inputRect.height / 2) - 11}px`;
-    icon.style.left = `${window.scrollX + inputRect.right + 5}px`;
+    icon.style.top =
+        `${window.scrollY + inputRect.top + (inputRect.height / 2) - 11}px`;
+    icon.style.left =
+        `${window.scrollX + inputRect.right + 5}px`;
 
     icon.onclick = (event) => {
         event.stopPropagation();
-        showTooltip(correctedText, originalText, inputElement);
+        showTooltip(
+            correctedText,
+            originalText,
+            inputElement,
+            suggestion
+        );
     };
 
     suggestionElements.icon = icon;
 }
 
-function showTooltip(correctedText, originalText, inputElement) {
+function showTooltip(
+    correctedText,
+    originalText,
+    inputElement,
+    suggestion = null
+) {
     const tooltip = document.createElement('div');
     tooltip.className = 'farsi-sugg-tooltip';
 
@@ -116,9 +553,21 @@ function showTooltip(correctedText, originalText, inputElement) {
     strong.textContent = correctedText;
     button.appendChild(strong);
 
+    const capturedSuggestion = suggestion || {
+        fieldText: getEditableText(inputElement),
+        start: 0,
+        end: getEditableText(inputElement).length,
+        originalText,
+        correctedText,
+        mode: 'legacy-test'
+    };
+
     button.onclick = () => {
         if (inputElement) {
-            setEditableText(inputElement, correctedText);
+            applyEditingSuggestion(
+                inputElement,
+                capturedSuggestion
+            );
         }
 
         hideSuggestion();
@@ -127,21 +576,32 @@ function showTooltip(correctedText, originalText, inputElement) {
     tooltip.appendChild(button);
     document.body.appendChild(tooltip);
 
-    const iconRect = suggestionElements.icon?.getBoundingClientRect();
+    const iconRect =
+        suggestionElements.icon?.getBoundingClientRect();
 
     if (iconRect) {
-        tooltip.style.top = `${window.scrollY + iconRect.bottom + 5}px`;
-        tooltip.style.left = `${window.scrollX + iconRect.right - (tooltip.offsetWidth || 0)}px`;
+        tooltip.style.top =
+            `${window.scrollY + iconRect.bottom + 5}px`;
+        tooltip.style.left =
+            `${window.scrollX + iconRect.right - (tooltip.offsetWidth || 0)}px`;
     }
 
     suggestionElements.tooltip = tooltip;
 }
 
 function hideSuggestion() {
-    if (suggestionElements.icon) suggestionElements.icon.remove();
-    if (suggestionElements.tooltip) suggestionElements.tooltip.remove();
+    if (suggestionElements.icon) {
+        suggestionElements.icon.remove();
+    }
 
-    suggestionElements = { icon: null, tooltip: null };
+    if (suggestionElements.tooltip) {
+        suggestionElements.tooltip.remove();
+    }
+
+    suggestionElements = {
+        icon: null,
+        tooltip: null
+    };
 }
 
 function handleInput(event) {
@@ -183,8 +643,10 @@ document.addEventListener('focusout', (event) => {
 });
 
 document.addEventListener('click', (event) => {
-    const clickedIcon = event.target === suggestionElements.icon;
-    const clickedTooltip = suggestionElements.tooltip?.contains?.(event.target) || false;
+    const clickedIcon =
+        event.target === suggestionElements.icon;
+    const clickedTooltip =
+        suggestionElements.tooltip?.contains?.(event.target) || false;
 
     if (!clickedIcon && !clickedTooltip) {
         hideSuggestion();
