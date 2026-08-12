@@ -669,3 +669,90 @@ textarea#correctedTextBox {
         animation-iteration-count: 1 !important;
     }
 }
+/* v4.4.1 — browser branding, footer identity, and separated management surfaces */
+.browser-logo {
+    width: 27px;
+    height: 27px;
+    display: block;
+    object-fit: contain;
+}
+
+.popup-footer {
+    flex-wrap: wrap;
+    line-height: 1.8;
+}
+
+.popup-footer a {
+    text-decoration: none;
+}
+
+.footer-heart,
+.footer-author {
+    color: var(--danger);
+}
+
+.footer-author {
+    font-weight: 800;
+}
+
+.footer-author:hover {
+    text-decoration: underline;
+}
+
+.footer-github {
+    width: 20px;
+    height: 20px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 7px;
+    color: var(--text);
+}
+
+.footer-github:hover {
+    background: var(--surface-soft);
+}
+
+.footer-github img {
+    width: 15px;
+    height: 15px;
+    display: block;
+}
+
+:root[data-theme="dark"] .footer-github img {
+    filter: invert(1);
+}
+
+.options-nav {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0;
+    padding: 6px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+}
+
+.options-nav-item {
+    flex: 1;
+    padding: 9px 12px;
+    border-radius: 10px;
+    text-align: center;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.options-nav-item:hover {
+    color: var(--accent);
+    background: var(--accent-soft);
+}
+
+.options-nav-item.is-active {
+    color: var(--accent);
+    background: var(--accent-soft);
+}
+
+.options-grid.single-column {
+    grid-template-columns: minmax(0, 1fr);
+}

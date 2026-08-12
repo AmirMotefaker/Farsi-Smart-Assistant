@@ -11,10 +11,15 @@
         <header class="options-header">
             <span class="eyebrow">Farsi Smart Assistant</span>
             <h1>تنظیمات</h1>
-            <p>واژه‌های شخصی و سایت‌هایی را که نمی‌خواهید دستیار در آن‌ها فعال باشد مدیریت کنید.</p>
+            <p>واژه‌های شخصی و اصلاحات ذخیره‌شده را مدیریت کنید.</p>
         </header>
 
-        <div class="options-grid">
+        <nav class="options-nav" aria-label="بخش‌های مدیریت">
+            <span class="options-nav-item is-active" aria-current="page">تنظیمات</span>
+            <a class="options-nav-item" href="site_management.html">مدیریت سایت‌ها</a>
+        </nav>
+
+        <div class="options-grid single-column">
             <section class="setting-section">
                 <h2>دیکشنری شخصی</h2>
                 <p>هر اصلاح را در یک خط و به فرم «عبارت اشتباه = عبارت درست» وارد کنید.</p>
@@ -22,16 +27,6 @@
                 <textarea id="customDictionary" spellcheck="false"></textarea>
                 <button id="saveDictionaryButton" class="main-button-style" type="button">
                     ذخیره دیکشنری
-                </button>
-            </section>
-
-            <section id="sites" class="setting-section">
-                <h2>سایت‌های مستثنا</h2>
-                <p>در هر خط یک دامنه وارد کنید؛ برای مثال example.com. زیر‌دامنه‌های آن هم مستثنا می‌شوند.</p>
-                <label class="sr-only" for="disabledHosts">دامنه‌های غیرفعال</label>
-                <textarea id="disabledHosts" spellcheck="false" placeholder="example.com"></textarea>
-                <button id="saveSitesButton" class="main-button-style" type="button">
-                    ذخیره سایت‌ها
                 </button>
             </section>
         </div>
