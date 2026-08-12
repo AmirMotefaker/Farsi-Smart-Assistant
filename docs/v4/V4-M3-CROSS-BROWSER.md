@@ -182,4 +182,4 @@ The release architecture now uses one self-contained suggestion action:
 
 This changes the browser gate from "icon then tooltip" to "visible correction action, clickable replacement, no automatic submit".
 
-Release Prep remains blocked until the full six-browser matrix passes on the new exact implementation SHA.
+The final single-action six-browser matrix passed 19/19 on `a9df133396bb3482a9c1acb566a2f33eb2385955`. Browser evidence is committed at `36f0e91f092c752ee17738079aa7826a03db6d5c`, and v4.3.0 Release Prep is approved.
