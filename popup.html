@@ -1,36 +1,142 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa" dir="rtl">
 <head>
-    <title>Farsi Smart Assistant</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>دستیار هوشمند فارسی</title>
     <link rel="stylesheet" href="popup.css">
 </head>
-<body>
-    <div class="header">
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg>
-        <h3>دستیار هوشمند فارسی</h3>
-        <a href="#" id="settingsLink" title="تنظیمات">⚙️</a>
-    </div>
-    <textarea id="inputText" placeholder="متن خود را اینجا وارد کنید..."></textarea>
-    <div id="resultContainer" class="result-container">
-        <textarea id="correctedTextBox" class="corrected-text-box"></textarea>
-        <div id="feedbackContainer" class="feedback-container">
-            <button id="confirmButton" title="تایید و ذخیره اصلاح">👍</button>
-            <button id="rejectButton" title="ویرایش دستی">👎</button>
-        </div>
-        <button id="saveManualCorrectionButton" class="save-button">ذخیره ویرایش</button>
-    </div>
-    <div id="knowledgePanel" class="knowledge-panel"></div>
-    <div id="saveConfirmation" class="confirmation"></div>
-    <button id="mainButton">جستجوی عمیق در گوگل</button>
-    <div class="footer">
-        <div class="author-links">
-            <a href="https://amirmotefaker.ir/" target="_blank" class="author-name">Amir Motefaker</a>
-            <a href="https://github.com/AmirMotefaker" target="_blank" title="پروفایل گیت‌هاب" class="footer-icon-link"><svg class="icon" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
-            <a href="https://www.instagram.com/amir.motefaker/" target="_blank" title="پروفایل اینستاگرام" class="footer-icon-link"><svg class="icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.585-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.85-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.85s.012-3.584.07-4.85c.148-3.227 1.66-4.771 4.919-4.919 1.266-.057 1.645-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.947s-.014-3.667-.072-4.947c-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.441-.645 1.441-1.44-.645-1.44-1.441-1.44z"/></svg></a>
-        </div>
-        <a href="https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases" target="_blank" id="version-display" title="تاریخچه نسخه‌ها"></a>
-    </div>
+<body class="popup-page">
+    <main class="popup-shell">
+        <header class="brand-row">
+            <div class="brand-mark" aria-hidden="true">
+                <span>ف</span>
+            </div>
+
+            <div class="brand-copy">
+                <div class="brand-title-row">
+                    <h1>دستیار هوشمند فارسی</h1>
+                    <span id="version-display" class="version-badge"></span>
+                </div>
+                <p>اصلاح هوشمند تایپ فارسی و انگلیسی در سراسر وب</p>
+            </div>
+
+            <button
+                id="themeToggle"
+                class="icon-button"
+                type="button"
+                title="تغییر حالت روشن و تاریک"
+                aria-label="تغییر حالت روشن و تاریک"
+            >
+                <span class="theme-icon theme-icon-light" aria-hidden="true">☀</span>
+                <span class="theme-icon theme-icon-dark" aria-hidden="true">☾</span>
+            </button>
+        </header>
+
+        <section class="status-card" aria-labelledby="assistantStatusTitle">
+            <div class="status-row">
+                <div>
+                    <div class="eyebrow">وضعیت دستیار</div>
+                    <h2 id="assistantStatusTitle">اصلاح در فیلدهای متنی</h2>
+                    <p id="assistantStatusText" class="status-detail">فعال در سراسر وب</p>
+                </div>
+
+                <label class="switch">
+                    <input id="assistantToggle" type="checkbox" aria-label="فعال یا غیرفعال کردن دستیار">
+                    <span class="switch-track" aria-hidden="true"></span>
+                </label>
+            </div>
+
+            <div class="site-row">
+                <div class="site-icon" aria-hidden="true">◎</div>
+                <div class="site-copy">
+                    <span class="site-label">صفحه فعلی</span>
+                    <strong id="currentSiteHost">در حال شناسایی…</strong>
+                </div>
+                <button id="siteToggleButton" class="text-button" type="button">
+                    تغییر وضعیت
+                </button>
+            </div>
+        </section>
+
+        <section class="browser-card" aria-label="مرورگرهای پشتیبانی‌شده">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">پشتیبانی دسکتاپ</span>
+                    <h2>یک تجربه، شش مرورگر</h2>
+                </div>
+                <span class="verified-pill">تست‌شده</span>
+            </div>
+
+            <div class="browser-list">
+                <span class="browser-chip" data-browser="Chrome" title="Google Chrome"><b>C</b><span>Chrome</span></span>
+                <span class="browser-chip" data-browser="Edge" title="Microsoft Edge"><b>E</b><span>Edge</span></span>
+                <span class="browser-chip" data-browser="Brave" title="Brave"><b>B</b><span>Brave</span></span>
+                <span class="browser-chip" data-browser="Opera" title="Opera"><b>O</b><span>Opera</span></span>
+                <span class="browser-chip" data-browser="Vivaldi" title="Vivaldi"><b>V</b><span>Vivaldi</span></span>
+                <span class="browser-chip" data-browser="Firefox" title="Mozilla Firefox"><b>F</b><span>Firefox</span></span>
+            </div>
+        </section>
+
+        <section class="quick-test-card">
+            <div class="section-heading compact-heading">
+                <div>
+                    <span class="eyebrow">تست سریع</span>
+                    <h2>متن را همین‌جا بررسی کن</h2>
+                </div>
+            </div>
+
+            <label class="sr-only" for="inputText">متن ورودی</label>
+            <textarea
+                id="inputText"
+                placeholder="مثلاً jivhk یا یک عبارت فارسی را وارد کنید…"
+                spellcheck="false"
+            ></textarea>
+
+            <div id="resultContainer" class="result-container">
+                <label class="sr-only" for="correctedTextBox">متن اصلاح‌شده</label>
+                <textarea id="correctedTextBox" class="corrected-text-box" readonly></textarea>
+
+                <div id="feedbackContainer" class="feedback-container">
+                    <button id="confirmButton" type="button" title="تأیید و ذخیره اصلاح" aria-label="تأیید و ذخیره اصلاح">✓</button>
+                    <button id="rejectButton" type="button" title="ویرایش دستی" aria-label="ویرایش دستی">✎</button>
+                </div>
+
+                <button id="saveManualCorrectionButton" class="save-button" type="button">
+                    ذخیره ویرایش
+                </button>
+            </div>
+
+            <div id="knowledgePanel" class="knowledge-panel" aria-live="polite"></div>
+            <div id="saveConfirmation" class="confirmation" aria-live="polite"></div>
+
+            <button id="mainButton" class="search-button" type="button">
+                جست‌وجوی بیشتر در گوگل
+            </button>
+        </section>
+
+        <nav class="quick-actions" aria-label="دسترسی سریع">
+            <button id="manageSitesLink" class="quick-action" type="button">
+                <span class="quick-action-icon" aria-hidden="true">◎</span>
+                <span>مدیریت سایت‌ها</span>
+            </button>
+            <button id="settingsLink" class="quick-action" type="button">
+                <span class="quick-action-icon" aria-hidden="true">⚙</span>
+                <span>تنظیمات</span>
+            </button>
+            <button id="reportIssueLink" class="quick-action" type="button">
+                <span class="quick-action-icon" aria-hidden="true">!</span>
+                <span>گزارش مشکل</span>
+            </button>
+        </nav>
+
+        <footer class="popup-footer">
+            <span>Farsi Smart Assistant</span>
+            <span class="footer-dot" aria-hidden="true">•</span>
+            <span>حریم خصوصی محلی؛ بدون تحلیل رفتار</span>
+        </footer>
+    </main>
+
     <script src="keyboard_layout.js"></script>
     <script src="logic.js"></script>
     <script src="popup.js"></script>

@@ -5,6 +5,8 @@
 let activeInput = null;
 let suggestionElements = { host: null, action: null };
 let customDictionary = {};
+let assistantEnabled = true;
+let disabledHosts = [];
 const trackedInputs = new WeakSet();
 const inputTimers = new WeakMap();
 
@@ -13,6 +15,86 @@ chrome.storage.sync.get('customDictionary', (data) => {
         customDictionary = data.customDictionary;
     }
 });
+
+chrome.storage.sync.get(
+    ['assistantEnabled', 'disabledHosts'],
+    (data) => {
+        assistantEnabled = data.assistantEnabled !== false;
+        disabledHosts = Array.isArray(data.disabledHosts)
+            ? data.disabledHosts
+            : [];
+    }
+);
+
+function normalizeAssistantHost(value) {
+    return String(value || '')
+        .trim()
+        .toLowerCase()
+        .replace(/^\.+|\.+$/g, '');
+}
+
+function getCurrentAssistantHost() {
+    if (
+        typeof location === 'undefined' ||
+        !location ||
+        !location.hostname
+    ) {
+        return '';
+    }
+
+    return normalizeAssistantHost(location.hostname);
+}
+
+function isAssistantHostDisabled(
+    hostname = getCurrentAssistantHost()
+) {
+    const host = normalizeAssistantHost(hostname);
+
+    if (!host) return false;
+
+    return disabledHosts.some((entry) => {
+        const blocked = normalizeAssistantHost(entry);
+
+        return blocked && (
+            host === blocked ||
+            host.endsWith(`.${blocked}`)
+        );
+    });
+}
+
+function isAssistantAvailable() {
+    return assistantEnabled && !isAssistantHostDisabled();
+}
+
+if (chrome.storage.onChanged?.addListener) {
+    chrome.storage.onChanged.addListener(
+        (changes, areaName) => {
+            if (areaName !== 'sync') return;
+
+            if (changes.customDictionary) {
+                customDictionary =
+                    changes.customDictionary.newValue || {};
+            }
+
+            if (changes.assistantEnabled) {
+                assistantEnabled =
+                    changes.assistantEnabled.newValue !== false;
+            }
+
+            if (changes.disabledHosts) {
+                disabledHosts = Array.isArray(
+                    changes.disabledHosts.newValue
+                )
+                    ? changes.disabledHosts.newValue
+                    : [];
+            }
+
+            if (!isAssistantAvailable()) {
+                hideSuggestion();
+            }
+        }
+    );
+}
 
 function isSupportedEditable(element) {
     if (!element) return false;
@@ -477,6 +559,11 @@ function applyEditingSuggestion(element, suggestion) {
 }
 
 function checkForCorrection(inputElement) {
+    if (!isAssistantAvailable()) {
+        hideSuggestion();
+        return;
+    }
+
     if (!isSupportedEditable(inputElement)) return;
 
     const text = getEditableText(inputElement);
