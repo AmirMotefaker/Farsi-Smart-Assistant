@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>مدیریت سایت‌ها — دستیار هوشمند فارسی</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body class="options-page site-management-page">
+    <main class="options-shell">
+        <header class="options-header">
+            <span class="eyebrow">Farsi Smart Assistant</span>
+            <h1>مدیریت سایت‌ها</h1>
+            <p>دامنه‌هایی را که نمی‌خواهید دستیار در آن‌ها فعال باشد مدیریت کنید.</p>
+        </header>
+
+        <nav class="options-nav" aria-label="بخش‌های مدیریت">
+            <a class="options-nav-item" href="options.html">تنظیمات</a>
+            <span class="options-nav-item is-active" aria-current="page">مدیریت سایت‌ها</span>
+        </nav>
+
+        <div class="options-grid single-column">
+            <section class="setting-section">
+                <h2>سایت‌های مستثنا</h2>
+                <p>در هر خط یک دامنه وارد کنید؛ برای مثال example.com. زیر‌دامنه‌های آن هم مستثنا می‌شوند.</p>
+                <label class="sr-only" for="disabledHosts">دامنه‌های غیرفعال</label>
+                <textarea id="disabledHosts" spellcheck="false" placeholder="example.com"></textarea>
+                <button id="saveSitesButton" class="main-button-style" type="button">
+                    ذخیره سایت‌ها
+                </button>
+            </section>
+        </div>
+
+        <div id="confirmation" class="confirmation options-confirmation" aria-live="polite"></div>
+    </main>
+
+    <script src="site_management.js"></script>
+</body>
+</html>

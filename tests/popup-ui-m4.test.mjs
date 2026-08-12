@@ -12,6 +12,8 @@ const popupCss = await readFile(path.join(root, 'popup.css'), 'utf8');
 const popupJs = await readFile(path.join(root, 'popup.js'), 'utf8');
 const optionsHtml = await readFile(path.join(root, 'options.html'), 'utf8');
 const optionsJs = await readFile(path.join(root, 'options.js'), 'utf8');
+const siteManagementHtml = await readFile(path.join(root, 'site_management.html'), 'utf8');
+const siteManagementJs = await readFile(path.join(root, 'site_management.js'), 'utf8');
 const inlineChecker = await readFile(path.join(root, 'inline_checker.js'), 'utf8');
 const manifest = JSON.parse(await readFile(path.join(root, 'manifest.json'), 'utf8'));
 const packageJson = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8'));
@@ -63,14 +65,19 @@ test('M4 theme is local CSS with explicit light and dark tokens', () => {
   assert.match(popupCss, /:root\s*\{/u);
   assert.match(popupCss, /:root\[data-theme="dark"\]/u);
   assert.match(popupCss, /prefers-reduced-motion/u);
+  // Runtime assets/styles must remain local. External navigation links are allowed.
   assert.doesNotMatch(
     popupHtml,
-    /(?:src|href)=["']https?:\/\//iu
+    /\bsrc=["']https?:\/\//iu
+  );
+  assert.doesNotMatch(
+    popupHtml,
+    /<link[^>]+\bhref=["']https?:\/\//iu
   );
 });
 
 test('M4 popup keeps Safe-DOM rendering invariants', () => {
-  for (const source of [popupJs, optionsJs]) {
+  for (const source of [popupJs, optionsJs, siteManagementJs]) {
     assert.doesNotMatch(source, /\binnerHTML\s*=/u);
     assert.doesNotMatch(source, /\bouterHTML\s*=/u);
     assert.doesNotMatch(source, /\binsertAdjacentHTML\s*\(/u);
@@ -98,17 +105,17 @@ test('M4 enable state is persistent and enforced by inline engine', () => {
   );
 });
 
-test('M4 options exposes persistent disabled-site management', () => {
-  assert.match(optionsHtml, /id="sites"/u);
-  assert.match(optionsHtml, /id="disabledHosts"/u);
-  assert.match(optionsHtml, /id="saveSitesButton"/u);
-  assert.match(optionsJs, /disabledHosts/u);
-  assert.match(optionsJs, /normalizeHostLine/u);
+test('M4 site management exposes persistent disabled-site management', () => {
+  assert.doesNotMatch(optionsHtml, /id="disabledHosts"/u);
+  assert.match(siteManagementHtml, /id="disabledHosts"/u);
+  assert.match(siteManagementHtml, /id="saveSitesButton"/u);
+  assert.match(siteManagementJs, /disabledHosts/u);
+  assert.match(siteManagementJs, /normalizeHostLine/u);
 });
 
-test('M4 metadata is synchronized at v4.4.0', () => {
-  assert.equal(manifest.version, '4.4.0');
-  assert.equal(packageJson.version, '4.4.0');
+test('M4 metadata is synchronized at v4.4.1', () => {
+  assert.equal(manifest.version, '4.4.1');
+  assert.equal(packageJson.version, '4.4.1');
   assert.equal(
     manifest.description,
     'Universal smart typing correction for Persian and English across the web.'

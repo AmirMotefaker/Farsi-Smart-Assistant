@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         manageSitesLink.addEventListener('click', () => {
-            const url = chrome.runtime.getURL('options.html#sites');
+            const url = chrome.runtime.getURL('site_management.html');
             chrome.tabs.create({ url });
         });
 
