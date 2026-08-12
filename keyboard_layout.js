@@ -1,4 +1,4 @@
-const KEYBOARD_LAYOUT_ENGINE_VERSION = '4.0.0-m0';
+const KEYBOARD_LAYOUT_ENGINE_VERSION = '4.1.0-m1';
 
 const ENGLISH_TO_PERSIAN_KEY_MAP = Object.freeze({
     q: 'ض', w: 'ص', e: 'ث', r: 'ق', t: 'ف', y: 'غ', u: 'ع', i: 'ه', o: 'خ', p: 'ح',
@@ -19,12 +19,23 @@ const PERSIAN_TO_ENGLISH_KEY_MAP = Object.freeze({
 });
 
 const HIGH_CONFIDENCE_ENGLISH_WORDS = new Set([
-    'a', 'an', 'and', 'api', 'app', 'are', 'as', 'at', 'be', 'browser', 'by', 'case', 'chrome', 'class',
-    'code', 'css', 'data', 'do', 'edge', 'else', 'english', 'false', 'for', 'from', 'function', 'git', 'github',
-    'google', 'hello', 'html', 'http', 'https', 'if', 'in', 'is', 'it', 'java', 'javascript', 'json', 'jwt',
-    'linux', 'mac', 'macos', 'node', 'not', 'npm', 'null', 'of', 'on', 'or', 'pdf', 'persian', 'python',
-    'react', 'return', 'safari', 'search', 'sdk', 'sql', 'ssh', 'system', 'test', 'text', 'the', 'then',
-    'to', 'true', 'typescript', 'undefined', 'url', 'vue', 'web', 'while', 'windows', 'with', 'world'
+    'a', 'an', 'and', 'api', 'app', 'are', 'artificial', 'as', 'at', 'actions', 'be', 'browser', 'by',
+    'case', 'chrome', 'class', 'client', 'cloud', 'code', 'css', 'data', 'database', 'docker', 'do',
+    'edge', 'else', 'english', 'false', 'for', 'from', 'function', 'git', 'github', 'google', 'hello',
+    'html', 'http', 'https', 'if', 'in', 'intelligence', 'is', 'it', 'java', 'javascript', 'json', 'jwt',
+    'learning', 'linux', 'machine', 'mac', 'macos', 'model', 'node', 'not', 'npm', 'null', 'of', 'on',
+    'open', 'or', 'pdf', 'persian', 'prompt', 'python', 'react', 'return', 'safari', 'search', 'sdk',
+    'server', 'source', 'sql', 'ssh', 'studio', 'system', 'test', 'text', 'the', 'then', 'to', 'true',
+    'typescript', 'undefined', 'url', 'visual', 'vue', 'web', 'while', 'windows', 'with', 'world'
+]);
+
+const HIGH_CONFIDENCE_PERSIAN_WORDS = new Set([
+    'سلام', 'دنیا', 'ایران', 'علی', 'تهران', 'هوش', 'مصنوعی', 'برنامه', 'نویسی',
+    'حال', 'شما', 'چطور', 'است', 'این', 'یک', 'متن', 'فارسی'
+]);
+
+const HIGH_CONFIDENCE_PERSIAN_PHRASES = new Set([
+    'صبح بخیر'
 ]);
 
 const LATIN_LETTER_RE = /[A-Za-z]/u;
@@ -50,6 +61,10 @@ function isHighConfidenceEnglishPhrase(text) {
     return words.length > 0 && words.every((word) => HIGH_CONFIDENCE_ENGLISH_WORDS.has(word));
 }
 
+function isHighConfidencePersianCandidate(text) {
+    return HIGH_CONFIDENCE_PERSIAN_WORDS.has(String(text ?? '').trim());
+}
+
 function countLatinLettersAndVowels(text) {
     let letters = 0;
     let vowels = 0;
@@ -64,113 +79,153 @@ function countLatinLettersAndVowels(text) {
     return { letters, vowels };
 }
 
-function analyzeKeyboardLayoutToken(token) {
-    const value = String(token ?? '');
-    const hasLatin = LATIN_LETTER_RE.test(value);
-    const hasPersian = PERSIAN_LETTER_RE.test(value);
+function scoreEnglishKeysToPersian(value) {
+    const corrected = convertEnglishKeysToPersian(value);
+    const { letters, vowels } = countLatinLettersAndVowels(value);
+    const hasStrongLayoutKey = Array.from(value)
+        .some((char) => STRONG_LAYOUT_KEYS.has(char));
 
-    if (!hasLatin && !hasPersian) {
-        return {
-            changed: false,
-            direction: 'none',
-            confidence: 0,
-            original: value,
-            corrected: value,
-            reason: 'no-letters'
-        };
+    const evidence = [];
+    let score = 0;
+
+    if (letters >= 3) {
+        score += 0.20;
+        evidence.push('minimum-length');
     }
 
-    if (hasLatin && hasPersian) {
-        return {
-            changed: false,
-            direction: 'none',
-            confidence: 0,
-            original: value,
-            corrected: value,
-            reason: 'mixed-script'
-        };
+    if (hasStrongLayoutKey) {
+        score += 0.74;
+        evidence.push('persian-layout-punctuation');
     }
 
-    if (hasLatin) {
-        if (isHighConfidenceEnglishPhrase(value)) {
-            return {
-                changed: false,
-                direction: 'none',
-                confidence: 0,
-                original: value,
-                corrected: value,
-                reason: 'known-english'
-            };
-        }
-
-        const { letters, vowels } = countLatinLettersAndVowels(value);
-
-        if (letters < 3) {
-            return {
-                changed: false,
-                direction: 'none',
-                confidence: 0,
-                original: value,
-                corrected: value,
-                reason: 'too-short'
-            };
-        }
-
-        const hasStrongLayoutKey = Array.from(value)
-            .some((char) => STRONG_LAYOUT_KEYS.has(char));
-
-        if (hasStrongLayoutKey || vowels === 0) {
-            const corrected = convertEnglishKeysToPersian(value);
-
-            if (corrected !== value) {
-                return {
-                    changed: true,
-                    direction: 'english-keys-to-persian',
-                    confidence: hasStrongLayoutKey ? 0.99 : 0.96,
-                    original: value,
-                    corrected,
-                    reason: hasStrongLayoutKey
-                        ? 'persian-layout-punctuation'
-                        : 'latin-without-vowels'
-                };
-            }
-        }
-
-        return {
-            changed: false,
-            direction: 'none',
-            confidence: 0,
-            original: value,
-            corrected: value,
-            reason: 'plausible-latin'
-        };
+    if (letters >= 3 && vowels === 0) {
+        score += 0.72;
+        evidence.push('latin-without-vowels');
     }
 
+    if (isHighConfidencePersianCandidate(corrected)) {
+        score += 0.78;
+        evidence.push('known-persian-after-layout-conversion');
+    }
+
+    if (isHighConfidenceEnglishPhrase(value)) {
+        score -= 1;
+        evidence.push('known-valid-english');
+    }
+
+    return {
+        score: Math.max(0, Math.min(0.99, score)),
+        corrected,
+        evidence
+    };
+}
+
+function scorePersianKeysToEnglish(value) {
     const corrected = convertPersianKeysToEnglish(value);
+    const evidence = [];
+    let score = 0;
 
     if (corrected !== value && isHighConfidenceEnglishPhrase(corrected)) {
-        return {
-            changed: true,
-            direction: 'persian-keys-to-english',
-            confidence: 0.99,
-            original: value,
-            corrected,
-            reason: 'known-english-after-layout-reversal'
-        };
+        score = 0.99;
+        evidence.push('known-english-after-layout-reversal');
     }
 
+    return { score, corrected, evidence };
+}
+
+function unchanged(value, reason, evidence = []) {
     return {
         changed: false,
         direction: 'none',
         confidence: 0,
         original: value,
         corrected: value,
-        reason: 'plausible-persian'
+        reason,
+        evidence
     };
+}
+
+function analyzeKeyboardLayoutPhrase(text) {
+    const value = String(text ?? '');
+
+    if (!value.includes(' ')) return unchanged(value, 'not-a-phrase');
+    if (!LATIN_LETTER_RE.test(value)) return unchanged(value, 'no-latin-phrase');
+    if (PERSIAN_LETTER_RE.test(value)) return unchanged(value, 'mixed-script-phrase');
+    if (isHighConfidenceEnglishPhrase(value)) {
+        return unchanged(value, 'known-valid-english-phrase', ['known-valid-english']);
+    }
+
+    const corrected = convertEnglishKeysToPersian(value);
+
+    if (HIGH_CONFIDENCE_PERSIAN_PHRASES.has(corrected.trim())) {
+        return {
+            changed: true,
+            direction: 'english-keys-to-persian',
+            confidence: 0.99,
+            original: value,
+            corrected,
+            reason: 'known-persian-phrase-after-layout-conversion',
+            evidence: ['known-persian-phrase-after-layout-conversion']
+        };
+    }
+
+    return unchanged(value, 'no-known-phrase-match');
+}
+
+function analyzeKeyboardLayoutToken(token) {
+    const value = String(token ?? '');
+    const hasLatin = LATIN_LETTER_RE.test(value);
+    const hasPersian = PERSIAN_LETTER_RE.test(value);
+
+    if (!hasLatin && !hasPersian) return unchanged(value, 'no-letters');
+    if (hasLatin && hasPersian) return unchanged(value, 'mixed-script');
+
+    if (hasLatin) {
+        const { letters } = countLatinLettersAndVowels(value);
+        if (letters < 3) return unchanged(value, 'too-short');
+
+        const scoring = scoreEnglishKeysToPersian(value);
+
+        if (scoring.score >= 0.90 && scoring.corrected !== value) {
+            return {
+                changed: true,
+                direction: 'english-keys-to-persian',
+                confidence: scoring.score,
+                original: value,
+                corrected: scoring.corrected,
+                reason: 'confidence-score',
+                evidence: scoring.evidence
+            };
+        }
+
+        return unchanged(value, 'plausible-latin', scoring.evidence);
+    }
+
+    const scoring = scorePersianKeysToEnglish(value);
+
+    if (scoring.score >= 0.90 && scoring.corrected !== value) {
+        return {
+            changed: true,
+            direction: 'persian-keys-to-english',
+            confidence: scoring.score,
+            original: value,
+            corrected: scoring.corrected,
+            reason: 'confidence-score',
+            evidence: scoring.evidence
+        };
+    }
+
+    return unchanged(value, 'plausible-persian', scoring.evidence);
 }
 
 function correctKeyboardLayoutText(text, minimumConfidence = 0.9) {
     const value = String(text ?? '');
+    const phrase = analyzeKeyboardLayoutPhrase(value);
+
+    if (phrase.changed && phrase.confidence >= minimumConfidence) {
+        return phrase.corrected;
+    }
+
     const parts = value.split(/(\s+)/u);
 
     return parts.map((part) => {
@@ -186,6 +241,19 @@ function correctKeyboardLayoutText(text, minimumConfidence = 0.9) {
 
 function analyzeKeyboardLayout(text, minimumConfidence = 0.9) {
     const value = String(text ?? '');
+    const phrase = analyzeKeyboardLayoutPhrase(value);
+
+    if (phrase.changed && phrase.confidence >= minimumConfidence) {
+        return {
+            engineVersion: KEYBOARD_LAYOUT_ENGINE_VERSION,
+            original: value,
+            corrected: phrase.corrected,
+            changed: true,
+            corrections: [{ index: 0, scope: 'phrase', ...phrase }],
+            confidence: phrase.confidence
+        };
+    }
+
     const parts = value.split(/(\s+)/u);
     const corrections = [];
 
@@ -195,7 +263,7 @@ function analyzeKeyboardLayout(text, minimumConfidence = 0.9) {
         const analysis = analyzeKeyboardLayoutToken(part);
 
         if (analysis.changed && analysis.confidence >= minimumConfidence) {
-            corrections.push({ index, ...analysis });
+            corrections.push({ index, scope: 'token', ...analysis });
             return analysis.corrected;
         }
 

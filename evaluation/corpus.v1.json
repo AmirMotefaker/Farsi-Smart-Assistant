@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "corpusVersion": "0.2.0",
+  "corpusVersion": "0.3.0",
   "language": "fa",
   "purpose": "Deterministic baseline for Persian/English keyboard-layout correction quality, false-positive review and latency measurement.",
   "categories": [
@@ -144,6 +144,78 @@
       "expected": "سلام",
       "enforcement": "manual-review",
       "note": "Finglish remains supported but is secondary to wrong-layout correction."
+    },
+    {
+      "id": "keyboard-layout-m1-001",
+      "category": "keyboard-layout",
+      "input": "ugd",
+      "expected": "علی",
+      "enforcement": "required",
+      "note": "Vowel-containing English-keyboard Persian intent recovered through curated Persian evidence."
+    },
+    {
+      "id": "keyboard-layout-m1-002",
+      "category": "keyboard-layout",
+      "input": "jivhk",
+      "expected": "تهران",
+      "enforcement": "required",
+      "note": "Vowel-containing Persian intent recovered without requiring punctuation."
+    },
+    {
+      "id": "keyboard-layout-m1-003",
+      "category": "keyboard-layout",
+      "input": "سثقرثق",
+      "expected": "server",
+      "enforcement": "required",
+      "note": "Expanded reverse English evidence."
+    },
+    {
+      "id": "keyboard-layout-m1-004",
+      "category": "keyboard-layout",
+      "input": "یشفشذشسث",
+      "expected": "database",
+      "enforcement": "required",
+      "note": "Expanded reverse English evidence with raw physical-key mapping regression."
+    },
+    {
+      "id": "no-change-m1-001",
+      "category": "no-change",
+      "input": "github actions",
+      "expected": "github actions",
+      "enforcement": "required",
+      "note": "Common valid English phrase must remain unchanged."
+    },
+    {
+      "id": "no-change-m1-002",
+      "category": "no-change",
+      "input": "visual studio code",
+      "expected": "visual studio code",
+      "enforcement": "required",
+      "note": "Common developer phrase must remain unchanged."
+    },
+    {
+      "id": "no-change-m1-003",
+      "category": "no-change",
+      "input": "machine learning",
+      "expected": "machine learning",
+      "enforcement": "required",
+      "note": "Common AI phrase must remain unchanged."
+    },
+    {
+      "id": "no-change-m1-004",
+      "category": "no-change",
+      "input": "هوش مصنوعی",
+      "expected": "هوش مصنوعی",
+      "enforcement": "required",
+      "note": "Common Persian phrase must remain unchanged."
+    },
+    {
+      "id": "keyboard-layout-m1-phrase-001",
+      "category": "keyboard-layout",
+      "input": "wfp fodv",
+      "expected": "صبح بخیر",
+      "enforcement": "required",
+      "note": "Exact short-phrase context resolves a token that is individually low-confidence."
     }
   ]
 }
