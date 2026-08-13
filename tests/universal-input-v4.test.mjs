@@ -45,10 +45,11 @@ test('content scripts cover matching frames and related iframe documents', () =>
   assert.equal(contentScript.match_about_blank, true);
   assert.equal(contentScript.match_origin_as_fallback, true);
   assert.deepEqual(
-    contentScript.js.slice(0, 4),
+    contentScript.js.slice(0, 5),
     [
       'language_profiles.js',
       'keyboard_layout.js',
+      'context_intent.js',
       'logic.js',
       'inline_checker.js'
     ]

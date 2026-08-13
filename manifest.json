@@ -37,6 +37,7 @@
       "js": [
         "language_profiles.js",
         "keyboard_layout.js",
+        "context_intent.js",
         "logic.js",
         "inline_checker.js"
       ],

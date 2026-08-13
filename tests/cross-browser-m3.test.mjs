@@ -99,6 +99,7 @@ test('M3 Firefox build uses MV3 background scripts in dependency order', async (
         scripts: [
           'language_profiles.js',
           'keyboard_layout.js',
+          'context_intent.js',
           'logic.js',
           'background.js'
         ]
@@ -165,6 +166,7 @@ test('M3 Firefox build preserves universal content-script frame coverage', async
       [
         'language_profiles.js',
         'keyboard_layout.js',
+        'context_intent.js',
         'logic.js',
         'inline_checker.js'
       ]
@@ -187,6 +189,7 @@ test('M3 generated packages contain runtime files and exclude dev-only content',
         'inline_checker.js',
         'language_profiles.js',
         'keyboard_layout.js',
+        'context_intent.js',
         'logic.js',
         'popup.html',
         'popup.js',

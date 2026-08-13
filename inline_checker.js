@@ -9,6 +9,7 @@ let assistantEnabled = true;
 let disabledHosts = [];
 const trackedInputs = new WeakSet();
 const inputTimers = new WeakMap();
+const intentKeyHistory = new WeakMap();
 
 chrome.storage.sync.get('customDictionary', (data) => {
     if (data.customDictionary) {
@@ -185,11 +186,190 @@ function replaceTextRange(text, start, end, replacement) {
         value.slice(safeEnd);
 }
 
+
+function classifyIntentKeyScript(value) {
+    const key = String(value ?? '');
+
+    if (/^[A-Za-z]$/u.test(key)) {
+        return 'en';
+    }
+
+    if (/^[\u0600-\u06FF]$/u.test(key)) {
+        return 'fa';
+    }
+
+    return '';
+}
+
+function handleIntentKeydown(event) {
+    const inputElement =
+        event.currentTarget || event.target;
+
+    if (!isSupportedEditable(inputElement)) {
+        return;
+    }
+
+    const script =
+        classifyIntentKeyScript(event.key);
+    const physicalAlpha =
+        /^Key[A-Z]$/u.test(
+            String(event.code || '')
+        );
+
+    if (!script && !physicalAlpha) {
+        return;
+    }
+
+    const now = Date.now();
+    const existing =
+        intentKeyHistory.get(inputElement) || [];
+    const next = [
+        ...existing,
+        {
+            at: now,
+            script,
+            physicalAlpha
+        }
+    ]
+        .filter(
+            (item) =>
+                now - item.at <= 5000
+        )
+        .slice(-24);
+
+    intentKeyHistory.set(
+        inputElement,
+        next
+    );
+}
+
+function summarizeIntentKeyboardEvidence(
+    inputElement
+) {
+    const now = Date.now();
+    const history =
+        intentKeyHistory.get(inputElement) || [];
+    let latinKeys = 0;
+    let persianKeys = 0;
+    let physicalAlphaKeys = 0;
+
+    for (const item of history) {
+        if (now - item.at > 5000) {
+            continue;
+        }
+
+        if (item.script === 'en') {
+            latinKeys += 1;
+        } else if (item.script === 'fa') {
+            persianKeys += 1;
+        }
+
+        if (item.physicalAlpha) {
+            physicalAlphaKeys += 1;
+        }
+    }
+
+    return {
+        latinKeys,
+        persianKeys,
+        physicalAlphaKeys
+    };
+}
+
+function closestIntentLanguage(
+    inputElement
+) {
+    const own = String(
+        inputElement?.lang || ''
+    ).trim();
+
+    if (own) return own;
+
+    const ancestor =
+        inputElement?.closest?.('[lang]');
+
+    return String(
+        ancestor?.getAttribute?.('lang') ||
+        ''
+    ).trim();
+}
+
+function closestIntentDirection(
+    inputElement
+) {
+    const own = String(
+        inputElement?.dir || ''
+    ).trim();
+
+    if (own) return own;
+
+    const ancestor =
+        inputElement?.closest?.('[dir]');
+
+    return String(
+        ancestor?.getAttribute?.('dir') ||
+        ''
+    ).trim();
+}
+
+function buildElementIntentContext(
+    inputElement
+) {
+    return {
+        fieldLanguage:
+            closestIntentLanguage(
+                inputElement
+            ),
+        pageLanguage: String(
+            document.documentElement?.lang ||
+            ''
+        ),
+        direction:
+            closestIntentDirection(
+                inputElement
+            ) ||
+            String(
+                document.documentElement?.dir ||
+                ''
+            ),
+        browserLanguage:
+            typeof navigator !== 'undefined'
+                ? String(
+                    navigator.language || ''
+                )
+                : '',
+        keyboardEvidence:
+            summarizeIntentKeyboardEvidence(
+                inputElement
+            )
+    };
+}
+
+function enrichIntentContext(
+    baseContext,
+    fieldText,
+    start,
+    end
+) {
+    return {
+        ...(baseContext || {}),
+        fieldText,
+        beforeText: String(
+            fieldText ?? ''
+        ).slice(0, start),
+        afterText: String(
+            fieldText ?? ''
+        ).slice(end)
+    };
+}
+
+
 function computeEditingSuggestion(
     text,
     selectionStart,
     selectionEnd,
-    dictionary = customDictionary
+    dictionary = customDictionary,
+    intentContext = null
 ) {
     const value = String(text ?? '');
     const start = clampOffset(selectionStart, value.length);
@@ -201,8 +381,20 @@ function computeEditingSuggestion(
         : findCurrentTokenRange(value, start);
 
     if (primaryRange.end > primaryRange.start) {
-        const originalText = value.slice(primaryRange.start, primaryRange.end);
-        const correctedText = smart_farsi_converter(originalText, dictionary);
+        const originalText = value.slice(
+            primaryRange.start,
+            primaryRange.end
+        );
+        const correctedText = smart_farsi_converter(
+            originalText,
+            dictionary,
+            enrichIntentContext(
+                intentContext,
+                value,
+                primaryRange.start,
+                primaryRange.end
+            )
+        );
 
         if (correctedText && correctedText !== originalText) {
             return {
@@ -220,8 +412,20 @@ function computeEditingSuggestion(
         const phraseRange = findTrailingTwoTokenRange(value, start);
 
         if (phraseRange) {
-            const originalText = value.slice(phraseRange.start, phraseRange.end);
-            const correctedText = smart_farsi_converter(originalText, dictionary);
+            const originalText = value.slice(
+                phraseRange.start,
+                phraseRange.end
+            );
+            const correctedText = smart_farsi_converter(
+                originalText,
+                dictionary,
+                enrichIntentContext(
+                    intentContext,
+                    value,
+                    phraseRange.start,
+                    phraseRange.end
+                )
+            );
 
             if (correctedText && correctedText !== originalText) {
                 return {
@@ -636,7 +840,10 @@ function checkForCorrection(inputElement) {
         text,
         selection.start,
         selection.end,
-        customDictionary
+        customDictionary,
+        buildElementIntentContext(
+            inputElement
+        )
     );
 
     if (suggestion) {
@@ -964,6 +1171,7 @@ function trackEditable(inputElement) {
 
     if (!trackedInputs.has(inputElement)) {
         inputElement.addEventListener('input', handleInput);
+        inputElement.addEventListener('keydown', handleIntentKeydown);
 
         if (!inputElement.isContentEditable) {
             inputElement.addEventListener(

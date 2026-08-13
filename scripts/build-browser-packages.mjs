@@ -96,6 +96,7 @@ function buildFirefoxManifest(canonicalManifest) {
     scripts: [
       'language_profiles.js',
       'keyboard_layout.js',
+  'context_intent.js',
       'logic.js',
       'background.js'
     ]

@@ -18,7 +18,11 @@ const WORD_MAP = {
     "hldn ljt;v": "امیر متفکر", "اعللهدل بشزث": "hugging face"
 };
 
-function smart_farsi_converter(text, customDictionary = {}) {
+function smart_farsi_converter(
+    text,
+    customDictionary = {},
+    intentContext = null
+) {
     const value = String(text ?? '');
     const textLower = value.toLowerCase();
 
@@ -26,9 +30,24 @@ function smart_farsi_converter(text, customDictionary = {}) {
         return customDictionary[textLower];
     }
 
-    const layoutCorrected = typeof correctKeyboardLayoutText === 'function'
-        ? correctKeyboardLayoutText(value)
-        : value;
+    const contextualLayoutCorrected =
+        intentContext &&
+        typeof correctKeyboardLayoutTextWithContext ===
+            'function'
+            ? correctKeyboardLayoutTextWithContext(
+                value,
+                intentContext
+            )
+            : value;
+
+    if (contextualLayoutCorrected !== value) {
+        return contextualLayoutCorrected;
+    }
+
+    const layoutCorrected =
+        typeof correctKeyboardLayoutText === 'function'
+            ? correctKeyboardLayoutText(value)
+            : value;
 
     if (layoutCorrected !== value) {
         return layoutCorrected;
