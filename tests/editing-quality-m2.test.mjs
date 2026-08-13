@@ -17,6 +17,7 @@ function smartConverter(value) {
     ['sghl', 'سلام'],
     ['ugd', 'علی'],
     ['فثسف', 'test'],
+    ['هقشد', 'iran'],
     ['wfp fodv', 'صبح بخیر']
   ]);
 
@@ -167,5 +168,31 @@ test('M2 range replacement never alters text outside the range', () => {
       'سلام'
     ),
     'AAA سلام BBB'
+  );
+});
+
+test('M2 exposes Persian-keyboard English correction as the same token suggestion', () => {
+  const value = 'search هقشد';
+  const caret = value.length;
+
+  const suggestion = m2.computeEditingSuggestion(
+    value,
+    caret,
+    caret,
+    {}
+  );
+
+  assert.equal(suggestion.mode, 'token');
+  assert.equal(suggestion.originalText, 'هقشد');
+  assert.equal(suggestion.correctedText, 'iran');
+
+  assert.equal(
+    m2.replaceTextRange(
+      value,
+      suggestion.start,
+      suggestion.end,
+      suggestion.correctedText
+    ),
+    'search iran'
   );
 });

@@ -34,9 +34,10 @@ const assetsDoc = await readFile(
   'utf8'
 );
 
-test('v4.5.1 store candidate metadata is synchronized', () => {
-  assert.equal(manifest.version, '4.5.1');
-  assert.equal(packageJson.version, '4.5.1');
+test('product metadata can advance while Store publication remains paused', () => {
+  assert.equal(manifest.version, packageJson.version);
+  assert.match(chromeDoc, /v4\.5\.1/u);
+  assert.match(firefoxDoc, /v4\.5\.1/u);
 });
 
 test('manifest declares the real store icon set', () => {

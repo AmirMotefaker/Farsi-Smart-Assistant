@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "corpusVersion": "0.3.0",
+  "corpusVersion": "0.4.0",
   "language": "fa",
   "purpose": "Deterministic baseline for Persian/English keyboard-layout correction quality, false-positive review and latency measurement.",
   "categories": [
@@ -12,9 +12,9 @@
     "no-change"
   ],
   "thresholds": {
-    "enforcedExactMatchRate": 1.0,
-    "maximumFalsePositiveRate": 0.0,
-    "maximumP95LatencyMs": 100.0
+    "enforcedExactMatchRate": 1,
+    "maximumFalsePositiveRate": 0,
+    "maximumP95LatencyMs": 100
   },
   "cases": [
     {
@@ -216,6 +216,38 @@
       "expected": "صبح بخیر",
       "enforcement": "required",
       "note": "Exact short-phrase context resolves a token that is individually low-confidence."
+    },
+    {
+      "id": "keyboard-layout-m5-001",
+      "category": "keyboard-layout",
+      "input": "هقشد",
+      "expected": "iran",
+      "enforcement": "required",
+      "note": "Persian keyboard active while English iran was intended."
+    },
+    {
+      "id": "keyboard-layout-m5-002",
+      "category": "keyboard-layout",
+      "input": "ضعثقغ",
+      "expected": "query",
+      "enforcement": "required",
+      "note": "Reverse layout intent generalizes beyond the curated English exact-word list."
+    },
+    {
+      "id": "keyboard-layout-m5-003",
+      "category": "keyboard-layout",
+      "input": "سلام هقشد",
+      "expected": "سلام iran",
+      "enforcement": "required",
+      "note": "Mixed Persian text preserves valid Persian and corrects only the reverse-intent token."
+    },
+    {
+      "id": "no-change-m5-001",
+      "category": "no-change",
+      "input": "خانه برنامه مدرسه قاشق مشهد ایران تهران",
+      "expected": "خانه برنامه مدرسه قاشق مشهد ایران تهران",
+      "enforcement": "required",
+      "note": "Representative valid Persian words must not become Latin false positives."
     }
   ]
 }

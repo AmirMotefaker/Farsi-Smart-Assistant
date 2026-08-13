@@ -1,4 +1,4 @@
-const KEYBOARD_LAYOUT_ENGINE_VERSION = '4.1.0-m1';
+const KEYBOARD_LAYOUT_ENGINE_VERSION = '4.6.0-bidirectional';
 
 const ENGLISH_TO_PERSIAN_KEY_MAP = Object.freeze({
     q: 'ض', w: 'ص', e: 'ث', r: 'ق', t: 'ف', y: 'غ', u: 'ع', i: 'ه', o: 'خ', p: 'ح',
@@ -31,7 +31,18 @@ const HIGH_CONFIDENCE_ENGLISH_WORDS = new Set([
 
 const HIGH_CONFIDENCE_PERSIAN_WORDS = new Set([
     'سلام', 'دنیا', 'ایران', 'علی', 'تهران', 'هوش', 'مصنوعی', 'برنامه', 'نویسی',
-    'حال', 'شما', 'چطور', 'است', 'این', 'یک', 'متن', 'فارسی'
+    'حال', 'شما', 'چطور', 'است', 'این', 'یک', 'متن', 'فارسی', 'خوب', 'خوبی',
+    'خانه', 'مدرسه', 'دانشگاه', 'کشور', 'مردم', 'دوست', 'عشق', 'زندگی', 'کار',
+    'زمان', 'زبان', 'اینترنت', 'سایت', 'جستجو', 'خبر', 'ورزش', 'دانشجو',
+    'خودمونی', 'قاشق', 'مشهد', 'کتاب', 'ماشین', 'خانواده', 'غذا', 'آب', 'هوا',
+    'زمین', 'آسمان', 'باران', 'برف', 'بهار', 'تابستان', 'پاییز', 'زمستان',
+    'صبح', 'ظهر', 'عصر', 'شب', 'دفتر', 'شرکت', 'پروژه', 'مشتری', 'محصول',
+    'فروش', 'خرید', 'قیمت', 'پول', 'بانک', 'کارت', 'شماره', 'موبایل', 'تلفن',
+    'ایمیل', 'پیام', 'عکس', 'فیلم', 'موسیقی', 'بازی', 'فوتبال', 'شیراز',
+    'اصفهان', 'تبریز', 'کرج', 'اهواز', 'قم', 'رشت', 'یزد', 'کرمان', 'قزوین',
+    'اردبیل', 'سنندج', 'بوشهر', 'بازار', 'برادر', 'مادر', 'پدر', 'خواهر',
+    'دختر', 'پسر', 'بچه', 'امروز', 'فردا', 'روز', 'هفته', 'ماه', 'سال',
+    'انگلیسی', 'کیبورد', 'مرورگر', 'گوگل'
 ]);
 
 const HIGH_CONFIDENCE_PERSIAN_PHRASES = new Set([
@@ -43,6 +54,38 @@ const PERSIAN_LETTER_RE = /[\u0600-\u06FF]/u;
 const LATIN_WORD_RE = /[A-Za-z]+/gu;
 const VOWELS = new Set(['a', 'e', 'i', 'o', 'u']);
 const STRONG_LAYOUT_KEYS = new Set([';', '[', ']', "'", '\\']);
+
+const COMMON_ENGLISH_BIGRAMS = new Set([
+    'th', 'he', 'in', 'er', 'an', 're', 'on', 'at', 'en', 'nd', 'ti', 'es',
+    'or', 'te', 'of', 'ed', 'is', 'it', 'al', 'ar', 'st', 'to', 'nt', 'ng',
+    'se', 'ha', 'as', 'ou', 'io', 'le', 've', 'co', 'me', 'de', 'hi', 'ri',
+    'ro', 'ic', 'ne', 'ea', 'ra', 'ce', 'li', 'ch', 'll', 'be', 'ma', 'si',
+    'om', 'ur', 'ir', 'qu', 'ue', 'ry', 'op', 'pe', 'na', 'ai', 'mi', 'cr',
+    'os', 'so', 'ft', 'ap', 'pl', 'pp', 'lo', 'ld', 'wo', 'rl', 'rd', 'el',
+    'ho', 'oo', 'og', 'gl', 'rv', 'va', 'da', 'ab', 'ba'
+]);
+
+const RARE_ENGLISH_BIGRAMS = new Set([
+    'hk', 'vh', 'fv', 'vk', 'lh', 'nv', 'kj', 'jv', 'cf', 'sd', 'hg', 'dk',
+    'vs', 'hd', 'dv', 'kh', 'hl', 'ln', 'ph'
+]);
+
+function buildCharacterBigrams(values) {
+    const result = new Set();
+
+    for (const raw of values) {
+        const value = String(raw ?? '').trim().toLowerCase();
+
+        for (let index = 0; index < value.length - 1; index += 1) {
+            result.add(value.slice(index, index + 2));
+        }
+    }
+
+    return result;
+}
+
+const COMMON_PERSIAN_BIGRAMS =
+    buildCharacterBigrams(HIGH_CONFIDENCE_PERSIAN_WORDS);
 
 function mapKeyboardCharacters(text, map) {
     return Array.from(text, (char) => map[char] ?? char).join('');
@@ -77,6 +120,116 @@ function countLatinLettersAndVowels(text) {
     }
 
     return { letters, vowels };
+}
+
+function getCharacterBigrams(text) {
+    const value = String(text ?? '');
+    const result = [];
+
+    for (let index = 0; index < value.length - 1; index += 1) {
+        result.push(value.slice(index, index + 2));
+    }
+
+    return result;
+}
+
+function scoreEnglishWordShape(text) {
+    const value = String(text ?? '').trim().toLowerCase();
+    const evidence = [];
+
+    if (!/^[a-z]+$/u.test(value) || value.length < 4) {
+        return { score: 0, evidence };
+    }
+
+    const { letters, vowels } = countLatinLettersAndVowels(value);
+    const vowelRatio = letters > 0 ? vowels / letters : 0;
+    const bigrams = getCharacterBigrams(value);
+    const commonCount = bigrams
+        .filter((item) => COMMON_ENGLISH_BIGRAMS.has(item))
+        .length;
+    const rareCount = bigrams
+        .filter((item) => RARE_ENGLISH_BIGRAMS.has(item))
+        .length;
+    const commonRatio = bigrams.length > 0
+        ? commonCount / bigrams.length
+        : 0;
+
+    let score = 0.25;
+    evidence.push('english-shape-minimum-length');
+
+    if (vowels >= 1) {
+        score += 0.20;
+        evidence.push('english-shape-has-vowel');
+    }
+
+    if (vowelRatio >= 0.20 && vowelRatio <= 0.65) {
+        score += 0.15;
+        evidence.push('english-shape-vowel-ratio');
+    }
+
+    if (commonCount >= 2) {
+        score += 0.20;
+        evidence.push('english-shape-common-bigrams');
+    }
+
+    if (commonRatio >= 0.60) {
+        score += 0.20;
+        evidence.push('english-shape-bigram-density');
+    }
+
+    if (rareCount > 0) {
+        score -= Math.min(0.60, rareCount * 0.25);
+        evidence.push('english-shape-rare-cluster-penalty');
+    }
+
+    return {
+        score: Math.max(0, Math.min(0.95, score)),
+        evidence
+    };
+}
+
+function scorePersianWordShape(text) {
+    const value = String(text ?? '').trim();
+    const evidence = [];
+
+    if (
+        !/^[\u0600-\u06FF]+$/u.test(value) ||
+        value.length < 3
+    ) {
+        return { score: 0, evidence };
+    }
+
+    if (isHighConfidencePersianCandidate(value)) {
+        return {
+            score: 0.99,
+            evidence: ['known-valid-persian']
+        };
+    }
+
+    const bigrams = getCharacterBigrams(value);
+    const commonCount = bigrams
+        .filter((item) => COMMON_PERSIAN_BIGRAMS.has(item))
+        .length;
+    const ratio = bigrams.length > 0
+        ? commonCount / bigrams.length
+        : 0;
+
+    if (ratio >= 0.65) {
+        evidence.push('strong-persian-bigram-density');
+        return { score: 0.95, evidence };
+    }
+
+    if (ratio >= 0.45) {
+        evidence.push('moderate-persian-bigram-density');
+        return { score: 0.65, evidence };
+    }
+
+    if (ratio >= 0.25) {
+        evidence.push('weak-persian-bigram-density');
+        return { score: 0.35, evidence };
+    }
+
+    return { score: 0, evidence };
 }
 
 function scoreEnglishKeysToPersian(value) {
@@ -123,14 +276,44 @@ function scoreEnglishKeysToPersian(value) {
 function scorePersianKeysToEnglish(value) {
     const corrected = convertPersianKeysToEnglish(value);
     const evidence = [];
-    let score = 0;
 
-    if (corrected !== value && isHighConfidenceEnglishPhrase(corrected)) {
-        score = 0.99;
-        evidence.push('known-english-after-layout-reversal');
+    if (corrected === value) {
+        return { score: 0, corrected, evidence };
     }
 
-    return { score, corrected, evidence };
+    const persianShape = scorePersianWordShape(value);
+
+    if (persianShape.score >= 0.90) {
+        evidence.push(...persianShape.evidence);
+        evidence.push('valid-persian-source-protected');
+        return { score: 0, corrected, evidence };
+    }
+
+    if (isHighConfidenceEnglishPhrase(corrected)) {
+        evidence.push('known-english-after-layout-reversal');
+        return { score: 0.99, corrected, evidence };
+    }
+
+    const englishShape = scoreEnglishWordShape(corrected);
+
+    evidence.push(...englishShape.evidence);
+    evidence.push(...persianShape.evidence);
+
+    if (
+        englishShape.score >= 0.90 &&
+        persianShape.score < 0.45
+    ) {
+        evidence.push('english-word-shape-after-layout-reversal');
+        evidence.push('low-persian-source-shape');
+
+        return {
+            score: 0.94,
+            corrected,
+            evidence
+        };
+    }
+
+    return { score: 0, corrected, evidence };
 }
 
 function unchanged(value, reason, evidence = []) {

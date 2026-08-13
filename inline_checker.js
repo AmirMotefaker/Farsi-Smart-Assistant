@@ -430,61 +430,54 @@ function tryNativeInsertText(element, start, end, correctedText) {
     }
 }
 
-function replaceStandardRange(element, suggestion) {
-    const text = getEditableText(element);
-    const newText = replaceTextRange(
-        text,
-        suggestion.start,
-        suggestion.end,
-        suggestion.correctedText
-    );
-    const caret = suggestion.start + suggestion.correctedText.length;
+function findValueSetterInPrototypeChain(prototype) {
+    let current = prototype;
 
-    if (
-        tryNativeInsertText(
-            element,
-            suggestion.start,
-            suggestion.end,
-            suggestion.correctedText
-        )
-    ) {
-        if (typeof element.setSelectionRange === 'function') {
-            element.setSelectionRange(caret, caret);
+    while (current) {
+        const descriptor = Object.getOwnPropertyDescriptor(
+            current,
+            'value'
+        );
+
+        if (typeof descriptor?.set === 'function') {
+            return descriptor.set;
         }
 
-        return true;
+        current = Object.getPrototypeOf(current);
     }
 
-    let nativeSetter = null;
+    return null;
+}
+
+function getStandardValueSetter(element) {
     const tagName = String(element.tagName || '').toUpperCase();
+    let prototype = null;
 
     if (
         tagName === 'TEXTAREA' &&
         typeof HTMLTextAreaElement !== 'undefined'
     ) {
-        nativeSetter = Object
-            .getOwnPropertyDescriptor(
-                HTMLTextAreaElement.prototype,
-                'value'
-            )?.set || null;
+        prototype = HTMLTextAreaElement.prototype;
     } else if (
         tagName === 'INPUT' &&
         typeof HTMLInputElement !== 'undefined'
     ) {
-        nativeSetter = Object
-            .getOwnPropertyDescriptor(
-                HTMLInputElement.prototype,
-                'value'
-            )?.set || null;
+        prototype = HTMLInputElement.prototype;
     }
 
-    if (nativeSetter) {
-        nativeSetter.call(element, newText);
-    } else {
-        element.value = newText;
-    }
+    return prototype
+        ? findValueSetterInPrototypeChain(prototype)
+        : null;
+}
 
-    dispatchReplacementInput(element, suggestion.correctedText);
+function finalizeStandardReplacement(
+    element,
+    expectedText,
+    caret
+) {
+    if (getEditableText(element) !== expectedText) {
+        return false;
+    }
 
     if (typeof element.focus === 'function') {
         element.focus();
@@ -494,7 +487,78 @@ function replaceStandardRange(element, suggestion) {
         element.setSelectionRange(caret, caret);
     }
 
-    return true;
+    return getEditableText(element) === expectedText;
+}
+
+function replaceStandardRange(element, suggestion) {
+    const text = getEditableText(element);
+    const newText = replaceTextRange(
+        text,
+        suggestion.start,
+        suggestion.end,
+        suggestion.correctedText
+    );
+    const caret = suggestion.start + suggestion.correctedText.length;
+    const nativeSetter = getStandardValueSetter(element);
+
+    // Controlled inputs (Google, React-style controls, etc.) are most
+    // reliable when the native prototype setter updates the DOM value
+    // and a bubbling input event informs the page framework.
+    if (nativeSetter) {
+        nativeSetter.call(element, newText);
+        dispatchReplacementInput(
+            element,
+            suggestion.correctedText
+        );
+
+        if (
+            finalizeStandardReplacement(
+                element,
+                newText,
+                caret
+            )
+        ) {
+            return true;
+        }
+    }
+
+    // Keep the browser-native insert path as a fallback for environments
+    // where the prototype value setter is unavailable or rejected.
+    if (
+        tryNativeInsertText(
+            element,
+            suggestion.start,
+            suggestion.end,
+            suggestion.correctedText
+        ) &&
+        finalizeStandardReplacement(
+            element,
+            newText,
+            caret
+        )
+    ) {
+        return true;
+    }
+
+    // Final compatibility fallback: some test harnesses, browser-like
+    // environments, and custom wrappers expose a writable value property
+    // without exposing the native HTMLInputElement/HTMLTextAreaElement
+    // constructor or execCommand path.
+    try {
+        element.value = newText;
+        dispatchReplacementInput(
+            element,
+            suggestion.correctedText
+        );
+    } catch (_error) {
+        return false;
+    }
+
+    return finalizeStandardReplacement(
+        element,
+        newText,
+        caret
+    );
 }
 
 function replaceContentEditableRange(element, suggestion) {
@@ -822,14 +886,20 @@ function showSuggestion(
         event.preventDefault?.();
         event.stopPropagation?.();
 
-        if (inputElement) {
-            applyEditingSuggestion(
+        const applied = inputElement
+            ? applyEditingSuggestion(
                 inputElement,
                 capturedSuggestion
-            );
-        }
+            )
+            : false;
 
         hideSuggestion();
+
+        if (!applied && inputElement) {
+            // Recompute from the live field instead of silently losing
+            // the action when a dynamic/controlled input rejects it.
+            scheduleCorrectionCheck(inputElement, 0);
+        }
     };
 
     const position =
@@ -885,10 +955,10 @@ function handleSelectionIntent(event) {
     scheduleCorrectionCheck(inputElement, 80);
 }
 
-document.addEventListener('focusin', (event) => {
-    const inputElement = event.target;
-
-    if (!isSupportedEditable(inputElement)) return;
+function trackEditable(inputElement) {
+    if (!isSupportedEditable(inputElement)) {
+        return false;
+    }
 
     activeInput = inputElement;
 
@@ -896,12 +966,42 @@ document.addEventListener('focusin', (event) => {
         inputElement.addEventListener('input', handleInput);
 
         if (!inputElement.isContentEditable) {
-            inputElement.addEventListener('select', handleSelectionIntent);
+            inputElement.addEventListener(
+                'select',
+                handleSelectionIntent
+            );
         }
 
         trackedInputs.add(inputElement);
     }
+
+    return true;
+}
+
+document.addEventListener('focusin', (event) => {
+    trackEditable(event.target);
 });
+
+// document_idle can run after a page has already focused its primary
+// editable (Google Search is a real example). A document-level fallback
+// catches the first edit even when that earlier focusin was missed.
+document.addEventListener(
+    'input',
+    (event) => {
+        const inputElement = event.target;
+
+        if (!isSupportedEditable(inputElement)) return;
+        if (trackedInputs.has(inputElement)) return;
+
+        trackEditable(inputElement);
+        scheduleCorrectionCheck(inputElement, 450);
+    },
+    true
+);
+
+// Bootstrap an editable that was already focused before this content
+// script initialized. This closes the document_idle/autofocus gap.
+trackEditable(document.activeElement);
 
 document.addEventListener('selectionchange', () => {
     if (!activeInput || !activeInput.isContentEditable) return;
