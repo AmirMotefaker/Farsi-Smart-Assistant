@@ -48,7 +48,8 @@ const excludedFiles = new Set([
   '.gitattributes',
   '.gitignore',
   'inline_styles.css',
-  'package.json'
+  'package.json',
+  'package-lock.json'
 ]);
 
 function shouldPackage(relativePath) {
@@ -93,6 +94,7 @@ function buildFirefoxManifest(canonicalManifest) {
 
   firefoxManifest.background = {
     scripts: [
+      'language_profiles.js',
       'keyboard_layout.js',
       'logic.js',
       'background.js'
@@ -143,6 +145,7 @@ const files = trackedRuntimeFiles();
 for (const requiredFile of [
   'background.js',
   'inline_checker.js',
+  'language_profiles.js',
   'keyboard_layout.js',
   'logic.js',
   'manifest.json',

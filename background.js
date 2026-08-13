@@ -2,7 +2,7 @@
 
 if (typeof importScripts === 'function') {
   try {
-    importScripts('keyboard_layout.js', 'logic.js');
+    importScripts('language_profiles.js', 'keyboard_layout.js', 'logic.js');
   } catch (e) {
     console.error(e);
   }

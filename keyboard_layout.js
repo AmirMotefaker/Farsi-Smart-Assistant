@@ -1,4 +1,4 @@
-const KEYBOARD_LAYOUT_ENGINE_VERSION = '4.6.0-bidirectional';
+const KEYBOARD_LAYOUT_ENGINE_VERSION = '4.7.0-universal-intent';
 
 const ENGLISH_TO_PERSIAN_KEY_MAP = Object.freeze({
     q: 'ض', w: 'ص', e: 'ث', r: 'ق', t: 'ف', y: 'غ', u: 'ع', i: 'ه', o: 'خ', p: 'ح',
@@ -137,7 +137,7 @@ function scoreEnglishWordShape(text) {
     const value = String(text ?? '').trim().toLowerCase();
     const evidence = [];
 
-    if (!/^[a-z]+$/u.test(value) || value.length < 4) {
+    if (!/^[a-z]+$/u.test(value) || value.length < 3) {
         return { score: 0, evidence };
     }
 
@@ -172,9 +172,27 @@ function scoreEnglishWordShape(text) {
         evidence.push('english-shape-common-bigrams');
     }
 
+    if (
+        value.length === 3 &&
+        commonCount >= 1
+    ) {
+        score += 0.25;
+        evidence.push(
+            'english-shape-tiny-common-bigram'
+        );
+    }
+
     if (commonRatio >= 0.60) {
         score += 0.20;
         evidence.push('english-shape-bigram-density');
+    } else if (
+        value.length === 3 &&
+        commonRatio >= 0.50
+    ) {
+        score += 0.15;
+        evidence.push(
+            'english-shape-tiny-bigram-density'
+        );
     }
 
     if (rareCount > 0) {
@@ -232,6 +250,37 @@ function scorePersianWordShape(text) {
     return { score: 0, evidence };
 }
 
+function countMappableEnglishLayoutKeys(text) {
+    return Array.from(String(text ?? ''))
+        .filter((char) =>
+            Object.hasOwn(ENGLISH_TO_PERSIAN_KEY_MAP, char)
+        )
+        .length;
+}
+
+function getStatisticalLayoutPreference(
+    source,
+    sourceLanguage,
+    corrected,
+    targetLanguage,
+    direction
+) {
+    if (
+        typeof compareFsaLanguageCandidates !== 'function'
+    ) {
+        return null;
+    }
+
+    return compareFsaLanguageCandidates(
+        source,
+        sourceLanguage,
+        corrected,
+        targetLanguage,
+        direction,
+        'suggest'
+    );
+}
+
 function scoreEnglishKeysToPersian(value) {
     const corrected = convertEnglishKeysToPersian(value);
     const { letters, vowels } = countLatinLettersAndVowels(value);
@@ -240,6 +289,31 @@ function scoreEnglishKeysToPersian(value) {
 
     const evidence = [];
     let score = 0;
+
+    const statistical = getStatisticalLayoutPreference(
+        value,
+        'en',
+        corrected,
+        'fa',
+        'enToFa'
+    );
+
+    if (statistical?.preferred) {
+        score = Math.max(
+            score,
+            Math.min(
+                0.985,
+                0.94 +
+                Math.max(
+                    0,
+                    statistical.margin -
+                    statistical.threshold
+                ) * 0.02
+            )
+        );
+        evidence.push('statistical-persian-language-shape');
+        evidence.push('dictionary-independent-language-margin');
+    }
 
     if (letters >= 3) {
         score += 0.20;
@@ -262,8 +336,19 @@ function scoreEnglishKeysToPersian(value) {
     }
 
     if (isHighConfidenceEnglishPhrase(value)) {
-        score -= 1;
+        const statisticalOverride =
+            statistical?.preferred &&
+            statistical.margin >=
+                statistical.threshold + 1.5;
+
+        score -= statisticalOverride ? 0.20 : 1;
         evidence.push('known-valid-english');
+
+        if (statisticalOverride) {
+            evidence.push(
+                'statistical-override-of-dictionary-prior'
+            );
+        }
     }
 
     return {
@@ -282,16 +367,63 @@ function scorePersianKeysToEnglish(value) {
     }
 
     const persianShape = scorePersianWordShape(value);
+    const statistical = getStatisticalLayoutPreference(
+        value,
+        'fa',
+        corrected,
+        'en',
+        'faToEn'
+    );
+
+    if (isHighConfidenceEnglishPhrase(corrected)) {
+        evidence.push('known-english-after-layout-reversal');
+        return { score: 0.99, corrected, evidence };
+    }
+
+    if (statistical?.preferred) {
+        const knownPersianPenalty =
+            persianShape.score >= 0.90
+                ? 1.5
+                : 0;
+
+        if (
+            statistical.margin >=
+            statistical.threshold + knownPersianPenalty
+        ) {
+            evidence.push(
+                'statistical-english-language-shape'
+            );
+            evidence.push(
+                'dictionary-independent-language-margin'
+            );
+
+            if (knownPersianPenalty > 0) {
+                evidence.push(
+                    'statistical-override-of-dictionary-prior'
+                );
+            }
+
+            return {
+                score: Math.min(
+                    0.985,
+                    0.94 +
+                    Math.max(
+                        0,
+                        statistical.margin -
+                        statistical.threshold -
+                        knownPersianPenalty
+                    ) * 0.02
+                ),
+                corrected,
+                evidence
+            };
+        }
+    }
 
     if (persianShape.score >= 0.90) {
         evidence.push(...persianShape.evidence);
         evidence.push('valid-persian-source-protected');
         return { score: 0, corrected, evidence };
-    }
-
-    if (isHighConfidenceEnglishPhrase(corrected)) {
-        evidence.push('known-english-after-layout-reversal');
-        return { score: 0.99, corrected, evidence };
     }
 
     const englishShape = scoreEnglishWordShape(corrected);
@@ -303,11 +435,35 @@ function scorePersianKeysToEnglish(value) {
         englishShape.score >= 0.90 &&
         persianShape.score < 0.45
     ) {
-        evidence.push('english-word-shape-after-layout-reversal');
+        evidence.push(
+            'english-word-shape-after-layout-reversal'
+        );
         evidence.push('low-persian-source-shape');
 
         return {
             score: 0.94,
+            corrected,
+            evidence
+        };
+    }
+
+    if (
+        corrected.length === 3 &&
+        statistical &&
+        englishShape.score >= 0.90 &&
+        persianShape.score < 0.65 &&
+        statistical.margin >=
+            statistical.threshold - 0.35
+    ) {
+        evidence.push(
+            'tiny-word-statistical-near-threshold'
+        );
+        evidence.push(
+            'tiny-word-english-shape-confirmation'
+        );
+
+        return {
+            score: 0.92,
             corrected,
             evidence
         };
@@ -365,7 +521,15 @@ function analyzeKeyboardLayoutToken(token) {
 
     if (hasLatin) {
         const { letters } = countLatinLettersAndVowels(value);
-        if (letters < 3) return unchanged(value, 'too-short');
+        const physicalKeys =
+            countMappableEnglishLayoutKeys(value);
+
+        if (
+            letters < 3 &&
+            physicalKeys < 3
+        ) {
+            return unchanged(value, 'too-short');
+        }
 
         const scoring = scoreEnglishKeysToPersian(value);
 

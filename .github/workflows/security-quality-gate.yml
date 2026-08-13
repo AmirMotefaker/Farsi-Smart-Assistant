@@ -22,6 +22,14 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Install pinned build-time dependencies
+        run: npm ci
+
+      - name: Rebuild and verify statistical language profiles
+        run: |
+          npm run model:build
+          git diff --exit-code -- language_profiles.js
+
       - name: Run JavaScript syntax checks
         run: npm run check
 

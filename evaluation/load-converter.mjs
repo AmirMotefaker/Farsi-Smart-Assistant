@@ -7,9 +7,11 @@ const moduleDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(moduleDirectory, '..');
 
 export async function loadConverter() {
+  const languageProfilePath = path.join(repositoryRoot, 'language_profiles.js');
   const keyboardLayoutPath = path.join(repositoryRoot, 'keyboard_layout.js');
   const logicPath = path.join(repositoryRoot, 'logic.js');
 
+  const languageProfileSource = await fs.readFile(languageProfilePath, 'utf8');
   const keyboardLayoutSource = await fs.readFile(keyboardLayoutPath, 'utf8');
   const logicSource = await fs.readFile(logicPath, 'utf8');
 
