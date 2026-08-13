@@ -160,6 +160,7 @@ for (const requiredFile of [
   'assets/browser-logos/firefox.svg',
   'assets/browser-logos/github.svg',
   'icon16.png',
+  'icon32.png',
   'icon48.png',
   'icon128.png',
   'fonts/Vazirmatn.woff2'
