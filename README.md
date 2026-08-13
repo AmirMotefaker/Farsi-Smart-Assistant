@@ -67,10 +67,10 @@
 
 ### آخرین بسته‌های انتشار
 
-از Release نسخه v4.5.1 این فایل‌ها به صورت versioned منتشر می‌شوند:
+از Release نسخه v4.6.0 این فایل‌ها به صورت versioned منتشر می‌شوند:
 
-- `Farsi-Smart-Assistant-v4.5.1-chromium.zip` برای Chrome / Edge / Brave / Opera / Vivaldi
-- `Farsi-Smart-Assistant-v4.5.1-firefox.zip` برای Firefox
+- `Farsi-Smart-Assistant-v4.6.0-chromium.zip` برای Chrome / Edge / Brave / Opera / Vivaldi
+- `Farsi-Smart-Assistant-v4.6.0-firefox.zip` برای Firefox
 - `SHA256SUMS.txt` برای اعتبارسنجی فایل‌ها
 
 صفحه انتشارها: **[GitHub Releases](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases)**
@@ -80,7 +80,7 @@
 
 ### نصب دستی در مرورگرهای Chromium برای تست/توسعه
 
-1. بسته `Farsi-Smart-Assistant-v4.5.1-chromium.zip` را از Release دانلود کنید.
+1. بسته `Farsi-Smart-Assistant-v4.6.0-chromium.zip` را از Release دانلود کنید.
 2. SHA256 فایل را با `SHA256SUMS.txt` تطبیق دهید.
 3. ZIP را Extract کنید.
 4. صفحه مدیریت افزونه‌های مرورگر را باز کنید.
@@ -89,7 +89,7 @@
 
 ### نصب موقت در Firefox برای تست/توسعه
 
-1. بسته `Farsi-Smart-Assistant-v4.5.1-firefox.zip` را Extract کنید.
+1. بسته `Farsi-Smart-Assistant-v4.6.0-firefox.zip` را Extract کنید.
 2. `about:debugging` را باز کنید.
 3. **This Firefox** → **Load Temporary Add-on** را انتخاب کنید.
 4. فایل `manifest.json` بسته Firefox را انتخاب کنید.

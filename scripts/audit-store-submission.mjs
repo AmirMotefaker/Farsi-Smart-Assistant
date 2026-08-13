@@ -39,10 +39,6 @@ if (manifest.version !== packageJson.version) {
   fail('manifest.json and package.json versions must match.');
 }
 
-if (manifest.version !== '4.5.1') {
-  fail(`Store compatibility candidate must be v4.5.1; got ${manifest.version}.`);
-}
-
 const version = manifest.version;
 
 if (manifest.manifest_version !== 3) {

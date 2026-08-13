@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Farsi Smart Assistant",
-  "version": "4.5.1",
+  "version": "4.6.0",
   "description": "Universal smart typing correction for Persian and English across the web.",
   "permissions": [
     "storage",
