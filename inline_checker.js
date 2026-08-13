@@ -955,10 +955,10 @@ function handleSelectionIntent(event) {
     scheduleCorrectionCheck(inputElement, 80);
 }
 
-document.addEventListener('focusin', (event) => {
-    const inputElement = event.target;
-
-    if (!isSupportedEditable(inputElement)) return;
+function trackEditable(inputElement) {
+    if (!isSupportedEditable(inputElement)) {
+        return false;
+    }
 
     activeInput = inputElement;
 
@@ -966,12 +966,42 @@ document.addEventListener('focusin', (event) => {
         inputElement.addEventListener('input', handleInput);
 
         if (!inputElement.isContentEditable) {
-            inputElement.addEventListener('select', handleSelectionIntent);
+            inputElement.addEventListener(
+                'select',
+                handleSelectionIntent
+            );
         }
 
         trackedInputs.add(inputElement);
     }
+
+    return true;
+}
+
+document.addEventListener('focusin', (event) => {
+    trackEditable(event.target);
 });
+
+// document_idle can run after a page has already focused its primary
+// editable (Google Search is a real example). A document-level fallback
+// catches the first edit even when that earlier focusin was missed.
+document.addEventListener(
+    'input',
+    (event) => {
+        const inputElement = event.target;
+
+        if (!isSupportedEditable(inputElement)) return;
+        if (trackedInputs.has(inputElement)) return;
+
+        trackEditable(inputElement);
+        scheduleCorrectionCheck(inputElement, 450);
+    },
+    true
+);
+
+// Bootstrap an editable that was already focused before this content
+// script initialized. This closes the document_idle/autofocus gap.
+trackEditable(document.activeElement);
 
 document.addEventListener('selectionchange', () => {
     if (!activeInput || !activeInput.isContentEditable) return;
