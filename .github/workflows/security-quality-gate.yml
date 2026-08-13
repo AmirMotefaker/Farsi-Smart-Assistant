@@ -37,6 +37,9 @@ jobs:
       - name: Verify release artifacts
         run: npm run verify:release
 
+      - name: Audit browser-store submission readiness
+        run: npm run audit:store
+
       - name: Upload release candidate artifacts
         uses: actions/upload-artifact@v4
         with:

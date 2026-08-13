@@ -1,14 +1,15 @@
 {
   "name": "farsi-smart-assistant",
-  "version": "4.5.0",
+  "version": "4.5.1",
   "private": true,
   "description": "Dependency-free quality gates for the Farsi Smart Assistant extension.",
   "scripts": {
     "build:browsers": "node scripts/build-browser-packages.mjs",
     "build:release": "node scripts/build-release-artifacts.mjs",
     "verify:release": "node scripts/verify-release-artifacts.mjs",
+    "audit:store": "npm run build:release && node scripts/audit-store-submission.mjs",
     "release:gate": "npm run test:product && npm run build:release && npm run verify:release",
-    "check": "node --check keyboard_layout.js && node --check inline_checker.js && node --check popup.js && node --check background.js && node --check content_script.js && node --check logic.js && node --check options.js && node --check site_management.js && node --check evaluation/load-converter.mjs && node --check evaluation/run-evaluation.mjs && node --check scripts/build-browser-packages.mjs && node --check scripts/build-release-artifacts.mjs && node --check scripts/verify-release-artifacts.mjs",
+    "check": "node --check keyboard_layout.js && node --check inline_checker.js && node --check popup.js && node --check background.js && node --check content_script.js && node --check logic.js && node --check options.js && node --check site_management.js && node --check evaluation/load-converter.mjs && node --check evaluation/run-evaluation.mjs && node --check scripts/build-browser-packages.mjs && node --check scripts/build-release-artifacts.mjs && node --check scripts/verify-release-artifacts.mjs && node --check scripts/audit-store-submission.mjs",
     "test": "node --test tests/*.test.mjs",
     "eval": "node evaluation/run-evaluation.mjs",
     "test:product": "npm run check && npm test && npm run eval"

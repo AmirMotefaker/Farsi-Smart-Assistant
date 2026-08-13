@@ -7,29 +7,35 @@ import { fileURLToPath } from 'node:url';
 const testDirectory = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(testDirectory, '..');
 
-const manifest = JSON.parse(await readFile(path.join(root, 'manifest.json'), 'utf8'));
-const packageJson = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8'));
+const manifest = JSON.parse(
+  await readFile(path.join(root, 'manifest.json'), 'utf8')
+);
+const packageJson = JSON.parse(
+  await readFile(path.join(root, 'package.json'), 'utf8')
+);
 const readme = await readFile(path.join(root, 'README.md'), 'utf8');
 const privacy = await readFile(path.join(root, 'docs', 'PRIVACY.md'), 'utf8');
-const distribution = await readFile(path.join(root, 'docs', 'DISTRIBUTION.md'), 'utf8');
-const storeListing = await readFile(path.join(root, 'docs', 'STORE-LISTING.md'), 'utf8');
+const distribution = await readFile(
+  path.join(root, 'docs', 'DISTRIBUTION.md'),
+  'utf8'
+);
+const storeListing = await readFile(
+  path.join(root, 'docs', 'STORE-LISTING.md'),
+  'utf8'
+);
 const workflow = await readFile(
   path.join(root, '.github', 'workflows', 'security-quality-gate.yml'),
   'utf8'
 );
 
-
-test('v4.5.0 metadata is synchronized', () => {
-  assert.equal(manifest.version, '4.5.0');
-  assert.equal(packageJson.version, '4.5.0');
+test('release metadata remains synchronized', () => {
+  assert.equal(manifest.version, packageJson.version);
 });
-
 
 test('store readiness removes the unused scripting permission', () => {
   assert.ok(Array.isArray(manifest.permissions));
   assert.equal(manifest.permissions.includes('scripting'), false);
 });
-
 
 test('release scripts are first-class package commands', () => {
   assert.equal(
@@ -44,13 +50,19 @@ test('release scripts are first-class package commands', () => {
   assert.match(packageJson.scripts['release:gate'], /verify:release/u);
 });
 
-
-test('README points to current versioned release artifacts', () => {
-  assert.match(readme, /Farsi-Smart-Assistant-v4\.5\.0-chromium\.zip/u);
-  assert.match(readme, /Farsi-Smart-Assistant-v4\.5\.0-firefox\.zip/u);
+test('README points to the current versioned release artifacts', () => {
+  assert.ok(
+    readme.includes(
+      `Farsi-Smart-Assistant-v${packageJson.version}-chromium.zip`
+    )
+  );
+  assert.ok(
+    readme.includes(
+      `Farsi-Smart-Assistant-v${packageJson.version}-firefox.zip`
+    )
+  );
   assert.match(readme, /SHA256SUMS\.txt/u);
 });
-
 
 test('distribution and privacy documentation cover release behavior', () => {
   assert.match(distribution, /npm run release:gate/u);
@@ -61,7 +73,6 @@ test('distribution and privacy documentation cover release behavior', () => {
   assert.match(storeListing, /Chrome Web Store/u);
   assert.match(storeListing, /Firefox/u);
 });
-
 
 test('CI builds, verifies and uploads release-candidate artifacts', () => {
   assert.match(workflow, /npm run build:release/u);
