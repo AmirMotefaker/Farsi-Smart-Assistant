@@ -96,7 +96,9 @@ function buildFirefoxManifest(canonicalManifest) {
     scripts: [
       'language_profiles.js',
       'keyboard_layout.js',
-  'context_intent.js',
+      'context_intent.js',
+      'transliteration_intent.js',
+      'normalization_intent.js',
       'logic.js',
       'background.js'
     ]
@@ -148,6 +150,9 @@ for (const requiredFile of [
   'inline_checker.js',
   'language_profiles.js',
   'keyboard_layout.js',
+  'context_intent.js',
+  'transliteration_intent.js',
+  'normalization_intent.js',
   'logic.js',
   'manifest.json',
   'popup.html',

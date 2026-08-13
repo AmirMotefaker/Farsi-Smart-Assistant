@@ -26,8 +26,21 @@ function smart_farsi_converter(
     const value = String(text ?? '');
     const textLower = value.toLowerCase();
 
-    if (customDictionary && customDictionary[textLower]) {
+    if (
+        customDictionary &&
+        customDictionary[textLower]
+    ) {
         return customDictionary[textLower];
+    }
+
+    const normalized =
+        typeof normalizePersianTextGeneral ===
+            'function'
+            ? normalizePersianTextGeneral(value)
+            : value;
+
+    if (normalized !== value) {
+        return normalized;
     }
 
     const contextualLayoutCorrected =
@@ -35,27 +48,56 @@ function smart_farsi_converter(
         typeof correctKeyboardLayoutTextWithContext ===
             'function'
             ? correctKeyboardLayoutTextWithContext(
-                value,
+                normalized,
                 intentContext
             )
-            : value;
+            : normalized;
 
-    if (contextualLayoutCorrected !== value) {
+    if (
+        contextualLayoutCorrected !==
+        normalized
+    ) {
         return contextualLayoutCorrected;
     }
 
     const layoutCorrected =
-        typeof correctKeyboardLayoutText === 'function'
-            ? correctKeyboardLayoutText(value)
-            : value;
+        typeof correctKeyboardLayoutText ===
+            'function'
+            ? correctKeyboardLayoutText(
+                normalized
+            )
+            : normalized;
 
-    if (layoutCorrected !== value) {
+    if (layoutCorrected !== normalized) {
         return layoutCorrected;
     }
 
-    if (WORD_MAP[textLower]) {
-        return WORD_MAP[textLower];
+    const finglish =
+        typeof analyzeFsaFinglishIntent ===
+            'function'
+            ? analyzeFsaFinglishIntent(
+                normalized,
+                intentContext
+            )
+            : null;
+
+    if (finglish?.changed) {
+        return finglish.corrected;
     }
 
-    return value;
+    if (WORD_MAP[textLower]) {
+        const protectEnglish =
+            typeof shouldProtectFsaEnglishSource ===
+                'function' &&
+            shouldProtectFsaEnglishSource(
+                normalized,
+                intentContext
+            );
+
+        if (!protectEnglish) {
+            return WORD_MAP[textLower];
+        }
+    }
+
+    return normalized;
 }
