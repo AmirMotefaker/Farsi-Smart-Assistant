@@ -2,6 +2,8 @@
 
 <p align="center">
   <a href="https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/latest"><img src="https://img.shields.io/github/v/release/AmirMotefaker/Farsi-Smart-Assistant" alt="آخرین نسخه"></a>
+  <a href="https://github.com/AmirMotefaker/Farsi-Smart-Assistant/stargazers"><img src="https://img.shields.io/github/stars/AmirMotefaker/Farsi-Smart-Assistant?style=flat&logo=github" alt="ستاره‌های گیت‌هاب"></a>
+  <a href="https://github.com/AmirMotefaker/Farsi-Smart-Assistant/network/members"><img src="https://img.shields.io/github/forks/AmirMotefaker/Farsi-Smart-Assistant?style=flat&logo=github" alt="فورک‌های گیت‌هاب"></a>
   <a href="https://github.com/AmirMotefaker/Farsi-Smart-Assistant/blob/main/LICENSE"><img src="https://img.shields.io/github/license/AmirMotefaker/Farsi-Smart-Assistant" alt="مجوز"></a>
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="مشارکت آزاد است">
 </p>
@@ -10,9 +12,8 @@
   <strong>یک افزونه مرورگر برای اصلاح هوشمند اشتباه‌های کیبورد فارسی و انگلیسی در سراسر وب، همراه با کنترل محلی و ابزارهای جست‌وجو.</strong>
 </p>
 
-<p align="center">
-  <img src="link/to/your/final_demo.gif" alt="دموی افزونه دستیار هوشمند فارسی">
-</p>
+> [!TIP]
+> اگر «دستیار هوشمند فارسی» برای شما مفید است، با ⭐ دادن به مخزن به دیده‌شدن پروژه و توسعه بیشتر ابزارهای متن‌باز فارسی کمک کنید.
 
 ## ✨ بزرگترین چالش فارسی‌زبانان: حل مشکل کیبورد انگلیسی
 
