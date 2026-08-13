@@ -172,6 +172,9 @@ test('M3 Firefox build preserves universal content-script frame coverage', async
         'transliteration_intent.js',
         'normalization_intent.js',
         'logic.js',
+        'lexical_priors.js',
+        'finglish_source_model.js',
+        'smart_auto_intent.js',
         'inline_checker.js'
       ]
     );
@@ -197,6 +200,9 @@ test('M3 generated packages contain runtime files and exclude dev-only content',
         'transliteration_intent.js',
         'normalization_intent.js',
         'logic.js',
+        'lexical_priors.js',
+        'finglish_source_model.js',
+        'smart_auto_intent.js',
         'popup.html',
         'popup.js',
         'options.html',

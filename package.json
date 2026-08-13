@@ -9,13 +9,16 @@
     "verify:release": "node scripts/verify-release-artifacts.mjs",
     "audit:store": "npm run build:release && node scripts/audit-store-submission.mjs",
     "release:gate": "npm run test:product && npm run build:release && npm run verify:release",
-    "check": "node --check language_profiles.js && node --check keyboard_layout.js && node --check context_intent.js && node --check inline_checker.js && node --check popup.js && node --check background.js && node --check content_script.js && node --check logic.js && node --check options.js && node --check site_management.js && node --check evaluation/load-converter.mjs && node --check evaluation/run-evaluation.mjs && node --check scripts/build-browser-packages.mjs && node --check scripts/build-release-artifacts.mjs && node --check scripts/verify-release-artifacts.mjs && node --check scripts/audit-store-submission.mjs && node --check scripts/build-language-profiles.mjs && node --check scripts/evaluate-universal-intent.mjs && node --check transliteration_intent.js && node --check normalization_intent.js && node --check scripts/evaluate-finglish-generalization.mjs",
+    "check": "node --check language_profiles.js && node --check keyboard_layout.js && node --check context_intent.js && node --check inline_checker.js && node --check popup.js && node --check background.js && node --check content_script.js && node --check logic.js && node --check options.js && node --check site_management.js && node --check evaluation/load-converter.mjs && node --check evaluation/run-evaluation.mjs && node --check scripts/build-browser-packages.mjs && node --check scripts/build-release-artifacts.mjs && node --check scripts/verify-release-artifacts.mjs && node --check scripts/audit-store-submission.mjs && node --check scripts/build-language-profiles.mjs && node --check scripts/evaluate-universal-intent.mjs && node --check transliteration_intent.js && node --check normalization_intent.js && node --check scripts/evaluate-finglish-generalization.mjs && node --check smart_auto_intent.js && node --check scripts/evaluate-smart-auto-safety.mjs && node --check lexical_priors.js && node --check scripts/build-lexical-priors.mjs && node --check finglish_source_model.js && node --check scripts/build-finglish-source-model.mjs",
     "test": "node --test tests/*.test.mjs",
     "eval": "node evaluation/run-evaluation.mjs",
     "test:product": "npm run check && npm test && npm run eval",
     "model:build": "node scripts/build-language-profiles.mjs",
     "model:eval": "node scripts/evaluate-universal-intent.mjs",
-    "finglish:eval": "node scripts/evaluate-finglish-generalization.mjs"
+    "finglish:eval": "node scripts/evaluate-finglish-generalization.mjs",
+    "smart-auto:eval": "node scripts/evaluate-smart-auto-safety.mjs",
+    "lexical:build": "node scripts/build-lexical-priors.mjs",
+    "finglish-source:build": "node scripts/build-finglish-source-model.mjs"
   },
   "devDependencies": {
     "dictionary-en": "4.0.0",

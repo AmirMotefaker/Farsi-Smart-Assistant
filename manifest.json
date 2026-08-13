@@ -41,6 +41,9 @@
         "transliteration_intent.js",
         "normalization_intent.js",
         "logic.js",
+        "lexical_priors.js",
+        "finglish_source_model.js",
+        "smart_auto_intent.js",
         "inline_checker.js"
       ],
       "all_frames": true,

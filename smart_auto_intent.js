@@ -1,0 +1,572 @@
+const FSA_SMART_AUTO_ENGINE_VERSION =
+    '4.7.0-smart-auto';
+
+const FSA_SMART_AUTO_THRESHOLDS = Object.freeze({
+    layout: 0.975,
+    contextLayout: 0.94,
+    contextDelta: 3,
+    finglishContextDelta: 6,
+    finglishRankGap: 0.15,
+    finglishDecisionMargin: 0.00,
+    finglishConfidence: 0.88,
+    normalization: 0.995
+});
+
+function makeFsaSmartAutoUnchanged(
+    original,
+    reason = 'unchanged',
+    evidence = []
+) {
+    return {
+        changed: false,
+        autoEligible: false,
+        original,
+        corrected: original,
+        confidence: 0,
+        kind: 'none',
+        reason,
+        evidence
+    };
+}
+
+function getFsaSmartAutoContextPrior(
+    context,
+    sourceLanguage = ''
+) {
+    return typeof getFsaContextLanguagePrior ===
+        'function'
+        ? getFsaContextLanguagePrior(
+            context || {},
+            sourceLanguage
+        )
+        : {
+            en: 0,
+            fa: 0,
+            delta: 0,
+            dominant: '',
+            evidence: []
+        };
+}
+
+function getFsaSmartAutoTargetContextDelta(
+    prior,
+    targetLanguage,
+    sourceLanguage
+) {
+    return (
+        (Number(prior?.[targetLanguage]) || 0) -
+        (Number(prior?.[sourceLanguage]) || 0)
+    );
+}
+
+function getFsaSmartAutoLayoutLanguages(
+    direction
+) {
+    if (
+        direction ===
+        'persian-keys-to-english'
+    ) {
+        return {
+            sourceLanguage: 'fa',
+            targetLanguage: 'en'
+        };
+    }
+
+    if (
+        direction ===
+        'english-keys-to-persian'
+    ) {
+        return {
+            sourceLanguage: 'en',
+            targetLanguage: 'fa'
+        };
+    }
+
+    return {
+        sourceLanguage: '',
+        targetLanguage: ''
+    };
+}
+
+function analyzeFsaSmartAutoFinglish(
+    value,
+    context,
+    expected
+) {
+    if (
+        typeof analyzeFsaFinglishIntent !==
+        'function'
+    ) {
+        return null;
+    }
+
+    const analysis =
+        analyzeFsaFinglishIntent(
+            value,
+            context
+        );
+
+    if (
+        !analysis.changed ||
+        (
+            expected !== null &&
+            analysis.corrected !== expected
+        )
+    ) {
+        return null;
+    }
+
+    const candidates =
+        typeof generateFsaFinglishCandidates ===
+            'function'
+            ? generateFsaFinglishCandidates(
+                value,
+                {
+                    beamLimit: 384,
+                    limit: 3
+                }
+            )
+            : [];
+
+    const first = candidates[0] || null;
+    const second = candidates[1] || null;
+    const rankGap =
+        first
+            ? second
+                ? first.rank - second.rank
+                : Number.POSITIVE_INFINITY
+            : 0;
+
+    const prior =
+        analysis.contextPrior ||
+        getFsaSmartAutoContextPrior(
+            context,
+            'en'
+        );
+
+    const contextDelta =
+        getFsaSmartAutoTargetContextDelta(
+            prior,
+            'fa',
+            'en'
+        );
+
+    const sourceZ =
+        Number(analysis.source?.z);
+
+    const targetZ =
+        Number(
+            analysis.bestCandidate
+                ?.shape
+                ?.z
+        );
+
+    const decisionMargin =
+        (
+            Number(analysis.margin) || 0
+        ) -
+        (
+            Number(analysis.threshold) || 0
+        );
+
+    const targetCoverage =
+        Number(
+            analysis.bestCandidate
+                ?.shape
+                ?.coverage
+        ) || 0;
+
+    const confidence =
+        Number(analysis.confidence) || 0;
+
+    const sourceIntent =
+        typeof scoreFsaFinglishSourceIntent ===
+            'function'
+            ? scoreFsaFinglishSourceIntent(
+                value
+            )
+            : {
+                score:
+                    Number.NEGATIVE_INFINITY,
+                threshold:
+                    Number.POSITIVE_INFINITY,
+                preferred: false
+            };
+
+    const autoEligible =
+        contextDelta >= 6 &&
+        sourceIntent.preferred === true;
+
+    return {
+        changed: true,
+        autoEligible,
+        original: value,
+        corrected: analysis.corrected,
+        confidence:
+            Number(analysis.confidence) || 0,
+        kind: 'finglish',
+        reason: analysis.reason,
+        evidence: [
+            ...(analysis.evidence || []),
+            autoEligible
+                ? 'smart-auto-finglish-safe'
+                : 'smart-auto-finglish-suggestion-only'
+        ],
+        rankGap,
+        contextDelta,
+        sourceZ,
+        targetZ,
+        decisionMargin,
+        targetCoverage,
+        sourceIntent,
+        analysis
+    };
+}
+
+function analyzeFsaSmartAutoIntent(
+    input,
+    context = null,
+    customDictionary = {}
+) {
+    const value = String(input ?? '');
+
+    if (!value) {
+        return makeFsaSmartAutoUnchanged(
+            value,
+            'empty'
+        );
+    }
+
+    const textLower =
+        value.toLowerCase();
+
+    const expected =
+        typeof smart_farsi_converter ===
+            'function'
+            ? smart_farsi_converter(
+                value,
+                customDictionary,
+                context
+            )
+            : value;
+
+    if (
+        !/\s/u.test(value) &&
+        /^[a-z]+$/u.test(value) &&
+        !(
+            customDictionary &&
+            Object.hasOwn(
+                customDictionary,
+                textLower
+            )
+        ) &&
+        !(
+            typeof isFsaKnownEnglishLexeme ===
+                'function' &&
+            isFsaKnownEnglishLexeme(
+                value
+            )
+        )
+    ) {
+        const highConfidenceFinglish =
+            analyzeFsaSmartAutoFinglish(
+                value,
+                context,
+                null
+            );
+
+        if (
+            highConfidenceFinglish
+                ?.autoEligible === true
+        ) {
+            return {
+                ...highConfidenceFinglish,
+                evidence: [
+                    ...(
+                        highConfidenceFinglish
+                            .evidence || []
+                    ),
+                    'source-intent-finglish-preempts-layout'
+                ]
+            };
+        }
+    }
+
+    if (expected === value) {
+        return makeFsaSmartAutoUnchanged(
+            value
+        );
+    }
+
+    if (
+        /^[a-z]+$/u.test(value) &&
+        typeof isFsaKnownEnglishLexeme === 'function' &&
+        isFsaKnownEnglishLexeme(value)
+    ) {
+        return {
+            changed: true,
+            autoEligible: false,
+            original: value,
+            corrected: expected,
+            confidence: 1,
+            kind: 'english-lexical-safety-prior',
+            reason: 'known-english-auto-protection',
+            evidence: [
+                'english-lexical-prior',
+                'suggestion-only'
+            ]
+        };
+    }
+
+    if (
+        customDictionary &&
+        Object.hasOwn(
+            customDictionary,
+            textLower
+        ) &&
+        customDictionary[textLower] ===
+            expected
+    ) {
+        return {
+            changed: true,
+            autoEligible: true,
+            original: value,
+            corrected: expected,
+            confidence: 1,
+            kind: 'custom-dictionary',
+            reason: 'user-defined-correction',
+            evidence: [
+                'explicit-user-dictionary'
+            ]
+        };
+    }
+
+    if (
+        typeof analyzePersianNormalization ===
+            'function'
+    ) {
+        const normalization =
+            analyzePersianNormalization(
+                value
+            );
+
+        if (
+            normalization.changed &&
+            normalization.corrected ===
+                expected
+        ) {
+            return {
+                changed: true,
+                autoEligible: true,
+                original: value,
+                corrected: expected,
+                confidence:
+                    FSA_SMART_AUTO_THRESHOLDS
+                        .normalization,
+                kind: 'normalization',
+                reason:
+                    normalization.reason,
+                evidence: [
+                    ...(normalization.evidence ||
+                        []),
+                    'deterministic-normalization'
+                ],
+                analysis: normalization
+            };
+        }
+    }
+
+    if (!/\s/u.test(value)) {
+        if (
+            context &&
+            typeof analyzeKeyboardLayoutTokenWithContext ===
+                'function'
+        ) {
+            const contextual =
+                analyzeKeyboardLayoutTokenWithContext(
+                    value,
+                    context
+                );
+
+            if (
+                contextual.changed &&
+                contextual.corrected ===
+                    expected
+            ) {
+                const {
+                    sourceLanguage,
+                    targetLanguage
+                } =
+                    getFsaSmartAutoLayoutLanguages(
+                        contextual.direction
+                    );
+
+                const prior =
+                    contextual.contextPrior ||
+                    getFsaSmartAutoContextPrior(
+                        context,
+                        sourceLanguage
+                    );
+
+                const contextDelta =
+                    sourceLanguage &&
+                    targetLanguage
+                        ? getFsaSmartAutoTargetContextDelta(
+                            prior,
+                            targetLanguage,
+                            sourceLanguage
+                        )
+                        : 0;
+
+                const confidence =
+                    Number(
+                        contextual.confidence
+                    ) || 0;
+
+                const contextApplied =
+                    contextual.contextApplied ===
+                    true;
+
+                const statisticalAuto =
+                    contextApplied &&
+                    sourceLanguage &&
+                    targetLanguage &&
+                    typeof compareFsaLanguageCandidates ===
+                        'function'
+                        ? compareFsaLanguageCandidates(
+                            value,
+                            sourceLanguage,
+                            contextual.corrected,
+                            targetLanguage,
+                            sourceLanguage === 'fa'
+                                ? 'faToEn'
+                                : 'enToFa',
+                            'auto'
+                        )
+                        : null;
+
+                const autoEligible =
+                    contextApplied
+                        ? (
+                            confidence >=
+                                FSA_SMART_AUTO_THRESHOLDS
+                                    .contextLayout &&
+                            contextDelta >=
+                                FSA_SMART_AUTO_THRESHOLDS
+                                    .contextDelta &&
+                            statisticalAuto?.preferred === true
+                        )
+                        : confidence >=
+                            FSA_SMART_AUTO_THRESHOLDS
+                                .layout;
+
+                return {
+                    changed: true,
+                    autoEligible,
+                    original: value,
+                    corrected: expected,
+                    confidence,
+                    kind: contextApplied
+                        ? 'context-layout'
+                        : 'layout',
+                    reason:
+                        contextual.reason,
+                    evidence: [
+                        ...(contextual.evidence ||
+                            []),
+                        autoEligible
+                            ? 'smart-auto-layout-safe'
+                            : 'smart-auto-layout-suggestion-only'
+                    ],
+                    contextDelta,
+                    analysis: contextual
+                };
+            }
+        }
+
+        if (
+            typeof analyzeKeyboardLayoutToken ===
+                'function'
+        ) {
+            const layout =
+                analyzeKeyboardLayoutToken(
+                    value
+                );
+
+            if (
+                layout.changed &&
+                layout.corrected === expected
+            ) {
+                const confidence =
+                    Number(
+                        layout.confidence
+                    ) || 0;
+
+                return {
+                    changed: true,
+                    autoEligible:
+                        confidence >=
+                        FSA_SMART_AUTO_THRESHOLDS
+                            .layout,
+                    original: value,
+                    corrected: expected,
+                    confidence,
+                    kind: 'layout',
+                    reason: layout.reason,
+                    evidence: [
+                        ...(layout.evidence || []),
+                        confidence >=
+                            FSA_SMART_AUTO_THRESHOLDS
+                                .layout
+                            ? 'smart-auto-layout-safe'
+                            : 'smart-auto-layout-suggestion-only'
+                    ],
+                    analysis: layout
+                };
+            }
+        }
+
+        const finglish =
+            analyzeFsaSmartAutoFinglish(
+                value,
+                context,
+                expected
+            );
+
+        if (finglish) {
+            return finglish;
+        }
+    }
+
+    if (
+        typeof WORD_MAP !== 'undefined' &&
+        WORD_MAP &&
+        WORD_MAP[textLower] === expected
+    ) {
+        return {
+            changed: true,
+            autoEligible: false,
+            original: value,
+            corrected: expected,
+            confidence: 0.90,
+            kind: 'legacy-prior',
+            reason: 'legacy-word-map-prior',
+            evidence: [
+                'legacy-prior-suggestion-only'
+            ]
+        };
+    }
+
+    return {
+        changed: true,
+        autoEligible: false,
+        original: value,
+        corrected: expected,
+        confidence: 0.75,
+        kind: 'unclassified',
+        reason: 'smart-converter-difference',
+        evidence: [
+            'unclassified-suggestion-only'
+        ]
+    };
+}
