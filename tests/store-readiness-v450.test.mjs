@@ -77,5 +77,5 @@ test('distribution and privacy documentation cover release behavior', () => {
 test('CI builds, verifies and uploads release-candidate artifacts', () => {
   assert.match(workflow, /npm run build:release/u);
   assert.match(workflow, /npm run verify:release/u);
-  assert.match(workflow, /actions\/upload-artifact@v4/u);
+  assert.match(workflow, /actions\/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02\s+# v4/u);
 });

@@ -75,3 +75,13 @@ Default setup is disabled only when needed so the repository does not run confli
 - Target tag: `trust-security-v2026.08.14`
 
 No secrets, private vulnerability data, security-alert contents, or private repository data are stored in this evidence.
+
+## CI compatibility follow-up
+
+The repository's pre-existing store-readiness test expected the mutable text `actions/upload-artifact@v4`.
+
+Phase 6 intentionally pins GitHub Actions to immutable 40-character commit SHAs. The test was therefore updated on the same Phase 6 branch to require:
+
+`actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4`
+
+This is a test-contract compatibility correction only. Product/runtime behavior is unchanged.
