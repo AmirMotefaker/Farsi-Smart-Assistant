@@ -193,9 +193,29 @@ function analyzeFsaSmartAutoFinglish(
                 preferred: false
             };
 
+    const sourceIntentMargin =
+        (Number(sourceIntent.score) || 0) -
+        (Number(sourceIntent.threshold) || 0);
+
+    const sourceShapeScore =
+        typeof scoreEnglishWordShape === 'function'
+            ? Number(
+                scoreEnglishWordShape(value)
+                    ?.score
+            ) || 0
+            : 0;
+
     const autoEligible =
-        contextDelta >= 6 &&
-        sourceIntent.preferred === true;
+        sourceIntent.preferred === true &&
+        (
+            contextDelta >= 6 ||
+            (
+                prior?.dominant === 'fa' &&
+                contextDelta >= 4.5 &&
+                sourceIntentMargin >= 3 &&
+                sourceShapeScore < 0.55
+            )
+        );
 
     return {
         changed: true,
@@ -275,9 +295,24 @@ function analyzeFsaSmartAutoIntent(
                 null
             );
 
+        const hasPersianSurroundingContext =
+            /[\u0600-\u06FF]/u.test(
+                `${String(
+                    context?.beforeText ?? ''
+                )}${String(
+                    context?.afterText ?? ''
+                )}`
+            );
+
         if (
             highConfidenceFinglish
-                ?.autoEligible === true
+                ?.autoEligible === true ||
+            (
+                highConfidenceFinglish
+                    ?.sourceIntent
+                    ?.preferred === true &&
+                hasPersianSurroundingContext
+            )
         ) {
             return {
                 ...highConfidenceFinglish,
@@ -286,7 +321,10 @@ function analyzeFsaSmartAutoIntent(
                         highConfidenceFinglish
                             .evidence || []
                     ),
-                    'source-intent-finglish-preempts-layout'
+                    highConfidenceFinglish
+                        .autoEligible === true
+                        ? 'source-intent-finglish-preempts-layout'
+                        : 'source-intent-finglish-blocks-layout-auto-with-persian-context'
                 ]
             };
         }
@@ -427,6 +465,36 @@ function analyzeFsaSmartAutoIntent(
                     contextual.contextApplied ===
                     true;
 
+                const sourceShapeScore =
+                    sourceLanguage === 'en' &&
+                    typeof scoreEnglishWordShape ===
+                        'function'
+                        ? Number(
+                            scoreEnglishWordShape(value)
+                                ?.score
+                        ) || 0
+                        : sourceLanguage === 'fa' &&
+                            typeof scorePersianWordShape ===
+                                'function'
+                            ? Number(
+                                scorePersianWordShape(value)
+                                    ?.score
+                            ) || 0
+                            : 0;
+
+                const sourceContextProtected =
+                    prior?.dominant === sourceLanguage &&
+                    (
+                        (
+                            sourceLanguage === 'en' &&
+                            sourceShapeScore >= 0.55
+                        ) ||
+                        (
+                            sourceLanguage === 'fa' &&
+                            sourceShapeScore >= 0.65
+                        )
+                    );
+
                 const statisticalAuto =
                     contextApplied &&
                     sourceLanguage &&
@@ -446,19 +514,21 @@ function analyzeFsaSmartAutoIntent(
                         : null;
 
                 const autoEligible =
-                    contextApplied
-                        ? (
-                            confidence >=
+                    sourceContextProtected
+                        ? false
+                        : contextApplied
+                            ? (
+                                confidence >=
+                                    FSA_SMART_AUTO_THRESHOLDS
+                                        .contextLayout &&
+                                contextDelta >=
+                                    FSA_SMART_AUTO_THRESHOLDS
+                                        .contextDelta &&
+                                statisticalAuto?.preferred === true
+                            )
+                            : confidence >=
                                 FSA_SMART_AUTO_THRESHOLDS
-                                    .contextLayout &&
-                            contextDelta >=
-                                FSA_SMART_AUTO_THRESHOLDS
-                                    .contextDelta &&
-                            statisticalAuto?.preferred === true
-                        )
-                        : confidence >=
-                            FSA_SMART_AUTO_THRESHOLDS
-                                .layout;
+                                    .layout;
 
                 return {
                     changed: true,
@@ -474,9 +544,11 @@ function analyzeFsaSmartAutoIntent(
                     evidence: [
                         ...(contextual.evidence ||
                             []),
-                        autoEligible
-                            ? 'smart-auto-layout-safe'
-                            : 'smart-auto-layout-suggestion-only'
+                        sourceContextProtected
+                            ? 'smart-auto-source-context-protection'
+                            : autoEligible
+                                ? 'smart-auto-layout-safe'
+                                : 'smart-auto-layout-suggestion-only'
                     ],
                     contextDelta,
                     analysis: contextual

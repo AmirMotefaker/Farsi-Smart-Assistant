@@ -278,3 +278,143 @@ test('v4.7 calibrated source-intent Finglish can preempt a false physical-layout
     true
   );
 });
+
+test('v4.7 real Chrome regression: plausible Latin proper name is not Auto-converted in English context', () => {
+  const analysis =
+    engine.analyzeFsaSmartAutoIntent(
+      'qazvin',
+      {
+        fieldLanguage: 'en',
+        pageLanguage: 'en',
+        direction: 'ltr',
+        browserLanguage: 'en-US',
+        keyboardEvidence: {
+          latinKeys: 6,
+          persianKeys: 0,
+          physicalAlphaKeys: 6
+        }
+      }
+    );
+
+  assert.equal(
+    analysis.autoEligible,
+    false
+  );
+
+  assert.equal(
+    analysis.original,
+    'qazvin'
+  );
+
+  assert.match(
+    (analysis.evidence || []).join(' '),
+    /smart-auto-source-context-protection/u
+  );
+});
+
+test('v4.7 real Chrome regression: strong Persian surrounding context promotes bgrdim to Finglish Auto', () => {
+  const analysis =
+    engine.analyzeFsaSmartAutoIntent(
+      'bgrdim',
+      {
+        beforeText:
+          'ما دوباره تلاش میکنیم ',
+        afterText: '',
+        fieldLanguage: '',
+        pageLanguage: 'en',
+        direction: 'ltr',
+        browserLanguage: 'en-US',
+        keyboardEvidence: {
+          latinKeys: 6,
+          persianKeys: 0,
+          physicalAlphaKeys: 6
+        }
+      }
+    );
+
+  assert.equal(
+    analysis.corrected,
+    'بگردیم'
+  );
+
+  assert.equal(
+    analysis.kind,
+    'finglish'
+  );
+
+  assert.equal(
+    analysis.autoEligible,
+    true
+  );
+});
+
+test('v4.7 real Chrome regression: weak context keeps strong Finglish source intent suggestion-only instead of wrong layout Auto', () => {
+  const analysis =
+    engine.analyzeFsaSmartAutoIntent(
+      'bgrdim',
+      {
+        beforeText: 'من ',
+        afterText: '',
+        pageLanguage: 'en',
+        direction: 'ltr',
+        browserLanguage: 'en-US',
+        keyboardEvidence: {
+          latinKeys: 6,
+          persianKeys: 0,
+          physicalAlphaKeys: 6
+        }
+      }
+    );
+
+  assert.equal(
+    analysis.corrected,
+    'بگردیم'
+  );
+
+  assert.equal(
+    analysis.kind,
+    'finglish'
+  );
+
+  assert.equal(
+    analysis.autoEligible,
+    false
+  );
+
+  assert.match(
+    (analysis.evidence || []).join(' '),
+    /source-intent-finglish-blocks-layout-auto-with-persian-context/u
+  );
+});
+
+test('v4.7 real Chrome regression: Undo surface has an explicit persistence window', () => {
+  assert.match(
+    inlineSource,
+    /smartAutoUndoUntil/u
+  );
+
+  assert.match(
+    inlineSource,
+    /SMART_AUTO_UNDO_VISIBLE_MS\s*=\s*5000/u
+  );
+
+  assert.match(
+    inlineSource,
+    /isSmartAutoUndoSurfaceActive/u
+  );
+
+  assert.match(
+    inlineSource,
+    /armSmartAutoUndoSurface/u
+  );
+
+  assert.match(
+    inlineSource,
+    /clearSmartAutoUndoSurface/u
+  );
+
+  assert.match(
+    inlineSource,
+    /isSmartAutoUndoSurfaceActive\(\s*inputElement\s*\)[\s\S]*?return;/u
+  );
+});

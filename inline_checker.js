@@ -3,7 +3,12 @@
 // =================================================================================
 
 let activeInput = null;
-let suggestionElements = { host: null, action: null };
+let suggestionElements = {
+    host: null,
+    action: null,
+    mode: '',
+    inputElement: null
+};
 let customDictionary = {};
 let assistantEnabled = true;
 let smartAutoEnabled = true;
@@ -13,7 +18,9 @@ const inputTimers = new WeakMap();
 const intentKeyHistory = new WeakMap();
 const smartAutoInputState = new WeakMap();
 const smartAutoSuppressUntil = new WeakMap();
+const smartAutoUndoUntil = new WeakMap();
 const smartAutoMutationInProgress = new WeakSet();
+const SMART_AUTO_UNDO_VISIBLE_MS = 5000;
 
 chrome.storage.sync.get('customDictionary', (data) => {
     if (data.customDictionary) {
@@ -848,6 +855,80 @@ function isSmartAutoSuppressed(
         ) || 0
     ) > Date.now();
 }
+function isSmartAutoUndoSurfaceActive(
+    inputElement
+) {
+    return (
+        Boolean(suggestionElements.host) &&
+        suggestionElements.mode === 'undo' &&
+        suggestionElements.inputElement ===
+            inputElement &&
+        (
+            Number(
+                smartAutoUndoUntil.get(
+                    inputElement
+                )
+            ) || 0
+        ) > Date.now()
+    );
+}
+
+function clearSmartAutoUndoSurface(
+    inputElement
+) {
+    if (!inputElement) return;
+
+    smartAutoUndoUntil.delete(
+        inputElement
+    );
+
+    if (
+        suggestionElements.mode === 'undo' &&
+        suggestionElements.inputElement ===
+            inputElement
+    ) {
+        hideSuggestion();
+    }
+}
+
+function armSmartAutoUndoSurface(
+    inputElement
+) {
+    const until =
+        Date.now() +
+        SMART_AUTO_UNDO_VISIBLE_MS;
+
+    smartAutoUndoUntil.set(
+        inputElement,
+        until
+    );
+
+    setTimeout(() => {
+        if (
+            (
+                Number(
+                    smartAutoUndoUntil.get(
+                        inputElement
+                    )
+                ) || 0
+            ) !== until
+        ) {
+            return;
+        }
+
+        if (
+            suggestionElements.mode === 'undo' &&
+            suggestionElements.inputElement ===
+                inputElement
+        ) {
+            hideSuggestion();
+        } else {
+            smartAutoUndoUntil.delete(
+                inputElement
+            );
+        }
+    }, SMART_AUTO_UNDO_VISIBLE_MS);
+}
 
 function getSmartAutoIntentContext(
     inputElement,
@@ -1082,6 +1163,10 @@ function applySmartAutoSuggestion(
         'undo'
     );
 
+    armSmartAutoUndoSurface(
+        inputElement
+    );
+
     return true;
 }
 
@@ -1177,6 +1262,14 @@ function checkForCorrection(inputElement) {
         );
 
     if (!suggestion) {
+        if (
+            isSmartAutoUndoSurfaceActive(
+                inputElement
+            )
+        ) {
+            return;
+        }
+
         hideSuggestion();
         return;
     }
@@ -1476,18 +1569,33 @@ function showSuggestion(
 
     suggestionElements = {
         host: surface.host,
-        action
+        action,
+        mode: surfaceMode,
+        inputElement
     };
 }
 
 function hideSuggestion() {
+    const undoInputElement =
+        suggestionElements.mode === 'undo'
+            ? suggestionElements.inputElement
+            : null;
+
     if (suggestionElements.host) {
         suggestionElements.host.remove();
     }
 
+    if (undoInputElement) {
+        smartAutoUndoUntil.delete(
+            undoInputElement
+        );
+    }
+
     suggestionElements = {
         host: null,
-        action: null
+        action: null,
+        mode: '',
+        inputElement: null
     };
 }
 
@@ -1519,6 +1627,10 @@ function handleInput(event) {
     ) {
         return;
     }
+
+    clearSmartAutoUndoSurface(
+        inputElement
+    );
 
     const data =
         String(event.data ?? '');
