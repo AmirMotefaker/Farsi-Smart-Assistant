@@ -14,10 +14,10 @@ This executes the product tests/evaluation, builds browser packages, creates det
 
 `release/` is generated locally and is not committed.
 
-For v4.6.0 the expected outputs are:
+For v4.7.0 the expected outputs are:
 
-- `Farsi-Smart-Assistant-v4.6.0-chromium.zip`
-- `Farsi-Smart-Assistant-v4.6.0-firefox.zip`
+- `Farsi-Smart-Assistant-v4.7.0-chromium.zip`
+- `Farsi-Smart-Assistant-v4.7.0-firefox.zip`
 - `SHA256SUMS.txt`
 - `release-manifest.json`
 
@@ -27,8 +27,8 @@ The ZIP writer uses stored entries, a fixed ZIP timestamp, and lexicographic ent
 
 ```powershell
 Get-Content .\release\SHA256SUMS.txt
-Get-FileHash .\release\Farsi-Smart-Assistant-v4.6.0-chromium.zip -Algorithm SHA256
-Get-FileHash .\release\Farsi-Smart-Assistant-v4.6.0-firefox.zip -Algorithm SHA256
+Get-FileHash .\release\Farsi-Smart-Assistant-v4.7.0-chromium.zip -Algorithm SHA256
+Get-FileHash .\release\Farsi-Smart-Assistant-v4.7.0-firefox.zip -Algorithm SHA256
 ```
 
 The hashes must exactly match `SHA256SUMS.txt`.
@@ -58,18 +58,18 @@ A temporary add-on is removed when Firefox restarts. Public Firefox distribution
 
 ## GitHub Release
 
-After the PR is merged and the exact merge SHA is tagged `v4.6.0`, rebuild from that exact tag and attach all files in `release/` to the GitHub Release.
+After the PR is merged and the exact merge SHA is tagged `v4.7.0`, rebuild from that exact tag and attach all files in `release/` to the GitHub Release.
 
 Example:
 
 ```powershell
-gh release create v4.6.0 `
-  .\release\Farsi-Smart-Assistant-v4.6.0-chromium.zip `
-  .\release\Farsi-Smart-Assistant-v4.6.0-firefox.zip `
+gh release create v4.7.0 `
+  .\release\Farsi-Smart-Assistant-v4.7.0-chromium.zip `
+  .\release\Farsi-Smart-Assistant-v4.7.0-firefox.zip `
   .\release\SHA256SUMS.txt `
   .\release\release-manifest.json `
   --repo AmirMotefaker/Farsi-Smart-Assistant `
-  --title "Farsi Smart Assistant v4.6.0" `
+  --title "Farsi Smart Assistant v4.7.0" `
   --verify-tag `
   --generate-notes
 ```

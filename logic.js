@@ -18,25 +18,86 @@ const WORD_MAP = {
     "hldn ljt;v": "امیر متفکر", "اعللهدل بشزث": "hugging face"
 };
 
-function smart_farsi_converter(text, customDictionary = {}) {
+function smart_farsi_converter(
+    text,
+    customDictionary = {},
+    intentContext = null
+) {
     const value = String(text ?? '');
     const textLower = value.toLowerCase();
 
-    if (customDictionary && customDictionary[textLower]) {
+    if (
+        customDictionary &&
+        customDictionary[textLower]
+    ) {
         return customDictionary[textLower];
     }
 
-    const layoutCorrected = typeof correctKeyboardLayoutText === 'function'
-        ? correctKeyboardLayoutText(value)
-        : value;
+    const normalized =
+        typeof normalizePersianTextGeneral ===
+            'function'
+            ? normalizePersianTextGeneral(value)
+            : value;
 
-    if (layoutCorrected !== value) {
+    if (normalized !== value) {
+        return normalized;
+    }
+
+    const contextualLayoutCorrected =
+        intentContext &&
+        typeof correctKeyboardLayoutTextWithContext ===
+            'function'
+            ? correctKeyboardLayoutTextWithContext(
+                normalized,
+                intentContext
+            )
+            : normalized;
+
+    if (
+        contextualLayoutCorrected !==
+        normalized
+    ) {
+        return contextualLayoutCorrected;
+    }
+
+    const layoutCorrected =
+        typeof correctKeyboardLayoutText ===
+            'function'
+            ? correctKeyboardLayoutText(
+                normalized
+            )
+            : normalized;
+
+    if (layoutCorrected !== normalized) {
         return layoutCorrected;
     }
 
-    if (WORD_MAP[textLower]) {
-        return WORD_MAP[textLower];
+    const finglish =
+        typeof analyzeFsaFinglishIntent ===
+            'function'
+            ? analyzeFsaFinglishIntent(
+                normalized,
+                intentContext
+            )
+            : null;
+
+    if (finglish?.changed) {
+        return finglish.corrected;
     }
 
-    return value;
+    if (WORD_MAP[textLower]) {
+        const protectEnglish =
+            typeof shouldProtectFsaEnglishSource ===
+                'function' &&
+            shouldProtectFsaEnglishSource(
+                normalized,
+                intentContext
+            );
+
+        if (!protectEnglish) {
+            return WORD_MAP[textLower];
+        }
+    }
+
+    return normalized;
 }

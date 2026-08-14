@@ -45,8 +45,19 @@ test('content scripts cover matching frames and related iframe documents', () =>
   assert.equal(contentScript.match_about_blank, true);
   assert.equal(contentScript.match_origin_as_fallback, true);
   assert.deepEqual(
-    contentScript.js.slice(0, 3),
-    ['keyboard_layout.js', 'logic.js', 'inline_checker.js']
+    contentScript.js.slice(0, 10),
+    [
+      'language_profiles.js',
+      'keyboard_layout.js',
+      'context_intent.js',
+      'transliteration_intent.js',
+      'normalization_intent.js',
+      'logic.js',
+      'lexical_priors.js',
+      'finglish_source_model.js',
+      'smart_auto_intent.js',
+      'inline_checker.js'
+    ]
   );
 });
 test('M2 contains range-local cursor and native undo paths', () => {

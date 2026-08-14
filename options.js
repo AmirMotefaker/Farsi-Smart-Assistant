@@ -2,9 +2,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const customDictText = document.getElementById('customDictionary');
     const saveDictionaryButton = document.getElementById('saveDictionaryButton');
     const confirmation = document.getElementById('confirmation');
+    const smartAutoEnabled = document.getElementById('smartAutoEnabled');
 
     chrome.storage.sync.get(
-        ['customDictionary', 'uiTheme'],
+        ['customDictionary', 'uiTheme', 'smartAutoEnabled'],
         (data) => {
             const dictionary = data.customDictionary || {};
             customDictText.value = Object
@@ -17,8 +18,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 : 'light';
 
             document.documentElement.dataset.theme = theme;
+
+            smartAutoEnabled.checked =
+                data.smartAutoEnabled !== false;
         }
     );
+
+    smartAutoEnabled.addEventListener('change', () => {
+        chrome.storage.sync.set(
+            {
+                smartAutoEnabled:
+                    smartAutoEnabled.checked
+            },
+            () => {
+                const runtimeError =
+                    chrome.runtime.lastError;
+
+                showConfirmation(
+                    runtimeError
+                        ? `ذخیره انجام نشد: ${runtimeError.message}`
+                        : smartAutoEnabled.checked
+                            ? 'Smart Auto فعال شد.'
+                            : 'Smart Auto غیرفعال شد.'
+                );
+            }
+        );
+    });
 
     saveDictionaryButton.addEventListener('click', () => {
         const lines = customDictText.value.split('\n');

@@ -3,12 +3,29 @@
 // =================================================================================
 
 let activeInput = null;
-let suggestionElements = { host: null, action: null };
+let suggestionElements = {
+    host: null,
+    action: null,
+    mode: '',
+    inputElement: null
+};
 let customDictionary = {};
 let assistantEnabled = true;
+let smartAutoEnabled = true;
 let disabledHosts = [];
 const trackedInputs = new WeakSet();
 const inputTimers = new WeakMap();
+const intentKeyHistory = new WeakMap();
+const smartAutoInputState = new WeakMap();
+const smartAutoSuppressUntil = new WeakMap();
+const smartAutoUndoUntil = new WeakMap();
+const smartAutoMutationInProgress = new WeakSet();
+const smartAutoControlledCommitState = new WeakMap();
+const smartAutoPostCommitState = new WeakMap();
+const SMART_AUTO_UNDO_VISIBLE_MS = 5000;
+const SMART_AUTO_POST_COMMIT_MS = 5000;
+const SMART_AUTO_CONTROLLED_STABILIZE_DELAYS =
+    Object.freeze([0, 40, 120, 280]);
 
 chrome.storage.sync.get('customDictionary', (data) => {
     if (data.customDictionary) {
@@ -17,12 +34,14 @@ chrome.storage.sync.get('customDictionary', (data) => {
 });
 
 chrome.storage.sync.get(
-    ['assistantEnabled', 'disabledHosts'],
+    ['assistantEnabled', 'disabledHosts', 'smartAutoEnabled'],
     (data) => {
         assistantEnabled = data.assistantEnabled !== false;
         disabledHosts = Array.isArray(data.disabledHosts)
             ? data.disabledHosts
             : [];
+        smartAutoEnabled =
+            data.smartAutoEnabled !== false;
     }
 );
 
@@ -87,6 +106,11 @@ if (chrome.storage.onChanged?.addListener) {
                 )
                     ? changes.disabledHosts.newValue
                     : [];
+            }
+
+            if (changes.smartAutoEnabled) {
+                smartAutoEnabled =
+                    changes.smartAutoEnabled.newValue !== false;
             }
 
             if (!isAssistantAvailable()) {
@@ -185,11 +209,190 @@ function replaceTextRange(text, start, end, replacement) {
         value.slice(safeEnd);
 }
 
+
+function classifyIntentKeyScript(value) {
+    const key = String(value ?? '');
+
+    if (/^[A-Za-z]$/u.test(key)) {
+        return 'en';
+    }
+
+    if (/^[\u0600-\u06FF]$/u.test(key)) {
+        return 'fa';
+    }
+
+    return '';
+}
+
+function handleIntentKeydown(event) {
+    const inputElement =
+        event.currentTarget || event.target;
+
+    if (!isSupportedEditable(inputElement)) {
+        return;
+    }
+
+    const script =
+        classifyIntentKeyScript(event.key);
+    const physicalAlpha =
+        /^Key[A-Z]$/u.test(
+            String(event.code || '')
+        );
+
+    if (!script && !physicalAlpha) {
+        return;
+    }
+
+    const now = Date.now();
+    const existing =
+        intentKeyHistory.get(inputElement) || [];
+    const next = [
+        ...existing,
+        {
+            at: now,
+            script,
+            physicalAlpha
+        }
+    ]
+        .filter(
+            (item) =>
+                now - item.at <= 5000
+        )
+        .slice(-24);
+
+    intentKeyHistory.set(
+        inputElement,
+        next
+    );
+}
+
+function summarizeIntentKeyboardEvidence(
+    inputElement
+) {
+    const now = Date.now();
+    const history =
+        intentKeyHistory.get(inputElement) || [];
+    let latinKeys = 0;
+    let persianKeys = 0;
+    let physicalAlphaKeys = 0;
+
+    for (const item of history) {
+        if (now - item.at > 5000) {
+            continue;
+        }
+
+        if (item.script === 'en') {
+            latinKeys += 1;
+        } else if (item.script === 'fa') {
+            persianKeys += 1;
+        }
+
+        if (item.physicalAlpha) {
+            physicalAlphaKeys += 1;
+        }
+    }
+
+    return {
+        latinKeys,
+        persianKeys,
+        physicalAlphaKeys
+    };
+}
+
+function closestIntentLanguage(
+    inputElement
+) {
+    const own = String(
+        inputElement?.lang || ''
+    ).trim();
+
+    if (own) return own;
+
+    const ancestor =
+        inputElement?.closest?.('[lang]');
+
+    return String(
+        ancestor?.getAttribute?.('lang') ||
+        ''
+    ).trim();
+}
+
+function closestIntentDirection(
+    inputElement
+) {
+    const own = String(
+        inputElement?.dir || ''
+    ).trim();
+
+    if (own) return own;
+
+    const ancestor =
+        inputElement?.closest?.('[dir]');
+
+    return String(
+        ancestor?.getAttribute?.('dir') ||
+        ''
+    ).trim();
+}
+
+function buildElementIntentContext(
+    inputElement
+) {
+    return {
+        fieldLanguage:
+            closestIntentLanguage(
+                inputElement
+            ),
+        pageLanguage: String(
+            document.documentElement?.lang ||
+            ''
+        ),
+        direction:
+            closestIntentDirection(
+                inputElement
+            ) ||
+            String(
+                document.documentElement?.dir ||
+                ''
+            ),
+        browserLanguage:
+            typeof navigator !== 'undefined'
+                ? String(
+                    navigator.language || ''
+                )
+                : '',
+        keyboardEvidence:
+            summarizeIntentKeyboardEvidence(
+                inputElement
+            )
+    };
+}
+
+function enrichIntentContext(
+    baseContext,
+    fieldText,
+    start,
+    end
+) {
+    return {
+        ...(baseContext || {}),
+        fieldText,
+        beforeText: String(
+            fieldText ?? ''
+        ).slice(0, start),
+        afterText: String(
+            fieldText ?? ''
+        ).slice(end)
+    };
+}
+
+
 function computeEditingSuggestion(
     text,
     selectionStart,
     selectionEnd,
-    dictionary = customDictionary
+    dictionary = customDictionary,
+    intentContext = null
 ) {
     const value = String(text ?? '');
     const start = clampOffset(selectionStart, value.length);
@@ -201,8 +404,39 @@ function computeEditingSuggestion(
         : findCurrentTokenRange(value, start);
 
     if (primaryRange.end > primaryRange.start) {
-        const originalText = value.slice(primaryRange.start, primaryRange.end);
-        const correctedText = smart_farsi_converter(originalText, dictionary);
+        const originalText = value.slice(
+            primaryRange.start,
+            primaryRange.end
+        );
+        const tokenIntentContext =
+            enrichIntentContext(
+                intentContext,
+                value,
+                primaryRange.start,
+                primaryRange.end
+            );
+        const intentAnalysis =
+            !explicitSelection &&
+            smartAutoEnabled &&
+            typeof analyzeFsaSmartAutoIntent ===
+                'function'
+                ? analyzeFsaSmartAutoIntent(
+                    originalText,
+                    tokenIntentContext,
+                    dictionary
+                )
+                : null;
+        const correctedText =
+            intentAnalysis?.changed &&
+            intentAnalysis.corrected &&
+            intentAnalysis.corrected !==
+                originalText
+                ? intentAnalysis.corrected
+                : smart_farsi_converter(
+                    originalText,
+                    dictionary,
+                    tokenIntentContext
+                );
 
         if (correctedText && correctedText !== originalText) {
             return {
@@ -211,6 +445,7 @@ function computeEditingSuggestion(
                 end: primaryRange.end,
                 originalText,
                 correctedText,
+                intentAnalysis,
                 mode: explicitSelection ? 'selection' : 'token'
             };
         }
@@ -220,8 +455,20 @@ function computeEditingSuggestion(
         const phraseRange = findTrailingTwoTokenRange(value, start);
 
         if (phraseRange) {
-            const originalText = value.slice(phraseRange.start, phraseRange.end);
-            const correctedText = smart_farsi_converter(originalText, dictionary);
+            const originalText = value.slice(
+                phraseRange.start,
+                phraseRange.end
+            );
+            const correctedText = smart_farsi_converter(
+                originalText,
+                dictionary,
+                enrichIntentContext(
+                    intentContext,
+                    value,
+                    phraseRange.start,
+                    phraseRange.end
+                )
+            );
 
             if (correctedText && correctedText !== originalText) {
                 return {
@@ -501,9 +748,27 @@ function replaceStandardRange(element, suggestion) {
     const caret = suggestion.start + suggestion.correctedText.length;
     const nativeSetter = getStandardValueSetter(element);
 
-    // Controlled inputs (Google, React-style controls, etc.) are most
-    // reliable when the native prototype setter updates the DOM value
-    // and a bubbling input event informs the page framework.
+    // Prefer a browser-native editing transaction first. On controlled
+    // inputs this gives the host the same edit semantics as real typing
+    // and participates in the browser undo stack.
+    if (
+        tryNativeInsertText(
+            element,
+            suggestion.start,
+            suggestion.end,
+            suggestion.correctedText
+        ) &&
+        finalizeStandardReplacement(
+            element,
+            newText,
+            caret
+        )
+    ) {
+        return true;
+    }
+
+    // Native prototype setter + bubbling input remains the controlled-input
+    // compatibility path when insertText is unavailable or rejected.
     if (nativeSetter) {
         nativeSetter.call(element, newText);
         dispatchReplacementInput(
@@ -520,24 +785,6 @@ function replaceStandardRange(element, suggestion) {
         ) {
             return true;
         }
-    }
-
-    // Keep the browser-native insert path as a fallback for environments
-    // where the prototype value setter is unavailable or rejected.
-    if (
-        tryNativeInsertText(
-            element,
-            suggestion.start,
-            suggestion.end,
-            suggestion.correctedText
-        ) &&
-        finalizeStandardReplacement(
-            element,
-            newText,
-            caret
-        )
-    ) {
-        return true;
     }
 
     // Final compatibility fallback: some test harnesses, browser-like
@@ -559,6 +806,182 @@ function replaceStandardRange(element, suggestion) {
         newText,
         caret
     );
+}
+
+function stabilizeSmartAutoControlledValue(
+    inputElement,
+    state
+) {
+    if (
+        !inputElement ||
+        !state ||
+        inputElement.isContentEditable
+    ) {
+        return false;
+    }
+
+    const currentText =
+        getEditableText(inputElement);
+
+    if (currentText === state.expectedText) {
+        return true;
+    }
+
+    // Never overwrite a real user edit or a new page value. Recovery is
+    // allowed only when a controlled host reverted exactly to the original
+    // pre-correction field value.
+    if (currentText !== state.originalText) {
+        return false;
+    }
+
+    const nativeSetter =
+        getStandardValueSetter(inputElement);
+
+    if (!nativeSetter) {
+        return false;
+    }
+
+    smartAutoMutationInProgress.add(
+        inputElement
+    );
+
+    try {
+        nativeSetter.call(
+            inputElement,
+            state.expectedText
+        );
+
+        dispatchReplacementInput(
+            inputElement,
+            state.correctedText
+        );
+
+        return finalizeStandardReplacement(
+            inputElement,
+            state.expectedText,
+            state.caret
+        );
+    } finally {
+        smartAutoMutationInProgress.delete(
+            inputElement
+        );
+    }
+}
+
+function scheduleSmartAutoControlledStabilization(
+    inputElement,
+    textBefore,
+    suggestion
+) {
+    if (
+        !inputElement ||
+        inputElement.isContentEditable
+    ) {
+        return;
+    }
+
+    const expectedText =
+        replaceTextRange(
+            textBefore,
+            suggestion.start,
+            suggestion.end,
+            suggestion.correctedText
+        );
+
+    const state = {
+        token: {},
+        originalText: textBefore,
+        expectedText,
+        correctedText:
+            suggestion.correctedText,
+        caret:
+            suggestion.start +
+            suggestion.correctedText.length
+    };
+
+    smartAutoControlledCommitState.set(
+        inputElement,
+        state
+    );
+
+    for (
+        const delay of
+        SMART_AUTO_CONTROLLED_STABILIZE_DELAYS
+    ) {
+        setTimeout(() => {
+            const live =
+                smartAutoControlledCommitState.get(
+                    inputElement
+                );
+
+            if (
+                !live ||
+                live.token !== state.token
+            ) {
+                return;
+            }
+
+            const currentText =
+                getEditableText(inputElement);
+
+            if (currentText === state.expectedText) {
+                if (
+                    delay ===
+                    SMART_AUTO_CONTROLLED_STABILIZE_DELAYS[
+                        SMART_AUTO_CONTROLLED_STABILIZE_DELAYS.length - 1
+                    ]
+                ) {
+                    smartAutoControlledCommitState.delete(
+                        inputElement
+                    );
+                }
+
+                return;
+            }
+
+            const recovered =
+                stabilizeSmartAutoControlledValue(
+                    inputElement,
+                    state
+                );
+
+            if (!recovered) {
+                smartAutoControlledCommitState.delete(
+                    inputElement
+                );
+            }
+        }, delay);
+    }
+}
+
+function makeSmartAutoEffectiveSuggestion(
+    suggestion,
+    analysis
+) {
+    if (
+        !suggestion ||
+        !analysis?.changed ||
+        !analysis.corrected ||
+        analysis.corrected ===
+            suggestion.originalText
+    ) {
+        return suggestion;
+    }
+
+    if (
+        analysis.corrected ===
+        suggestion.correctedText
+    ) {
+        return suggestion;
+    }
+
+    return {
+        ...suggestion,
+        correctedText:
+            analysis.corrected,
+        mode:
+            suggestion.mode
+    };
 }
 
 function replaceContentEditableRange(element, suggestion) {
@@ -622,33 +1045,631 @@ function applyEditingSuggestion(element, suggestion) {
         : replaceStandardRange(element, suggestion);
 }
 
+function armSmartAutoPostCommitProtection(
+    inputElement,
+    suggestion
+) {
+    if (!inputElement || !suggestion) {
+        return;
+    }
+
+    const state = {
+        token: {},
+        start: suggestion.start,
+        end:
+            suggestion.start +
+            suggestion.correctedText.length,
+        originalText:
+            suggestion.originalText,
+        correctedText:
+            suggestion.correctedText,
+        until:
+            Date.now() +
+            SMART_AUTO_POST_COMMIT_MS
+    };
+
+    smartAutoPostCommitState.set(
+        inputElement,
+        state
+    );
+
+    setTimeout(() => {
+        const live =
+            smartAutoPostCommitState.get(
+                inputElement
+            );
+
+        if (
+            live?.token === state.token &&
+            Date.now() >= state.until
+        ) {
+            smartAutoPostCommitState.delete(
+                inputElement
+            );
+        }
+    }, SMART_AUTO_POST_COMMIT_MS);
+}
+
+function isSmartAutoPostCommitSuggestion(
+    inputElement,
+    suggestion
+) {
+    const state =
+        smartAutoPostCommitState.get(
+            inputElement
+        );
+
+    if (!state || Date.now() >= state.until) {
+        if (state) {
+            smartAutoPostCommitState.delete(
+                inputElement
+            );
+        }
+
+        return false;
+    }
+
+    if (!suggestion) {
+        return false;
+    }
+
+    const currentText =
+        getEditableText(inputElement);
+
+    return (
+        suggestion.start === state.start &&
+        suggestion.end === state.end &&
+        suggestion.originalText ===
+            state.correctedText &&
+        currentText.slice(
+            state.start,
+            state.end
+        ) === state.correctedText
+    );
+}
+
+function isSmartAutoSuppressed(
+    inputElement
+) {
+    return (
+        Number(
+            smartAutoSuppressUntil.get(
+                inputElement
+            )
+        ) || 0
+    ) > Date.now();
+}
+function isSmartAutoUndoSurfaceActive(
+    inputElement
+) {
+    return (
+        Boolean(suggestionElements.host) &&
+        suggestionElements.mode === 'undo' &&
+        suggestionElements.inputElement ===
+            inputElement &&
+        (
+            Number(
+                smartAutoUndoUntil.get(
+                    inputElement
+                )
+            ) || 0
+        ) > Date.now()
+    );
+}
+
+function clearSmartAutoUndoSurface(
+    inputElement
+) {
+    if (!inputElement) return;
+
+    smartAutoUndoUntil.delete(
+        inputElement
+    );
+
+    if (
+        suggestionElements.mode === 'undo' &&
+        suggestionElements.inputElement ===
+            inputElement
+    ) {
+        hideSuggestion();
+    }
+}
+
+function armSmartAutoUndoSurface(
+    inputElement
+) {
+    const until =
+        Date.now() +
+        SMART_AUTO_UNDO_VISIBLE_MS;
+
+    smartAutoUndoUntil.set(
+        inputElement,
+        until
+    );
+
+    setTimeout(() => {
+        if (
+            (
+                Number(
+                    smartAutoUndoUntil.get(
+                        inputElement
+                    )
+                ) || 0
+            ) !== until
+        ) {
+            return;
+        }
+
+        if (
+            suggestionElements.mode === 'undo' &&
+            suggestionElements.inputElement ===
+                inputElement
+        ) {
+            hideSuggestion();
+        } else {
+            smartAutoUndoUntil.delete(
+                inputElement
+            );
+        }
+    }, SMART_AUTO_UNDO_VISIBLE_MS);
+}
+
+function getSmartAutoIntentContext(
+    inputElement,
+    text,
+    suggestion
+) {
+    return enrichIntentContext(
+        buildElementIntentContext(
+            inputElement
+        ),
+        text,
+        suggestion.start,
+        suggestion.end
+    );
+}
+
+function isSmartAutoBoundary(
+    text,
+    selection,
+    suggestion
+) {
+    if (
+        !selection ||
+        selection.start !== selection.end ||
+        selection.start <= suggestion.end
+    ) {
+        return false;
+    }
+
+    const between =
+        String(text ?? '').slice(
+            suggestion.end,
+            selection.start
+        );
+
+    return (
+        between.length > 0 &&
+        /^[\s.,!?،؛:…()[\]{}«»]+$/u
+            .test(between)
+    );
+}
+
+function isSmartAutoRecentBoundaryAtTokenEnd(
+    inputElement,
+    selection,
+    suggestion
+) {
+    if (
+        !selection ||
+        selection.start !== selection.end ||
+        selection.start !== suggestion.end
+    ) {
+        return false;
+    }
+
+    const state =
+        smartAutoInputState.get(
+            inputElement
+        );
+
+    if (!state) return false;
+
+    const age =
+        Date.now() - state.at;
+
+    return (
+        age >= 0 &&
+        age <= 1400 &&
+        /^[\s.,!?،؛:…]$/u.test(
+            String(state.data ?? '')
+        )
+    );
+}
+
+function isSmartAutoIdleAtTokenEnd(
+    inputElement,
+    selection,
+    suggestion
+) {
+    if (
+        !selection ||
+        selection.start !== selection.end ||
+        selection.start !== suggestion.end
+    ) {
+        return false;
+    }
+
+    const state =
+        smartAutoInputState.get(
+            inputElement
+        );
+
+    if (!state) return false;
+
+    return Date.now() - state.at >= 600;
+}
+
+function adjustSmartAutoOffset(
+    offset,
+    suggestion
+) {
+    const value = Number(offset);
+
+    if (!Number.isFinite(value)) {
+        return null;
+    }
+
+    if (value <= suggestion.start) {
+        return value;
+    }
+
+    if (value >= suggestion.end) {
+        return (
+            value +
+            suggestion.correctedText.length -
+            suggestion.originalText.length
+        );
+    }
+
+    return (
+        suggestion.start +
+        suggestion.correctedText.length
+    );
+}
+
+function restoreSmartAutoSelection(
+    inputElement,
+    selectionBefore,
+    suggestion
+) {
+    if (!selectionBefore) {
+        return;
+    }
+
+    const start =
+        adjustSmartAutoOffset(
+            selectionBefore.start,
+            suggestion
+        );
+    const end =
+        adjustSmartAutoOffset(
+            selectionBefore.end,
+            suggestion
+        );
+
+    if (
+        start === null ||
+        end === null
+    ) {
+        return;
+    }
+
+    if (!inputElement.isContentEditable) {
+        if (
+            typeof inputElement.setSelectionRange ===
+                'function'
+        ) {
+            inputElement.setSelectionRange(
+                start,
+                Math.max(start, end)
+            );
+        }
+
+        return;
+    }
+
+    if (
+        typeof window.getSelection !==
+            'function'
+    ) {
+        return;
+    }
+
+    const range =
+        createContentEditableRange(
+            inputElement,
+            start,
+            Math.max(start, end)
+        );
+
+    if (!range) return;
+
+    const selection =
+        window.getSelection();
+
+    if (!selection) return;
+
+    selection.removeAllRanges();
+    selection.addRange(range);
+}
+
+function makeSmartAutoUndoSuggestion(
+    inputElement,
+    suggestion
+) {
+    const currentText =
+        getEditableText(inputElement);
+
+    return {
+        fieldText: currentText,
+        start: suggestion.start,
+        end:
+            suggestion.start +
+            suggestion.correctedText.length,
+        originalText:
+            suggestion.correctedText,
+        correctedText:
+            suggestion.originalText,
+        mode: 'undo'
+    };
+}
+
+function applySmartAutoSuggestion(
+    inputElement,
+    suggestion
+) {
+    const textBefore =
+        getEditableText(inputElement);
+    const selectionBefore =
+        getEditableSelection(
+            inputElement,
+            textBefore
+        );
+
+    smartAutoMutationInProgress.add(
+        inputElement
+    );
+
+    let applied = false;
+
+    try {
+        applied =
+            applyEditingSuggestion(
+                inputElement,
+                suggestion
+            );
+    } finally {
+        smartAutoMutationInProgress.delete(
+            inputElement
+        );
+    }
+
+    if (!applied) {
+        return false;
+    }
+
+    restoreSmartAutoSelection(
+        inputElement,
+        selectionBefore,
+        suggestion
+    );
+
+    armSmartAutoPostCommitProtection(
+        inputElement,
+        suggestion
+    );
+
+    const undoSuggestion =
+        makeSmartAutoUndoSuggestion(
+            inputElement,
+            suggestion
+        );
+
+    showSuggestion(
+        suggestion.originalText,
+        suggestion.correctedText,
+        inputElement,
+        undoSuggestion,
+        'undo'
+    );
+
+    armSmartAutoUndoSurface(
+        inputElement
+    );
+
+    scheduleSmartAutoControlledStabilization(
+        inputElement,
+        textBefore,
+        suggestion
+    );
+
+    return true;
+}
+
+function trySmartAutoCorrection(
+    inputElement,
+    text,
+    selection,
+    suggestion
+) {
+    if (
+        !smartAutoEnabled ||
+        isSmartAutoSuppressed(
+            inputElement
+        ) ||
+        suggestion.mode === 'selection' ||
+        typeof analyzeFsaSmartAutoIntent !==
+            'function'
+    ) {
+        return {
+            applied: false,
+            suggestion
+        };
+    }
+
+    const intentContext =
+        getSmartAutoIntentContext(
+            inputElement,
+            text,
+            suggestion
+        );
+
+    const analysis =
+        suggestion.intentAnalysis ||
+        analyzeFsaSmartAutoIntent(
+            suggestion.originalText,
+            intentContext,
+            customDictionary
+        );
+
+    const effectiveSuggestion =
+        makeSmartAutoEffectiveSuggestion(
+            suggestion,
+            analysis
+        );
+
+    if (
+        !analysis.changed ||
+        !analysis.autoEligible
+    ) {
+        return {
+            applied: false,
+            suggestion:
+                effectiveSuggestion
+        };
+    }
+
+    const ready =
+        isSmartAutoBoundary(
+            text,
+            selection,
+            effectiveSuggestion
+        ) ||
+        isSmartAutoRecentBoundaryAtTokenEnd(
+            inputElement,
+            selection,
+            effectiveSuggestion
+        ) ||
+        isSmartAutoIdleAtTokenEnd(
+            inputElement,
+            selection,
+            effectiveSuggestion
+        );
+
+    if (!ready) {
+        return {
+            applied: false,
+            suggestion:
+                effectiveSuggestion
+        };
+    }
+
+    return {
+        applied:
+            applySmartAutoSuggestion(
+                inputElement,
+                effectiveSuggestion
+            ),
+        suggestion:
+            effectiveSuggestion
+    };
+}
+
 function checkForCorrection(inputElement) {
     if (!isAssistantAvailable()) {
         hideSuggestion();
         return;
     }
 
-    if (!isSupportedEditable(inputElement)) return;
+    if (!isSupportedEditable(inputElement)) {
+        return;
+    }
 
-    const text = getEditableText(inputElement);
-    const selection = getEditableSelection(inputElement, text);
-    const suggestion = computeEditingSuggestion(
-        text,
-        selection.start,
-        selection.end,
-        customDictionary
-    );
+    const text =
+        getEditableText(inputElement);
+    const selection =
+        getEditableSelection(
+            inputElement,
+            text
+        );
+    const suggestion =
+        computeEditingSuggestion(
+            text,
+            selection.start,
+            selection.end,
+            customDictionary,
+            buildElementIntentContext(
+                inputElement
+            )
+        );
 
-    if (suggestion) {
-        showSuggestion(
-            suggestion.correctedText,
-            suggestion.originalText,
+    if (!suggestion) {
+        if (
+            isSmartAutoUndoSurfaceActive(
+                inputElement
+            )
+        ) {
+            return;
+        }
+
+        hideSuggestion();
+        return;
+    }
+
+    if (
+        isSmartAutoPostCommitSuggestion(
             inputElement,
             suggestion
-        );
-    } else {
+        )
+    ) {
+        // The exact token just produced by Auto correction must not be
+        // immediately reconsidered in the opposite direction. Preserve the
+        // Undo surface while this token-local protection is active.
+        if (
+            isSmartAutoUndoSurfaceActive(
+                inputElement
+            )
+        ) {
+            return;
+        }
+
         hideSuggestion();
+        return;
     }
+
+    const smartAutoResult =
+        trySmartAutoCorrection(
+            inputElement,
+            text,
+            selection,
+            suggestion
+        );
+
+    if (smartAutoResult.applied) {
+        return;
+    }
+
+    const visibleSuggestion =
+        smartAutoResult.suggestion ||
+        suggestion;
+
+    showSuggestion(
+        visibleSuggestion.correctedText,
+        visibleSuggestion.originalText,
+        inputElement,
+        visibleSuggestion
+    );
 }
 
 function clampViewportCoordinate(value, minimum, maximum) {
@@ -805,7 +1826,8 @@ function showSuggestion(
     correctedText,
     originalText,
     inputElement,
-    suggestion = null
+    suggestion = null,
+    surfaceMode = 'suggestion'
 ) {
     hideSuggestion();
 
@@ -841,7 +1863,10 @@ function showSuggestion(
     marker.style.lineHeight = '20px';
 
     const prefix = document.createElement('span');
-    prefix.textContent = 'اصلاح:';
+    prefix.textContent =
+        surfaceMode === 'undo'
+            ? 'برگردان:'
+            : 'اصلاح:';
     prefix.style.all = 'initial';
     prefix.style.color = '#4a4a4a';
     prefix.style.fontFamily =
@@ -886,6 +1911,16 @@ function showSuggestion(
         event.preventDefault?.();
         event.stopPropagation?.();
 
+        if (
+            surfaceMode === 'undo' &&
+            inputElement
+        ) {
+            smartAutoSuppressUntil.set(
+                inputElement,
+                Date.now() + 5000
+            );
+        }
+
         const applied = inputElement
             ? applyEditingSuggestion(
                 inputElement,
@@ -913,18 +1948,33 @@ function showSuggestion(
 
     suggestionElements = {
         host: surface.host,
-        action
+        action,
+        mode: surfaceMode,
+        inputElement
     };
 }
 
 function hideSuggestion() {
+    const undoInputElement =
+        suggestionElements.mode === 'undo'
+            ? suggestionElements.inputElement
+            : null;
+
     if (suggestionElements.host) {
         suggestionElements.host.remove();
     }
 
+    if (undoInputElement) {
+        smartAutoUndoUntil.delete(
+            undoInputElement
+        );
+    }
+
     suggestionElements = {
         host: null,
-        action: null
+        action: null,
+        mode: '',
+        inputElement: null
     };
 }
 
@@ -946,8 +1996,61 @@ function scheduleCorrectionCheck(inputElement, delay = 450) {
 }
 
 function handleInput(event) {
-    const inputElement = event.currentTarget || event.target;
-    scheduleCorrectionCheck(inputElement, 450);
+    const inputElement =
+        event.currentTarget || event.target;
+
+    if (
+        smartAutoMutationInProgress.has(
+            inputElement
+        )
+    ) {
+        return;
+    }
+
+    const trustedUserInput =
+        event.isTrusted === true;
+
+    if (trustedUserInput) {
+        smartAutoControlledCommitState.delete(
+            inputElement
+        );
+
+        clearSmartAutoUndoSurface(
+            inputElement
+        );
+    }
+
+    const data =
+        String(event.data ?? '');
+
+    smartAutoInputState.set(
+        inputElement,
+        {
+            at: Date.now(),
+            data,
+            inputType:
+                String(
+                    event.inputType || ''
+                )
+        }
+    );
+
+    const boundaryInput =
+        /^[\s.,!?،؛:…]$/u.test(
+            data
+        );
+
+    const delay =
+        smartAutoEnabled
+            ? boundaryInput
+                ? 120
+                : 650
+            : 450;
+
+    scheduleCorrectionCheck(
+        inputElement,
+        delay
+    );
 }
 
 function handleSelectionIntent(event) {
@@ -964,6 +2067,7 @@ function trackEditable(inputElement) {
 
     if (!trackedInputs.has(inputElement)) {
         inputElement.addEventListener('input', handleInput);
+        inputElement.addEventListener('keydown', handleIntentKeydown);
 
         if (!inputElement.isContentEditable) {
             inputElement.addEventListener(
@@ -1040,7 +2144,27 @@ document.addEventListener('click', (event) => {
     }
 });
 
+function hideSuggestionForPassiveViewportChange() {
+    if (
+        suggestionElements.mode === 'undo' &&
+        isSmartAutoUndoSurfaceActive(
+            suggestionElements.inputElement
+        )
+    ) {
+        return;
+    }
+
+    hideSuggestion();
+}
+
 if (typeof window.addEventListener === 'function') {
-    window.addEventListener('resize', hideSuggestion);
-    window.addEventListener('scroll', hideSuggestion, true);
+    window.addEventListener(
+        'resize',
+        hideSuggestionForPassiveViewportChange
+    );
+    window.addEventListener(
+        'scroll',
+        hideSuggestionForPassiveViewportChange,
+        true
+    );
 }

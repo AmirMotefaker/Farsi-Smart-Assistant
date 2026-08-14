@@ -97,7 +97,11 @@ test('M3 Firefox build uses MV3 background scripts in dependency order', async (
       firefox.background,
       {
         scripts: [
+          'language_profiles.js',
           'keyboard_layout.js',
+          'context_intent.js',
+          'transliteration_intent.js',
+          'normalization_intent.js',
           'logic.js',
           'background.js'
         ]
@@ -162,8 +166,15 @@ test('M3 Firefox build preserves universal content-script frame coverage', async
     assert.deepEqual(
       content.js,
       [
+        'language_profiles.js',
         'keyboard_layout.js',
+        'context_intent.js',
+        'transliteration_intent.js',
+        'normalization_intent.js',
         'logic.js',
+        'lexical_priors.js',
+        'finglish_source_model.js',
+        'smart_auto_intent.js',
         'inline_checker.js'
       ]
     );
@@ -183,8 +194,15 @@ test('M3 generated packages contain runtime files and exclude dev-only content',
       for (const required of [
         'background.js',
         'inline_checker.js',
+        'language_profiles.js',
         'keyboard_layout.js',
+        'context_intent.js',
+        'transliteration_intent.js',
+        'normalization_intent.js',
         'logic.js',
+        'lexical_priors.js',
+        'finglish_source_model.js',
+        'smart_auto_intent.js',
         'popup.html',
         'popup.js',
         'options.html',
@@ -207,6 +225,7 @@ test('M3 generated packages contain runtime files and exclude dev-only content',
         'scripts',
         '.github',
         'package.json',
+        'package-lock.json',
         'inline_styles.css'
       ]) {
         assert.equal(

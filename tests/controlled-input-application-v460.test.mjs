@@ -104,7 +104,9 @@ vm.runInContext(
   `${source}
 ;globalThis.__apply = {
   replaceStandardRange,
-  applyEditingSuggestion
+  applyEditingSuggestion,
+  stabilizeSmartAutoControlledValue,
+  makeSmartAutoEffectiveSuggestion
 };`,
   context
 );
@@ -216,5 +218,81 @@ test('v4.6 final writable-value fallback remains available when native construct
   assert.match(
     source,
     /return finalizeStandardReplacement\([\s\S]*newText[\s\S]*caret/u
+  );
+});
+
+test('v4.7 runtime arbitration uses the Smart Auto correction when the converter proposed a conflicting layout candidate', () => {
+  const suggestion = {
+    fieldText: 'ما دوباره تلاش میکنیم bgrdim ',
+    start: 'ما دوباره تلاش میکنیم '.length,
+    end: 'ما دوباره تلاش میکنیم bgrdim'.length,
+    originalText: 'bgrdim',
+    correctedText: 'ذلقیهپ',
+    mode: 'token'
+  };
+
+  const analysis = {
+    changed: true,
+    autoEligible: true,
+    original: 'bgrdim',
+    corrected: 'بگردیم',
+    kind: 'finglish'
+  };
+
+  const effective =
+    apply.makeSmartAutoEffectiveSuggestion(
+      suggestion,
+      analysis
+    );
+
+  assert.equal(
+    effective.correctedText,
+    'بگردیم'
+  );
+
+  assert.equal(
+    effective.originalText,
+    'bgrdim'
+  );
+});
+
+test('v4.7 controlled-input stabilization reapplies only an exact framework revert', () => {
+  const original = 'ضشظرهد ';
+  const expected = 'qazvin ';
+  const element = new FakeInput(original);
+
+  const state = {
+    originalText: original,
+    expectedText: expected,
+    correctedText: 'qazvin',
+    caret: expected.length
+  };
+
+  assert.equal(
+    apply.stabilizeSmartAutoControlledValue(
+      element,
+      state
+    ),
+    true
+  );
+
+  assert.equal(
+    element.value,
+    expected
+  );
+
+  element.value = 'qazvin user edit';
+
+  assert.equal(
+    apply.stabilizeSmartAutoControlledValue(
+      element,
+      state
+    ),
+    false
+  );
+
+  assert.equal(
+    element.value,
+    'qazvin user edit'
   );
 });
