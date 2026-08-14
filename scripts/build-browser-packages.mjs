@@ -147,6 +147,7 @@ const files = trackedRuntimeFiles();
 
 for (const requiredFile of [
   'background.js',
+  'ui_i18n.js',
   'inline_checker.js',
   'language_profiles.js',
   'keyboard_layout.js',

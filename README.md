@@ -54,6 +54,7 @@
 - **جستجوی عمیق در گوگل:** اگر اطلاعاتی در ویکی‌پدیا یافت نشود، به طور خودکار نتایج برتر گوگل را نمایش می‌دهد.
 
 ### 🌐 ادغام کامل با مرورگر
+- **رابط کاربری دو‌زبانه:** جابه‌جایی فوری بین فارسی (RTL) و English (LTR) با ذخیره انتخاب کاربر.
 - **پاپ‌آپ اصلی:** پنل مدیریتی کامل با طراحی مدرن و فلت.
 - **تبدیل درجا (Inline Correction):** آیکون شناور در کنار کادرهای متنی برای اصلاح لحظه‌ای.
 - **منوی راست‌کلیک:** قابلیت جستجوی هوشمند برای متن انتخاب شده.
@@ -68,10 +69,10 @@
 
 ### آخرین بسته‌های انتشار
 
-از Release نسخه v4.7.0 این فایل‌ها به صورت versioned منتشر می‌شوند:
+از Release نسخه v4.8.0 این فایل‌ها به صورت versioned منتشر می‌شوند:
 
-- `Farsi-Smart-Assistant-v4.7.0-chromium.zip` برای Chrome / Edge / Brave / Opera / Vivaldi
-- `Farsi-Smart-Assistant-v4.7.0-firefox.zip` برای Firefox
+- `Farsi-Smart-Assistant-v4.8.0-chromium.zip` برای Chrome / Edge / Brave / Opera / Vivaldi
+- `Farsi-Smart-Assistant-v4.8.0-firefox.zip` برای Firefox
 - `SHA256SUMS.txt` برای اعتبارسنجی فایل‌ها
 
 صفحه انتشارها: **[GitHub Releases](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases)**
@@ -81,7 +82,7 @@
 
 ### نصب دستی در مرورگرهای Chromium برای تست/توسعه
 
-1. بسته `Farsi-Smart-Assistant-v4.7.0-chromium.zip` را از Release دانلود کنید.
+1. بسته `Farsi-Smart-Assistant-v4.8.0-chromium.zip` را از Release دانلود کنید.
 2. SHA256 فایل را با `SHA256SUMS.txt` تطبیق دهید.
 3. ZIP را Extract کنید.
 4. صفحه مدیریت افزونه‌های مرورگر را باز کنید.
@@ -90,7 +91,7 @@
 
 ### نصب موقت در Firefox برای تست/توسعه
 
-1. بسته `Farsi-Smart-Assistant-v4.7.0-firefox.zip` را Extract کنید.
+1. بسته `Farsi-Smart-Assistant-v4.8.0-firefox.zip` را Extract کنید.
 2. `about:debugging` را باز کنید.
 3. **This Firefox** → **Load Temporary Add-on** را انتخاب کنید.
 4. فایل `manifest.json` بسته Firefox را انتخاب کنید.

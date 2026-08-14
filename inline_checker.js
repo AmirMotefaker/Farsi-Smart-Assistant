@@ -6,6 +6,8 @@ let activeInput = null;
 let suggestionElements = {
     host: null,
     action: null,
+    prefix: null,
+    correctedText: '',
     mode: '',
     inputElement: null
 };
@@ -13,6 +15,7 @@ let customDictionary = {};
 let assistantEnabled = true;
 let smartAutoEnabled = true;
 let disabledHosts = [];
+let uiLanguage = 'fa';
 const trackedInputs = new WeakSet();
 const inputTimers = new WeakMap();
 const intentKeyHistory = new WeakMap();
@@ -34,7 +37,7 @@ chrome.storage.sync.get('customDictionary', (data) => {
 });
 
 chrome.storage.sync.get(
-    ['assistantEnabled', 'disabledHosts', 'smartAutoEnabled'],
+    ['assistantEnabled', 'disabledHosts', 'smartAutoEnabled', 'uiLanguage'],
     (data) => {
         assistantEnabled = data.assistantEnabled !== false;
         disabledHosts = Array.isArray(data.disabledHosts)
@@ -42,8 +45,74 @@ chrome.storage.sync.get(
             : [];
         smartAutoEnabled =
             data.smartAutoEnabled !== false;
+        uiLanguage = normalizeUiLanguage(
+            data.uiLanguage
+        );
     }
 );
+
+function normalizeUiLanguage(value) {
+    if (
+        globalThis.FSA_UI_I18N &&
+        typeof globalThis.FSA_UI_I18N.normalizeLocale === 'function'
+    ) {
+        return globalThis.FSA_UI_I18N.normalizeLocale(value);
+    }
+
+    return String(value || '').toLowerCase() === 'en'
+        ? 'en'
+        : 'fa';
+}
+
+function inlineUiText(key, variables = {}) {
+    if (
+        globalThis.FSA_UI_I18N &&
+        typeof globalThis.FSA_UI_I18N.t === 'function'
+    ) {
+        return globalThis.FSA_UI_I18N.t(
+            key,
+            uiLanguage,
+            variables
+        );
+    }
+
+    const fallback = {
+        'inline.undoPrefix': 'برگردان:',
+        'inline.correctionPrefix': 'اصلاح:',
+        'inline.replaceWith': 'جایگزین با {text}'
+    };
+
+    return String(fallback[key] || key).replace(
+        /\{text\}/g,
+        String(variables.text || '')
+    );
+}
+
+function refreshSuggestionLanguage() {
+    const action = suggestionElements.action;
+    const prefix = suggestionElements.prefix;
+
+    if (!action) return;
+
+    const direction = uiLanguage === 'en' ? 'ltr' : 'rtl';
+    action.style.direction = direction;
+    action.setAttribute?.(
+        'aria-label',
+        inlineUiText(
+            'inline.replaceWith',
+            { text: suggestionElements.correctedText }
+        )
+    );
+
+    if (prefix) {
+        prefix.textContent = inlineUiText(
+            suggestionElements.mode === 'undo'
+                ? 'inline.undoPrefix'
+                : 'inline.correctionPrefix'
+        );
+        prefix.style.direction = direction;
+    }
+}
 
 function normalizeAssistantHost(value) {
     return String(value || '')
@@ -111,6 +180,13 @@ if (chrome.storage.onChanged?.addListener) {
             if (changes.smartAutoEnabled) {
                 smartAutoEnabled =
                     changes.smartAutoEnabled.newValue !== false;
+            }
+
+            if (changes.uiLanguage) {
+                uiLanguage = normalizeUiLanguage(
+                    changes.uiLanguage.newValue
+                );
+                refreshSuggestionLanguage();
             }
 
             if (!isAssistantAvailable()) {
@@ -1727,7 +1803,8 @@ function styleSuggestionAction(action) {
     action.style.fontSize = '14px';
     action.style.fontWeight = '600';
     action.style.lineHeight = '20px';
-    action.style.direction = 'rtl';
+    action.style.direction =
+        uiLanguage === 'en' ? 'ltr' : 'rtl';
     action.style.whiteSpace = 'nowrap';
     action.style.overflow = 'hidden';
     action.style.textOverflow = 'ellipsis';
@@ -1840,7 +1917,10 @@ function showSuggestion(
     action.className = 'farsi-smart-suggestion-action';
     action.setAttribute?.(
         'aria-label',
-        `جایگزین با ${correctedText}`
+        inlineUiText(
+            'inline.replaceWith',
+            { text: correctedText }
+        )
     );
 
     styleSuggestionAction(action);
@@ -1863,17 +1943,19 @@ function showSuggestion(
     marker.style.lineHeight = '20px';
 
     const prefix = document.createElement('span');
-    prefix.textContent =
+    prefix.textContent = inlineUiText(
         surfaceMode === 'undo'
-            ? 'برگردان:'
-            : 'اصلاح:';
+            ? 'inline.undoPrefix'
+            : 'inline.correctionPrefix'
+    );
     prefix.style.all = 'initial';
     prefix.style.color = '#4a4a4a';
     prefix.style.fontFamily =
         'Arial, Tahoma, sans-serif';
     prefix.style.fontSize = '13px';
     prefix.style.fontWeight = '500';
-    prefix.style.direction = 'rtl';
+    prefix.style.direction =
+        uiLanguage === 'en' ? 'ltr' : 'rtl';
 
     const correctionText = document.createElement('strong');
     correctionText.textContent = correctedText;
@@ -1949,6 +2031,8 @@ function showSuggestion(
     suggestionElements = {
         host: surface.host,
         action,
+        prefix,
+        correctedText,
         mode: surfaceMode,
         inputElement
     };
@@ -1973,6 +2057,8 @@ function hideSuggestion() {
     suggestionElements = {
         host: null,
         action: null,
+        prefix: null,
+        correctedText: '',
         mode: '',
         inputElement: null
     };

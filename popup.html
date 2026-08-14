@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>دستیار هوشمند فارسی</title>
+    <title data-i18n="popup.documentTitle">دستیار هوشمند فارسی</title>
     <link rel="stylesheet" href="popup.css">
 </head>
 <body class="popup-page">
@@ -15,34 +15,47 @@
 
             <div class="brand-copy">
                 <div class="brand-title-row">
-                    <h1>دستیار هوشمند فارسی</h1>
+                    <h1 data-i18n="common.productName">دستیار هوشمند فارسی</h1>
                     <span id="version-display" class="version-badge"></span>
                 </div>
-                <p>اصلاح هوشمند تایپ فارسی و انگلیسی در سراسر وب</p>
+                <p data-i18n="popup.tagline">اصلاح هوشمند تایپ فارسی و انگلیسی در سراسر وب</p>
             </div>
 
-            <button
-                id="themeToggle"
-                class="icon-button"
-                type="button"
-                title="تغییر حالت روشن و تاریک"
-                aria-label="تغییر حالت روشن و تاریک"
-            >
-                <span class="theme-icon theme-icon-light" aria-hidden="true">☀</span>
-                <span class="theme-icon theme-icon-dark" aria-hidden="true">☾</span>
-            </button>
+            <div class="header-controls">
+                <div
+                    id="languageSwitch"
+                    class="language-switch"
+                    role="group"
+                    aria-label="زبان رابط کاربری"
+                    data-i18n-aria-label="common.languageSwitcher"
+                >
+                    <button id="languageFa" class="language-option is-active" type="button" aria-pressed="true">FA</button>
+                    <button id="languageEn" class="language-option" type="button" aria-pressed="false">EN</button>
+                </div>
+
+                <button
+                    id="themeToggle"
+                    class="icon-button"
+                    type="button"
+                    title="فعال کردن حالت تاریک"
+                    aria-label="فعال کردن حالت تاریک"
+                >
+                    <span class="theme-icon theme-icon-light" aria-hidden="true">☀</span>
+                    <span class="theme-icon theme-icon-dark" aria-hidden="true">☾</span>
+                </button>
+            </div>
         </header>
 
         <section class="status-card" aria-labelledby="assistantStatusTitle">
             <div class="status-row">
                 <div>
-                    <div class="eyebrow">وضعیت دستیار</div>
-                    <h2 id="assistantStatusTitle">اصلاح در فیلدهای متنی</h2>
+                    <div class="eyebrow" data-i18n="popup.assistantStatus">وضعیت دستیار</div>
+                    <h2 id="assistantStatusTitle" data-i18n="popup.textFieldCorrections">اصلاح در فیلدهای متنی</h2>
                     <p id="assistantStatusText" class="status-detail">فعال در سراسر وب</p>
                 </div>
 
                 <label class="switch">
-                    <input id="assistantToggle" type="checkbox" aria-label="فعال یا غیرفعال کردن دستیار">
+                    <input id="assistantToggle" type="checkbox" aria-label="فعال یا غیرفعال کردن دستیار" data-i18n-aria-label="popup.assistantToggleLabel">
                     <span class="switch-track" aria-hidden="true"></span>
                 </label>
             </div>
@@ -50,22 +63,20 @@
             <div class="site-row">
                 <div class="site-icon" aria-hidden="true">◎</div>
                 <div class="site-copy">
-                    <span class="site-label">صفحه فعلی</span>
-                    <strong id="currentSiteHost">در حال شناسایی…</strong>
+                    <span class="site-label" data-i18n="popup.currentPage">صفحه فعلی</span>
+                    <strong id="currentSiteHost" data-i18n="popup.detecting">در حال شناسایی…</strong>
                 </div>
-                <button id="siteToggleButton" class="text-button" type="button">
-                    تغییر وضعیت
-                </button>
+                <button id="siteToggleButton" class="text-button" type="button" data-i18n="popup.changeStatus">تغییر وضعیت</button>
             </div>
         </section>
 
-        <section class="browser-card" aria-label="مرورگرهای پشتیبانی‌شده">
+        <section class="browser-card" aria-label="مرورگرهای پشتیبانی‌شده" data-i18n-aria-label="popup.browserSupportLabel">
             <div class="section-heading">
                 <div>
-                    <span class="eyebrow">پشتیبانی دسکتاپ</span>
-                    <h2>یک تجربه، شش مرورگر</h2>
+                    <span class="eyebrow" data-i18n="popup.desktopSupport">پشتیبانی دسکتاپ</span>
+                    <h2 data-i18n="popup.sixBrowsers">یک تجربه، شش مرورگر</h2>
                 </div>
-                <span class="verified-pill">تست‌شده</span>
+                <span class="verified-pill" data-i18n="popup.tested">تست‌شده</span>
             </div>
 
             <div class="browser-list">
@@ -81,63 +92,64 @@
         <section class="quick-test-card">
             <div class="section-heading compact-heading">
                 <div>
-                    <span class="eyebrow">تست سریع</span>
-                    <h2>متن را همین‌جا بررسی کن</h2>
+                    <span class="eyebrow" data-i18n="popup.quickTest">تست سریع</span>
+                    <h2 data-i18n="popup.checkHere">متن را همین‌جا بررسی کن</h2>
                 </div>
             </div>
 
-            <label class="sr-only" for="inputText">متن ورودی</label>
+            <label class="sr-only" for="inputText" data-i18n="popup.inputLabel">متن ورودی</label>
             <textarea
                 id="inputText"
+                dir="auto"
                 placeholder="مثلاً jivhk یا یک عبارت فارسی را وارد کنید…"
+                data-i18n-placeholder="popup.inputPlaceholder"
                 spellcheck="false"
             ></textarea>
 
             <div id="resultContainer" class="result-container">
-                <label class="sr-only" for="correctedTextBox">متن اصلاح‌شده</label>
-                <textarea id="correctedTextBox" class="corrected-text-box" readonly></textarea>
+                <label class="sr-only" for="correctedTextBox" data-i18n="popup.correctedLabel">متن اصلاح‌شده</label>
+                <textarea id="correctedTextBox" class="corrected-text-box" dir="auto" readonly></textarea>
 
                 <div id="feedbackContainer" class="feedback-container">
-                    <button id="confirmButton" type="button" title="تأیید و ذخیره اصلاح" aria-label="تأیید و ذخیره اصلاح">✓</button>
-                    <button id="rejectButton" type="button" title="ویرایش دستی" aria-label="ویرایش دستی">✎</button>
+                    <button id="confirmButton" type="button" title="تأیید و ذخیره اصلاح" aria-label="تأیید و ذخیره اصلاح" data-i18n-title="popup.confirmCorrection" data-i18n-aria-label="popup.confirmCorrection">✓</button>
+                    <button id="rejectButton" type="button" title="ویرایش دستی" aria-label="ویرایش دستی" data-i18n-title="popup.manualEdit" data-i18n-aria-label="popup.manualEdit">✎</button>
                 </div>
 
-                <button id="saveManualCorrectionButton" class="save-button" type="button">
-                    ذخیره ویرایش
-                </button>
+                <button id="saveManualCorrectionButton" class="save-button" type="button" data-i18n="popup.saveEdit">ذخیره ویرایش</button>
             </div>
 
             <div id="knowledgePanel" class="knowledge-panel" aria-live="polite"></div>
             <div id="saveConfirmation" class="confirmation" aria-live="polite"></div>
 
-            <button id="mainButton" class="search-button" type="button">
-                جست‌وجوی بیشتر در گوگل
-            </button>
+            <button id="mainButton" class="search-button" type="button" data-i18n="popup.searchGoogle">جست‌وجوی بیشتر در گوگل</button>
         </section>
 
-        <nav class="quick-actions" aria-label="دسترسی سریع">
+        <nav class="quick-actions" aria-label="دسترسی سریع" data-i18n-aria-label="popup.quickActions">
             <button id="manageSitesLink" class="quick-action" type="button">
                 <span class="quick-action-icon" aria-hidden="true">◎</span>
-                <span>مدیریت سایت‌ها</span>
+                <span data-i18n="popup.manageSites">مدیریت سایت‌ها</span>
             </button>
             <button id="settingsLink" class="quick-action" type="button">
                 <span class="quick-action-icon" aria-hidden="true">⚙</span>
-                <span>تنظیمات</span>
+                <span data-i18n="popup.settings">تنظیمات</span>
             </button>
             <button id="reportIssueLink" class="quick-action" type="button">
                 <span class="quick-action-icon" aria-hidden="true">!</span>
-                <span>گزارش مشکل</span>
+                <span data-i18n="popup.reportIssue">گزارش مشکل</span>
             </button>
         </nav>
 
         <footer class="popup-footer">
-            <span>ساخته شده با <span class="footer-heart" aria-label="عشق">♥</span> برای ایرانیان توسط</span>
+            <span data-i18n="popup.footerMadeWith">ساخته شده با</span>
+            <span class="footer-heart" aria-label="عشق" data-i18n-aria-label="popup.love">♥</span>
+            <span data-i18n="popup.footerFor">برای ایرانیان توسط</span>
             <a
                 id="authorLink"
                 class="footer-author"
                 href="https://amirmotefaker.ir/"
                 target="_blank"
                 rel="noopener noreferrer"
+                data-i18n="popup.authorName"
             >امیر متفکر</a>
             <a
                 id="githubLink"
@@ -147,10 +159,13 @@
                 rel="noopener noreferrer"
                 aria-label="GitHub پروژه Farsi Smart Assistant"
                 title="GitHub پروژه"
+                data-i18n-aria-label="popup.githubLabel"
+                data-i18n-title="popup.githubTitle"
             ><img src="assets/browser-logos/github.svg" alt="" aria-hidden="true"></a>
         </footer>
     </main>
 
+    <script src="ui_i18n.js"></script>
     <script src="keyboard_layout.js"></script>
     <script src="logic.js"></script>
     <script src="popup.js"></script>

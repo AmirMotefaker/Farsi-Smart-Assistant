@@ -166,6 +166,7 @@ test('M3 Firefox build preserves universal content-script frame coverage', async
     assert.deepEqual(
       content.js,
       [
+        'ui_i18n.js',
         'language_profiles.js',
         'keyboard_layout.js',
         'context_intent.js',
@@ -193,6 +194,7 @@ test('M3 generated packages contain runtime files and exclude dev-only content',
 
       for (const required of [
         'background.js',
+        'ui_i18n.js',
         'inline_checker.js',
         'language_profiles.js',
         'keyboard_layout.js',
