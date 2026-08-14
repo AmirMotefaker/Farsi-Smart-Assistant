@@ -160,3 +160,14 @@
 ## 📜 مجوز (لایسنس)
 
 این پروژه تحت مجوز [MIT](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/blob/main/LICENSE) منتشر شده است.
+<!-- phase9-community-start -->
+## 💬 جامعه، پرسش و مشارکت
+
+- برای سؤال‌های نحوه استفاده، تجربه کاربری و پرسش‌های فنی از [GitHub Discussions](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/discussions) استفاده کنید.
+- سؤال‌هایی که پاسخ مشخص دارند را در دسته **Q&A** مطرح کنید تا پاسخ مفید بتواند به‌عنوان answer علامت‌گذاری شود.
+- باگ قابل بازتولید یا درخواست قابلیتِ آماده‌ی اجرا را در [Issues](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/issues) ثبت کنید.
+- برای مشارکت کد یا مستندات، ابتدا [CONTRIBUTING.md](CONTRIBUTING.md) را بخوانید.
+- برای آسیب‌پذیری امنیتی از مسیر خصوصی ذکرشده در [SECURITY.md](SECURITY.md) استفاده کنید و جزئیات حساس را عمومی نکنید.
+
+مشارکت‌های کوچک و واقعی استقبال می‌شوند؛ `good first issue` و `help wanted` فقط زمانی استفاده می‌شوند که یک کار واقعی و قابل‌تحویل برای contributor وجود داشته باشد.
+<!-- phase9-community-end -->
