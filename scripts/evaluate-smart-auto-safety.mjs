@@ -274,6 +274,20 @@ const persianContext = {
   direction:'rtl'
 };
 
+const googlePersianContext = {
+  beforeText:'ما دوباره تلاش میکنیم ',
+  afterText:'',
+  fieldLanguage:'en',
+  pageLanguage:'en',
+  direction:'',
+  browserLanguage:'en-US',
+  keyboardEvidence:{
+    latinKeys:5,
+    persianKeys:0,
+    physicalAlphaKeys:5
+  }
+};
+
 function ratio(a,b) {
   return b > 0 ? a / b : 0;
 }
@@ -282,6 +296,7 @@ let validEnglishAuto = 0;
 let validPersianAuto = 0;
 let validPersianPhysicalKeyboardAuto = 0;
 let englishContextRuntimeAuto = 0;
+let englishGooglePersianContextAuto = 0;
 let englishContextLexicalMissAuto = 0;
 let reverseCorrect = 0;
 let forwardCorrect = 0;
@@ -312,6 +327,17 @@ for (const word of english) {
       .autoEligible
   ) {
     englishContextRuntimeAuto += 1;
+  }
+
+  if (
+    runtimeEngine
+      .analyzeFsaSmartAutoIntent(
+        word,
+        googlePersianContext
+      )
+      .autoEligible
+  ) {
+    englishGooglePersianContextAuto += 1;
   }
 
   const lexicalMiss =
@@ -504,6 +530,11 @@ const result = {
       ratio(
         englishContextRuntimeAuto,
         english.length
+      ),
+    englishInGooglePersianContextAutoRate:
+      ratio(
+        englishGooglePersianContextAuto,
+        english.length
       )
   },
   lexicalMiss:{
@@ -540,6 +571,7 @@ const result = {
     validSourceCeiling:0.002,
     physicalKeyboardValidPersianCeiling:0.002,
     runtimeEnglishContextCeiling:0.01,
+    googlePersianContextEnglishCeiling:0.01,
     lexicalMissEnglishContextCeiling:0.01,
     reverseLayoutFloor:0.80,
     forwardLayoutFloor:0.80,
@@ -568,6 +600,11 @@ result.pass = {
       .englishInPersianContextAutoRate <=
     result.gates
       .runtimeEnglishContextCeiling,
+  googlePersianContextEnglish:
+    result.runtime
+      .englishInGooglePersianContextAutoRate <=
+    result.gates
+      .googlePersianContextEnglishCeiling,
   lexicalMissEnglishContext:
     result.lexicalMiss
       .englishInPersianContextAutoRate <=

@@ -206,6 +206,14 @@ test('v4.7 inline Smart Auto has mutation guard, suppression and Undo surface', 
   );
   assert.match(
     inlineSource,
+    /smartAutoPostCommitState/u
+  );
+  assert.match(
+    inlineSource,
+    /isSmartAutoPostCommitSuggestion/u
+  );
+  assert.match(
+    inlineSource,
     /applySmartAutoSuggestion/u
   );
   assert.match(
@@ -312,7 +320,30 @@ test('v4.7 real Chrome regression: plausible Latin proper name is not Auto-conve
   );
 });
 
-test('v4.7 real Chrome regression: strong Persian surrounding context promotes bgrdim to Finglish Auto', () => {
+test('v4.7 real Chrome regression: Google lang=en field still promotes high-confidence bgrdim under strong Persian surrounding text', () => {
+  const smartAutoSource =
+    sources.find(
+      source =>
+        source.includes(
+          'const FSA_SMART_AUTO_ENGINE_VERSION'
+        )
+    ) || '';
+
+  const promotionBlock =
+    smartAutoSource.match(
+      /const targetStatisticallyStrong[\s\S]*?const autoEligible/u
+    )?.[0] || '';
+
+  assert.match(
+    promotionBlock,
+    /decisionMargin\s*>=\s*2\.0/u
+  );
+
+  assert.doesNotMatch(
+    promotionBlock,
+    /isHighConfidencePersianCandidate/u
+  );
+
   const analysis =
     engine.analyzeFsaSmartAutoIntent(
       'bgrdim',
@@ -320,14 +351,14 @@ test('v4.7 real Chrome regression: strong Persian surrounding context promotes b
         beforeText:
           'ما دوباره تلاش میکنیم ',
         afterText: '',
-        fieldLanguage: '',
+        fieldLanguage: 'en',
         pageLanguage: 'en',
-        direction: 'ltr',
+        direction: '',
         browserLanguage: 'en-US',
         keyboardEvidence: {
-          latinKeys: 6,
+          latinKeys: 5,
           persianKeys: 0,
-          physicalAlphaKeys: 6
+          physicalAlphaKeys: 5
         }
       }
     );

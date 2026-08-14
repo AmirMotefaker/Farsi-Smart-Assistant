@@ -168,3 +168,45 @@ v7 therefore keeps those runtime fixes but requires an additional conservative t
 ### Release policy
 
 The full locked safety suite, physical-keyboard valid-Persian false-positive gate, exact-head CI, and a **fourth fresh real Chrome test** must all pass before merge/release.
+
+## Phase E4 — diagnostic root cause
+
+A diagnostic-only build on exact product head `aeb48963ff4b468cdac806eb9fc05672946fbf59` reproduced the fourth real Chrome findings without changing product behavior.
+
+### Finding A — Google field language suppressed Finglish Auto
+
+For `ما دوباره تلاش میکنیم bgrdim` the real Google trace produced the correct `بگردیم` candidate and a strong Finglish source-intent score, but `autoEligible=false`.
+
+The missing test dimension was Google Search's own field language hint (`fieldLanguage=en`). Earlier integration coverage used an empty field-language hint, so the automated fixture was not equivalent to the browser.
+
+Remediation:
+- strong Persian surrounding **field text** is now an independent high-confidence signal;
+- Auto still requires preferred Finglish source intent, a large source-intent margin, weak English source shape, high Finglish confidence and a high-confidence Persian target;
+- English page/field metadata alone can no longer veto that narrowly qualified Persian-text context.
+
+### Finding B — reverse-layout output was immediately reconsidered
+
+Real Chrome corrected `ضشظرهد -> qazvin`, then immediately analyzed the new `qazvin` token in the opposite direction and surfaced `ضشظرهد` again.
+
+That re-analysis also competed with the visible Undo surface because every new suggestion calls the common suggestion renderer.
+
+Remediation:
+- every successful Auto correction arms a five-second token-local post-commit protection;
+- only the exact corrected token/range is protected;
+- an unrelated/new token is not blocked;
+- while the protected token is unchanged, opposite-direction suggestion/Auto is suppressed and the active Undo surface is preserved;
+- manual Undo keeps the existing independent suppression behavior.
+
+### v8 preflight rejection
+
+The first v8 local preflight stopped before commit/push on the new exact-Google `bgrdim` regression. The reason was not insufficient statistical evidence: the new promotion guard accidentally delegated to `isHighConfidencePersianCandidate()`, which is a small explicit Persian word set and does not contain `بگردیم`.
+
+v9 removes that dictionary-like dependency from the Google-context promotion. It uses the existing generalized Finglish statistical evidence instead: target coverage / target z-score, decision margin, source-intent margin, source shape, surrounding Persian script evidence, and calibrated confidence.
+
+No word-specific exception is added for `بگردیم`.
+
+### Safety
+
+The locked evaluator includes an additional English holdout using the exact Google-style context (`fieldLanguage=en`, `pageLanguage=en`, English browser, Latin physical-key evidence, Persian surrounding field text). Its Auto false-positive rate must remain <= 1%.
+
+A fifth fresh real Chrome gate is mandatory before merge/release.

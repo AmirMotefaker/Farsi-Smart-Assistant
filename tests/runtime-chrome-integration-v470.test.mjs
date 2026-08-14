@@ -88,7 +88,9 @@ const context =
 vm.runInContext(
   `${sources.join('\n')}
 ;globalThis.__runtimeChrome = {
-  computeEditingSuggestion
+  computeEditingSuggestion,
+  armSmartAutoPostCommitProtection,
+  isSmartAutoPostCommitSuggestion
 };`,
   context
 );
@@ -107,14 +109,14 @@ test('v4.7 runtime bridge chooses generalized Finglish before generic physical l
       text.length,
       {},
       {
-        fieldLanguage: '',
+        fieldLanguage: 'en',
         pageLanguage: 'en',
-        direction: 'ltr',
+        direction: '',
         browserLanguage: 'en-US',
         keyboardEvidence: {
-          latinKeys: 6,
-          persianKeys: 20,
-          physicalAlphaKeys: 26
+          latinKeys: 5,
+          persianKeys: 0,
+          physicalAlphaKeys: 5
         }
       }
     );
@@ -300,5 +302,56 @@ test('v4.7 native insertText precedes prototype-setter fallback and passive view
   assert.match(
     inline,
     /suggestionElements\.mode === 'undo'/u
+  );
+});
+
+test('v4.7 post-Auto token immunity blocks immediate qazvin ping-pong without blocking unrelated tokens', () => {
+  const input = {
+    value: 'qazvin ',
+    isContentEditable: false
+  };
+
+  const applied = {
+    fieldText: 'ضشظرهد ',
+    start: 0,
+    end: 6,
+    originalText: 'ضشظرهد',
+    correctedText: 'qazvin',
+    mode: 'token'
+  };
+
+  runtime.armSmartAutoPostCommitProtection(
+    input,
+    applied
+  );
+
+  assert.equal(
+    runtime.isSmartAutoPostCommitSuggestion(
+      input,
+      {
+        fieldText: 'qazvin ',
+        start: 0,
+        end: 6,
+        originalText: 'qazvin',
+        correctedText: 'ضشظرهد',
+        mode: 'token'
+      }
+    ),
+    true
+  );
+
+  assert.equal(
+    runtime.isSmartAutoPostCommitSuggestion(
+      input,
+      {
+        fieldText: 'qazvin next',
+        start: 7,
+        end: 11,
+        originalText: 'next',
+        correctedText: 'دثطف',
+        mode: 'token'
+      }
+    ),
+    false
   );
 });

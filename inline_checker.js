@@ -21,7 +21,9 @@ const smartAutoSuppressUntil = new WeakMap();
 const smartAutoUndoUntil = new WeakMap();
 const smartAutoMutationInProgress = new WeakSet();
 const smartAutoControlledCommitState = new WeakMap();
+const smartAutoPostCommitState = new WeakMap();
 const SMART_AUTO_UNDO_VISIBLE_MS = 5000;
+const SMART_AUTO_POST_COMMIT_MS = 5000;
 const SMART_AUTO_CONTROLLED_STABILIZE_DELAYS =
     Object.freeze([0, 40, 120, 280]);
 
@@ -1043,6 +1045,89 @@ function applyEditingSuggestion(element, suggestion) {
         : replaceStandardRange(element, suggestion);
 }
 
+function armSmartAutoPostCommitProtection(
+    inputElement,
+    suggestion
+) {
+    if (!inputElement || !suggestion) {
+        return;
+    }
+
+    const state = {
+        token: {},
+        start: suggestion.start,
+        end:
+            suggestion.start +
+            suggestion.correctedText.length,
+        originalText:
+            suggestion.originalText,
+        correctedText:
+            suggestion.correctedText,
+        until:
+            Date.now() +
+            SMART_AUTO_POST_COMMIT_MS
+    };
+
+    smartAutoPostCommitState.set(
+        inputElement,
+        state
+    );
+
+    setTimeout(() => {
+        const live =
+            smartAutoPostCommitState.get(
+                inputElement
+            );
+
+        if (
+            live?.token === state.token &&
+            Date.now() >= state.until
+        ) {
+            smartAutoPostCommitState.delete(
+                inputElement
+            );
+        }
+    }, SMART_AUTO_POST_COMMIT_MS);
+}
+
+function isSmartAutoPostCommitSuggestion(
+    inputElement,
+    suggestion
+) {
+    const state =
+        smartAutoPostCommitState.get(
+            inputElement
+        );
+
+    if (!state || Date.now() >= state.until) {
+        if (state) {
+            smartAutoPostCommitState.delete(
+                inputElement
+            );
+        }
+
+        return false;
+    }
+
+    if (!suggestion) {
+        return false;
+    }
+
+    const currentText =
+        getEditableText(inputElement);
+
+    return (
+        suggestion.start === state.start &&
+        suggestion.end === state.end &&
+        suggestion.originalText ===
+            state.correctedText &&
+        currentText.slice(
+            state.start,
+            state.end
+        ) === state.correctedText
+    );
+}
+
 function isSmartAutoSuppressed(
     inputElement
 ) {
@@ -1380,6 +1465,11 @@ function applySmartAutoSuggestion(
         suggestion
     );
 
+    armSmartAutoPostCommitProtection(
+        inputElement,
+        suggestion
+    );
+
     const undoSuggestion =
         makeSmartAutoUndoSuggestion(
             inputElement,
@@ -1525,6 +1615,27 @@ function checkForCorrection(inputElement) {
         );
 
     if (!suggestion) {
+        if (
+            isSmartAutoUndoSurfaceActive(
+                inputElement
+            )
+        ) {
+            return;
+        }
+
+        hideSuggestion();
+        return;
+    }
+
+    if (
+        isSmartAutoPostCommitSuggestion(
+            inputElement,
+            suggestion
+        )
+    ) {
+        // The exact token just produced by Auto correction must not be
+        // immediately reconsidered in the opposite direction. Preserve the
+        // Undo surface while this token-local protection is active.
         if (
             isSmartAutoUndoSurfaceActive(
                 inputElement

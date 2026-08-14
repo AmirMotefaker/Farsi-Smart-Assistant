@@ -205,6 +205,56 @@ function analyzeFsaSmartAutoFinglish(
             ) || 0
             : 0;
 
+    const surroundingText =
+        `${String(
+            context?.beforeText ?? ''
+        )}${String(
+            context?.afterText ?? ''
+        )}`;
+    const surroundingScripts =
+        typeof countFsaContextScripts === 'function'
+            ? countFsaContextScripts(
+                surroundingText
+            )
+            : {
+                latin:
+                    (
+                        surroundingText.match(
+                            /[A-Za-z]/gu
+                        ) || []
+                    ).length,
+                persian:
+                    (
+                        surroundingText.match(
+                            /[\u0600-\u06FF]/gu
+                        ) || []
+                    ).length
+            };
+    const strongPersianSurroundingContext =
+        surroundingScripts.persian >= 6 &&
+        surroundingScripts.persian >=
+            surroundingScripts.latin + 4;
+    // Keep the Google-context promotion dictionary-independent. The
+    // generalized Finglish engine has already required a statistically
+    // plausible Persian target and a positive source-to-target margin before
+    // returning changed=true. Auto promotion tightens that evidence further
+    // instead of consulting the small HIGH_CONFIDENCE_PERSIAN_WORDS set.
+    const targetStatisticallyStrong =
+        (
+            targetCoverage >= 0.72 ||
+            (
+                Number.isFinite(targetZ) &&
+                targetZ >= -0.20
+            )
+        ) &&
+        decisionMargin >= 2.0;
+    const realGooglePersianContextAuto =
+        strongPersianSurroundingContext &&
+        sourceIntentMargin >= 3 &&
+        sourceShapeScore < 0.55 &&
+        confidence >= 0.96 &&
+        targetStatisticallyStrong;
+
     const autoEligible =
         sourceIntent.preferred === true &&
         (
@@ -214,7 +264,8 @@ function analyzeFsaSmartAutoFinglish(
                 contextDelta >= 4.5 &&
                 sourceIntentMargin >= 3 &&
                 sourceShapeScore < 0.55
-            )
+            ) ||
+            realGooglePersianContextAuto
         );
 
     return {
