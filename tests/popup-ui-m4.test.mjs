@@ -24,8 +24,10 @@ test('M4 popup declares Persian RTL and required product surfaces', () => {
   for (const id of [
     'assistantToggle',
     'themeToggle',
+    'currentSiteFavicon',
     'currentSiteHost',
-    'siteToggleButton',
+    'siteToggle',
+    'siteToggleText',
     'manageSitesLink',
     'settingsLink',
     'reportIssueLink',
@@ -42,6 +44,11 @@ test('M4 popup declares Persian RTL and required product surfaces', () => {
   assert.match(
     popupHtml,
     /اصلاح هوشمند تایپ فارسی و انگلیسی در سراسر وب/u
+  );
+  assert.doesNotMatch(
+    popupHtml,
+    /id="siteToggleButton"/u,
+    'legacy site text-button must not return'
   );
 });
 

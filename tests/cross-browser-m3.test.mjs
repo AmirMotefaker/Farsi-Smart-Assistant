@@ -195,6 +195,7 @@ test('M3 generated packages contain runtime files and exclude dev-only content',
       for (const required of [
         'background.js',
         'ui_i18n.js',
+        'assets/brand/fsa-mark.png',
         'inline_checker.js',
         'language_profiles.js',
         'keyboard_layout.js',

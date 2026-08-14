@@ -25,7 +25,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const assistantToggle = document.getElementById('assistantToggle');
     const assistantStatusText = document.getElementById('assistantStatusText');
     const currentSiteHost = document.getElementById('currentSiteHost');
-    const siteToggleButton = document.getElementById('siteToggleButton');
+    const currentSiteFavicon = document.getElementById('currentSiteFavicon');
+    const currentSiteFallback = document.getElementById('currentSiteFallback');
+    const siteToggle = document.getElementById('siteToggle');
+    const siteToggleText = document.getElementById('siteToggleText');
 
     let debounceTimer;
     const DEBOUNCE_DELAY = 500;
@@ -34,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let assistantEnabled = true;
     let disabledHosts = [];
     let activeHost = '';
+    let activeFaviconUrl = '';
     let uiTheme = 'light';
     let uiLanguage = 'fa';
 
@@ -103,6 +107,49 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    function normalizeFaviconUrl(value) {
+        const source = String(value || '').trim();
+
+        if (!source) return '';
+
+        try {
+            const parsed = new URL(source);
+
+            return [
+                'http:',
+                'https:',
+                'data:',
+                'chrome:',
+                'chrome-extension:'
+            ].includes(parsed.protocol)
+                ? source
+                : '';
+        } catch (_error) {
+            return '';
+        }
+    }
+
+    function renderSiteFavicon() {
+        const showFallback = () => {
+            currentSiteFavicon.hidden = true;
+            currentSiteFavicon.removeAttribute('src');
+            currentSiteFallback.hidden = false;
+        };
+
+        if (!activeHost || !activeFaviconUrl) {
+            showFallback();
+            return;
+        }
+
+        currentSiteFavicon.onload = () => {
+            currentSiteFallback.hidden = true;
+            currentSiteFavicon.hidden = false;
+        };
+
+        currentSiteFavicon.onerror = showFallback;
+        currentSiteFavicon.src = activeFaviconUrl;
+    }
+
     function isHostDisabled(hostname) {
         const host = normalizeHostname(hostname);
 
@@ -165,18 +212,24 @@ document.addEventListener('DOMContentLoaded', function() {
             assistantStatusText.style.color = 'var(--success)';
         }
 
+        renderSiteFavicon();
+
         if (!activeHost) {
             currentSiteHost.textContent = t('popup.browserInternal');
-            siteToggleButton.textContent = t('popup.unavailable');
-            siteToggleButton.disabled = true;
+            siteToggle.checked = false;
+            siteToggle.disabled = true;
+            siteToggleText.textContent = t('popup.unavailable');
             return;
         }
 
+        const siteEnabled = !isHostDisabled(activeHost);
+
         currentSiteHost.textContent = activeHost;
-        siteToggleButton.disabled = false;
-        siteToggleButton.textContent = isHostDisabled(activeHost)
-            ? t('popup.enableOnSite')
-            : t('popup.disableOnSite');
+        siteToggle.checked = siteEnabled;
+        siteToggle.disabled = false;
+        siteToggleText.textContent = siteEnabled
+            ? t('popup.siteActive')
+            : t('popup.siteDisabled');
     }
 
     async function setUiLanguage(nextLanguage) {
@@ -214,6 +267,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const activeTab = await queryCurrentTab();
             activeHost = hostnameFromUrl(activeTab?.url || '');
+            activeFaviconUrl = normalizeFaviconUrl(
+                activeTab?.favIconUrl || ''
+            );
 
             applyLanguage(uiLanguage);
             applyTheme(uiTheme);
@@ -279,12 +335,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        siteToggleButton.addEventListener('click', async () => {
+        siteToggle.addEventListener('change', async () => {
             if (!activeHost) return;
 
             const previous = [...disabledHosts];
+            const shouldEnable = siteToggle.checked;
 
-            if (isHostDisabled(activeHost)) {
+            if (shouldEnable) {
                 disabledHosts = disabledHosts.filter((entry) => {
                     const blocked = normalizeHostname(entry);
                     return !(

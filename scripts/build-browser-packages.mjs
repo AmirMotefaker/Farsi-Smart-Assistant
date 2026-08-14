@@ -172,6 +172,7 @@ for (const requiredFile of [
   'assets/browser-logos/vivaldi.svg',
   'assets/browser-logos/firefox.svg',
   'assets/browser-logos/github.svg',
+  'assets/brand/fsa-mark.png',
   'icon16.png',
   'icon32.png',
   'icon48.png',

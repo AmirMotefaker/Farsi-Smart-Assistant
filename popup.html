@@ -8,42 +8,45 @@
 </head>
 <body class="popup-page">
     <main class="popup-shell">
-        <header class="brand-row">
-            <div class="brand-mark" aria-hidden="true">
-                <span>ف</span>
-            </div>
-
-            <div class="brand-copy">
-                <div class="brand-title-row">
-                    <h1 data-i18n="common.productName">دستیار هوشمند فارسی</h1>
-                    <span id="version-display" class="version-badge"></span>
-                </div>
-                <p data-i18n="popup.tagline">اصلاح هوشمند تایپ فارسی و انگلیسی در سراسر وب</p>
-            </div>
-
-            <div class="header-controls">
-                <div
-                    id="languageSwitch"
-                    class="language-switch"
-                    role="group"
-                    aria-label="زبان رابط کاربری"
-                    data-i18n-aria-label="common.languageSwitcher"
-                >
-                    <button id="languageFa" class="language-option is-active" type="button" aria-pressed="true">FA</button>
-                    <button id="languageEn" class="language-option" type="button" aria-pressed="false">EN</button>
+        <header class="brand-header">
+            <div class="brand-row">
+                <div class="brand-mark" aria-hidden="true">
+                    <img src="assets/brand/fsa-mark.png" alt="">
                 </div>
 
-                <button
-                    id="themeToggle"
-                    class="icon-button"
-                    type="button"
-                    title="فعال کردن حالت تاریک"
-                    aria-label="فعال کردن حالت تاریک"
-                >
-                    <span class="theme-icon theme-icon-light" aria-hidden="true">☀</span>
-                    <span class="theme-icon theme-icon-dark" aria-hidden="true">☾</span>
-                </button>
+                <div class="brand-copy">
+                    <div class="brand-title-row">
+                        <h1 data-i18n="common.productName">دستیار هوشمند فارسی</h1>
+                        <span id="version-display" class="version-badge"></span>
+                    </div>
+                </div>
+
+                <div class="header-controls">
+                    <div
+                        id="languageSwitch"
+                        class="language-switch"
+                        role="group"
+                        aria-label="زبان رابط کاربری"
+                        data-i18n-aria-label="common.languageSwitcher"
+                    >
+                        <button id="languageFa" class="language-option is-active" type="button" aria-pressed="true">FA</button>
+                        <button id="languageEn" class="language-option" type="button" aria-pressed="false">EN</button>
+                    </div>
+
+                    <button
+                        id="themeToggle"
+                        class="icon-button"
+                        type="button"
+                        title="فعال کردن حالت تاریک"
+                        aria-label="فعال کردن حالت تاریک"
+                    >
+                        <span class="theme-icon theme-icon-light" aria-hidden="true">☀</span>
+                        <span class="theme-icon theme-icon-dark" aria-hidden="true">☾</span>
+                    </button>
+                </div>
             </div>
+
+            <p class="brand-tagline" data-i18n="popup.tagline">اصلاح هوشمند تایپ فارسی و انگلیسی در سراسر وب</p>
         </header>
 
         <section class="status-card" aria-labelledby="assistantStatusTitle">
@@ -61,12 +64,28 @@
             </div>
 
             <div class="site-row">
-                <div class="site-icon" aria-hidden="true">◎</div>
+                <div class="site-icon" aria-hidden="true">
+                    <img id="currentSiteFavicon" class="site-favicon" alt="" hidden>
+                    <span id="currentSiteFallback" class="site-favicon-fallback">◎</span>
+                </div>
+
                 <div class="site-copy">
                     <span class="site-label" data-i18n="popup.currentPage">صفحه فعلی</span>
                     <strong id="currentSiteHost" data-i18n="popup.detecting">در حال شناسایی…</strong>
                 </div>
-                <button id="siteToggleButton" class="text-button" type="button" data-i18n="popup.changeStatus">تغییر وضعیت</button>
+
+                <label class="site-toggle-control">
+                    <span id="siteToggleText" class="site-toggle-text" data-i18n="popup.siteActive">فعال در این سایت</span>
+                    <span class="site-switch">
+                        <input
+                            id="siteToggle"
+                            type="checkbox"
+                            aria-label="فعال یا غیرفعال کردن دستیار در سایت فعلی"
+                            data-i18n-aria-label="popup.siteToggleLabel"
+                        >
+                        <span class="site-switch-track" aria-hidden="true"></span>
+                    </span>
+                </label>
             </div>
         </section>
 
