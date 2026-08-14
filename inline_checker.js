@@ -20,7 +20,10 @@ const smartAutoInputState = new WeakMap();
 const smartAutoSuppressUntil = new WeakMap();
 const smartAutoUndoUntil = new WeakMap();
 const smartAutoMutationInProgress = new WeakSet();
+const smartAutoControlledCommitState = new WeakMap();
 const SMART_AUTO_UNDO_VISIBLE_MS = 5000;
+const SMART_AUTO_CONTROLLED_STABILIZE_DELAYS =
+    Object.freeze([0, 40, 120, 280]);
 
 chrome.storage.sync.get('customDictionary', (data) => {
     if (data.customDictionary) {
@@ -783,6 +786,182 @@ function replaceStandardRange(element, suggestion) {
     );
 }
 
+function stabilizeSmartAutoControlledValue(
+    inputElement,
+    state
+) {
+    if (
+        !inputElement ||
+        !state ||
+        inputElement.isContentEditable
+    ) {
+        return false;
+    }
+
+    const currentText =
+        getEditableText(inputElement);
+
+    if (currentText === state.expectedText) {
+        return true;
+    }
+
+    // Never overwrite a real user edit or a new page value. Recovery is
+    // allowed only when a controlled host reverted exactly to the original
+    // pre-correction field value.
+    if (currentText !== state.originalText) {
+        return false;
+    }
+
+    const nativeSetter =
+        getStandardValueSetter(inputElement);
+
+    if (!nativeSetter) {
+        return false;
+    }
+
+    smartAutoMutationInProgress.add(
+        inputElement
+    );
+
+    try {
+        nativeSetter.call(
+            inputElement,
+            state.expectedText
+        );
+
+        dispatchReplacementInput(
+            inputElement,
+            state.correctedText
+        );
+
+        return finalizeStandardReplacement(
+            inputElement,
+            state.expectedText,
+            state.caret
+        );
+    } finally {
+        smartAutoMutationInProgress.delete(
+            inputElement
+        );
+    }
+}
+
+function scheduleSmartAutoControlledStabilization(
+    inputElement,
+    textBefore,
+    suggestion
+) {
+    if (
+        !inputElement ||
+        inputElement.isContentEditable
+    ) {
+        return;
+    }
+
+    const expectedText =
+        replaceTextRange(
+            textBefore,
+            suggestion.start,
+            suggestion.end,
+            suggestion.correctedText
+        );
+
+    const state = {
+        token: {},
+        originalText: textBefore,
+        expectedText,
+        correctedText:
+            suggestion.correctedText,
+        caret:
+            suggestion.start +
+            suggestion.correctedText.length
+    };
+
+    smartAutoControlledCommitState.set(
+        inputElement,
+        state
+    );
+
+    for (
+        const delay of
+        SMART_AUTO_CONTROLLED_STABILIZE_DELAYS
+    ) {
+        setTimeout(() => {
+            const live =
+                smartAutoControlledCommitState.get(
+                    inputElement
+                );
+
+            if (
+                !live ||
+                live.token !== state.token
+            ) {
+                return;
+            }
+
+            const currentText =
+                getEditableText(inputElement);
+
+            if (currentText === state.expectedText) {
+                if (
+                    delay ===
+                    SMART_AUTO_CONTROLLED_STABILIZE_DELAYS[
+                        SMART_AUTO_CONTROLLED_STABILIZE_DELAYS.length - 1
+                    ]
+                ) {
+                    smartAutoControlledCommitState.delete(
+                        inputElement
+                    );
+                }
+
+                return;
+            }
+
+            const recovered =
+                stabilizeSmartAutoControlledValue(
+                    inputElement,
+                    state
+                );
+
+            if (!recovered) {
+                smartAutoControlledCommitState.delete(
+                    inputElement
+                );
+            }
+        }, delay);
+    }
+}
+
+function makeSmartAutoEffectiveSuggestion(
+    suggestion,
+    analysis
+) {
+    if (
+        !suggestion ||
+        !analysis?.changed ||
+        !analysis.corrected ||
+        analysis.corrected ===
+            suggestion.originalText
+    ) {
+        return suggestion;
+    }
+
+    if (
+        analysis.corrected ===
+        suggestion.correctedText
+    ) {
+        return suggestion;
+    }
+
+    return {
+        ...suggestion,
+        correctedText:
+            analysis.corrected,
+        mode:
+            suggestion.mode
+    };
+}
+
 function replaceContentEditableRange(element, suggestion) {
     if (
         tryNativeInsertText(
@@ -1167,6 +1346,12 @@ function applySmartAutoSuggestion(
         inputElement
     );
 
+    scheduleSmartAutoControlledStabilization(
+        inputElement,
+        textBefore,
+        suggestion
+    );
+
     return true;
 }
 
@@ -1185,7 +1370,10 @@ function trySmartAutoCorrection(
         typeof analyzeFsaSmartAutoIntent !==
             'function'
     ) {
-        return false;
+        return {
+            applied: false,
+            suggestion
+        };
     }
 
     const intentContext =
@@ -1202,35 +1390,52 @@ function trySmartAutoCorrection(
             customDictionary
         );
 
+    const effectiveSuggestion =
+        makeSmartAutoEffectiveSuggestion(
+            suggestion,
+            analysis
+        );
+
     if (
         !analysis.changed ||
-        !analysis.autoEligible ||
-        analysis.corrected !==
-            suggestion.correctedText
+        !analysis.autoEligible
     ) {
-        return false;
+        return {
+            applied: false,
+            suggestion:
+                effectiveSuggestion
+        };
     }
 
     const ready =
         isSmartAutoBoundary(
             text,
             selection,
-            suggestion
+            effectiveSuggestion
         ) ||
         isSmartAutoIdleAtTokenEnd(
             inputElement,
             selection,
-            suggestion
+            effectiveSuggestion
         );
 
     if (!ready) {
-        return false;
+        return {
+            applied: false,
+            suggestion:
+                effectiveSuggestion
+        };
     }
 
-    return applySmartAutoSuggestion(
-        inputElement,
-        suggestion
-    );
+    return {
+        applied:
+            applySmartAutoSuggestion(
+                inputElement,
+                effectiveSuggestion
+            ),
+        suggestion:
+            effectiveSuggestion
+    };
 }
 
 function checkForCorrection(inputElement) {
@@ -1274,22 +1479,27 @@ function checkForCorrection(inputElement) {
         return;
     }
 
-    if (
+    const smartAutoResult =
         trySmartAutoCorrection(
             inputElement,
             text,
             selection,
             suggestion
-        )
-    ) {
+        );
+
+    if (smartAutoResult.applied) {
         return;
     }
 
+    const visibleSuggestion =
+        smartAutoResult.suggestion ||
+        suggestion;
+
     showSuggestion(
-        suggestion.correctedText,
-        suggestion.originalText,
+        visibleSuggestion.correctedText,
+        visibleSuggestion.originalText,
         inputElement,
-        suggestion
+        visibleSuggestion
     );
 }
 
@@ -1627,6 +1837,10 @@ function handleInput(event) {
     ) {
         return;
     }
+
+    smartAutoControlledCommitState.delete(
+        inputElement
+    );
 
     clearSmartAutoUndoSurface(
         inputElement

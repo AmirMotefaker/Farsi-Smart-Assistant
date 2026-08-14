@@ -418,3 +418,47 @@ test('v4.7 real Chrome regression: Undo surface has an explicit persistence wind
     /isSmartAutoUndoSurfaceActive\(\s*inputElement\s*\)[\s\S]*?return;/u
   );
 });
+
+test('v4.7 runtime bridge cannot display a conflicting layout candidate after Smart Auto selected Finglish', () => {
+  assert.match(
+    inlineSource,
+    /function makeSmartAutoEffectiveSuggestion/u
+  );
+
+  assert.match(
+    inlineSource,
+    /analysis\.corrected/u
+  );
+
+  assert.match(
+    inlineSource,
+    /const visibleSuggestion\s*=\s*smartAutoResult\.suggestion/u
+  );
+
+  assert.doesNotMatch(
+    inlineSource,
+    /analysis\.corrected\s*!==\s*suggestion\.correctedText[\s\S]*?return false/u
+  );
+});
+
+test('v4.7 Google-like controlled inputs have bounded exact-revert stabilization', () => {
+  assert.match(
+    inlineSource,
+    /smartAutoControlledCommitState/u
+  );
+
+  assert.match(
+    inlineSource,
+    /SMART_AUTO_CONTROLLED_STABILIZE_DELAYS/u
+  );
+
+  assert.match(
+    inlineSource,
+    /currentText !== state\.originalText/u
+  );
+
+  assert.match(
+    inlineSource,
+    /scheduleSmartAutoControlledStabilization/u
+  );
+});

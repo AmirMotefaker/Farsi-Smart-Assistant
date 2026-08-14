@@ -60,3 +60,46 @@ The recovery narrows that guard: suggestion-only Finglish may block a contradict
 This remediation does not merge PR #30 and does not release v4.7.0.
 
 After exact-head CI and locked automated gates pass, a **new fresh real Chrome gate** is still mandatory. The failed browser evidence for the previous head remains preserved.
+
+## Phase E2 — second real Chrome findings
+
+A second real Chrome test on exact head `47d8e2fa5c385e779959582f509d397852a1eb9d` exposed two runtime-integration defects after all locked model gates had passed.
+
+### Finding 1 — runtime candidate disagreement
+
+Observed:
+- input context: `ما دوباره تلاش میکنیم bgrdim`
+- expected Smart Auto correction: `بگردیم`
+- visible/runtime candidate: physical-layout `ذلقیهپ`
+
+Root cause:
+- the generic converter resolves physical layout before generalized Finglish;
+- the Smart Auto engine can independently choose `بگردیم`;
+- the inline bridge rejected the Smart Auto result whenever it differed from the generic converter's earlier candidate.
+
+Remediation:
+- Smart Auto analysis is now authoritative for the inline Smart Auto surface;
+- when it selects a different correction, that correction becomes the effective token-local suggestion;
+- a conflicting generic layout candidate can no longer leak back into the visible Smart Auto surface.
+
+### Finding 2 — controlled-input visible value reversion
+
+Observed:
+- reverse-layout intent `ضشظرهد -> qazvin` produced the intended search behavior;
+- the Google-controlled search field could visually return to the original text.
+
+Root cause:
+- the native setter + input event was verified only synchronously;
+- a controlled host may rehydrate its previous state after the synchronous verification.
+
+Remediation:
+- bounded post-commit stabilization checks at 0/40/120/280 ms;
+- re-application is allowed only if the host reverted **exactly** to the original pre-correction value;
+- any real user edit or different host value cancels stabilization;
+- stabilization uses the same native setter + bubbling input path and never submits the host form.
+
+### Safety
+
+No model threshold or locked statistical safety gate is relaxed in Phase E2.
+
+A third fresh real Chrome gate is mandatory before merge/release.
