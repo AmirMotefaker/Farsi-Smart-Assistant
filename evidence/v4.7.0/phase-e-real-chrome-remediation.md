@@ -103,3 +103,68 @@ Remediation:
 No model threshold or locked statistical safety gate is relaxed in Phase E2.
 
 A third fresh real Chrome gate is mandatory before merge/release.
+
+## Phase E3 — third real Chrome findings
+
+A third real Chrome re-test on exact head `e000522de144470a1e7e585e9e3c7babcf6d9691` remained release-blocking.
+
+### Recovery preflight note
+
+The first v5 local preflight intentionally stopped before commit/push because its new integration test incorrectly required `baran -> باران` under weak English-page context. The conservative contract allows abstention in weak context; suggestion-only `باران` is required only when Persian context is sufficiently strong. v6 corrects that test fixture without relaxing any product safety threshold.
+
+Observed by the repository owner:
+- `bgrdim`: FAIL
+- `ضشظرهد -> qazvin` visible in the input: FAIL
+- `sghl -> سلام`: PASS
+- visible Undo: FAIL
+
+### Root cause — reverse qazvin was not an extension correction
+
+The current engine classifies `ضشظرهد` as `plausible-persian`, so the generic converter returns it unchanged. The previous runtime bridge only constructed a suggestion when that generic converter changed the token. Therefore the extension did not have a `qazvin` correction candidate to apply. A Google result for Qazvin is not evidence that the extension changed the input.
+
+Phase E3 adds a narrow physical-keyboard evidence path for isolated Persian-script search tokens. It requires:
+- real physical alpha-key evidence;
+- weak Persian source shape;
+- plausible English physical-layout target;
+- no surrounding Persian/Latin prose.
+
+A new locked holdout gate measures false automatic conversions of valid Persian words under this physical-keyboard context.
+
+### Root cause — Smart Auto candidate was still downstream of the generic converter
+
+For `bgrdim`, the Smart Auto model selects `بگردیم`, while the generic converter can select the physical-layout candidate first.
+
+Phase E3 moves Smart Auto analysis into primary token suggestion construction. The same exact analysis object is then reused by the auto-application path, removing converter/model drift.
+
+### Root cause — controlled-host boundary timing
+
+A controlled search field may consume or trim the delimiter before the delayed check runs.
+
+Phase E3 retains the recent trusted boundary input as readiness evidence for 1.4 seconds when the caret is back at token end.
+
+### Root cause — visible mutation and Undo lifecycle
+
+The previous path prioritized prototype-setter mutation and cleared stabilization/Undo on every non-guard input event. Passive scroll/resize also removed the Undo surface.
+
+Phase E3:
+- prefers browser-native `insertText` editing first;
+- uses the setter path only as compatibility fallback;
+- treats only trusted user input as cancellation;
+- preserves a live Undo surface across passive viewport changes.
+
+### v6 safety preflight rejection
+
+The first v6 safety preflight correctly stopped before commit/push.
+
+- valid Persian physical-keyboard Auto false-positive rate: `0.02125`
+- locked ceiling: `0.002`
+- gate: `physicalKeyboardValidPersian = false`
+- decision: `FAIL`
+
+The model/runtime fixes for `bgrdim`, `qazvin`, `baran`, controlled-host timing and Undo all passed focused integration tests, but the new reverse-layout fallback was still too permissive for valid Persian input.
+
+v7 therefore keeps those runtime fixes but requires an additional conservative transliteration witness before this ambiguous physical-keyboard fallback can Auto-correct.
+
+### Release policy
+
+The full locked safety suite, physical-keyboard valid-Persian false-positive gate, exact-head CI, and a **fourth fresh real Chrome test** must all pass before merge/release.

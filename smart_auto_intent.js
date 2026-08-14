@@ -243,6 +243,143 @@ function analyzeFsaSmartAutoFinglish(
     };
 }
 
+function analyzeFsaPhysicalKeyboardEvidenceOverride(
+    value,
+    context
+) {
+    if (
+        !context ||
+        typeof convertPersianKeysToEnglish !==
+            'function' ||
+        typeof scorePersianWordShape !==
+            'function' ||
+        typeof scoreEnglishWordShape !==
+            'function'
+    ) {
+        return null;
+    }
+
+    if (
+        /\s/u.test(value) ||
+        !/^[\u0600-\u06FF]+$/u.test(
+            value
+        )
+    ) {
+        return null;
+    }
+
+    const keyboard =
+        context.keyboardEvidence;
+
+    if (!keyboard || typeof keyboard !== 'object') {
+        return null;
+    }
+
+    const requiredEvidence =
+        Math.min(4, value.length);
+    const persianKeys =
+        Number(keyboard.persianKeys) || 0;
+    const physicalAlphaKeys =
+        Number(keyboard.physicalAlphaKeys) || 0;
+
+    if (
+        persianKeys < requiredEvidence ||
+        physicalAlphaKeys < requiredEvidence
+    ) {
+        return null;
+    }
+
+    const surrounding =
+        `${String(
+            context.beforeText ?? ''
+        )}${String(
+            context.afterText ?? ''
+        )}`;
+
+    // Keep this override narrow: isolated physical-keyboard search token,
+    // not ordinary Persian prose.
+    if (/[A-Za-z\u0600-\u06FF]/u.test(surrounding)) {
+        return null;
+    }
+
+    const corrected =
+        String(
+            convertPersianKeysToEnglish(
+                value
+            ) || ''
+        ).toLowerCase();
+
+    if (!/^[a-z]{4,16}$/u.test(corrected)) {
+        return null;
+    }
+
+    const sourceShape =
+        scorePersianWordShape(value);
+    const targetShape =
+        scoreEnglishWordShape(corrected);
+    const sourceScore =
+        Number(sourceShape?.score) || 0;
+    const targetScore =
+        Number(targetShape?.score) || 0;
+
+    if (
+        sourceScore > 0.40 ||
+        targetScore < 0.60 ||
+        targetScore - sourceScore < 0.20
+    ) {
+        return null;
+    }
+
+    // Shape plausibility alone was too permissive in the v6 holdout.
+    // This fallback is reserved for ambiguous Latin targets that also have
+    // a strong Persian transliteration witness already present in the
+    // product's conservative high-confidence Persian safety prior.
+    const transliterationWitness =
+        typeof generateFsaFinglishCandidates ===
+            'function' &&
+        typeof isHighConfidencePersianCandidate ===
+            'function'
+            ? generateFsaFinglishCandidates(
+                corrected
+            )
+                .slice(0, 6)
+                .find(
+                    (candidate) =>
+                        Number(
+                            candidate?.penalty
+                        ) <= 1.10 &&
+                        isHighConfidencePersianCandidate(
+                            candidate?.text
+                        )
+                )
+            : null;
+
+    if (!transliterationWitness) {
+        return null;
+    }
+
+    return {
+        changed: true,
+        autoEligible: true,
+        original: value,
+        corrected,
+        confidence: 0.985,
+        kind: 'physical-keyboard-evidence-layout',
+        reason: 'physical-keyboard-evidence-override',
+        evidence: [
+            'isolated-persian-physical-alpha-token',
+            'weak-persian-source-shape',
+            'plausible-english-layout-target',
+            'known-persian-transliteration-witness',
+            'smart-auto-physical-keyboard-safe'
+        ],
+        sourceShape,
+        targetShape,
+        transliterationWitness:
+            transliterationWitness.text
+    };
+}
+
 function analyzeFsaSmartAutoIntent(
     input,
     context = null,
@@ -269,6 +406,25 @@ function analyzeFsaSmartAutoIntent(
                 context
             )
             : value;
+
+    const hasExplicitUserDictionary =
+        customDictionary &&
+        Object.hasOwn(
+            customDictionary,
+            textLower
+        );
+
+    if (!hasExplicitUserDictionary) {
+        const physicalKeyboardOverride =
+            analyzeFsaPhysicalKeyboardEvidenceOverride(
+                value,
+                context
+            );
+
+        if (physicalKeyboardOverride) {
+            return physicalKeyboardOverride;
+        }
+    }
 
     if (
         !/\s/u.test(value) &&

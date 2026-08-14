@@ -280,6 +280,7 @@ function ratio(a,b) {
 
 let validEnglishAuto = 0;
 let validPersianAuto = 0;
+let validPersianPhysicalKeyboardAuto = 0;
 let englishContextRuntimeAuto = 0;
 let englishContextLexicalMissAuto = 0;
 let reverseCorrect = 0;
@@ -289,6 +290,7 @@ let finglishTotal = 0;
 
 const lexicalMissSamples = [];
 const finglishAutoSamples = [];
+const persianPhysicalKeyboardFalsePositiveSamples = [];
 
 for (const word of english) {
   if (
@@ -368,6 +370,48 @@ for (const word of persian) {
       .autoEligible
   ) {
     validPersianAuto += 1;
+  }
+
+  const physicalKeyboardContext = {
+    beforeText:'',
+    afterText:'',
+    fieldLanguage:'',
+    pageLanguage:'en',
+    direction:'ltr',
+    browserLanguage:'en-US',
+    keyboardEvidence:{
+      latinKeys:0,
+      persianKeys:word.length,
+      physicalAlphaKeys:word.length
+    }
+  };
+
+  const physicalKeyboardResult =
+    runtimeEngine
+      .analyzeFsaSmartAutoIntent(
+        word,
+        physicalKeyboardContext
+      );
+
+  if (
+    physicalKeyboardResult.autoEligible &&
+    physicalKeyboardResult.corrected !== word
+  ) {
+    validPersianPhysicalKeyboardAuto += 1;
+
+    if (
+      persianPhysicalKeyboardFalsePositiveSamples
+        .length < 20
+    ) {
+      persianPhysicalKeyboardFalsePositiveSamples
+        .push({
+          word,
+          corrected:
+            physicalKeyboardResult.corrected,
+          kind:
+            physicalKeyboardResult.kind
+        });
+    }
   }
 
   const wrong =
@@ -451,6 +495,11 @@ const result = {
         validPersianAuto,
         persian.length
       ),
+    validPersianPhysicalKeyboardAutoFalsePositiveRate:
+      ratio(
+        validPersianPhysicalKeyboardAuto,
+        persian.length
+      ),
     englishInPersianContextAutoRate:
       ratio(
         englishContextRuntimeAuto,
@@ -467,7 +516,8 @@ const result = {
       lexicalMissSamples
   },
   samples:{
-    finglishAutoSamples
+    finglishAutoSamples,
+    persianPhysicalKeyboardFalsePositiveSamples
   },
   recall:{
     reverseLayoutAuto:
@@ -488,6 +538,7 @@ const result = {
   },
   gates:{
     validSourceCeiling:0.002,
+    physicalKeyboardValidPersianCeiling:0.002,
     runtimeEnglishContextCeiling:0.01,
     lexicalMissEnglishContextCeiling:0.01,
     reverseLayoutFloor:0.80,
@@ -507,6 +558,11 @@ result.pass = {
       .validPersianAutoFalsePositiveRate <=
     result.gates
       .validSourceCeiling,
+  physicalKeyboardValidPersian:
+    result.runtime
+      .validPersianPhysicalKeyboardAutoFalsePositiveRate <=
+    result.gates
+      .physicalKeyboardValidPersianCeiling,
   runtimeEnglishContext:
     result.runtime
       .englishInPersianContextAutoRate <=

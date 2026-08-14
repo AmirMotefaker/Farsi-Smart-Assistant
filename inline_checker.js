@@ -406,16 +406,35 @@ function computeEditingSuggestion(
             primaryRange.start,
             primaryRange.end
         );
-        const correctedText = smart_farsi_converter(
-            originalText,
-            dictionary,
+        const tokenIntentContext =
             enrichIntentContext(
                 intentContext,
                 value,
                 primaryRange.start,
                 primaryRange.end
-            )
-        );
+            );
+        const intentAnalysis =
+            !explicitSelection &&
+            smartAutoEnabled &&
+            typeof analyzeFsaSmartAutoIntent ===
+                'function'
+                ? analyzeFsaSmartAutoIntent(
+                    originalText,
+                    tokenIntentContext,
+                    dictionary
+                )
+                : null;
+        const correctedText =
+            intentAnalysis?.changed &&
+            intentAnalysis.corrected &&
+            intentAnalysis.corrected !==
+                originalText
+                ? intentAnalysis.corrected
+                : smart_farsi_converter(
+                    originalText,
+                    dictionary,
+                    tokenIntentContext
+                );
 
         if (correctedText && correctedText !== originalText) {
             return {
@@ -424,6 +443,7 @@ function computeEditingSuggestion(
                 end: primaryRange.end,
                 originalText,
                 correctedText,
+                intentAnalysis,
                 mode: explicitSelection ? 'selection' : 'token'
             };
         }
@@ -726,9 +746,27 @@ function replaceStandardRange(element, suggestion) {
     const caret = suggestion.start + suggestion.correctedText.length;
     const nativeSetter = getStandardValueSetter(element);
 
-    // Controlled inputs (Google, React-style controls, etc.) are most
-    // reliable when the native prototype setter updates the DOM value
-    // and a bubbling input event informs the page framework.
+    // Prefer a browser-native editing transaction first. On controlled
+    // inputs this gives the host the same edit semantics as real typing
+    // and participates in the browser undo stack.
+    if (
+        tryNativeInsertText(
+            element,
+            suggestion.start,
+            suggestion.end,
+            suggestion.correctedText
+        ) &&
+        finalizeStandardReplacement(
+            element,
+            newText,
+            caret
+        )
+    ) {
+        return true;
+    }
+
+    // Native prototype setter + bubbling input remains the controlled-input
+    // compatibility path when insertText is unavailable or rejected.
     if (nativeSetter) {
         nativeSetter.call(element, newText);
         dispatchReplacementInput(
@@ -745,24 +783,6 @@ function replaceStandardRange(element, suggestion) {
         ) {
             return true;
         }
-    }
-
-    // Keep the browser-native insert path as a fallback for environments
-    // where the prototype value setter is unavailable or rejected.
-    if (
-        tryNativeInsertText(
-            element,
-            suggestion.start,
-            suggestion.end,
-            suggestion.correctedText
-        ) &&
-        finalizeStandardReplacement(
-            element,
-            newText,
-            caret
-        )
-    ) {
-        return true;
     }
 
     // Final compatibility fallback: some test harnesses, browser-like
@@ -1150,6 +1170,38 @@ function isSmartAutoBoundary(
     );
 }
 
+function isSmartAutoRecentBoundaryAtTokenEnd(
+    inputElement,
+    selection,
+    suggestion
+) {
+    if (
+        !selection ||
+        selection.start !== selection.end ||
+        selection.start !== suggestion.end
+    ) {
+        return false;
+    }
+
+    const state =
+        smartAutoInputState.get(
+            inputElement
+        );
+
+    if (!state) return false;
+
+    const age =
+        Date.now() - state.at;
+
+    return (
+        age >= 0 &&
+        age <= 1400 &&
+        /^[\s.,!?،؛:…]$/u.test(
+            String(state.data ?? '')
+        )
+    );
+}
+
 function isSmartAutoIdleAtTokenEnd(
     inputElement,
     selection,
@@ -1384,6 +1436,7 @@ function trySmartAutoCorrection(
         );
 
     const analysis =
+        suggestion.intentAnalysis ||
         analyzeFsaSmartAutoIntent(
             suggestion.originalText,
             intentContext,
@@ -1410,6 +1463,11 @@ function trySmartAutoCorrection(
     const ready =
         isSmartAutoBoundary(
             text,
+            selection,
+            effectiveSuggestion
+        ) ||
+        isSmartAutoRecentBoundaryAtTokenEnd(
+            inputElement,
             selection,
             effectiveSuggestion
         ) ||
@@ -1838,13 +1896,18 @@ function handleInput(event) {
         return;
     }
 
-    smartAutoControlledCommitState.delete(
-        inputElement
-    );
+    const trustedUserInput =
+        event.isTrusted === true;
 
-    clearSmartAutoUndoSurface(
-        inputElement
-    );
+    if (trustedUserInput) {
+        smartAutoControlledCommitState.delete(
+            inputElement
+        );
+
+        clearSmartAutoUndoSurface(
+            inputElement
+        );
+    }
 
     const data =
         String(event.data ?? '');
@@ -1970,7 +2033,27 @@ document.addEventListener('click', (event) => {
     }
 });
 
+function hideSuggestionForPassiveViewportChange() {
+    if (
+        suggestionElements.mode === 'undo' &&
+        isSmartAutoUndoSurfaceActive(
+            suggestionElements.inputElement
+        )
+    ) {
+        return;
+    }
+
+    hideSuggestion();
+}
+
 if (typeof window.addEventListener === 'function') {
-    window.addEventListener('resize', hideSuggestion);
-    window.addEventListener('scroll', hideSuggestion, true);
+    window.addEventListener(
+        'resize',
+        hideSuggestionForPassiveViewportChange
+    );
+    window.addEventListener(
+        'scroll',
+        hideSuggestionForPassiveViewportChange,
+        true
+    );
 }

@@ -462,3 +462,103 @@ test('v4.7 Google-like controlled inputs have bounded exact-revert stabilization
     /scheduleSmartAutoControlledStabilization/u
   );
 });
+
+test('v4.7 physical Persian keyboard evidence can recover qazvin only with a conservative transliteration witness', () => {
+  const analysis =
+    engine.analyzeFsaSmartAutoIntent(
+      'ضشظرهد',
+      {
+        beforeText: '',
+        afterText: ' ',
+        fieldLanguage: '',
+        pageLanguage: 'en',
+        direction: 'ltr',
+        browserLanguage: 'en-US',
+        keyboardEvidence: {
+          latinKeys: 0,
+          persianKeys: 6,
+          physicalAlphaKeys: 6
+        }
+      }
+    );
+
+  assert.equal(
+    analysis.corrected,
+    'qazvin'
+  );
+
+  assert.equal(
+    analysis.autoEligible,
+    true
+  );
+
+  assert.equal(
+    analysis.kind,
+    'physical-keyboard-evidence-layout'
+  );
+
+  assert.equal(
+    analysis.transliterationWitness,
+    'قزوین'
+  );
+});
+
+test('v4.7 physical keyboard override does not convert an ordinary isolated Persian word', () => {
+  const analysis =
+    engine.analyzeFsaSmartAutoIntent(
+      'سلام',
+      {
+        beforeText: '',
+        afterText: ' ',
+        fieldLanguage: '',
+        pageLanguage: 'en',
+        direction: 'ltr',
+        browserLanguage: 'en-US',
+        keyboardEvidence: {
+          latinKeys: 0,
+          persianKeys: 4,
+          physicalAlphaKeys: 4
+        }
+      }
+    );
+
+  assert.equal(
+    analysis.autoEligible,
+    false
+  );
+
+  assert.equal(
+    analysis.corrected,
+    'سلام'
+  );
+});
+
+test('v4.7 v6 holdout false-positive sample is rejected without a conservative transliteration witness', () => {
+  const analysis =
+    engine.analyzeFsaSmartAutoIntent(
+      'پیشدستی',
+      {
+        beforeText: '',
+        afterText: ' ',
+        fieldLanguage: '',
+        pageLanguage: 'en',
+        direction: 'ltr',
+        browserLanguage: 'en-US',
+        keyboardEvidence: {
+          latinKeys: 0,
+          persianKeys: 8,
+          physicalAlphaKeys: 8
+        }
+      }
+    );
+
+  assert.equal(
+    analysis.autoEligible,
+    false
+  );
+
+  assert.equal(
+    analysis.corrected,
+    'پیشدستی'
+  );
+});
