@@ -2,6 +2,8 @@
 
 <p align="center">
   <a href="https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/latest"><img src="https://img.shields.io/github/v/release/AmirMotefaker/Farsi-Smart-Assistant" alt="آخرین نسخه"></a>
+  <a href="https://github.com/AmirMotefaker/Farsi-Smart-Assistant/stargazers"><img src="https://img.shields.io/github/stars/AmirMotefaker/Farsi-Smart-Assistant?style=flat&logo=github" alt="ستاره‌های گیت‌هاب"></a>
+  <a href="https://github.com/AmirMotefaker/Farsi-Smart-Assistant/network/members"><img src="https://img.shields.io/github/forks/AmirMotefaker/Farsi-Smart-Assistant?style=flat&logo=github" alt="فورک‌های گیت‌هاب"></a>
   <a href="https://github.com/AmirMotefaker/Farsi-Smart-Assistant/blob/main/LICENSE"><img src="https://img.shields.io/github/license/AmirMotefaker/Farsi-Smart-Assistant" alt="مجوز"></a>
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="مشارکت آزاد است">
 </p>
@@ -10,9 +12,8 @@
   <strong>یک افزونه مرورگر برای اصلاح هوشمند اشتباه‌های کیبورد فارسی و انگلیسی در سراسر وب، همراه با کنترل محلی و ابزارهای جست‌وجو.</strong>
 </p>
 
-<p align="center">
-  <img src="link/to/your/final_demo.gif" alt="دموی افزونه دستیار هوشمند فارسی">
-</p>
+> [!TIP]
+> اگر «دستیار هوشمند فارسی» برای شما مفید است، با ⭐ دادن به مخزن به دیده‌شدن پروژه و توسعه بیشتر ابزارهای متن‌باز فارسی کمک کنید.
 
 ## ✨ بزرگترین چالش فارسی‌زبانان: حل مشکل کیبورد انگلیسی
 
@@ -159,3 +160,14 @@
 ## 📜 مجوز (لایسنس)
 
 این پروژه تحت مجوز [MIT](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/blob/main/LICENSE) منتشر شده است.
+<!-- phase9-community-start -->
+## 💬 جامعه، پرسش و مشارکت
+
+- برای سؤال‌های نحوه استفاده، تجربه کاربری و پرسش‌های فنی از [GitHub Discussions](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/discussions) استفاده کنید.
+- سؤال‌هایی که پاسخ مشخص دارند را در دسته **Q&A** مطرح کنید تا پاسخ مفید بتواند به‌عنوان answer علامت‌گذاری شود.
+- باگ قابل بازتولید یا درخواست قابلیتِ آماده‌ی اجرا را در [Issues](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/issues) ثبت کنید.
+- برای مشارکت کد یا مستندات، ابتدا [CONTRIBUTING.md](CONTRIBUTING.md) را بخوانید.
+- برای آسیب‌پذیری امنیتی از مسیر خصوصی ذکرشده در [SECURITY.md](SECURITY.md) استفاده کنید و جزئیات حساس را عمومی نکنید.
+
+مشارکت‌های کوچک و واقعی استقبال می‌شوند؛ `good first issue` و `help wanted` فقط زمانی استفاده می‌شوند که یک کار واقعی و قابل‌تحویل برای contributor وجود داشته باشد.
+<!-- phase9-community-end -->

@@ -1,0 +1,54 @@
+name: Release provenance
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+  attestations: write
+  artifact-metadata: write
+
+concurrency:
+  group: release-provenance-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  provenance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout exact release ref
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Configure Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "20"
+
+      - name: Run product release gate
+        run: npm run release:gate
+
+      - name: Audit browser-store readiness
+        run: node scripts/audit-store-submission.mjs
+
+      - name: Generate signed artifact provenance
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
+        with:
+          subject-path: |
+            release/*.zip
+            release/SHA256SUMS.txt
+            release/release-manifest.json
+
+      - name: Upload attested release bundle
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: farsi-smart-assistant-attested-${{ github.ref_name }}
+          path: release/
+          if-no-files-found: error
