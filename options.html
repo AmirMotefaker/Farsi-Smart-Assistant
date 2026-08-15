@@ -3,50 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>تنظیمات دستیار هوشمند فارسی</title>
+    <title data-i18n="options.documentTitle">تنظیمات دستیار هوشمند فارسی</title>
     <link rel="stylesheet" href="popup.css">
 </head>
 <body class="options-page">
     <main class="options-shell">
         <header class="options-header">
-            <span class="eyebrow">Farsi Smart Assistant</span>
-            <h1>تنظیمات</h1>
-            <p>واژه‌های شخصی و اصلاحات ذخیره‌شده را مدیریت کنید.</p>
+            <span class="eyebrow" data-i18n="common.productEnglishName">Farsi Smart Assistant</span>
+            <h1 data-i18n="options.title">تنظیمات</h1>
+            <p data-i18n="options.subtitle">واژه‌های شخصی و اصلاحات ذخیره‌شده را مدیریت کنید.</p>
         </header>
 
-        <nav class="options-nav" aria-label="بخش‌های مدیریت">
-            <span class="options-nav-item is-active" aria-current="page">تنظیمات</span>
-            <a class="options-nav-item" href="site_management.html">مدیریت سایت‌ها</a>
+        <nav class="options-nav" aria-label="بخش‌های مدیریت" data-i18n-aria-label="options.managementSections">
+            <span class="options-nav-item is-active" aria-current="page" data-i18n="options.settings">تنظیمات</span>
+            <a class="options-nav-item" href="site_management.html" data-i18n="options.manageSites">مدیریت سایت‌ها</a>
         </nav>
 
         <div class="options-grid single-column">
             <section class="setting-section">
-                <h2>اصلاح خودکار هوشمند</h2>
-                <p>
-                    در اطمینان بالا، اصلاح به‌صورت خودکار اعمال می‌شود.
-                    موارد متوسط همچنان به شکل پیشنهاد باقی می‌مانند و بعد از
-                    اصلاح خودکار، گزینه «برگردان» نمایش داده می‌شود.
-                </p>
+                <h2 data-i18n="options.smartAutoTitle">اصلاح خودکار هوشمند</h2>
+                <p data-i18n="options.smartAutoDescription">در اطمینان بالا، اصلاح به‌صورت خودکار اعمال می‌شود. موارد متوسط همچنان به شکل پیشنهاد باقی می‌مانند و بعد از اصلاح خودکار، گزینه «برگردان» نمایش داده می‌شود.</p>
                 <label for="smartAutoEnabled">
                     <input id="smartAutoEnabled" type="checkbox">
-                    فعال بودن Smart Auto
+                    <span data-i18n="options.smartAutoLabel">فعال بودن Smart Auto</span>
                 </label>
             </section>
 
             <section class="setting-section">
-                <h2>دیکشنری شخصی</h2>
-                <p>هر اصلاح را در یک خط و به فرم «عبارت اشتباه = عبارت درست» وارد کنید.</p>
-                <label class="sr-only" for="customDictionary">دیکشنری شخصی</label>
-                <textarea id="customDictionary" spellcheck="false"></textarea>
-                <button id="saveDictionaryButton" class="main-button-style" type="button">
-                    ذخیره دیکشنری
-                </button>
+                <h2 data-i18n="options.dictionaryTitle">دیکشنری شخصی</h2>
+                <p data-i18n="options.dictionaryDescription">هر اصلاح را در یک خط و به فرم «عبارت اشتباه = عبارت درست» وارد کنید.</p>
+                <label class="sr-only" for="customDictionary" data-i18n="options.dictionaryLabel">دیکشنری شخصی</label>
+                <textarea id="customDictionary" dir="auto" spellcheck="false"></textarea>
+                <button id="saveDictionaryButton" class="main-button-style" type="button" data-i18n="options.saveDictionary">ذخیره دیکشنری</button>
             </section>
         </div>
 
         <div id="confirmation" class="confirmation options-confirmation" aria-live="polite"></div>
     </main>
 
+    <script src="ui_i18n.js"></script>
     <script src="options.js"></script>
 </body>
 </html>

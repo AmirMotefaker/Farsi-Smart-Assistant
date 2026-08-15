@@ -3,37 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>مدیریت سایت‌ها — دستیار هوشمند فارسی</title>
+    <title data-i18n="sites.documentTitle">مدیریت سایت‌ها — دستیار هوشمند فارسی</title>
     <link rel="stylesheet" href="popup.css">
 </head>
 <body class="options-page site-management-page">
     <main class="options-shell">
         <header class="options-header">
-            <span class="eyebrow">Farsi Smart Assistant</span>
-            <h1>مدیریت سایت‌ها</h1>
-            <p>دامنه‌هایی را که نمی‌خواهید دستیار در آن‌ها فعال باشد مدیریت کنید.</p>
+            <span class="eyebrow" data-i18n="common.productEnglishName">Farsi Smart Assistant</span>
+            <h1 data-i18n="sites.title">مدیریت سایت‌ها</h1>
+            <p data-i18n="sites.subtitle">دامنه‌هایی را که نمی‌خواهید دستیار در آن‌ها فعال باشد مدیریت کنید.</p>
         </header>
 
-        <nav class="options-nav" aria-label="بخش‌های مدیریت">
-            <a class="options-nav-item" href="options.html">تنظیمات</a>
-            <span class="options-nav-item is-active" aria-current="page">مدیریت سایت‌ها</span>
+        <nav class="options-nav" aria-label="بخش‌های مدیریت" data-i18n-aria-label="options.managementSections">
+            <a class="options-nav-item" href="options.html" data-i18n="options.settings">تنظیمات</a>
+            <span class="options-nav-item is-active" aria-current="page" data-i18n="options.manageSites">مدیریت سایت‌ها</span>
         </nav>
 
         <div class="options-grid single-column">
             <section class="setting-section">
-                <h2>سایت‌های مستثنا</h2>
-                <p>در هر خط یک دامنه وارد کنید؛ برای مثال example.com. زیر‌دامنه‌های آن هم مستثنا می‌شوند.</p>
-                <label class="sr-only" for="disabledHosts">دامنه‌های غیرفعال</label>
-                <textarea id="disabledHosts" spellcheck="false" placeholder="example.com"></textarea>
-                <button id="saveSitesButton" class="main-button-style" type="button">
-                    ذخیره سایت‌ها
-                </button>
+                <h2 data-i18n="sites.excludedTitle">سایت‌های مستثنا</h2>
+                <p data-i18n="sites.excludedDescription">در هر خط یک دامنه وارد کنید؛ برای مثال example.com. زیر‌دامنه‌های آن هم مستثنا می‌شوند.</p>
+                <label class="sr-only" for="disabledHosts" data-i18n="sites.disabledHostsLabel">دامنه‌های غیرفعال</label>
+                <textarea id="disabledHosts" dir="ltr" spellcheck="false" placeholder="example.com"></textarea>
+                <button id="saveSitesButton" class="main-button-style" type="button" data-i18n="sites.save">ذخیره سایت‌ها</button>
             </section>
         </div>
 
         <div id="confirmation" class="confirmation options-confirmation" aria-live="polite"></div>
     </main>
 
+    <script src="ui_i18n.js"></script>
     <script src="site_management.js"></script>
 </body>
 </html>

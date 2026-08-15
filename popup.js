@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const i18n = globalThis.FSA_UI_I18N;
+
+    if (!i18n) {
+        throw new Error('FSA_UI_I18N is required before popup.js');
+    }
+
     const mainButton = document.getElementById('mainButton');
     const inputText = document.getElementById('inputText');
     const correctedTextBox = document.getElementById('correctedTextBox');
@@ -14,10 +20,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const saveManualCorrectionButton = document.getElementById('saveManualCorrectionButton');
     const saveConfirmation = document.getElementById('saveConfirmation');
     const themeToggle = document.getElementById('themeToggle');
+    const languageFa = document.getElementById('languageFa');
+    const languageEn = document.getElementById('languageEn');
     const assistantToggle = document.getElementById('assistantToggle');
     const assistantStatusText = document.getElementById('assistantStatusText');
     const currentSiteHost = document.getElementById('currentSiteHost');
-    const siteToggleButton = document.getElementById('siteToggleButton');
+    const currentSiteFavicon = document.getElementById('currentSiteFavicon');
+    const currentSiteFallback = document.getElementById('currentSiteFallback');
+    const siteToggle = document.getElementById('siteToggle');
+    const siteToggleText = document.getElementById('siteToggleText');
 
     let debounceTimer;
     const DEBOUNCE_DELAY = 500;
@@ -26,7 +37,13 @@ document.addEventListener('DOMContentLoaded', function() {
     let assistantEnabled = true;
     let disabledHosts = [];
     let activeHost = '';
+    let activeFaviconUrl = '';
     let uiTheme = 'light';
+    let uiLanguage = 'fa';
+
+    function t(key, variables = {}) {
+        return i18n.t(key, uiLanguage, variables);
+    }
 
     function storageGet(keys) {
         return new Promise((resolve, reject) => {
@@ -90,6 +107,49 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    function normalizeFaviconUrl(value) {
+        const source = String(value || '').trim();
+
+        if (!source) return '';
+
+        try {
+            const parsed = new URL(source);
+
+            return [
+                'http:',
+                'https:',
+                'data:',
+                'chrome:',
+                'chrome-extension:'
+            ].includes(parsed.protocol)
+                ? source
+                : '';
+        } catch (_error) {
+            return '';
+        }
+    }
+
+    function renderSiteFavicon() {
+        const showFallback = () => {
+            currentSiteFavicon.hidden = true;
+            currentSiteFavicon.removeAttribute('src');
+            currentSiteFallback.hidden = false;
+        };
+
+        if (!activeHost || !activeFaviconUrl) {
+            showFallback();
+            return;
+        }
+
+        currentSiteFavicon.onload = () => {
+            currentSiteFallback.hidden = true;
+            currentSiteFavicon.hidden = false;
+        };
+
+        currentSiteFavicon.onerror = showFallback;
+        currentSiteFavicon.src = activeFaviconUrl;
+    }
+
     function isHostDisabled(hostname) {
         const host = normalizeHostname(hostname);
 
@@ -115,40 +175,73 @@ document.addEventListener('DOMContentLoaded', function() {
     function applyTheme(theme) {
         uiTheme = theme === 'dark' ? 'dark' : 'light';
         document.documentElement.dataset.theme = uiTheme;
-        themeToggle.setAttribute(
-            'aria-label',
-            uiTheme === 'dark'
-                ? 'فعال کردن حالت روشن'
-                : 'فعال کردن حالت تاریک'
-        );
+        const themeAction = uiTheme === 'dark'
+            ? t('common.themeToLight')
+            : t('common.themeToDark');
+
+        themeToggle.setAttribute('aria-label', themeAction);
+        themeToggle.setAttribute('title', themeAction);
+    }
+
+    function renderLanguageSwitch() {
+        const isFa = uiLanguage === 'fa';
+        languageFa.classList.toggle('is-active', isFa);
+        languageEn.classList.toggle('is-active', !isFa);
+        languageFa.setAttribute('aria-pressed', String(isFa));
+        languageEn.setAttribute('aria-pressed', String(!isFa));
+    }
+
+    function applyLanguage(language) {
+        uiLanguage = i18n.applyDocument(language, document);
+        renderLanguageSwitch();
+        applyTheme(uiTheme);
+        renderAssistantState();
     }
 
     function renderAssistantState() {
         assistantToggle.checked = assistantEnabled;
 
         if (!assistantEnabled) {
-            assistantStatusText.textContent = 'غیرفعال در همه سایت‌ها';
+            assistantStatusText.textContent = t('popup.statusDisabledAll');
             assistantStatusText.style.color = 'var(--muted)';
         } else if (activeHost && isHostDisabled(activeHost)) {
-            assistantStatusText.textContent = 'فعال؛ سایت فعلی مستثنا شده است';
+            assistantStatusText.textContent = t('popup.statusSiteExcluded');
             assistantStatusText.style.color = 'var(--muted)';
         } else {
-            assistantStatusText.textContent = 'فعال در سراسر وب';
+            assistantStatusText.textContent = t('popup.statusActiveWeb');
             assistantStatusText.style.color = 'var(--success)';
         }
 
+        renderSiteFavicon();
+
         if (!activeHost) {
-            currentSiteHost.textContent = 'صفحه مرورگر / داخلی';
-            siteToggleButton.textContent = 'در دسترس نیست';
-            siteToggleButton.disabled = true;
+            currentSiteHost.textContent = t('popup.browserInternal');
+            siteToggle.checked = false;
+            siteToggle.disabled = true;
+            siteToggleText.textContent = t('popup.unavailable');
             return;
         }
 
+        const siteEnabled = !isHostDisabled(activeHost);
+
         currentSiteHost.textContent = activeHost;
-        siteToggleButton.disabled = false;
-        siteToggleButton.textContent = isHostDisabled(activeHost)
-            ? 'فعال در این سایت'
-            : 'غیرفعال در این سایت';
+        siteToggle.checked = siteEnabled;
+        siteToggle.disabled = false;
+        siteToggleText.textContent = siteEnabled
+            ? t('popup.siteActive')
+            : t('popup.siteDisabled');
+    }
+
+    async function setUiLanguage(nextLanguage) {
+        const previous = uiLanguage;
+        applyLanguage(nextLanguage);
+
+        try {
+            await storageSet({ uiLanguage });
+        } catch (error) {
+            console.error('Language save error:', error);
+            applyLanguage(previous);
+        }
     }
 
     async function init() {
@@ -160,7 +253,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 'customDictionary',
                 'assistantEnabled',
                 'disabledHosts',
-                'uiTheme'
+                'uiTheme',
+                'uiLanguage'
             ]);
 
             customDictionary = data.customDictionary || {};
@@ -168,15 +262,23 @@ document.addEventListener('DOMContentLoaded', function() {
             disabledHosts = Array.isArray(data.disabledHosts)
                 ? data.disabledHosts.map(normalizeHostname).filter(Boolean)
                 : [];
-            applyTheme(resolveInitialTheme(data.uiTheme));
+            uiTheme = resolveInitialTheme(data.uiTheme);
+            uiLanguage = i18n.normalizeLocale(data.uiLanguage);
 
             const activeTab = await queryCurrentTab();
             activeHost = hostnameFromUrl(activeTab?.url || '');
-            renderAssistantState();
+            activeFaviconUrl = normalizeFaviconUrl(
+                activeTab?.favIconUrl || ''
+            );
+
+            applyLanguage(uiLanguage);
+            applyTheme(uiTheme);
         } catch (error) {
             console.error('Popup initialization error:', error);
-            applyTheme(resolveInitialTheme(null));
-            renderAssistantState();
+            uiLanguage = 'fa';
+            uiTheme = resolveInitialTheme(null);
+            applyLanguage(uiLanguage);
+            applyTheme(uiTheme);
         }
 
         mainButton.addEventListener('click', () => searchGoogle(currentTermForSearch));
@@ -198,6 +300,14 @@ document.addEventListener('DOMContentLoaded', function() {
         reportIssueLink.addEventListener('click', () => {
             const url = 'https://github.com/AmirMotefaker/Farsi-Smart-Assistant/issues/new';
             chrome.tabs.create({ url });
+        });
+
+        languageFa.addEventListener('click', () => {
+            void setUiLanguage('fa');
+        });
+
+        languageEn.addEventListener('click', () => {
+            void setUiLanguage('en');
         });
 
         themeToggle.addEventListener('click', async () => {
@@ -225,12 +335,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        siteToggleButton.addEventListener('click', async () => {
+        siteToggle.addEventListener('change', async () => {
             if (!activeHost) return;
 
             const previous = [...disabledHosts];
+            const shouldEnable = siteToggle.checked;
 
-            if (isHostDisabled(activeHost)) {
+            if (shouldEnable) {
                 disabledHosts = disabledHosts.filter((entry) => {
                     const blocked = normalizeHostname(entry);
                     return !(
@@ -272,13 +383,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             await storageSet({ customDictionary });
-            showConfirmation('اصلاح شما در دیکشنری ذخیره شد.');
+            showConfirmation(t('popup.correctionSaved'));
             feedbackContainer.style.display = 'none';
             saveManualCorrectionButton.style.display = 'none';
             correctedTextBox.readOnly = true;
         } catch (error) {
             console.error('Dictionary save error:', error);
-            showConfirmation('ذخیره اصلاح انجام نشد.');
+            showConfirmation(t('popup.correctionSaveFailed'));
         }
     }
 
@@ -313,7 +424,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         knowledgePanel.style.display = 'block';
         const loadingMessage = document.createElement('p');
-        loadingMessage.textContent = 'در حال پردازش…';
+        loadingMessage.textContent = t('popup.loading');
         knowledgePanel.replaceChildren(loadingMessage);
 
         try {
@@ -348,13 +459,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (!result) {
             const noResultMessage = document.createElement('p');
-            noResultMessage.textContent = `نتیجه‌ای برای «${term}» یافت نشد.`;
+            noResultMessage.textContent = t('popup.noResult', { term });
             knowledgePanel.replaceChildren(noResultMessage);
             return;
         }
 
         const title = document.createElement('h4');
-        title.textContent = result.title;
+        title.textContent = result.type === 'disambiguation'
+            ? t('popup.disambiguation', {
+                title: result.sourceTitle || result.title
+            })
+            : result.title;
         knowledgePanel.appendChild(title);
 
         const summary = document.createElement('div');
@@ -411,7 +526,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.type.includes('disambiguation')) {
                 return {
                     type: 'disambiguation',
-                    title: `"${data.title}" چند معنی دارد:`,
+                    sourceTitle: data.title,
+                    title: data.title,
                     summary: data.extract
                 };
             }

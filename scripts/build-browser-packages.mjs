@@ -45,6 +45,7 @@ const excludedPrefixes = [
 ];
 
 const excludedFiles = new Set([
+  'assets/brand/fsa-mark-master.png',
   '.gitattributes',
   '.gitignore',
   'inline_styles.css',
@@ -147,6 +148,7 @@ const files = trackedRuntimeFiles();
 
 for (const requiredFile of [
   'background.js',
+  'ui_i18n.js',
   'inline_checker.js',
   'language_profiles.js',
   'keyboard_layout.js',
@@ -171,6 +173,7 @@ for (const requiredFile of [
   'assets/browser-logos/vivaldi.svg',
   'assets/browser-logos/firefox.svg',
   'assets/browser-logos/github.svg',
+  'assets/brand/fsa-mark.png',
   'icon16.png',
   'icon32.png',
   'icon48.png',

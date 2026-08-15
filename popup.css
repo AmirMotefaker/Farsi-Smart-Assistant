@@ -58,8 +58,8 @@ body {
     font-family: "Vazirmatn", Tahoma, sans-serif;
     background: var(--page);
     color: var(--text);
-    direction: rtl;
-    text-align: right;
+    direction: inherit;
+    text-align: start;
 }
 
 button,
@@ -90,7 +90,7 @@ input:focus-visible {
 
 .brand-row {
     display: grid;
-    grid-template-columns: 44px minmax(0, 1fr) 38px;
+    grid-template-columns: 44px minmax(0, 1fr) auto;
     align-items: center;
     gap: 11px;
     margin-bottom: 14px;
@@ -148,6 +148,48 @@ input:focus-visible {
     font-size: 9.5px;
     direction: ltr;
     white-space: nowrap;
+}
+
+.header-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    direction: ltr;
+}
+
+.language-switch {
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    padding: 3px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+}
+
+.language-option {
+    min-width: 29px;
+    height: 30px;
+    padding: 0 6px;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: Arial, Tahoma, sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.language-option:hover {
+    color: var(--accent);
+    background: var(--accent-soft);
+}
+
+.language-option.is-active {
+    color: #ffffff;
+    background: var(--accent);
 }
 
 .icon-button {
@@ -251,7 +293,7 @@ input:focus-visible {
     height: 21px;
     border-radius: 50%;
     top: 2px;
-    right: 2px;
+    left: 2px;
     background: #ffffff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
     transition: transform 180ms ease;
@@ -263,7 +305,7 @@ input:focus-visible {
 }
 
 .switch input:checked + .switch-track::after {
-    transform: translateX(-21px);
+    transform: translateX(21px);
 }
 
 .switch input:focus-visible + .switch-track {
@@ -304,7 +346,7 @@ input:focus-visible {
 .site-copy strong {
     display: block;
     direction: ltr;
-    text-align: right;
+    text-align: start;
     font-size: 11.5px;
     font-weight: 700;
     overflow: hidden;
@@ -426,7 +468,8 @@ textarea#inputText:focus {
 
 textarea#correctedTextBox {
     min-height: 52px;
-    padding: 10px 62px 10px 10px;
+    padding: 10px;
+    padding-inline-end: 62px;
     font-size: 11.5px;
     line-height: 1.7;
     background: var(--accent-soft);
@@ -436,7 +479,7 @@ textarea#correctedTextBox {
 .feedback-container {
     position: absolute;
     top: 8px;
-    left: 8px;
+    inset-inline-end: 8px;
     display: none;
     gap: 5px;
 }
@@ -755,4 +798,292 @@ textarea#correctedTextBox {
 
 .options-grid.single-column {
     grid-template-columns: minmax(0, 1fr);
+}
+
+/* v4.8.0 manual-gate UI polish — PR #45 follow-up */
+.brand-header {
+    margin-bottom: 14px;
+}
+
+.brand-header .brand-row {
+    margin-bottom: 0;
+}
+
+.brand-mark {
+    overflow: hidden;
+    background: transparent;
+    box-shadow: none;
+}
+
+.brand-mark img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+}
+
+.brand-title-row {
+    gap: 5px;
+}
+
+.version-badge {
+    padding: 1px 5px;
+    font-size: 8px;
+    line-height: 1.35;
+    flex: 0 0 auto;
+}
+
+.brand-tagline {
+    margin: 3px 0 0;
+    padding-inline-start: 55px;
+    color: var(--muted);
+    font-size: 9.4px;
+    line-height: 1.5;
+    white-space: nowrap;
+}
+
+:root[data-locale="en"] .brand-copy h1 {
+    font-size: 14px;
+}
+
+:root[data-locale="en"] .brand-tagline {
+    font-size: 9px;
+    letter-spacing: -0.01em;
+}
+
+.header-controls {
+    gap: 4px;
+}
+
+.icon-button {
+    width: 32px;
+    height: 32px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    box-shadow: none;
+}
+
+.icon-button:hover {
+    border-color: transparent;
+    background: var(--accent-soft);
+}
+
+.site-row {
+    grid-template-columns: 36px minmax(0, 1fr) auto;
+    gap: 10px;
+}
+
+.site-icon {
+    width: 36px;
+    height: 36px;
+    padding: 5px;
+    overflow: hidden;
+}
+
+.site-favicon {
+    width: 24px;
+    height: 24px;
+    display: block;
+    object-fit: contain;
+    border-radius: 6px;
+}
+
+.site-favicon-fallback {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.site-copy {
+    align-self: center;
+}
+
+.site-copy strong {
+    margin-top: 1px;
+}
+
+.site-toggle-control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.site-toggle-text {
+    max-width: 92px;
+    color: var(--accent);
+    font-size: 9.5px;
+    font-weight: 800;
+    line-height: 1.45;
+    text-align: end;
+}
+
+.site-switch {
+    position: relative;
+    display: inline-flex;
+    flex: 0 0 auto;
+}
+
+.site-switch input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.site-switch-track {
+    width: 36px;
+    height: 21px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--line);
+    position: relative;
+    cursor: pointer;
+    transition: background 160ms ease, border-color 160ms ease;
+}
+
+.site-switch-track::after {
+    content: "";
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    left: 2px;
+    top: 2px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.18);
+    transition: transform 180ms ease;
+}
+
+.site-switch input:checked + .site-switch-track {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.site-switch input:checked + .site-switch-track::after {
+    transform: translateX(15px);
+}
+
+.site-switch input:focus-visible + .site-switch-track {
+    box-shadow: var(--focus);
+}
+
+.site-switch input:disabled + .site-switch-track {
+    opacity: 0.55;
+    cursor: default;
+}
+
+.site-toggle-control:has(input:disabled) {
+    cursor: default;
+}
+
+.site-toggle-control:has(input:disabled) .site-toggle-text {
+    color: var(--muted);
+}
+
+.popup-footer {
+    gap: 7px;
+    margin-top: 14px;
+    font-size: 10px;
+    line-height: 1.9;
+}
+
+.footer-heart {
+    font-size: 11px;
+}
+
+.footer-author {
+    font-size: 10px;
+}
+
+.footer-github {
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+}
+
+.footer-github img {
+    width: 18px;
+    height: 18px;
+}
+
+/* FSA v4.8.0 current-site favicon polish */
+.site-icon {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.site-favicon {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
+    display: block;
+    object-fit: contain;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.site-favicon[hidden],
+.site-favicon-fallback[hidden] {
+    display: none !important;
+}
+
+.site-favicon:not([hidden]) + .site-favicon-fallback {
+    display: none !important;
+}
+
+.site-favicon-fallback {
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+}
+/* FSA v4.8.0 locale-aware header brand mark */
+.brand-mark-fa {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+}
+
+.brand-mark-en {
+    width: 100%;
+    height: 100%;
+    display: none;
+    place-items: center;
+    direction: ltr;
+    color: #4036ff;
+    font-family: "Vazirmatn", Arial, sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.05em;
+}
+
+:root[data-locale="en"] .brand-mark-fa {
+    display: none;
+}
+
+:root[data-locale="en"] .brand-mark-en {
+    display: grid;
 }
