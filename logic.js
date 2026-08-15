@@ -3,14 +3,16 @@ const WORD_MAP = {
     "jol lvt": "تخم مرغ", "khodamoni": "خودمونی", "khodemoni": "خودمونی",
     "ofv": "خبر", "ofvHkghdk": "خبرآنلاین", "لخخلمث": "گوگل", "rhar": "قاشق",
 
-    "salam": "سلام", "chetori": "چطوری", "khobi": "خوبی", "darya": "دریا", "man": "من",
+    "salam": "سلام", "salaam": "سلام", "chetori": "چطوری", "khobi": "خوبی", "khoobi": "خوبی",
+    "darya": "دریا", "man": "من",
     "be": "به", "madrese": "مدرسه", "miravam": "میروم", "baradar": "برادر", "bazar": "بازار",
     "va": "و", "az": "از", "to": "تو", "in": "این", "on": "آن", "eshtebah": "اشتباه",
     "hame": "همه", "baz": "باز", "dorost": "درست", "khrooji": "خروجی", "bayad": "باید",
     "bashe": "باشه", "hastam": "هستم", "hasti": "هستی", "hast": "هست", "ast": "است",
     "hastim": "هستیم", "hastid": "هستید", "hastand": "هستند", "alan": "الان", "farsi": "فارسی",
     "baladam": "بلدم", "mersi": "مرسی", "khodahafez": "خداحافظ", "are": "آره", "na": "نه",
-    "komak": "کمک", "daneshgah": "دانشگاه", "mikham": "میخوام", "bedoonam": "بدونم",
+    "komak": "کمک", "daneshgah": "دانشگاه", "barname": "برنامه", "kharid": "خرید",
+    "khanevade": "خانواده", "mikham": "میخوام", "bedoonam": "بدونم",
     "vaziat": "وضعیت", "ab": "آب", "o": "و", "hava": "هوا", "farda": "فردا", "chetore": "چطوره",
 
     "\\vhdl sdsjl": "پرایم سیستم", "\\vs\\,gds": "پرسپولیس", "vs,gds": "پرسپولیس",
@@ -41,6 +43,26 @@ function smart_farsi_converter(
 
     if (normalized !== value) {
         return normalized;
+    }
+
+    const universal =
+        typeof analyzeFsaUniversalCorrection ===
+            'function'
+            ? analyzeFsaUniversalCorrection(
+                normalized,
+                intentContext
+            )
+            : null;
+
+    if (universal?.protected) {
+        return normalized;
+    }
+
+    if (
+        universal?.changed &&
+        universal.corrected
+    ) {
+        return universal.corrected;
     }
 
     const contextualLayoutCorrected =
@@ -83,6 +105,19 @@ function smart_farsi_converter(
 
     if (finglish?.changed) {
         return finglish.corrected;
+    }
+
+    const spelling =
+        typeof analyzeFsaSpellingIntent ===
+            'function'
+            ? analyzeFsaSpellingIntent(
+                normalized,
+                intentContext
+            )
+            : null;
+
+    if (spelling?.changed) {
+        return spelling.corrected;
     }
 
     if (WORD_MAP[textLower]) {

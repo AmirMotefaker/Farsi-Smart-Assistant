@@ -421,6 +421,15 @@ function shouldProtectFsaEnglishSource(
     }
 
     if (
+        typeof isFsaKnownEnglishLexeme ===
+            'function' &&
+        isFsaKnownEnglishLexeme(value) &&
+        contextDelta < 4.5
+    ) {
+        return true;
+    }
+
+    if (
         typeof isHighConfidenceEnglishPhrase ===
             'function' &&
         isHighConfidenceEnglishPhrase(value) &&

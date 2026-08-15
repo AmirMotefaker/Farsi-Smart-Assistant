@@ -13,8 +13,12 @@ export async function loadConverter() {
     'language_profiles.js',
     'keyboard_layout.js',
     'context_intent.js',
-    'transliteration_intent.js',
     'normalization_intent.js',
+    'lexical_priors.js',
+    'finglish_source_model.js',
+    'transliteration_intent.js',
+    'spell_correction.js',
+    'universal_correction.js',
     'logic.js'
   ];
 

@@ -1,0 +1,3276 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "FSA v4.9.0 single-edit bilingual spelling foundation",
+  "samplesPerLanguage": 1000,
+  "dictionaryPopulation": {
+    "english": 44244,
+    "persian": 94204
+  },
+  "metrics": {
+    "englishTypo": {
+      "total": 1000,
+      "exactPass": 917,
+      "exactFail": 83,
+      "exactRate": 0.917,
+      "candidatePass": 1000,
+      "candidateFail": 0,
+      "candidateRecall": 1,
+      "skipped": 0,
+      "failures": [
+        {
+          "source": "deeg",
+          "expected": "deng",
+          "operation": "substitute",
+          "actual": "deg",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9644,
+          "candidateCount": 8,
+          "topCandidates": [
+            {
+              "text": "deg",
+              "operation": "delete-extra",
+              "score": 1.55
+            },
+            {
+              "text": "deng",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "deed",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "deem",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "deep",
+              "operation": "substitute",
+              "score": 1.085
+            }
+          ]
+        },
+        {
+          "source": "fiim",
+          "expected": "firm",
+          "operation": "substitute",
+          "actual": "film",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "film",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "firm",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "memmer",
+          "expected": "hemmer",
+          "operation": "substitute",
+          "actual": "member",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 4,
+          "topCandidates": [
+            {
+              "text": "member",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "mesmer",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "mummer",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "hemmer",
+              "operation": "substitute",
+              "score": 1.085
+            }
+          ]
+        },
+        {
+          "source": "tmara",
+          "expected": "tamara",
+          "operation": "delete",
+          "actual": "tamra",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9420000000000001,
+          "candidateCount": 5,
+          "topCandidates": [
+            {
+              "text": "tamra",
+              "operation": "transpose",
+              "score": 1.37
+            },
+            {
+              "text": "tamara",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "tiara",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "tara",
+              "operation": "delete-extra",
+              "score": 1.07
+            },
+            {
+              "text": "mara",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "mron",
+          "expected": "moron",
+          "operation": "delete",
+          "actual": "morn",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9420000000000001,
+          "candidateCount": 9,
+          "topCandidates": [
+            {
+              "text": "morn",
+              "operation": "transpose",
+              "score": 1.37
+            },
+            {
+              "text": "moron",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "myron",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "moon",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "aron",
+              "operation": "substitute",
+              "score": 1.085
+            }
+          ]
+        },
+        {
+          "source": "kaet",
+          "expected": "kart",
+          "operation": "substitute",
+          "actual": "kate",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9400000000000001,
+          "candidateCount": 3,
+          "topCandidates": [
+            {
+              "text": "kate",
+              "operation": "transpose",
+              "score": 1.335
+            },
+            {
+              "text": "kart",
+              "operation": "substitute",
+              "score": 1.21
+            },
+            {
+              "text": "kant",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "memer",
+          "expected": "meier",
+          "operation": "substitute",
+          "actual": "member",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 6,
+          "topCandidates": [
+            {
+              "text": "member",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "mesmer",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "meier",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "meter",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "meyer",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "ramro",
+          "expected": "ramrod",
+          "operation": "delete",
+          "actual": "ramiro",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9328000000000001,
+          "candidateCount": 3,
+          "topCandidates": [
+            {
+              "text": "ramiro",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "ramrod",
+              "operation": "insert-missing",
+              "score": 1.1849999999999998
+            },
+            {
+              "text": "rambo",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "locn",
+          "expected": "lorn",
+          "operation": "substitute",
+          "actual": "loan",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 8,
+          "topCandidates": [
+            {
+              "text": "loan",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "loin",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "loon",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "lorn",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "loci",
+              "operation": "substitute",
+              "score": 1.085
+            }
+          ]
+        },
+        {
+          "source": "blony",
+          "expected": "blond",
+          "operation": "substitute",
+          "actual": "blowy",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9328000000000001,
+          "candidateCount": 3,
+          "topCandidates": [
+            {
+              "text": "blowy",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "blond",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "bony",
+              "operation": "delete-extra",
+              "score": 1.07
+            }
+          ]
+        },
+        {
+          "source": "wiip",
+          "expected": "wimp",
+          "operation": "substitute",
+          "actual": "whip",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 4,
+          "topCandidates": [
+            {
+              "text": "whip",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "wimp",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "wisp",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "wii",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "wrease",
+          "expected": "grease",
+          "operation": "substitute",
+          "actual": "crease",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "crease",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "grease",
+              "operation": "substitute",
+              "score": 1.085
+            }
+          ]
+        },
+        {
+          "source": "paya",
+          "expected": "papa",
+          "operation": "substitute",
+          "actual": "pays",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9344,
+          "candidateCount": 5,
+          "topCandidates": [
+            {
+              "text": "pays",
+              "operation": "substitute",
+              "score": 1.1749999999999998
+            },
+            {
+              "text": "papa",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "para",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "maya",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "pay",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "vaaunt",
+          "expected": "avaunt",
+          "operation": "transpose",
+          "actual": "vaunt",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9472,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "vaunt",
+              "operation": "delete-extra",
+              "score": 1.55
+            },
+            {
+              "text": "avaunt",
+              "operation": "transpose",
+              "score": 1.335
+            }
+          ]
+        },
+        {
+          "source": "shfw",
+          "expected": "shew",
+          "operation": "substitute",
+          "actual": "shaw",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 3,
+          "topCandidates": [
+            {
+              "text": "shaw",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "shew",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "show",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "wordly",
+          "expected": "worldly",
+          "operation": "delete",
+          "actual": "wordily",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 4,
+          "topCandidates": [
+            {
+              "text": "wordily",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "worldly",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "lordly",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "wordy",
+              "operation": "delete-extra",
+              "score": 1.07
+            }
+          ]
+        },
+        {
+          "source": "sedy",
+          "expected": "seedy",
+          "operation": "delete",
+          "actual": "sedgy",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 4,
+          "topCandidates": [
+            {
+              "text": "sedgy",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "seedy",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "secy",
+              "operation": "substitute",
+              "score": 1.21
+            },
+            {
+              "text": "sexy",
+              "operation": "substitute",
+              "score": 1.21
+            }
+          ]
+        },
+        {
+          "source": "litte",
+          "expected": "litter",
+          "operation": "delete",
+          "actual": "lite",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9564,
+          "candidateCount": 5,
+          "topCandidates": [
+            {
+              "text": "lite",
+              "operation": "delete-extra",
+              "score": 1.55
+            },
+            {
+              "text": "little",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "litter",
+              "operation": "insert-missing",
+              "score": 1.1849999999999998
+            },
+            {
+              "text": "latte",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "lithe",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "achieveh",
+          "expected": "achieve",
+          "operation": "insert",
+          "actual": "achiever",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.934,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "achiever",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "achieve",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "gaine",
+          "expected": "gainer",
+          "operation": "delete",
+          "actual": "gamine",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9328000000000001,
+          "candidateCount": 8,
+          "topCandidates": [
+            {
+              "text": "gamine",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "gainer",
+              "operation": "insert-missing",
+              "score": 1.1849999999999998
+            },
+            {
+              "text": "gaines",
+              "operation": "insert-missing",
+              "score": 1.1849999999999998
+            },
+            {
+              "text": "gains",
+              "operation": "substitute",
+              "score": 1.1749999999999998
+            },
+            {
+              "text": "taine",
+              "operation": "substitute",
+              "score": 1.1749999999999998
+            }
+          ]
+        },
+        {
+          "source": "wimy",
+          "expected": "winy",
+          "operation": "substitute",
+          "actual": "wimpy",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9308000000000001,
+          "candidateCount": 6,
+          "topCandidates": [
+            {
+              "text": "wimpy",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "winy",
+              "operation": "substitute",
+              "score": 1.21
+            },
+            {
+              "text": "wily",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "wiry",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "limy",
+              "operation": "substitute",
+              "score": 1.085
+            }
+          ]
+        },
+        {
+          "source": "squeezex",
+          "expected": "squeeze",
+          "operation": "insert",
+          "actual": "squeezer",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.934,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "squeezer",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "squeeze",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "clui",
+          "expected": "clvi",
+          "operation": "substitute",
+          "actual": "clii",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9372,
+          "candidateCount": 5,
+          "topCandidates": [
+            {
+              "text": "clii",
+              "operation": "substitute",
+              "score": 1.21
+            },
+            {
+              "text": "clvi",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "clxi",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "club",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "clue",
+              "operation": "substitute",
+              "score": 1.085
+            }
+          ]
+        },
+        {
+          "source": "kroper",
+          "expected": "groper",
+          "operation": "substitute",
+          "actual": "kroger",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9328000000000001,
+          "candidateCount": 4,
+          "topCandidates": [
+            {
+              "text": "kroger",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "groper",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "proper",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "roper",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "cletan",
+          "expected": "clean",
+          "operation": "insert",
+          "actual": "cretan",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.934,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "cretan",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "clean",
+              "operation": "delete-extra",
+              "score": 1.07
+            }
+          ]
+        },
+        {
+          "source": "pakl",
+          "expected": "paul",
+          "operation": "substitute",
+          "actual": "pail",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 5,
+          "topCandidates": [
+            {
+              "text": "pail",
+              "operation": "substitute",
+              "score": 1.21
+            },
+            {
+              "text": "pall",
+              "operation": "substitute",
+              "score": 1.21
+            },
+            {
+              "text": "paul",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "pawl",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "pal",
+              "operation": "delete-extra",
+              "score": 1.07
+            }
+          ]
+        },
+        {
+          "source": "phill",
+          "expected": "philly",
+          "operation": "delete",
+          "actual": "phil",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9592,
+          "candidateCount": 8,
+          "topCandidates": [
+            {
+              "text": "phil",
+              "operation": "delete-extra",
+              "score": 1.55
+            },
+            {
+              "text": "philly",
+              "operation": "insert-missing",
+              "score": 1.1849999999999998
+            },
+            {
+              "text": "uphill",
+              "operation": "insert-missing",
+              "score": 1.1849999999999998
+            },
+            {
+              "text": "phial",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "chill",
+              "operation": "substitute",
+              "score": 1.085
+            }
+          ]
+        },
+        {
+          "source": "hyke",
+          "expected": "hype",
+          "operation": "substitute",
+          "actual": "hake",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 7,
+          "topCandidates": [
+            {
+              "text": "hake",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "hike",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "hoke",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "hyde",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "hype",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "piejce",
+          "expected": "piece",
+          "operation": "insert",
+          "actual": "pierce",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.934,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "pierce",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "piece",
+              "operation": "delete-extra",
+              "score": 1.07
+            }
+          ]
+        },
+        {
+          "source": "snwgged",
+          "expected": "snogged",
+          "operation": "substitute",
+          "actual": "snagged",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9372,
+          "candidateCount": 3,
+          "topCandidates": [
+            {
+              "text": "snagged",
+              "operation": "substitute",
+              "score": 1.21
+            },
+            {
+              "text": "snogged",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "snugged",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "kaci",
+          "expected": "kari",
+          "operation": "substitute",
+          "actual": "kali",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "kali",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "kari",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "sassd",
+          "expected": "sass",
+          "operation": "insert",
+          "actual": "sassy",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.934,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "sassy",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "sass",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "btte",
+          "expected": "butte",
+          "operation": "delete",
+          "actual": "bette",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 5,
+          "topCandidates": [
+            {
+              "text": "bette",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "butte",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "byte",
+              "operation": "substitute",
+              "score": 1.21
+            },
+            {
+              "text": "bate",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "bite",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "saus",
+          "expected": "sars",
+          "operation": "substitute",
+          "actual": "says",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9372,
+          "candidateCount": 6,
+          "topCandidates": [
+            {
+              "text": "says",
+              "operation": "substitute",
+              "score": 1.21
+            },
+            {
+              "text": "saks",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "sans",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "sars",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "sass",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "yearlng",
+          "expected": "yearlong",
+          "operation": "delete",
+          "actual": "yearling",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "yearling",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "yearlong",
+              "operation": "insert-missing",
+              "score": 1.22
+            }
+          ]
+        },
+        {
+          "source": "slan",
+          "expected": "sloan",
+          "operation": "delete",
+          "actual": "slain",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 16,
+          "topCandidates": [
+            {
+              "text": "slain",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "sloan",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "span",
+              "operation": "substitute",
+              "score": 1.21
+            },
+            {
+              "text": "slang",
+              "operation": "insert-missing",
+              "score": 1.1849999999999998
+            },
+            {
+              "text": "slant",
+              "operation": "insert-missing",
+              "score": 1.1849999999999998
+            }
+          ]
+        },
+        {
+          "source": "ouper",
+          "expected": "super",
+          "operation": "substitute",
+          "actual": "duper",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "duper",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "super",
+              "operation": "substitute",
+              "score": 1.085
+            }
+          ]
+        },
+        {
+          "source": "exploer",
+          "expected": "explorer",
+          "operation": "delete",
+          "actual": "explore",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9392,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "explore",
+              "operation": "transpose",
+              "score": 1.335
+            },
+            {
+              "text": "explorer",
+              "operation": "insert-missing",
+              "score": 1.22
+            }
+          ]
+        },
+        {
+          "source": "pucl",
+          "expected": "pull",
+          "operation": "substitute",
+          "actual": "puck",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9344,
+          "candidateCount": 4,
+          "topCandidates": [
+            {
+              "text": "puck",
+              "operation": "substitute",
+              "score": 1.1749999999999998
+            },
+            {
+              "text": "pull",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "purl",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "puce",
+              "operation": "substitute",
+              "score": 1.085
+            }
+          ]
+        },
+        {
+          "source": "paos",
+          "expected": "pays",
+          "operation": "substitute",
+          "actual": "laos",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9344,
+          "candidateCount": 3,
+          "topCandidates": [
+            {
+              "text": "laos",
+              "operation": "substitute",
+              "score": 1.1749999999999998
+            },
+            {
+              "text": "pass",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "pays",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "paik",
+          "expected": "park",
+          "operation": "substitute",
+          "actual": "pail",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9344,
+          "candidateCount": 6,
+          "topCandidates": [
+            {
+              "text": "pail",
+              "operation": "substitute",
+              "score": 1.1749999999999998
+            },
+            {
+              "text": "pack",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "park",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "paid",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "pain",
+              "operation": "substitute",
+              "score": 1.085
+            }
+          ]
+        },
+        {
+          "source": "crcp",
+          "expected": "crop",
+          "operation": "substitute",
+          "actual": "crap",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "crap",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "crop",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "pais",
+          "expected": "pass",
+          "operation": "substitute",
+          "actual": "paris",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9336000000000001,
+          "candidateCount": 8,
+          "topCandidates": [
+            {
+              "text": "paris",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "paid",
+              "operation": "substitute",
+              "score": 1.1749999999999998
+            },
+            {
+              "text": "pass",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "pays",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "dais",
+              "operation": "substitute",
+              "score": 1.085
+            }
+          ]
+        },
+        {
+          "source": "saak",
+          "expected": "sank",
+          "operation": "substitute",
+          "actual": "sask",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 8,
+          "topCandidates": [
+            {
+              "text": "sask",
+              "operation": "substitute",
+              "score": 1.21
+            },
+            {
+              "text": "swak",
+              "operation": "substitute",
+              "score": 1.21
+            },
+            {
+              "text": "sack",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "salk",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "sank",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "nace",
+          "expected": "nate",
+          "operation": "substitute",
+          "actual": "nacre",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9308000000000001,
+          "candidateCount": 14,
+          "topCandidates": [
+            {
+              "text": "nacre",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "nave",
+              "operation": "substitute",
+              "score": 1.21
+            },
+            {
+              "text": "mace",
+              "operation": "substitute",
+              "score": 1.1749999999999998
+            },
+            {
+              "text": "name",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "nape",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "wovel",
+          "expected": "novel",
+          "operation": "substitute",
+          "actual": "hovel",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 4,
+          "topCandidates": [
+            {
+              "text": "hovel",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "novel",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "woven",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "wove",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "loei",
+          "expected": "lori",
+          "operation": "substitute",
+          "actual": "loewi",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9308000000000001,
+          "candidateCount": 6,
+          "topCandidates": [
+            {
+              "text": "loewi",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "lodi",
+              "operation": "substitute",
+              "score": 1.21
+            },
+            {
+              "text": "lori",
+              "operation": "substitute",
+              "score": 1.21
+            },
+            {
+              "text": "loci",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "loki",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "deay",
+          "expected": "decay",
+          "operation": "delete",
+          "actual": "deary",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 14,
+          "topCandidates": [
+            {
+              "text": "deary",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "decay",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "delay",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "dewy",
+              "operation": "substitute",
+              "score": 1.21
+            },
+            {
+              "text": "dray",
+              "operation": "substitute",
+              "score": 1.21
+            }
+          ]
+        },
+        {
+          "source": "elmma",
+          "expected": "lemma",
+          "operation": "transpose",
+          "actual": "elma",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9472,
+          "candidateCount": 3,
+          "topCandidates": [
+            {
+              "text": "elma",
+              "operation": "delete-extra",
+              "score": 1.55
+            },
+            {
+              "text": "lemma",
+              "operation": "transpose",
+              "score": 1.335
+            },
+            {
+              "text": "emma",
+              "operation": "delete-extra",
+              "score": 1.07
+            }
+          ]
+        },
+        {
+          "source": "hnull",
+          "expected": "null",
+          "operation": "insert",
+          "actual": "hull",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9328000000000001,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "hull",
+              "operation": "delete-extra",
+              "score": 1.07
+            },
+            {
+              "text": "null",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        }
+      ]
+    },
+    "persianTypo": {
+      "total": 1000,
+      "exactPass": 838,
+      "exactFail": 162,
+      "exactRate": 0.838,
+      "candidatePass": 1000,
+      "candidateFail": 0,
+      "candidateRecall": 1,
+      "skipped": 0,
+      "failures": [
+        {
+          "source": "هرغانه",
+          "expected": "مرغانه",
+          "operation": "substitute",
+          "actual": "هردانه",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9328000000000001,
+          "candidateCount": 3,
+          "topCandidates": [
+            {
+              "text": "هردانه",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "فرغانه",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "مرغانه",
+              "operation": "substitute",
+              "score": 1.085
+            }
+          ]
+        },
+        {
+          "source": "جااری",
+          "expected": "اجاری",
+          "operation": "transpose",
+          "actual": "جاری",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9472,
+          "candidateCount": 5,
+          "topCandidates": [
+            {
+              "text": "جاری",
+              "operation": "delete-extra",
+              "score": 1.55
+            },
+            {
+              "text": "اجاری",
+              "operation": "transpose",
+              "score": 1.335
+            },
+            {
+              "text": "جاداری",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "جابری",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "جباری",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "کرخشیم",
+          "expected": "نرخشیم",
+          "operation": "substitute",
+          "actual": "برخشیم",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 4,
+          "topCandidates": [
+            {
+              "text": "برخشیم",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "درخشیم",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "نرخشیم",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "رخشیم",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "بیندوید",
+          "expected": "بیندودید",
+          "operation": "delete",
+          "actual": "بیندودی",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9392,
+          "candidateCount": 6,
+          "topCandidates": [
+            {
+              "text": "بیندودی",
+              "operation": "transpose",
+              "score": 1.335
+            },
+            {
+              "text": "بیندودید",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "بیندوزید",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "بینداید",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "بیندوزد",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "طپسندی",
+          "expected": "نپسندی",
+          "operation": "substitute",
+          "actual": "بپسندی",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 3,
+          "topCandidates": [
+            {
+              "text": "بپسندی",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "نپسندی",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "پسندی",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "ثمیچرخاندهاید",
+          "expected": "میچرخاندهاید",
+          "operation": "insert",
+          "actual": "نمیچرخاندهاید",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 3,
+          "topCandidates": [
+            {
+              "text": "نمیچرخاندهاید",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "همیچرخاندهاید",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "میچرخاندهاید",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "مدرسگ",
+          "expected": "مدرسی",
+          "operation": "substitute",
+          "actual": "مدرسه",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 4,
+          "topCandidates": [
+            {
+              "text": "مدرسه",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "مدرسی",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "پدرسگ",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "مدرس",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "جکشته",
+          "expected": "کشته",
+          "operation": "insert",
+          "actual": "نکشته",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.934,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "نکشته",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "کشته",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "خکوبند",
+          "expected": "نکوبند",
+          "operation": "substitute",
+          "actual": "بکوبند",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 3,
+          "topCandidates": [
+            {
+              "text": "بکوبند",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "نکوبند",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "کوبند",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "انضار",
+          "expected": "انصار",
+          "operation": "substitute",
+          "actual": "احضار",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 10,
+          "topCandidates": [
+            {
+              "text": "احضار",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "انبار",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "انذار",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "انصار",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "انظار",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "کسای",
+          "expected": "کسایی",
+          "operation": "delete",
+          "actual": "کسادی",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 11,
+          "topCandidates": [
+            {
+              "text": "کسادی",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "کسانی",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "کسایی",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "کسبی",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "کسری",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "نچینز",
+          "expected": "نچینی",
+          "operation": "substitute",
+          "actual": "نچیند",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 4,
+          "topCandidates": [
+            {
+              "text": "نچیند",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "نچینم",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "نچینی",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "نچین",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "همیچیید",
+          "expected": "همیچیدید",
+          "operation": "delete",
+          "actual": "همیچید",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9472,
+          "candidateCount": 14,
+          "topCandidates": [
+            {
+              "text": "همیچید",
+              "operation": "delete-extra",
+              "score": 1.55
+            },
+            {
+              "text": "همیچیدی",
+              "operation": "transpose",
+              "score": 1.335
+            },
+            {
+              "text": "همیچایید",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "همیچیدید",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "همیچینید",
+              "operation": "insert-missing",
+              "score": 1.22
+            }
+          ]
+        },
+        {
+          "source": "گردنند",
+          "expected": "گردانند",
+          "operation": "delete",
+          "actual": "گردند",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9564,
+          "candidateCount": 5,
+          "topCandidates": [
+            {
+              "text": "گردند",
+              "operation": "delete-extra",
+              "score": 1.55
+            },
+            {
+              "text": "گردانند",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "گردنبند",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "گرانند",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "گرداند",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "برصمیتافتهای",
+          "expected": "برهمیتافتهای",
+          "operation": "substitute",
+          "actual": "برنمیتافتهای",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 3,
+          "topCandidates": [
+            {
+              "text": "برنمیتافتهای",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "برهمیتافتهای",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "برمیتافتهای",
+              "operation": "delete-extra",
+              "score": 1.07
+            }
+          ]
+        },
+        {
+          "source": "مینورد",
+          "expected": "مینوردم",
+          "operation": "delete",
+          "actual": "مینوردد",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9328000000000001,
+          "candidateCount": 10,
+          "topCandidates": [
+            {
+              "text": "مینوردد",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "مینوردم",
+              "operation": "insert-missing",
+              "score": 1.1849999999999998
+            },
+            {
+              "text": "مینوردی",
+              "operation": "insert-missing",
+              "score": 1.1849999999999998
+            },
+            {
+              "text": "میآورد",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "میخورد",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "نمیپروراندطد",
+          "expected": "نمیپروراندید",
+          "operation": "substitute",
+          "actual": "نمیپروراندند",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "نمیپروراندند",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "نمیپروراندید",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "تزیده",
+          "expected": "تنیده",
+          "operation": "substitute",
+          "actual": "تازیده",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9380000000000001,
+          "candidateCount": 8,
+          "topCandidates": [
+            {
+              "text": "تازیده",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "تنیده",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "تپیده",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "تکیده",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "خزیده",
+              "operation": "substitute",
+              "score": 1.085
+            }
+          ]
+        },
+        {
+          "source": "نملیدی",
+          "expected": "نمالیدی",
+          "operation": "delete",
+          "actual": "نلمیدی",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9420000000000001,
+          "candidateCount": 6,
+          "topCandidates": [
+            {
+              "text": "نلمیدی",
+              "operation": "transpose",
+              "score": 1.37
+            },
+            {
+              "text": "نمالیدی",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "نالیدی",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "نخلیدی",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "نشلیدی",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "چاندهای",
+          "expected": "چکاندهای",
+          "operation": "delete",
+          "actual": "چراندهای",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 7,
+          "topCandidates": [
+            {
+              "text": "چراندهای",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "چشاندهای",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "چلاندهای",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "چپاندهای",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "چکاندهای",
+              "operation": "insert-missing",
+              "score": 1.22
+            }
+          ]
+        },
+        {
+          "source": "بیوض",
+          "expected": "بیاض",
+          "operation": "substitute",
+          "actual": "بیعوض",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9328000000000001,
+          "candidateCount": 10,
+          "topCandidates": [
+            {
+              "text": "بیعوض",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "بیوضو",
+              "operation": "insert-missing",
+              "score": 1.1849999999999998
+            },
+            {
+              "text": "بیاض",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "بیوت",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "بیون",
+              "operation": "substitute",
+              "score": 1.085
+            }
+          ]
+        },
+        {
+          "source": "پالن",
+          "expected": "پانل",
+          "operation": "transpose",
+          "actual": "پلان",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9328000000000001,
+          "candidateCount": 15,
+          "topCandidates": [
+            {
+              "text": "پلان",
+              "operation": "transpose",
+              "score": 1.37
+            },
+            {
+              "text": "پانل",
+              "operation": "transpose",
+              "score": 1.335
+            },
+            {
+              "text": "پالان",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "بالن",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "سالن",
+              "operation": "substitute",
+              "score": 1.085
+            }
+          ]
+        },
+        {
+          "source": "بازنگگفتن",
+          "expected": "بازنگرفتن",
+          "operation": "substitute",
+          "actual": "بازنگفتن",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9644,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "بازنگفتن",
+              "operation": "delete-extra",
+              "score": 1.55
+            },
+            {
+              "text": "بازنگرفتن",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "فریبو",
+          "expected": "فریب",
+          "operation": "insert",
+          "actual": "فریبا",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 5,
+          "topCandidates": [
+            {
+              "text": "فریبا",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "فریبد",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "فریبم",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "فریبی",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "فریب",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "نوضل",
+          "expected": "نوفل",
+          "operation": "substitute",
+          "actual": "نوئل",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 5,
+          "topCandidates": [
+            {
+              "text": "نوئل",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "نوبل",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "نوفل",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "نوول",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "نویل",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "نتدری",
+          "expected": "نادری",
+          "operation": "substitute",
+          "actual": "تندری",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9472,
+          "candidateCount": 3,
+          "topCandidates": [
+            {
+              "text": "تندری",
+              "operation": "transpose",
+              "score": 1.335
+            },
+            {
+              "text": "نادری",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "ندری",
+              "operation": "delete-extra",
+              "score": 1.07
+            }
+          ]
+        },
+        {
+          "source": "حمیپیمودید",
+          "expected": "همیپیمودید",
+          "operation": "substitute",
+          "actual": "نمیپیمودید",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 3,
+          "topCandidates": [
+            {
+              "text": "نمیپیمودید",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "همیپیمودید",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "میپیمودید",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "ایهد",
+          "expected": "ایزد",
+          "operation": "substitute",
+          "actual": "ایده",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9392,
+          "candidateCount": 4,
+          "topCandidates": [
+            {
+              "text": "ایده",
+              "operation": "transpose",
+              "score": 1.335
+            },
+            {
+              "text": "ایهود",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "اشهد",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "ایزد",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "بربغه",
+          "expected": "بربنه",
+          "operation": "substitute",
+          "actual": "بربجه",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "بربجه",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "بربنه",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "عیفض",
+          "expected": "عیوض",
+          "operation": "substitute",
+          "actual": "عیاض",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "عیاض",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "عیوض",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "حمصی",
+          "expected": "حموی",
+          "operation": "substitute",
+          "actual": "حمدی",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 3,
+          "topCandidates": [
+            {
+              "text": "حمدی",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "حموی",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "حمص",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "لیوناردن",
+          "expected": "لیونارد",
+          "operation": "insert",
+          "actual": "لیوناردو",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.934,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "لیوناردو",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "لیونارد",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "بدضل",
+          "expected": "بدیل",
+          "operation": "substitute",
+          "actual": "بددل",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 3,
+          "topCandidates": [
+            {
+              "text": "بددل",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "بدیل",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "بدل",
+              "operation": "delete-extra",
+              "score": 1.07
+            }
+          ]
+        },
+        {
+          "source": "میذب",
+          "expected": "میاب",
+          "operation": "substitute",
+          "actual": "معذب",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 3,
+          "topCandidates": [
+            {
+              "text": "معذب",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "مهذب",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "میاب",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "نمیگناندی",
+          "expected": "نمیگنداندی",
+          "operation": "delete",
+          "actual": "نمیگنجاندی",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "نمیگنجاندی",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "نمیگنداندی",
+              "operation": "insert-missing",
+              "score": 1.22
+            }
+          ]
+        },
+        {
+          "source": "نمیکم",
+          "expected": "نمیمکم",
+          "operation": "delete",
+          "actual": "نمکیم",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9420000000000001,
+          "candidateCount": 8,
+          "topCandidates": [
+            {
+              "text": "نمکیم",
+              "operation": "transpose",
+              "score": 1.37
+            },
+            {
+              "text": "نمیمکم",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "نمیپکم",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "نمیچکم",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "نمیکشم",
+              "operation": "insert-missing",
+              "score": 1.22
+            }
+          ]
+        },
+        {
+          "source": "نچکیدیب",
+          "expected": "نچکیدیم",
+          "operation": "substitute",
+          "actual": "نچکیدید",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 3,
+          "topCandidates": [
+            {
+              "text": "نچکیدید",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "نچکیدیم",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "نچکیدی",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "شومن",
+          "expected": "شوپن",
+          "operation": "substitute",
+          "actual": "شومان",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9380000000000001,
+          "candidateCount": 10,
+          "topCandidates": [
+            {
+              "text": "شومان",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "شرمن",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "شوپن",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "رومن",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "شومی",
+              "operation": "substitute",
+              "score": 1.085
+            }
+          ]
+        },
+        {
+          "source": "کاتور",
+          "expected": "کاتوره",
+          "operation": "delete",
+          "actual": "اکتور",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9392,
+          "candidateCount": 10,
+          "topCandidates": [
+            {
+              "text": "اکتور",
+              "operation": "transpose",
+              "score": 1.335
+            },
+            {
+              "text": "کانتور",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "کاتوره",
+              "operation": "insert-missing",
+              "score": 1.1849999999999998
+            },
+            {
+              "text": "کارور",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "کافور",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "کوباندش",
+          "expected": "کوباند",
+          "operation": "insert",
+          "actual": "کوباندم",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 5,
+          "topCandidates": [
+            {
+              "text": "کوباندم",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "کوباندن",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "کوبانده",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "کوباندی",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "کوباند",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "نمیاندطخته",
+          "expected": "نمیاندوخته",
+          "operation": "substitute",
+          "actual": "نمیانداخته",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "نمیانداخته",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "نمیاندوخته",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "درمانفم",
+          "expected": "درمانم",
+          "operation": "insert",
+          "actual": "درماندم",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 3,
+          "topCandidates": [
+            {
+              "text": "درماندم",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "درمانیم",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "درمانم",
+              "operation": "delete-extra",
+              "score": 1.07
+            }
+          ]
+        },
+        {
+          "source": "بکنضید",
+          "expected": "بکنید",
+          "operation": "insert",
+          "actual": "بکندید",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.934,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "بکندید",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "بکنید",
+              "operation": "delete-extra",
+              "score": 1.07
+            }
+          ]
+        },
+        {
+          "source": "تالی",
+          "expected": "تالیف",
+          "operation": "delete",
+          "actual": "تالشی",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 16,
+          "topCandidates": [
+            {
+              "text": "تالشی",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "تالکی",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "تعالی",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "توالی",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "تالیا",
+              "operation": "insert-missing",
+              "score": 1.1849999999999998
+            }
+          ]
+        },
+        {
+          "source": "دریافتهاطد",
+          "expected": "دریافتهاید",
+          "operation": "substitute",
+          "actual": "دریافتهاند",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "دریافتهاند",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "دریافتهاید",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "سریه",
+          "expected": "سوریه",
+          "operation": "delete",
+          "actual": "سیره",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9420000000000001,
+          "candidateCount": 16,
+          "topCandidates": [
+            {
+              "text": "سیره",
+              "operation": "transpose",
+              "score": 1.37
+            },
+            {
+              "text": "سرایه",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "سریده",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "سوریه",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "سایه",
+              "operation": "substitute",
+              "score": 1.12
+            }
+          ]
+        },
+        {
+          "source": "آمزی",
+          "expected": "آمفی",
+          "operation": "substitute",
+          "actual": "آمیز",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9392,
+          "candidateCount": 11,
+          "topCandidates": [
+            {
+              "text": "آمیز",
+              "operation": "transpose",
+              "score": 1.335
+            },
+            {
+              "text": "آمرزی",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "آموزی",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "آمیزی",
+              "operation": "insert-missing",
+              "score": 1.22
+            },
+            {
+              "text": "آچمزی",
+              "operation": "insert-missing",
+              "score": 1.22
+            }
+          ]
+        },
+        {
+          "source": "صناعتگ",
+          "expected": "صناعت",
+          "operation": "insert",
+          "actual": "صناعتی",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.934,
+          "candidateCount": 2,
+          "topCandidates": [
+            {
+              "text": "صناعتی",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "صناعت",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        },
+        {
+          "source": "ششاندم",
+          "expected": "نشاندم",
+          "operation": "substitute",
+          "actual": "فشاندم",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 4,
+          "topCandidates": [
+            {
+              "text": "فشاندم",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "نشاندم",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "چشاندم",
+              "operation": "substitute",
+              "score": 1.085
+            },
+            {
+              "text": "کشاندم",
+              "operation": "substitute",
+              "score": 1.085
+            }
+          ]
+        },
+        {
+          "source": "نقرسی",
+          "expected": "نترسی",
+          "operation": "substitute",
+          "actual": "نارسی",
+          "candidateFound": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93,
+          "candidateCount": 5,
+          "topCandidates": [
+            {
+              "text": "نارسی",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "نترسی",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "نپرسی",
+              "operation": "substitute",
+              "score": 1.12
+            },
+            {
+              "text": "نرسی",
+              "operation": "delete-extra",
+              "score": 1.07
+            },
+            {
+              "text": "نقرس",
+              "operation": "delete-extra",
+              "score": 1.035
+            }
+          ]
+        }
+      ]
+    },
+    "englishProtection": {
+      "total": 1000,
+      "pass": 1000,
+      "fail": 0,
+      "rate": 1,
+      "failures": []
+    },
+    "persianProtection": {
+      "total": 1000,
+      "pass": 1000,
+      "fail": 0,
+      "rate": 1,
+      "failures": []
+    },
+    "fixedCases": {
+      "total": 11,
+      "pass": 10,
+      "fail": 1,
+      "rate": 0.9090909090909091,
+      "results": [
+        {
+          "language": "en",
+          "source": "tehcnology",
+          "expected": "technology",
+          "actual": "technology",
+          "pass": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.985
+        },
+        {
+          "language": "en",
+          "source": "recieve",
+          "expected": "receive",
+          "actual": "receive",
+          "pass": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9500000000000001
+        },
+        {
+          "language": "en",
+          "source": "adress",
+          "expected": "address",
+          "actual": "address",
+          "pass": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9448000000000001
+        },
+        {
+          "language": "en",
+          "source": "pyhton",
+          "expected": "python",
+          "actual": "python",
+          "pass": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.985
+        },
+        {
+          "language": "en",
+          "source": "javscript",
+          "expected": "javascript",
+          "actual": "javascript",
+          "pass": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.985
+        },
+        {
+          "language": "en",
+          "source": "databse",
+          "expected": "database",
+          "actual": "database",
+          "pass": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.985
+        },
+        {
+          "language": "fa",
+          "source": "دانشکاه",
+          "expected": "دانشگاه",
+          "actual": "دانشکده",
+          "pass": false,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.93
+        },
+        {
+          "language": "fa",
+          "source": "برنانه",
+          "expected": "برنامه",
+          "actual": "برنامه",
+          "pass": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.934
+        },
+        {
+          "language": "fa",
+          "source": "اینترننت",
+          "expected": "اینترنت",
+          "actual": "اینترنت",
+          "pass": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9644
+        },
+        {
+          "language": "fa",
+          "source": "مرورگرر",
+          "expected": "مرورگر",
+          "actual": "مرورگر",
+          "pass": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.985
+        },
+        {
+          "language": "fa",
+          "source": "موسقی",
+          "expected": "موسیقی",
+          "actual": "موسیقی",
+          "pass": true,
+          "reason": "one-edit-lexical-candidate",
+          "confidence": 0.9380000000000001
+        }
+      ]
+    }
+  },
+  "gates": {
+    "englishCandidateRecall": {
+      "rate": 1,
+      "threshold": 0.99,
+      "pass": true
+    },
+    "persianCandidateRecall": {
+      "rate": 1,
+      "threshold": 0.99,
+      "pass": true
+    },
+    "englishExactTop1": {
+      "rate": 0.917,
+      "threshold": 0.7,
+      "pass": true
+    },
+    "persianExactTop1": {
+      "rate": 0.838,
+      "threshold": 0.7,
+      "pass": true
+    },
+    "englishProtection": {
+      "rate": 1,
+      "threshold": 1,
+      "pass": true
+    },
+    "persianProtection": {
+      "rate": 1,
+      "threshold": 1,
+      "pass": true
+    },
+    "fixedCases": {
+      "rate": 0.9090909090909091,
+      "threshold": 0.9,
+      "pass": true
+    }
+  },
+  "finalTargets": {
+    "englishTypoExact": false,
+    "persianTypoExact": false,
+    "englishProtection": true,
+    "persianProtection": true
+  },
+  "decision": "M1_PASS",
+  "note": "M1_PASS proves candidate-generation and initial ranking foundations only; it is not the final v4.9.0 Store-unblock gate."
+}

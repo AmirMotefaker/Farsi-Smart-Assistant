@@ -817,6 +817,43 @@ function analyzeFsaSmartAutoIntent(
         }
     }
 
+
+    if (
+        typeof analyzeFsaSpellingIntent ===
+            'function'
+    ) {
+        const spelling =
+            analyzeFsaSpellingIntent(
+                value,
+                context
+            );
+
+        if (
+            spelling.changed &&
+            spelling.corrected ===
+                expected
+        ) {
+            return {
+                changed: true,
+                autoEligible: false,
+                original: value,
+                corrected: expected,
+                confidence:
+                    Number(
+                        spelling.confidence
+                    ) || 0,
+                kind: 'spelling',
+                reason:
+                    spelling.reason,
+                evidence: [
+                    ...(spelling.evidence || []),
+                    'smart-auto-spelling-suggestion-only'
+                ],
+                analysis: spelling
+            };
+        }
+    }
+
     if (
         typeof WORD_MAP !== 'undefined' &&
         WORD_MAP &&
