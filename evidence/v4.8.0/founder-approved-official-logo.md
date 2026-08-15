@@ -147,3 +147,30 @@ Final release candidate after bilingual-toolbar refinement:
 - Chromium SHA-256: 697DC1B8F790CA7C795D5542DCD491379F2BB89A29D7770CE35DD04848DECACA
 - Firefox entries: 56
 - Firefox SHA-256: 115BE1756D9B0A2DA5B9075F0BEF6F37AB96F5F4B3E70AC74A73C422B0E4C196
+## Final halo-toolbar and locale-aware header mark
+
+This visual contract supersedes the earlier full-white toolbar disk.
+
+Founder-approved target:
+
+- Toolbar has no solid white background disk.
+- FA toolbar icon is the blue Persian ف with only a subtle white halo.
+- EN toolbar icon is the blue Latin E with only a subtle white halo.
+- Popup header mark is the canonical blue Persian ف in FA.
+- Popup header mark switches to a bold blue E in EN.
+- The EN header E uses the bundled Vazirmatn UI font.
+- Current-site favicon remains unchanged from the previously approved clean version.
+
+Final halo toolbar asset hashes:
+
+- assets/brand/toolbar/fa-16.png — 5D680BCF1CE132A5CEACA4F5CDCBFE8A3D2AD79E98E27C04394C20D180B2EF29
+- assets/brand/toolbar/fa-32.png — 18CBD1A520E513327FB089E6FA03553A08C8E1738DD2D30250EC7EE4AEBA9A62
+- assets/brand/toolbar/en-16.png — E94C9476D653453DF4FA43BC32101CDF33BADACD785E02D5A93CBEE58CAE1CA9
+- assets/brand/toolbar/en-32.png — B50FAB405D850B92ABB9158D130E7628FA62E76846803CD9B9F15AA988A5DA2D
+
+Final deterministic release candidate:
+
+- Chromium entries: 56
+- Chromium SHA-256: 245254EA760FB02B78E4527953957A33B3E60098BA8A114F11ECDA35163B7A37
+- Firefox entries: 56
+- Firefox SHA-256: DCB9D970BE03FC0AF4FF318AB29B1DBA6F9B0512D8BE4124BC81F808C9A91901

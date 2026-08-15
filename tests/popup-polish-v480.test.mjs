@@ -51,11 +51,10 @@ function pngDimensions(buffer) {
   };
 }
 
-test('v4.8.0 polish keeps canonical product icons while toolbar uses action-only FA default', () => {
-  assert.match(
-    popupHtml,
-    /src="assets\/brand\/fsa-mark\.png"/u
-  );
+test("v4.8.0 polish keeps canonical store icons, halo toolbar icons, and locale-aware header mark", () => {
+  assert.ok(popupHtml.includes(`src="assets/brand/fsa-mark.png"`));
+  assert.ok(popupHtml.includes(`id="brandMarkFa"`));
+  assert.ok(popupHtml.includes(`id="brandMarkEn"`));
   assert.deepEqual(brandMark, icon128);
 
   for (const [buffer, expected] of [
@@ -70,20 +69,20 @@ test('v4.8.0 polish keeps canonical product icons while toolbar uses action-only
     );
   }
 
-  assert.equal(manifest.icons['16'], 'icon16.png');
-  assert.equal(manifest.icons['32'], 'icon32.png');
-  assert.equal(manifest.icons['48'], 'icon48.png');
-  assert.equal(manifest.icons['128'], 'icon128.png');
+  assert.equal(manifest.icons["16"], "icon16.png");
+  assert.equal(manifest.icons["32"], "icon32.png");
+  assert.equal(manifest.icons["48"], "icon48.png");
+  assert.equal(manifest.icons["128"], "icon128.png");
   assert.deepEqual(
     manifest.action.default_icon,
     {
-      '16': 'assets/brand/toolbar/fa-16.png',
-      '32': 'assets/brand/toolbar/fa-32.png'
+      "16": "assets/brand/toolbar/fa-16.png",
+      "32": "assets/brand/toolbar/fa-32.png"
     }
   );
+  assert.ok(popupCss.includes(`:root[data-locale="en"] .brand-mark-en`));
   assert.match(buildBrowser, /'assets\/brand\/fsa-mark\.png'/u);
 });
-
 test('v4.8.0 polish makes the header compact without boxing the theme icon', () => {
   assert.match(popupHtml, /class="brand-tagline"/u);
   assert.match(popupCss, /\.version-badge\s*\{[\s\S]*font-size:\s*8px/u);
