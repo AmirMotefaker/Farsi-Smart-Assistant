@@ -106,11 +106,23 @@ function analyzeFsaSmartAutoFinglish(
             context
         );
 
+    const trustedPrior =
+        typeof getFsaUniversalTrustedFinglishPrior ===
+            'function'
+            ? getFsaUniversalTrustedFinglishPrior(
+                value
+            )
+            : null;
+
+    const corrected =
+        trustedPrior?.corrected ||
+        analysis.corrected;
+
     if (
         !analysis.changed ||
         (
             expected !== null &&
-            analysis.corrected !== expected
+            corrected !== expected
         )
     ) {
         return null;
@@ -272,13 +284,19 @@ function analyzeFsaSmartAutoFinglish(
         changed: true,
         autoEligible,
         original: value,
-        corrected: analysis.corrected,
+        corrected,
         confidence:
             Number(analysis.confidence) || 0,
         kind: 'finglish',
         reason: analysis.reason,
         evidence: [
             ...(analysis.evidence || []),
+            ...(trustedPrior
+                ? [
+                    'smart-auto-trusted-finglish-prior',
+                    'trusted-prior-is-generated-beam-candidate'
+                ]
+                : []),
             autoEligible
                 ? 'smart-auto-finglish-safe'
                 : 'smart-auto-finglish-suggestion-only'
@@ -511,14 +529,60 @@ function analyzeFsaSmartAutoIntent(
                 )}`
             );
 
-        if (
+        const competingLayout =
+            context &&
+            typeof analyzeKeyboardLayoutTokenWithContext ===
+                'function'
+                ? analyzeKeyboardLayoutTokenWithContext(
+                    value,
+                    context
+                )
+                : typeof analyzeKeyboardLayoutToken ===
+                    'function'
+                    ? analyzeKeyboardLayoutToken(
+                        value
+                    )
+                    : null;
+
+        const competingLayoutTargetKnown =
+            competingLayout?.changed === true &&
+            competingLayout.direction ===
+                'english-keys-to-persian' &&
+            (
+                Number(
+                    competingLayout.confidence
+                ) || 0
+            ) >= 0.94 &&
+            typeof isFsaKnownPersianLexeme ===
+                'function' &&
+            isFsaKnownPersianLexeme(
+                competingLayout.corrected
+            );
+
+        const competingFinglishTargetKnown =
             highConfidenceFinglish
-                ?.autoEligible === true ||
+                ?.changed === true &&
+            typeof isFsaKnownPersianLexeme ===
+                'function' &&
+            isFsaKnownPersianLexeme(
+                highConfidenceFinglish.corrected
+            );
+
+        const lexicalLayoutOverridesUnknownFinglish =
+            competingLayoutTargetKnown &&
+            !competingFinglishTargetKnown;
+
+        if (
+            !lexicalLayoutOverridesUnknownFinglish &&
             (
                 highConfidenceFinglish
-                    ?.sourceIntent
-                    ?.preferred === true &&
-                hasPersianSurroundingContext
+                    ?.autoEligible === true ||
+                (
+                    highConfidenceFinglish
+                        ?.sourceIntent
+                        ?.preferred === true &&
+                    hasPersianSurroundingContext
+                )
             )
         ) {
             return {

@@ -528,3 +528,116 @@ test(
     );
   }
 );
+
+
+test(
+  'v4.9 M2A real baseline ndndl layout target blocks unknown Finglish preemption',
+  () => {
+    const result =
+      engine.analyzeFsaSmartAutoIntent(
+        'ndndl',
+        faContext,
+        {}
+      );
+
+    assert.equal(
+      result.corrected,
+      'دیدیم'
+    );
+
+    assert.match(
+      result.kind,
+      /layout/u
+    );
+
+    assert.equal(
+      engine.smart_farsi_converter(
+        'ndndl',
+        {},
+        faContext
+      ),
+      'دیدیم'
+    );
+  }
+);
+
+test(
+  'v4.9 M2A Smart Auto resolves kharid through the beam-backed trusted prior',
+  () => {
+    const result =
+      engine.analyzeFsaSmartAutoIntent(
+        'kharid',
+        faContext,
+        {}
+      );
+
+    assert.equal(
+      result.corrected,
+      'خرید'
+    );
+
+    assert.equal(
+      result.kind,
+      'finglish'
+    );
+
+    assert.ok(
+      result.evidence.includes(
+        'smart-auto-trusted-finglish-prior'
+      )
+    );
+
+    assert.ok(
+      result.evidence.includes(
+        'trusted-prior-is-generated-beam-candidate'
+      )
+    );
+  }
+);
+
+test(
+  'v4.9 M2A preserves known-target Finglish when layout also competes',
+  () => {
+    const cases = [
+      ['salam', 'سلام'],
+      ['daneshgah', 'دانشگاه'],
+      ['barname', 'برنامه'],
+      ['kharid', 'خرید'],
+      ['khanevade', 'خانواده']
+    ];
+
+    const failures = [];
+
+    for (
+      const [source, expected]
+      of cases
+    ) {
+      const result =
+        engine.analyzeFsaSmartAutoIntent(
+          source,
+          faContext,
+          {}
+        );
+
+      if (
+        result.corrected !== expected
+      ) {
+        failures.push({
+          source,
+          expected,
+          actual:
+            result.corrected,
+          kind:
+            result.kind,
+          evidence:
+            result.evidence
+        });
+      }
+    }
+
+    assert.deepEqual(
+      failures,
+      []
+    );
+  }
+);
