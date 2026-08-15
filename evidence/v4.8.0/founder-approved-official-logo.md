@@ -119,3 +119,31 @@ Final release-candidate hashes after toolbar refinement:
 
 - Chromium SHA-256: 8F084C9048093750E3AD74D86C2FE51733EEFBBBA95293D9643E489EF7091D7F
 - Firefox SHA-256: B1530BF5E3BD10707C1CC910F7B8772A90B77CAA0EE136BFE144380EBABA2ADE
+## Final bilingual toolbar action contract
+
+Founder-approved toolbar behavior for v4.8.0:
+
+- toolbar-only contrast surface: white circle
+- Persian UI language: blue Persian ف
+- English UI language: blue Latin E
+- uiLanguage is the single source of truth
+- background.js updates the browser action icon when uiLanguage changes
+- persisted uiLanguage restores the matching toolbar icon
+- manifest action default is Persian because Persian is the product default
+- manifest.icons remains the canonical/store product icon set
+- popup/site product mark remains the canonical standalone blue Persian ف
+- current-site favicon remains the previously approved clean version
+
+Action-only toolbar asset hashes:
+
+- assets/brand/toolbar/fa-16.png — A5694F719B16AE98CE02B38F86E002427F3B061C1F37E77A8AAE897602775D9B
+- assets/brand/toolbar/fa-32.png — B124E7ABAE808F3DCE00D79D9946F9FF8D86251003B2A3F56A195B03688D3DBE
+- assets/brand/toolbar/en-16.png — 44C9658B3AD5534B01EF11BB27297F1FF383324F9D5A1B494453E92735CC4FF4
+- assets/brand/toolbar/en-32.png — 00C9E8E545AF72B3D92321BA1EA7CF012F7615F74CF7771C00DD47D8A40C793F
+
+Final release candidate after bilingual-toolbar refinement:
+
+- Chromium entries: 56
+- Chromium SHA-256: 697DC1B8F790CA7C795D5542DCD491379F2BB89A29D7770CE35DD04848DECACA
+- Firefox entries: 56
+- Firefox SHA-256: 115BE1756D9B0A2DA5B9075F0BEF6F37AB96F5F4B3E70AC74A73C422B0E4C196
