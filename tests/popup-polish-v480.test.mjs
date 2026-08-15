@@ -74,6 +74,13 @@ test('v4.8.0 polish keeps one canonical ف mark for popup, site reuse and extens
   assert.equal(manifest.icons['32'], 'icon32.png');
   assert.equal(manifest.icons['48'], 'icon48.png');
   assert.equal(manifest.icons['128'], 'icon128.png');
+  assert.deepEqual(
+    manifest.action.default_icon,
+    {
+      '16': 'icon16.png',
+      '32': 'icon32.png'
+    }
+  );
   assert.match(buildBrowser, /'assets\/brand\/fsa-mark\.png'/u);
 });
 

@@ -33,8 +33,8 @@ previous logo-restoration candidates for v4.8.0.
 
 ## Generated asset hashes
 
-- `icon16.png` — `E7B2D4A0A23C6DAA5C8659E80C25FEC6C23F966967C49FF266D5F191B8F6B89A`
-- `icon32.png` — `71AC42DFB3C019A078D08D2A9F88D70553152CB82ED0DA950AB25274227FAF54`
+- `icon16.png` — `635C60E4DDE3DBB0B61C0A6DEDF459119A2C4AF8A35D5B70E89149EEF38AE9FB`
+- `icon32.png` — `719217E974431FB7414409A6305BBFBBD37E482F5580D3E112F6AA6B94BEF71A`
 - `icon48.png` — `D2BD2AAF03E086C23E67DBCF9F67ED8D5F9B2D56F30A1629266B62F7239EE039`
 - `icon128.png` — `03BD960E5F545724D1A1A6C0D030CE63C07B495B51BB4519487FE30D4BAE47D5`
 - `assets/brand/fsa-mark.png` — `03BD960E5F545724D1A1A6C0D030CE63C07B495B51BB4519487FE30D4BAE47D5`
@@ -54,9 +54,9 @@ as runtime content.
 ## Verified release candidate
 
 - Chromium entries: `52`
-- Chromium SHA-256: `CD51EC205F001F73F4DAC326D23AA861D29A07CDBFA25A502F3D03BB4A25CF04`
+- Chromium SHA-256: `8F084C9048093750E3AD74D86C2FE51733EEFBBBA95293D9643E489EF7091D7F`
 - Firefox entries: `52`
-- Firefox SHA-256: `563F4580EEAD9E66ED62AE5818344F3EBBE6AD62F4AF9825ABC2496AE4CC1FB8`
+- Firefox SHA-256: `B1530BF5E3BD10707C1CC910F7B8772A90B77CAA0EE136BFE144380EBABA2ADE`
 
 ## Required gates before merge
 
@@ -92,3 +92,30 @@ The favicon polish was tightened after exact popup source review:
 - the generic MutationObserver favicon workaround was removed
 - the existing enderSiteFavicon() onload/onerror lifecycle remains authoritative
 - a dedicated regression test enforces the final rendering contract
+## Final pinned-toolbar visibility refinement
+
+A second founder visual review showed that the blue Persian ف remained too small in
+Chrome's pinned toolbar on dark browser chrome even though its color was present.
+
+The final small-icon strategy therefore keeps the canonical mark unchanged while
+optimizing only its raster occupancy:
+
+- icon16.png is alpha-trimmed from the canonical master and fills approximately
+  15x15 visible pixels inside the 16x16 canvas
+- icon32.png is alpha-trimmed from the canonical master and fills approximately
+  29x30 visible pixels inside the 32x32 canvas
+- transparent background is preserved
+- no square, badge, panel, border, or alternate logo is introduced
+- manifest.action.default_icon explicitly binds Chrome's toolbar action to the
+  optimized 16px and 32px assets
+- popup/site favicon rendering is unchanged by this refinement
+
+Final small-icon hashes:
+
+- icon16.png — 635C60E4DDE3DBB0B61C0A6DEDF459119A2C4AF8A35D5B70E89149EEF38AE9FB
+- icon32.png — 719217E974431FB7414409A6305BBFBBD37E482F5580D3E112F6AA6B94BEF71A
+
+Final release-candidate hashes after toolbar refinement:
+
+- Chromium SHA-256: 8F084C9048093750E3AD74D86C2FE51733EEFBBBA95293D9643E489EF7091D7F
+- Firefox SHA-256: B1530BF5E3BD10707C1CC910F7B8772A90B77CAA0EE136BFE144380EBABA2ADE
