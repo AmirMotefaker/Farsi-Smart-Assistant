@@ -1011,76 +1011,50 @@ textarea#correctedTextBox {
 }
 
 /* FSA v4.8.0 current-site favicon polish */
-:root {
-  --fsa-current-site-favicon-size: 22px;
-  --fsa-current-site-favicon-box: 24px;
+.site-icon {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
 }
 
-.current-site-favicon,
-.current-site__favicon,
-.site-favicon,
-.site-favicon-wrap,
-.site-logo,
-.page-favicon,
-.current-page-icon,
-.current-site .favicon,
-[data-current-site-favicon],
-[data-favicon-container] {
-  width: var(--fsa-current-site-favicon-box) !important;
-  height: var(--fsa-current-site-favicon-box) !important;
-  min-width: var(--fsa-current-site-favicon-box) !important;
-  min-height: var(--fsa-current-site-favicon-box) !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
-  overflow: hidden !important;
-  padding: 0 !important;
+.site-favicon {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
+    display: block;
+    object-fit: contain;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
 }
 
-.current-site-favicon::before,
-.current-site-favicon::after,
-.current-site__favicon::before,
-.current-site__favicon::after,
-.site-favicon::before,
-.site-favicon::after,
-.site-logo::before,
-.site-logo::after,
-.page-favicon::before,
-.page-favicon::after,
-.current-page-icon::before,
-.current-page-icon::after,
-[data-current-site-favicon]::before,
-[data-current-site-favicon]::after,
-[data-favicon-container]::before,
-[data-favicon-container]::after {
-  content: none !important;
-  display: none !important;
+.site-favicon[hidden],
+.site-favicon-fallback[hidden] {
+    display: none !important;
 }
 
-.current-site-favicon img,
-.current-site__favicon img,
-.site-favicon img,
-.site-favicon-wrap img,
-.site-logo img,
-.page-favicon img,
-.current-page-icon img,
-.current-site .favicon img,
-[data-current-site-favicon] img,
-[data-favicon-container] img {
-  width: var(--fsa-current-site-favicon-size) !important;
-  height: var(--fsa-current-site-favicon-size) !important;
-  min-width: var(--fsa-current-site-favicon-size) !important;
-  min-height: var(--fsa-current-site-favicon-size) !important;
-  display: block !important;
-  object-fit: contain !important;
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
+.site-favicon:not([hidden]) + .site-favicon-fallback {
+    display: none !important;
+}
+
+.site-favicon-fallback {
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
 }

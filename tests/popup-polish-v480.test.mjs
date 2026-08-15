@@ -124,3 +124,41 @@ test('v4.8.0 polish requires no new permission for favicons or site state', () =
     ['storage', 'contextMenus', 'tabs', 'webNavigation']
   );
 });
+test('v4.8.0 current-site favicon is clean, larger, and source-targeted', () => {
+  assert.match(
+    popupCss,
+    /\.site-icon\s*\{[\s\S]*background:\s*transparent/u
+  );
+  assert.match(
+    popupCss,
+    /\.site-icon\s*\{[\s\S]*border-radius:\s*0/u
+  );
+  assert.match(
+    popupCss,
+    /\.site-favicon\s*\{[\s\S]*width:\s*30px/u
+  );
+  assert.match(
+    popupCss,
+    /\.site-favicon\s*\{[\s\S]*height:\s*30px/u
+  );
+  assert.match(
+    popupCss,
+    /\.site-favicon-fallback\[hidden\]\s*\{[\s\S]*display:\s*none\s*!important/u
+  );
+  assert.match(
+    popupCss,
+    /\.site-favicon:not\(\[hidden\]\) \+ \.site-favicon-fallback\s*\{[\s\S]*display:\s*none\s*!important/u
+  );
+  assert.match(
+    popupJs,
+    /currentSiteFavicon\.onload = \(\) =>/
+  );
+  assert.match(
+    popupJs,
+    /currentSiteFallback\.hidden = true/
+  );
+  assert.doesNotMatch(
+    popupJs,
+    /installFsaCurrentSiteFaviconPolish/u
+  );
+});

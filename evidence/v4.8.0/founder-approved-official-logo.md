@@ -80,3 +80,15 @@ A founder-approved polish follow-up was applied after manual Chrome review:
   - remove extra decorative/background artifacts
   - render the site favicon slightly larger
   - preserve transparent rendering
+## Current-site favicon targeted refinement
+
+The favicon polish was tightened after exact popup source review:
+
+- the popup uses .site-icon, #currentSiteFavicon, and #currentSiteFallback
+- .site-icon is transparent with no colored badge, border, radius, or shadow
+- the real site favicon renders at 30x30 inside the existing 36x36 layout slot
+- hidden fallback content is explicitly forced to display: none
+- a loaded favicon suppresses its adjacent fallback defensively in CSS
+- the generic MutationObserver favicon workaround was removed
+- the existing enderSiteFavicon() onload/onerror lifecycle remains authoritative
+- a dedicated regression test enforces the final rendering contract
