@@ -641,3 +641,103 @@ test(
     );
   }
 );
+
+
+test(
+  'v4.9 M2B-F raw analyzer preserves curated beam-backed Finglish priors',
+  () => {
+    const cases = [
+      ['salam', 'سلام'],
+      ['salaam', 'سلام'],
+      ['chetori', 'چطوری'],
+      ['khobi', 'خوبی'],
+      ['khoobi', 'خوبی'],
+      ['daneshgah', 'دانشگاه'],
+      ['barname', 'برنامه'],
+      ['kharid', 'خرید'],
+      ['khanevade', 'خانواده']
+    ];
+
+    const failures = [];
+
+    for (
+      const [source, expected]
+      of cases
+    ) {
+      const analysis =
+        engine.analyzeFsaFinglishIntent(
+          source,
+          faContext
+        );
+
+      if (
+        !analysis.changed ||
+        analysis.corrected !== expected
+      ) {
+        failures.push({
+          source,
+          expected,
+          actual:
+            analysis.corrected,
+          reason:
+            analysis.reason,
+          evidence:
+            analysis.evidence
+        });
+
+        continue;
+      }
+
+      if (
+        !analysis.evidence.includes(
+          'trusted-word-map-finglish-prior'
+        ) ||
+        !analysis.evidence.includes(
+          'trusted-prior-is-generated-beam-candidate'
+        )
+      ) {
+        failures.push({
+          source,
+          expected,
+          actual:
+            analysis.corrected,
+          reason:
+            'missing-trusted-prior-evidence',
+          evidence:
+            analysis.evidence
+        });
+      }
+    }
+
+    assert.deepEqual(
+      failures,
+      []
+    );
+  }
+);
+
+test(
+  'v4.9 M2B-F keeps English-source protection ahead of trusted WORD_MAP',
+  () => {
+    for (
+      const word
+      of [
+        'are',
+        'in',
+        'to'
+      ]
+    ) {
+      const analysis =
+        engine.analyzeFsaFinglishIntent(
+          word,
+          enContext
+        );
+
+      assert.equal(
+        analysis.changed,
+        false,
+        word
+      );
+    }
+  }
+);

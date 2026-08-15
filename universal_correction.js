@@ -537,11 +537,12 @@ function getFsaUniversalFinglishHypothesis(
                     'trusted-word-map-finglish-prior',
                     'trusted-prior-is-generated-beam-candidate',
                     ...(
-                        analysis?.changed
-                            ? []
-                            : [
+                        !context ||
+                        !analysis?.changed
+                            ? [
                                 'trusted-prior-standalone-hypothesis'
                             ]
+                            : []
                     )
                 ]
                 : [])
