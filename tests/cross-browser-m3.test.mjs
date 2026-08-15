@@ -222,6 +222,7 @@ test('M3 generated packages contain runtime files and exclude dev-only content',
       }
 
       for (const forbidden of [
+        'assets/brand/fsa-mark-master.png',
         'tests',
         'evidence',
         'evaluation',

@@ -45,6 +45,7 @@ const excludedPrefixes = [
 ];
 
 const excludedFiles = new Set([
+  'assets/brand/fsa-mark-master.png',
   '.gitattributes',
   '.gitignore',
   'inline_styles.css',

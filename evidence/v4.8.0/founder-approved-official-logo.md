@@ -50,3 +50,13 @@ previous logo-restoration candidates for v4.8.0.
 
 No merge, tag, GitHub Release, or Store publication is performed by this logo
 adoption step.
+## Runtime packaging rule
+
+ssets/brand/fsa-mark-master.png is the canonical high-resolution brand source
+tracked in Git, but it is intentionally excluded from Chromium and Firefox runtime
+packages. Runtime/browser surfaces use the derived ssets/brand/fsa-mark.png and
+the dedicated 16/32/48/128 extension icons.
+
+This keeps the release package minimal while preserving the exact approved master
+as repository source-of-truth. A regression test enforces that the master source is
+never accidentally shipped as runtime content.
