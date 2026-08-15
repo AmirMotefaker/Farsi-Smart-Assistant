@@ -23,10 +23,10 @@ const popupCss = await readFile(
 );
 
 const expectedToolbarHashes = {
-  "assets/brand/toolbar/fa-16.png": "E1B43F658440E45870960333305792922976506DDA987C0765E076927BD7B6BD",
-  "assets/brand/toolbar/fa-32.png": "F8E9512C029A593B2D92D1602A71C51B46A37605F9CCFEAAA22062FD1A118F6D",
-  "assets/brand/toolbar/en-16.png": "42E61F781B393800A7E2C8B18C55A4B6A0C7B79D7B0B1462B95AD67076FCFE1B",
-  "assets/brand/toolbar/en-32.png": "423BEB8F6F92ADD48889E8E3314B48E8AF9F5F5051306FA6C97E5242D74A9771"
+  "assets/brand/toolbar/fa-16.png": "4F9027870A401CE806BD8AE352037F232BBF9D08DEEB78C440B582AF5384B4AA",
+  "assets/brand/toolbar/fa-32.png": "4AF722D3E3A8DA413EA203BFC2C5A7D9ACA1C203B75A3C30B77E3EB97EAA3B50",
+  "assets/brand/toolbar/en-16.png": "D32E27D3ED0E7ACA020B28F3B84922BC16A04A92B7764D186B485F62279F8A1B",
+  "assets/brand/toolbar/en-32.png": "47580D00AA7E20C698E0020C412E45445894A3C7AE5587ED4EB4C82F3DDFE26D"
 };
 
 async function sha256(relativePath) {
@@ -34,7 +34,7 @@ async function sha256(relativePath) {
   return createHash("sha256").update(bytes).digest("hex").toUpperCase();
 }
 
-test("v4.8.0 toolbar uses founder-approved Option C keyline icons", async () => {
+test("v4.8.0 toolbar uses founder-approved pure-white glyph icons", async () => {
   assert.deepEqual(
     manifest.action.default_icon,
     {

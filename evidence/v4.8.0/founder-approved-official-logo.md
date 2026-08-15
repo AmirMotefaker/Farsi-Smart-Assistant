@@ -202,3 +202,32 @@ Final deterministic Option C release candidate:
 - Chromium SHA-256: A288F8A397438A60DADAB002D103DA2B07C3A9F8BE30151673170FC313486135
 - Firefox entries: 56
 - Firefox SHA-256: A31C623A7511CD97E6AA274A80E149D4BA2AEBE8D180A67F31F6678D7BF3BF23
+## Final pure-white bilingual toolbar visual approval
+
+Founder manual Chrome visual gate: PASS.
+
+Final toolbar contract:
+
+- Persian toolbar icon: sharp pure-white Persian ف.
+- English toolbar icon: sharp standard uppercase white E.
+- Transparent background.
+- No border, keyline, tile, disk, badge, or halo.
+- Toolbar switches with persisted uiLanguage.
+- Popup product mark remains bright brand-blue: ف in FA and E in EN.
+- Current-site favicon remains the previously approved clean version.
+
+Final toolbar SHA-256:
+
+- assets/brand/toolbar/fa-16.png — 4F9027870A401CE806BD8AE352037F232BBF9D08DEEB78C440B582AF5384B4AA
+- assets/brand/toolbar/fa-32.png — 4AF722D3E3A8DA413EA203BFC2C5A7D9ACA1C203B75A3C30B77E3EB97EAA3B50
+- assets/brand/toolbar/en-16.png — D32E27D3ED0E7ACA020B28F3B84922BC16A04A92B7764D186B485F62279F8A1B
+- assets/brand/toolbar/en-32.png — 47580D00AA7E20C698E0020C412E45445894A3C7AE5587ED4EB4C82F3DDFE26D
+
+Final deterministic release candidate:
+
+- Chromium entries: 56
+- Chromium SHA-256: 5767B7032D5EEA2780DC9A2540BC547AC1FF4A2AA6537D5701EBB6D9E777ECAB
+- Firefox entries: 56
+- Firefox SHA-256: 037E5EA09BE76BE3F4A151E54D5122D83F069A7046F39D11E53D9E8DB86E24FB
+
+Store publication is not claimed by this milestone.
