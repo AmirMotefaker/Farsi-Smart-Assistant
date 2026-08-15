@@ -68,3 +68,15 @@ as runtime content.
 
 No merge, tag, GitHub Release, or Store publication is performed by this evidence
 repair step.
+## Toolbar/readability polish
+
+A founder-approved polish follow-up was applied after manual Chrome review:
+
+- icon16.png and icon32.png remain transparent-background product marks
+- the small toolbar sizes were visually optimized for dark-mode readability
+- no colored square or badge was reintroduced
+- the current-site favicon area in the popup was polished to:
+  - show only the site favicon
+  - remove extra decorative/background artifacts
+  - render the site favicon slightly larger
+  - preserve transparent rendering
