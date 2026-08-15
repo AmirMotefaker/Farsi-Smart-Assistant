@@ -174,3 +174,31 @@ Final deterministic release candidate:
 - Chromium SHA-256: 245254EA760FB02B78E4527953957A33B3E60098BA8A114F11ECDA35163B7A37
 - Firefox entries: 56
 - Firefox SHA-256: DCB9D970BE03FC0AF4FF318AB29B1DBA6F9B0512D8BE4124BC81F808C9A91901
+## Founder-approved Option C toolbar contract
+
+Founder visual approval selected Option C for the final toolbar treatment.
+
+Final Option C contract:
+
+- transparent interior; no solid white disk or white fill
+- thin rounded white keyline around the outer icon area
+- Persian UI toolbar glyph: blue Persian ف
+- English UI toolbar glyph: blue Latin E
+- toolbar continues to switch with persisted uiLanguage
+- popup header remains locale-aware: ف in FA and E in EN
+- canonical product/store icon set remains unchanged
+- current-site favicon remains the previously approved clean version
+
+Option C toolbar SHA-256:
+
+- assets/brand/toolbar/fa-16.png — E1B43F658440E45870960333305792922976506DDA987C0765E076927BD7B6BD
+- assets/brand/toolbar/fa-32.png — F8E9512C029A593B2D92D1602A71C51B46A37605F9CCFEAAA22062FD1A118F6D
+- assets/brand/toolbar/en-16.png — 42E61F781B393800A7E2C8B18C55A4B6A0C7B79D7B0B1462B95AD67076FCFE1B
+- assets/brand/toolbar/en-32.png — 423BEB8F6F92ADD48889E8E3314B48E8AF9F5F5051306FA6C97E5242D74A9771
+
+Final deterministic Option C release candidate:
+
+- Chromium entries: 56
+- Chromium SHA-256: A288F8A397438A60DADAB002D103DA2B07C3A9F8BE30151673170FC313486135
+- Firefox entries: 56
+- Firefox SHA-256: A31C623A7511CD97E6AA274A80E149D4BA2AEBE8D180A67F31F6678D7BF3BF23

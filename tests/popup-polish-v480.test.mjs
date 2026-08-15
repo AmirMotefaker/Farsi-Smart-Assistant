@@ -51,7 +51,7 @@ function pngDimensions(buffer) {
   };
 }
 
-test("v4.8.0 polish keeps canonical store icons, halo toolbar icons, and locale-aware header mark", () => {
+test("v4.8.0 polish keeps canonical store icons, Option C keyline toolbar icons, and locale-aware header mark", () => {
   assert.ok(popupHtml.includes(`src="assets/brand/fsa-mark.png"`));
   assert.ok(popupHtml.includes(`id="brandMarkFa"`));
   assert.ok(popupHtml.includes(`id="brandMarkEn"`));
