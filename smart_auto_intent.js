@@ -312,6 +312,131 @@ function analyzeFsaSmartAutoFinglish(
     };
 }
 
+function analyzeFsaLatinPhysicalKeyboardEvidenceOverride(
+    value,
+    context
+) {
+    if (
+        !context ||
+        typeof convertEnglishKeysToPersian !==
+            'function' ||
+        typeof isFsaKnownEnglishLexeme !==
+            'function' ||
+        typeof isFsaKnownPersianLexeme !==
+            'function'
+    ) {
+        return null;
+    }
+
+    if (
+        /\s/u.test(value) ||
+        !/^[A-Za-z]+$/u.test(
+            value
+        )
+    ) {
+        return null;
+    }
+
+    const keyboard =
+        context.keyboardEvidence;
+
+    if (!keyboard || typeof keyboard !== 'object') {
+        return null;
+    }
+
+    const requiredEvidence =
+        Math.min(4, value.length);
+    const latinKeys =
+        Number(keyboard.latinKeys) || 0;
+    const physicalAlphaKeys =
+        Number(keyboard.physicalAlphaKeys) || 0;
+
+    if (
+        latinKeys < requiredEvidence ||
+        physicalAlphaKeys < requiredEvidence
+    ) {
+        return null;
+    }
+
+    const surrounding =
+        `${String(
+            context.beforeText ?? ''
+        )}${String(
+            context.afterText ?? ''
+        )}`;
+
+    // Keep this override narrow: an isolated physical-keyboard token only.
+    // Ordinary English prose and mixed surrounding text must continue to use
+    // the normal context/arbitration path.
+    if (/[A-Za-z\u0600-\u06FF]/u.test(surrounding)) {
+        return null;
+    }
+
+    const source =
+        String(value).toLowerCase();
+
+    if (
+        isFsaKnownEnglishLexeme(
+            source
+        )
+    ) {
+        return null;
+    }
+
+    const corrected =
+        String(
+            convertEnglishKeysToPersian(
+                source
+            ) || ''
+        );
+
+    if (
+        !/^[\u0600-\u06FF\u200c]{2,16}$/u.test(
+            corrected
+        ) ||
+        !isFsaKnownPersianLexeme(
+            corrected
+        )
+    ) {
+        return null;
+    }
+
+    const sourceShape =
+        typeof scoreEnglishWordShape ===
+            'function'
+            ? scoreEnglishWordShape(
+                source
+            )
+            : null;
+
+    const targetShape =
+        typeof scorePersianWordShape ===
+            'function'
+            ? scorePersianWordShape(
+                corrected
+            )
+            : null;
+
+    return {
+        changed: true,
+        autoEligible: true,
+        original: value,
+        corrected,
+        confidence: 0.99,
+        kind: 'physical-keyboard-evidence-layout',
+        reason:
+            'latin-physical-keyboard-evidence-override',
+        evidence: [
+            'isolated-latin-physical-alpha-token',
+            'unknown-english-source-lexeme',
+            'known-persian-layout-target',
+            'smart-auto-physical-keyboard-safe'
+        ],
+        sourceShape,
+        targetShape
+    };
+}
+
 function analyzeFsaPhysicalKeyboardEvidenceOverride(
     value,
     context
@@ -484,14 +609,24 @@ function analyzeFsaSmartAutoIntent(
         );
 
     if (!hasExplicitUserDictionary) {
-        const physicalKeyboardOverride =
+        const latinPhysicalKeyboardOverride =
+            analyzeFsaLatinPhysicalKeyboardEvidenceOverride(
+                value,
+                context
+            );
+
+        if (latinPhysicalKeyboardOverride) {
+            return latinPhysicalKeyboardOverride;
+        }
+
+        const persianPhysicalKeyboardOverride =
             analyzeFsaPhysicalKeyboardEvidenceOverride(
                 value,
                 context
             );
 
-        if (physicalKeyboardOverride) {
-            return physicalKeyboardOverride;
+        if (persianPhysicalKeyboardOverride) {
+            return persianPhysicalKeyboardOverride;
         }
     }
 

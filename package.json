@@ -20,10 +20,13 @@
     "lexical:build": "node scripts/build-lexical-priors.mjs",
     "finglish-source:build": "node scripts/build-finglish-source-model.mjs",
     "spell:eval": "node scripts/evaluate-spelling-v490.mjs",
-    "build:amo-source": "node scripts/build-firefox-reviewer-source.mjs"
+    "build:amo-source": "node scripts/build-firefox-reviewer-source.mjs",
+    "test:browsers": "node scripts/automated-dual-browser-acceptance.mjs"
   },
   "devDependencies": {
     "dictionary-en": "4.0.0",
-    "dictionary-fa": "2.0.0"
+    "dictionary-fa": "2.0.0",
+    "puppeteer": "25.4.0",
+    "selenium-webdriver": "4.46.0"
   }
 }
