@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "auditedAt": "2026-08-16T13:35:38.8134479+03:30",
+  "sourceOfTruth": {
+    "issue": 24,
+    "version": "4.9.0",
+    "exactMain": "a074f5178b8b7e015f0fe4c3010818cf86a68107",
+    "exactTree": "8e94e0d6bcbbbe8a34d136228e94b380261f6f83",
+    "tag": "v4.9.0"
+  },
+  "canonicalArtifacts": {
+    "chromiumSha256": "688D6EB7E442F4C3D6F51B921A4B339CF151B60C13534ED94436A2DB351C251B",
+    "firefoxSha256": "62C5AA9F474A332C43F0E917B97023E4844B22821CC1380703CDF9C4252EBA29",
+    "checksumsSha256": "4A115C211AF0BF39B528ECD4A3A32858EA09E503630C79CAB827EE7F2ED156E1",
+    "releaseManifestSha256": "650DE9B20839D9F5D5FFC12EFA96A26EE4AD88E52F3B3F72F4D3E43215A6322E",
+    "localBuildMatchesRelease": true
+  },
+  "behaviorSignals": {
+    "googleNavigationIntercept": true,
+    "contextMenuGoogleSearch": true,
+    "popupGoogleSearch": true,
+    "wikipediaRemoteLookup": true,
+    "wikipediaLookupFromRealtimeInput": true
+  },
+  "phase1": {
+    "chromeTechnical": "PASS",
+    "chromePolicy": "BLOCKED-PHASE1-REMEDIATION-REQUIRED",
+    "chromeAssets": "BLOCKED-PENDING-MANDATORY-LISTING-ASSETS",
+    "firefoxTechnical": "PASS",
+    "firefoxPolicy": "BLOCKED-PHASE1-REMEDIATION-REQUIRED",
+    "firefoxSourcePackage": "REQUIRED-PENDING",
+    "accountDashboardReadiness": "MANUAL-DASHBOARD-VERIFICATION-PENDING",
+    "overallDecision": "BLOCKED-BEFORE-STORE-UPLOAD"
+  },
+  "publication": {
+    "chromeUpload": "NOT PERFORMED",
+    "firefoxUpload": "NOT PERFORMED",
+    "storeSubmission": "NOT PERFORMED",
+    "storePublication": "NOT CLAIMED"
+  }
+}
