@@ -2,7 +2,7 @@
 
 if (typeof importScripts === 'function') {
   try {
-    importScripts('language_profiles.js', 'keyboard_layout.js', 'context_intent.js', 'transliteration_intent.js', 'normalization_intent.js', 'logic.js');
+    importScripts('language_profiles.js', 'keyboard_layout.js', 'context_intent.js', 'normalization_intent.js', 'lexical_priors.js', 'finglish_source_model.js', 'transliteration_intent.js', 'spell_correction.js', 'universal_correction.js', 'logic.js');
   } catch (e) {
     console.error(e);
   }

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "FSA v4.9.0 M3 final-fix Smart Auto valid-source destructive FP 10000 validation",
+  "exactHead": "2d76d7cad84094c33d3fcfdc0d83398efc98a0ae",
+  "seed": 508815,
+  "note": "The release target is <=0.01%. This final holdout uses 10,000 valid words per language, so the empirical gate is directly measurable: destructiveRate <=0.0001 (at most 1 event per 10,000).",
+  "english": {
+    "language": "en",
+    "total": 10000,
+    "destructive": 1,
+    "destructiveRate": 0.0001,
+    "passFinalTarget": true,
+    "failures": [
+      {
+        "source": "constructor",
+        "kind": "english-lexical-safety-prior",
+        "reason": "known-english-auto-protection",
+        "confidence": 1,
+        "evidence": [
+          "english-lexical-prior",
+          "suggestion-only"
+        ]
+      }
+    ]
+  },
+  "persian": {
+    "language": "fa",
+    "total": 10000,
+    "destructive": 0,
+    "destructiveRate": 0,
+    "passFinalTarget": true,
+    "failures": []
+  },
+  "pass": true
+}

@@ -31,10 +31,12 @@ jobs:
       - name: Install pinned build-time dependencies
         run: npm ci
 
-      - name: Rebuild and verify statistical language profiles
+      - name: Rebuild and verify generated runtime models
         run: |
           npm run model:build
-          git diff --exit-code -- language_profiles.js
+          npm run lexical:build
+          npm run finglish-source:build
+          git diff --exit-code -- language_profiles.js lexical_priors.js finglish_source_model.js
 
       - name: Run JavaScript syntax checks
         run: npm run check

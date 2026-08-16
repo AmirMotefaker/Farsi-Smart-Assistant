@@ -1,5 +1,5 @@
 const FSA_FINGLISH_ENGINE_VERSION =
-    '4.7.0-generalized-finglish';
+    '4.9.0-generalized-finglish-rerank-v4-flexible-segmentation';
 
 const FSA_FINGLISH_MULTI = Object.freeze({
     kh: [['خ', 0]],
@@ -53,6 +53,288 @@ function normalizeFsaFinglishInput(value) {
     return String(value ?? '')
         .trim()
         .toLowerCase();
+}
+
+const FSA_FINGLISH_PERSIAN_TO_LATIN =
+    Object.freeze({
+        'ا': 'a',
+        'آ': 'aa',
+        'ب': 'b',
+        'پ': 'p',
+        'ت': 't',
+        'ث': 's',
+        'ج': 'j',
+        'چ': 'ch',
+        'ح': 'h',
+        'خ': 'kh',
+        'د': 'd',
+        'ذ': 'z',
+        'ر': 'r',
+        'ز': 'z',
+        'ژ': 'zh',
+        'س': 's',
+        'ش': 'sh',
+        'ص': 's',
+        'ض': 'z',
+        'ط': 't',
+        'ظ': 'z',
+        'ع': 'a',
+        'غ': 'gh',
+        'ف': 'f',
+        'ق': 'gh',
+        'ک': 'k',
+        'گ': 'g',
+        'ل': 'l',
+        'م': 'm',
+        'ن': 'n',
+        'و': 'v',
+        'ه': 'h',
+        'ی': 'i'
+    });
+
+function romanizeFsaPersianForRerank(
+    value
+) {
+    return [...String(value ?? '')]
+        .map(
+            (char) =>
+                FSA_FINGLISH_PERSIAN_TO_LATIN[
+                    char
+                ] ?? ''
+        )
+        .join('');
+}
+
+function normalizeFsaVariantLatinForRerank(
+    value
+) {
+    return String(value ?? '')
+        .toLowerCase()
+        .replaceAll('q', 'gh')
+        .replaceAll('w', 'v')
+        .replaceAll('y', 'i')
+        .replaceAll('o', 'v')
+        .replaceAll('aa', 'a');
+}
+
+function getFsaFinglishEditSimilarity(
+    left,
+    right
+) {
+    const source =
+        [...String(left ?? '')];
+
+    const target =
+        [...String(right ?? '')];
+
+    const maxLength =
+        Math.max(
+            source.length,
+            target.length,
+            1
+        );
+
+    if (source.length === 0) {
+        return target.length === 0
+            ? 1
+            : 0;
+    }
+
+    if (target.length === 0) {
+        return 0;
+    }
+
+    let previous =
+        Array.from(
+            {
+                length:
+                    target.length + 1
+            },
+            (
+                _,
+                index
+            ) => index
+        );
+
+    for (
+        let sourceIndex = 1;
+        sourceIndex <=
+            source.length;
+        sourceIndex += 1
+    ) {
+        const current =
+            [sourceIndex];
+
+        for (
+            let targetIndex = 1;
+            targetIndex <=
+                target.length;
+            targetIndex += 1
+        ) {
+            const cost =
+                source[
+                    sourceIndex - 1
+                ] ===
+                target[
+                    targetIndex - 1
+                ]
+                    ? 0
+                    : 1;
+
+            current[targetIndex] =
+                Math.min(
+                    current[
+                        targetIndex - 1
+                    ] + 1,
+                    previous[
+                        targetIndex
+                    ] + 1,
+                    previous[
+                        targetIndex - 1
+                    ] + cost
+                );
+        }
+
+        previous =
+            current;
+    }
+
+    const distance =
+        previous[
+            target.length
+        ];
+
+    return Math.max(
+        0,
+        1 -
+        (
+            distance /
+            maxLength
+        )
+    );
+}
+
+function getFsaFinglishRerankFeatures(
+    source,
+    candidate
+) {
+    const roundTrip =
+        romanizeFsaPersianForRerank(
+            candidate.text
+        );
+
+    const known =
+        typeof isFsaKnownPersianLexeme ===
+            'function' &&
+        isFsaKnownPersianLexeme(
+            candidate.text
+        );
+
+    const strictSimilarity =
+        getFsaFinglishEditSimilarity(
+            source,
+            roundTrip
+        );
+
+    const variantSimilarity =
+        getFsaFinglishEditSimilarity(
+            normalizeFsaVariantLatinForRerank(
+                source
+            ),
+            normalizeFsaVariantLatinForRerank(
+                roundTrip
+            )
+        );
+
+    const exactStrictBonus =
+        strictSimilarity >=
+            0.999999
+            ? 1
+            : 0;
+
+    const adjustment =
+        (
+            known
+                ? 4
+                : 0
+        ) +
+        strictSimilarity * 2.5 +
+        variantSimilarity * 2 +
+        (
+            (
+                Number(
+                    candidate.penalty
+                ) || 0
+            ) * 0.25
+        ) +
+        exactStrictBonus;
+
+    return {
+        roundTrip,
+        known,
+        strictSimilarity,
+        variantSimilarity,
+        exactStrictBonus,
+        adjustment
+    };
+}
+
+function getFsaFinglishTrustedWordMapCandidate(
+    source,
+    candidates
+) {
+    if (
+        typeof WORD_MAP ===
+            'undefined' ||
+        !WORD_MAP ||
+        typeof isFsaKnownPersianLexeme !==
+            'function'
+    ) {
+        return null;
+    }
+
+    const key =
+        String(source ?? '')
+            .toLowerCase();
+
+    if (
+        !Object.hasOwn(
+            WORD_MAP,
+            key
+        )
+    ) {
+        return null;
+    }
+
+    const mapped =
+        String(
+            WORD_MAP[key] ?? ''
+        );
+
+    if (
+        !mapped ||
+        !isFsaKnownPersianLexeme(
+            mapped
+        )
+    ) {
+        return null;
+    }
+
+    const candidate =
+        candidates.find(
+            (item) =>
+                item?.text ===
+                mapped
+        );
+
+    if (!candidate) {
+        return null;
+    }
+
+    return {
+        corrected: mapped,
+        candidate
+    };
 }
 
 const FSA_FINGLISH_LATIN_VOWELS =
@@ -146,25 +428,45 @@ function getFsaFinglishSegmentOptions(
     value,
     index
 ) {
-    const pair = value.slice(index, index + 2);
+    const segments = [];
+    const pair =
+        value.slice(
+            index,
+            index + 2
+        );
 
-    if (Object.hasOwn(FSA_FINGLISH_MULTI, pair)) {
-        return {
+    if (
+        Object.hasOwn(
+            FSA_FINGLISH_MULTI,
+            pair
+        )
+    ) {
+        segments.push({
             length: 2,
-            options: FSA_FINGLISH_MULTI[pair]
-        };
+            options:
+                FSA_FINGLISH_MULTI[pair],
+            sourceKind: 'multi'
+        });
     }
 
-    const char = value[index];
+    const char =
+        value[index];
 
-    if (Object.hasOwn(FSA_FINGLISH_SINGLE, char)) {
-        return {
+    if (
+        Object.hasOwn(
+            FSA_FINGLISH_SINGLE,
+            char
+        )
+    ) {
+        segments.push({
             length: 1,
-            options: FSA_FINGLISH_SINGLE[char]
-        };
+            options:
+                FSA_FINGLISH_SINGLE[char],
+            sourceKind: 'single'
+        });
     }
 
-    return null;
+    return segments;
 }
 
 function dedupeFsaFinglishBeams(
@@ -265,35 +567,50 @@ function generateFsaFinglishCandidates(
                 continue;
             }
 
-            const segment =
+            const segments =
                 getFsaFinglishSegmentOptions(
                     value,
                     beam.index
                 );
 
-            if (!segment) continue;
+            if (
+                !Array.isArray(
+                    segments
+                ) ||
+                segments.length === 0
+            ) {
+                continue;
+            }
 
             for (
-                const [replacement, penalty]
-                of segment.options
+                const segment
+                of segments
             ) {
-                expanded.push({
-                    index:
-                        beam.index +
-                        segment.length,
-                    text:
-                        beam.text +
+                for (
+                    const [
                         replacement,
-                    penalty:
-                        beam.penalty +
-                        getFsaFinglishTransitionPenalty(
-                            value,
-                            beam.index,
+                        penalty
+                    ]
+                    of segment.options
+                ) {
+                    expanded.push({
+                        index:
+                            beam.index +
                             segment.length,
+                        text:
+                            beam.text +
                             replacement,
-                            penalty
-                        )
-                });
+                        penalty:
+                            beam.penalty +
+                            getFsaFinglishTransitionPenalty(
+                                value,
+                                beam.index,
+                                segment.length,
+                                replacement,
+                                penalty
+                            )
+                    });
+                }
             }
         }
 
@@ -351,7 +668,7 @@ function generateFsaFinglishCandidates(
                         ? 0.55
                         : 0.48;
 
-            const rank =
+            const baseRank =
                 shape.z +
                 (shape.coverage * 0.70) -
                 (
@@ -359,11 +676,26 @@ function generateFsaFinglishCandidates(
                     fidelityWeight
                 );
 
-            return {
+            const candidate = {
                 text: beam.text,
                 penalty: beam.penalty,
                 shape,
-                rank
+                rank: baseRank
+            };
+
+            const rerank =
+                getFsaFinglishRerankFeatures(
+                    value,
+                    candidate
+                );
+
+            return {
+                ...candidate,
+                baseRank,
+                rerank,
+                rank:
+                    baseRank +
+                    rerank.adjustment
             };
         })
         .sort((a, b) => {
@@ -416,6 +748,15 @@ function shouldProtectFsaEnglishSource(
     if (
         prior.dominant === 'en' &&
         contextDelta <= -1.25
+    ) {
+        return true;
+    }
+
+    if (
+        typeof isFsaKnownEnglishLexeme ===
+            'function' &&
+        isFsaKnownEnglishLexeme(value) &&
+        contextDelta < 4.5
     ) {
         return true;
     }
@@ -499,7 +840,16 @@ function analyzeFsaFinglishIntent(
         );
     }
 
-    const best = candidates[0];
+    const trustedPrior =
+        getFsaFinglishTrustedWordMapCandidate(
+            value,
+            candidates
+        );
+
+    const best =
+        trustedPrior?.candidate ||
+        candidates[0];
+
     const prior =
         getFsaFinglishContextPrior(
             context
@@ -534,8 +884,11 @@ function analyzeFsaFinglishIntent(
         best.shape.z >= -0.20;
 
     if (
-        !targetPlausible ||
-        margin < threshold
+        !trustedPrior &&
+        (
+            !targetPlausible ||
+            margin < threshold
+        )
     ) {
         return {
             ...unchanged(
@@ -553,29 +906,54 @@ function analyzeFsaFinglishIntent(
         };
     }
 
-    const confidence = Math.min(
-        0.97,
-        0.82 +
-        Math.max(
-            0,
-            margin - threshold
-        ) * 0.035 +
-        Math.max(
-            0,
-            contextDelta
-        ) * 0.01
-    );
+    const confidence =
+        trustedPrior
+            ? Math.max(
+                0.94,
+                Math.min(
+                    0.985,
+                    0.90 +
+                    Math.max(
+                        0,
+                        contextDelta
+                    ) * 0.01
+                )
+            )
+            : Math.min(
+                0.97,
+                0.82 +
+                Math.max(
+                    0,
+                    margin - threshold
+                ) * 0.035 +
+                Math.max(
+                    0,
+                    contextDelta
+                ) * 0.01
+            );
 
     return {
         changed: true,
         original,
         corrected: best.text,
         confidence,
-        reason: 'generalized-finglish',
+        reason:
+            trustedPrior
+                ? 'trusted-beam-backed-finglish-prior'
+                : 'generalized-finglish',
         evidence: [
             'beam-transliteration',
             'persian-statistical-language-shape',
             'dictionary-independent-finglish',
+            'generalized-lexical-roundtrip-rerank',
+            ...(
+                trustedPrior
+                    ? [
+                        'trusted-word-map-finglish-prior',
+                        'trusted-prior-is-generated-beam-candidate'
+                    ]
+                    : []
+            ),
             ...prior.evidence
         ],
         source,

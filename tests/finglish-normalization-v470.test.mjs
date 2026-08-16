@@ -59,6 +59,37 @@ function candidateTexts(value) {
     .map((item) => item.text);
 }
 
+
+
+test(
+  'v4.9 flexible segmentation preserves both digraph and single-character boundary paths',
+  () => {
+    const candidates =
+      engine
+        .generateFsaFinglishCandidates(
+          'sha',
+          {
+            beamLimit: 256,
+            limit: 96
+          }
+        )
+        .map(
+          (item) =>
+            item.text
+        );
+
+    assert.equal(
+      candidates.includes('شا'),
+      true
+    );
+
+    assert.equal(
+      candidates.includes('سها'),
+      true
+    );
+  }
+);
+
 test('v4.7 generalized beam generates باران without a word-map lookup', () => {
   assert.equal(
     candidateTexts('baran').includes('باران'),

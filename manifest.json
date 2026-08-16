@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Farsi Smart Assistant",
-  "version": "4.8.0",
+  "version": "4.9.0",
   "description": "Universal smart typing correction for Persian and English across the web.",
   "permissions": [
     "storage",
@@ -43,11 +43,13 @@
         "language_profiles.js",
         "keyboard_layout.js",
         "context_intent.js",
-        "transliteration_intent.js",
         "normalization_intent.js",
-        "logic.js",
         "lexical_priors.js",
         "finglish_source_model.js",
+        "transliteration_intent.js",
+        "spell_correction.js",
+        "universal_correction.js",
+        "logic.js",
         "smart_auto_intent.js",
         "inline_checker.js"
       ],

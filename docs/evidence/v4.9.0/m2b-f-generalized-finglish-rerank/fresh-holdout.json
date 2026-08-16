@@ -1,0 +1,3886 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "FSA v4.9.0 M2B-F untouched-seed generalized Finglish holdout",
+  "exactBaseHead": "434f5c0f8c66cdcf91eecc9d16bef2b130ee2131",
+  "seed": 493815,
+  "sampleCountPerFinglishClass": 2000,
+  "canonical": {
+    "total": 2000,
+    "candidateHits": 1940,
+    "candidateRecall": 0.97,
+    "exact": 1901,
+    "exactRate": 0.9505,
+    "failures": [
+      {
+        "source": "mcha",
+        "target": "مچا",
+        "actual": "mcha",
+        "changed": false,
+        "reason": "insufficient-finglish-margin",
+        "targetCandidatePresent": true,
+        "top": [
+          {
+            "text": "مچا",
+            "rank": 6.635986474188275,
+            "baseRank": -2.864013525811725,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "mcha",
+              "known": true,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 9.5
+            }
+          },
+          {
+            "text": "مچ",
+            "rank": 4.649728051754964,
+            "baseRank": -2.8102719482450356,
+            "penalty": 0.33999999999999997,
+            "rerank": {
+              "roundTrip": "mch",
+              "known": true,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 0.75,
+              "exactStrictBonus": 0,
+              "adjustment": 7.46
+            }
+          },
+          {
+            "text": "مچع",
+            "rank": 1.385703171719233,
+            "baseRank": -4.339296828280767,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "mcha",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.725
+            }
+          },
+          {
+            "text": "مچآ",
+            "rank": -0.4334459221417255,
+            "baseRank": -4.608445922141725,
+            "penalty": 0.7,
+            "rerank": {
+              "roundTrip": "mchaa",
+              "known": false,
+              "strictSimilarity": 0.8,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.175
+            }
+          }
+        ]
+      },
+      {
+        "source": "nghbanan",
+        "target": "نگهبانان",
+        "actual": "نقبانان",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "نقبانان",
+            "rank": 6.328809333495889,
+            "baseRank": 0.7988093334958888,
+            "penalty": 0.12,
+            "rerank": {
+              "roundTrip": "nghbanan",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.53
+            }
+          },
+          {
+            "text": "نغبانان",
+            "rank": 5.6057309727360805,
+            "baseRank": 0.10573097273608079,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "nghbanan",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.5
+            }
+          },
+          {
+            "text": "نقبعنان",
+            "rank": 4.159815447528908,
+            "baseRank": -1.5951845524710913,
+            "penalty": 1.02,
+            "rerank": {
+              "roundTrip": "nghbanan",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.755
+            }
+          },
+          {
+            "text": "نقبانعن",
+            "rank": 4.006686120469114,
+            "baseRank": -1.7483138795308855,
+            "penalty": 1.02,
+            "rerank": {
+              "roundTrip": "nghbanan",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.755
+            }
+          },
+          {
+            "text": "نقبانن",
+            "rank": 3.9792879598996374,
+            "baseRank": -0.2232120401003625,
+            "penalty": 1.06,
+            "rerank": {
+              "roundTrip": "nghbann",
+              "known": false,
+              "strictSimilarity": 0.875,
+              "variantSimilarity": 0.875,
+              "exactStrictBonus": 0,
+              "adjustment": 4.2025
+            }
+          }
+        ]
+      },
+      {
+        "source": "snaa",
+        "target": "صناع",
+        "actual": "سنا",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "سنا",
+            "rank": 8.13988064032727,
+            "baseRank": 0.26488064032727093,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "sna",
+              "known": true,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 7.875
+            }
+          },
+          {
+            "text": "ثنا",
+            "rank": 6.492508207592315,
+            "baseRank": -1.5699917924076854,
+            "penalty": 0.75,
+            "rerank": {
+              "roundTrip": "sna",
+              "known": true,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 8.0625
+            }
+          },
+          {
+            "text": "صنا",
+            "rank": 3.1120827814246637,
+            "baseRank": -0.8879172185753366,
+            "penalty": 0.5,
+            "rerank": {
+              "roundTrip": "sna",
+              "known": false,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4
+            }
+          },
+          {
+            "text": "سنآ",
+            "rank": 2.193145512997922,
+            "baseRank": -3.3368544870020784,
+            "penalty": 0.12,
+            "rerank": {
+              "roundTrip": "snaa",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.53
+            }
+          },
+          {
+            "text": "صنآ",
+            "rank": 1.323286154851874,
+            "baseRank": -4.331713845148126,
+            "penalty": 0.62,
+            "rerank": {
+              "roundTrip": "snaa",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.655
+            }
+          }
+        ]
+      },
+      {
+        "source": "maavnian",
+        "target": "معاونیان",
+        "actual": "مآونیان",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "مآونیان",
+            "rank": 5.638409415124425,
+            "baseRank": 0.10840941512442426,
+            "penalty": 0.12,
+            "rerank": {
+              "roundTrip": "maavnian",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.53
+            }
+          },
+          {
+            "text": "ماونیان",
+            "rank": 5.480275926315789,
+            "baseRank": 1.2927759263157887,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "mavnian",
+              "known": false,
+              "strictSimilarity": 0.875,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.1875
+            }
+          },
+          {
+            "text": "ماونان",
+            "rank": 4.2671722053343855,
+            "baseRank": 0.522886491048671,
+            "penalty": 0.62,
+            "rerank": {
+              "roundTrip": "mavnan",
+              "known": false,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 0.8571428571428572,
+              "exactStrictBonus": 0,
+              "adjustment": 3.744285714285714
+            }
+          },
+          {
+            "text": "ماونین",
+            "rank": 4.264340297783407,
+            "baseRank": 0.5275545834976922,
+            "penalty": 0.5900000000000001,
+            "rerank": {
+              "roundTrip": "mavnin",
+              "known": false,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 0.8571428571428572,
+              "exactStrictBonus": 0,
+              "adjustment": 3.7367857142857144
+            }
+          },
+          {
+            "text": "مآونان",
+            "rank": 3.2511080493752678,
+            "baseRank": -0.8356776649104461,
+            "penalty": 0.74,
+            "rerank": {
+              "roundTrip": "maavnan",
+              "known": false,
+              "strictSimilarity": 0.875,
+              "variantSimilarity": 0.8571428571428572,
+              "exactStrictBonus": 0,
+              "adjustment": 4.086785714285714
+            }
+          }
+        ]
+      },
+      {
+        "source": "psaastamari",
+        "target": "پسااستعماری",
+        "actual": "پسآستاماری",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "پسآستاماری",
+            "rank": 5.157904607225415,
+            "baseRank": -0.3720953927745849,
+            "penalty": 0.12,
+            "rerank": {
+              "roundTrip": "psaastamari",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.53
+            }
+          },
+          {
+            "text": "پساستاماری",
+            "rank": 5.1414096035007795,
+            "baseRank": 0.8686823307735072,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "psastamari",
+              "known": false,
+              "strictSimilarity": 0.9090909090909091,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.2727272727272725
+            }
+          },
+          {
+            "text": "پسآستعماری",
+            "rank": 4.50113485911771,
+            "baseRank": -1.2538651408822903,
+            "penalty": 1.02,
+            "rerank": {
+              "roundTrip": "psaastamari",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.755
+            }
+          },
+          {
+            "text": "پساستعماری",
+            "rank": 4.484639855393072,
+            "baseRank": -0.013087417334199769,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "psastamari",
+              "known": false,
+              "strictSimilarity": 0.9090909090909091,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.497727272727272
+            }
+          },
+          {
+            "text": "پساستماری",
+            "rank": 4.441232371719373,
+            "baseRank": 0.36077782626482663,
+            "penalty": 0.9400000000000001,
+            "rerank": {
+              "roundTrip": "psastmari",
+              "known": false,
+              "strictSimilarity": 0.8181818181818181,
+              "variantSimilarity": 0.9,
+              "exactStrictBonus": 0,
+              "adjustment": 4.080454545454546
+            }
+          }
+        ]
+      },
+      {
+        "source": "atih",
+        "target": "عطیه",
+        "actual": "atih",
+        "changed": false,
+        "reason": "insufficient-finglish-margin",
+        "targetCandidatePresent": true,
+        "top": [
+          {
+            "text": "عطیه",
+            "rank": 7.397582386156467,
+            "baseRank": -2.4399176138435337,
+            "penalty": 1.35,
+            "rerank": {
+              "roundTrip": "atih",
+              "known": true,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 9.8375
+            }
+          },
+          {
+            "text": "ته",
+            "rank": 6.867990419633491,
+            "baseRank": 0.3279904196334915,
+            "penalty": 1.16,
+            "rerank": {
+              "roundTrip": "th",
+              "known": true,
+              "strictSimilarity": 0.5,
+              "variantSimilarity": 0.5,
+              "exactStrictBonus": 0,
+              "adjustment": 6.54
+            }
+          },
+          {
+            "text": "آتیه",
+            "rank": 6.602537616316567,
+            "baseRank": -1.5724623836834333,
+            "penalty": 0.7,
+            "rerank": {
+              "roundTrip": "aatih",
+              "known": true,
+              "strictSimilarity": 0.8,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 8.175
+            }
+          },
+          {
+            "text": "اتیه",
+            "rank": 5.8515304798321335,
+            "baseRank": 0.3515304798321335,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "atih",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.5
+            }
+          },
+          {
+            "text": "عتیه",
+            "rank": 4.757203478989553,
+            "baseRank": -0.9677965210104466,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "atih",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.725
+            }
+          }
+        ]
+      },
+      {
+        "source": "shmalars",
+        "target": "سهمالارث",
+        "actual": "شمالارس",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "شمالارس",
+            "rank": 6.013005726545338,
+            "baseRank": 0.5130057265453382,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "shmalars",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.5
+            }
+          },
+          {
+            "text": "شمالارث",
+            "rank": 5.072190605881706,
+            "baseRank": -0.6153093941182946,
+            "penalty": 0.75,
+            "rerank": {
+              "roundTrip": "shmalars",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.6875
+            }
+          },
+          {
+            "text": "شمعلارس",
+            "rank": 4.945559313731641,
+            "baseRank": -0.7794406862683587,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "shmalars",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.725
+            }
+          },
+          {
+            "text": "شمالارص",
+            "rank": 4.752947655547206,
+            "baseRank": -0.8720523444527944,
+            "penalty": 0.5,
+            "rerank": {
+              "roundTrip": "shmalars",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.625
+            }
+          },
+          {
+            "text": "شمالعرس",
+            "rank": 4.070216273274241,
+            "baseRank": -1.654783726725759,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "shmalars",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.725
+            }
+          }
+        ]
+      },
+      {
+        "source": "ashab",
+        "target": "اصحاب",
+        "actual": "شاب",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "شاب",
+            "rank": 7.81063143194281,
+            "baseRank": 0.12563143194281035,
+            "penalty": 0.33999999999999997,
+            "rerank": {
+              "roundTrip": "shab",
+              "known": true,
+              "strictSimilarity": 0.8,
+              "variantSimilarity": 0.8,
+              "exactStrictBonus": 0,
+              "adjustment": 7.685
+            }
+          },
+          {
+            "text": "اشاب",
+            "rank": 5.941957708996085,
+            "baseRank": 0.44195770899608533,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "ashab",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.5
+            }
+          },
+          {
+            "text": "شعب",
+            "rank": 5.924806522537657,
+            "baseRank": -1.9851934774623425,
+            "penalty": 1.24,
+            "rerank": {
+              "roundTrip": "shab",
+              "known": true,
+              "strictSimilarity": 0.8,
+              "variantSimilarity": 0.8,
+              "exactStrictBonus": 0,
+              "adjustment": 7.909999999999999
+            }
+          },
+          {
+            "text": "شب",
+            "rank": 5.551497764015927,
+            "baseRank": -1.4685022359840736,
+            "penalty": 1.28,
+            "rerank": {
+              "roundTrip": "shb",
+              "known": true,
+              "strictSimilarity": 0.6,
+              "variantSimilarity": 0.6,
+              "exactStrictBonus": 0,
+              "adjustment": 7.0200000000000005
+            }
+          },
+          {
+            "text": "اشعب",
+            "rank": 4.140631514835254,
+            "baseRank": -1.5843684851647448,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "ashab",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.725
+            }
+          }
+        ]
+      },
+      {
+        "source": "vili",
+        "target": "ویلی",
+        "actual": "vili",
+        "changed": false,
+        "reason": "insufficient-finglish-margin",
+        "targetCandidatePresent": true,
+        "top": [
+          {
+            "text": "ویلی",
+            "rank": 10.187421192881397,
+            "baseRank": 0.6874211928813962,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "vili",
+              "known": true,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 9.5
+            }
+          },
+          {
+            "text": "ولی",
+            "rank": 7.890109450369022,
+            "baseRank": 0.3101094503690216,
+            "penalty": 0.82,
+            "rerank": {
+              "roundTrip": "vli",
+              "known": true,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 0.75,
+              "exactStrictBonus": 0,
+              "adjustment": 7.58
+            }
+          },
+          {
+            "text": "ویل",
+            "rank": 7.495489978549123,
+            "baseRank": 0.01048997854912248,
+            "penalty": 0.44,
+            "rerank": {
+              "roundTrip": "vil",
+              "known": true,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 0.75,
+              "exactStrictBonus": 0,
+              "adjustment": 7.485
+            }
+          },
+          {
+            "text": "ول",
+            "rank": 5.989011541478025,
+            "baseRank": -0.5759884585219757,
+            "penalty": 1.26,
+            "rerank": {
+              "roundTrip": "vl",
+              "known": true,
+              "strictSimilarity": 0.5,
+              "variantSimilarity": 0.5,
+              "exactStrictBonus": 0,
+              "adjustment": 6.565
+            }
+          }
+        ]
+      },
+      {
+        "source": "atlaarsan",
+        "target": "اطلاعرسان",
+        "actual": "اتلارسان",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "اتلارسان",
+            "rank": 4.902141030581529,
+            "baseRank": 0.6799188083593063,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "atlarsan",
+              "known": false,
+              "strictSimilarity": 0.8888888888888888,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.222222222222222
+            }
+          },
+          {
+            "text": "اطلارسان",
+            "rank": 4.69277774044311,
+            "baseRank": 0.35805551822088744,
+            "penalty": 0.45,
+            "rerank": {
+              "roundTrip": "atlarsan",
+              "known": false,
+              "strictSimilarity": 0.8888888888888888,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.334722222222222
+            }
+          },
+          {
+            "text": "تلارسان",
+            "rank": 4.490769804309944,
+            "baseRank": 0.7113253598654994,
+            "penalty": 0.33999999999999997,
+            "rerank": {
+              "roundTrip": "tlarsan",
+              "known": false,
+              "strictSimilarity": 0.7777777777777778,
+              "variantSimilarity": 0.875,
+              "exactStrictBonus": 0,
+              "adjustment": 3.7794444444444446
+            }
+          },
+          {
+            "text": "اتلآرسان",
+            "rank": 4.298723704415092,
+            "baseRank": -1.2312762955849081,
+            "penalty": 0.12,
+            "rerank": {
+              "roundTrip": "atlaarsan",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.53
+            }
+          },
+          {
+            "text": "طلارسان",
+            "rank": 4.2485733502508065,
+            "baseRank": 0.356628905806362,
+            "penalty": 0.79,
+            "rerank": {
+              "roundTrip": "tlarsan",
+              "known": false,
+              "strictSimilarity": 0.7777777777777778,
+              "variantSimilarity": 0.875,
+              "exactStrictBonus": 0,
+              "adjustment": 3.8919444444444444
+            }
+          }
+        ]
+      },
+      {
+        "source": "tachr",
+        "target": "تاچر",
+        "actual": "tachr",
+        "changed": false,
+        "reason": "insufficient-finglish-margin",
+        "targetCandidatePresent": true,
+        "top": [
+          {
+            "text": "تاچر",
+            "rank": 7.410643187137769,
+            "baseRank": -2.0893568128622313,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "tachr",
+              "known": true,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 9.5
+            }
+          },
+          {
+            "text": "طاچر",
+            "rank": 2.6069485604463747,
+            "baseRank": -3.005551439553625,
+            "penalty": 0.45,
+            "rerank": {
+              "roundTrip": "tachr",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.6125
+            }
+          },
+          {
+            "text": "تعچر",
+            "rank": 2.0123653620585946,
+            "baseRank": -3.712634637941405,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "tachr",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.725
+            }
+          },
+          {
+            "text": "طعچر",
+            "rank": 1.1799633572424364,
+            "baseRank": -4.657536642757564,
+            "penalty": 1.35,
+            "rerank": {
+              "roundTrip": "tachr",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.8375
+            }
+          },
+          {
+            "text": "تچر",
+            "rank": 0.11573323478281994,
+            "baseRank": -3.71926676521718,
+            "penalty": 0.9400000000000001,
+            "rerank": {
+              "roundTrip": "tchr",
+              "known": false,
+              "strictSimilarity": 0.8,
+              "variantSimilarity": 0.8,
+              "exactStrictBonus": 0,
+              "adjustment": 3.835
+            }
+          }
+        ]
+      },
+      {
+        "source": "saadaabadi",
+        "target": "ساعدآبادی",
+        "actual": "سادابادی",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "سادابادی",
+            "rank": 5.157616843290814,
+            "baseRank": 1.1576168432908145,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "sadabadi",
+              "known": false,
+              "strictSimilarity": 0.8,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4
+            }
+          },
+          {
+            "text": "سادآبادی",
+            "rank": 5.038323756829501,
+            "baseRank": 0.7583237568295013,
+            "penalty": 0.12,
+            "rerank": {
+              "roundTrip": "sadaabadi",
+              "known": false,
+              "strictSimilarity": 0.9,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.28
+            }
+          },
+          {
+            "text": "صادابادی",
+            "rank": 4.721097327315558,
+            "baseRank": 0.5960973273155579,
+            "penalty": 0.5,
+            "rerank": {
+              "roundTrip": "sadabadi",
+              "known": false,
+              "strictSimilarity": 0.8,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.125
+            }
+          },
+          {
+            "text": "صادآبادی",
+            "rank": 4.601804240854245,
+            "baseRank": 0.1968042408542448,
+            "penalty": 0.62,
+            "rerank": {
+              "roundTrip": "sadaabadi",
+              "known": false,
+              "strictSimilarity": 0.9,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.405
+            }
+          },
+          {
+            "text": "ساداباد",
+            "rank": 4.397741488379217,
+            "baseRank": 0.7877414883792173,
+            "penalty": 0.44,
+            "rerank": {
+              "roundTrip": "sadabad",
+              "known": false,
+              "strictSimilarity": 0.7,
+              "variantSimilarity": 0.875,
+              "exactStrictBonus": 0,
+              "adjustment": 3.61
+            }
+          }
+        ]
+      },
+      {
+        "source": "hta",
+        "target": "حتا",
+        "actual": "hta",
+        "changed": false,
+        "reason": "insufficient-finglish-margin",
+        "targetCandidatePresent": true,
+        "top": [
+          {
+            "text": "حتا",
+            "rank": 7.6154904238871595,
+            "baseRank": -2.0470095761128406,
+            "penalty": 0.65,
+            "rerank": {
+              "roundTrip": "hta",
+              "known": true,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 9.6625
+            }
+          },
+          {
+            "text": "هتا",
+            "rank": 4.150692896886369,
+            "baseRank": -1.349307103113631,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "hta",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.5
+            }
+          },
+          {
+            "text": "هطا",
+            "rank": 2.026865289896233,
+            "baseRank": -3.5856347101037667,
+            "penalty": 0.45,
+            "rerank": {
+              "roundTrip": "hta",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.6125
+            }
+          },
+          {
+            "text": "حطا",
+            "rank": 1.473429334897232,
+            "baseRank": -4.301570665102768,
+            "penalty": 1.1,
+            "rerank": {
+              "roundTrip": "hta",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.775
+            }
+          },
+          {
+            "text": "هطع",
+            "rank": 1.2582614218333141,
+            "baseRank": -4.579238578166686,
+            "penalty": 1.35,
+            "rerank": {
+              "roundTrip": "hta",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.8375
+            }
+          }
+        ]
+      },
+      {
+        "source": "aabdnzhad",
+        "target": "عابدنژاد",
+        "actual": "آبدنژاد",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "آبدنژاد",
+            "rank": 5.346324113656788,
+            "baseRank": -0.1836758863432123,
+            "penalty": 0.12,
+            "rerank": {
+              "roundTrip": "aabdnzhad",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.53
+            }
+          },
+          {
+            "text": "ابدنژاد",
+            "rank": 4.403371654026585,
+            "baseRank": 0.18114943180436283,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "abdnzhad",
+              "known": false,
+              "strictSimilarity": 0.8888888888888888,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.222222222222222
+            }
+          },
+          {
+            "text": "آبدنژعد",
+            "rank": 3.0394305033978233,
+            "baseRank": -2.7155694966021766,
+            "penalty": 1.02,
+            "rerank": {
+              "roundTrip": "aabdnzhad",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.755
+            }
+          },
+          {
+            "text": "ابدنژعد",
+            "rank": 2.0964780437676214,
+            "baseRank": -2.3507441784546006,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "abdnzhad",
+              "known": false,
+              "strictSimilarity": 0.8888888888888888,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.447222222222222
+            }
+          },
+          {
+            "text": "ابدنژد",
+            "rank": 1.9000624204875125,
+            "baseRank": -2.029382023956932,
+            "penalty": 0.9400000000000001,
+            "rerank": {
+              "roundTrip": "abdnzhd",
+              "known": false,
+              "strictSimilarity": 0.7777777777777778,
+              "variantSimilarity": 0.875,
+              "exactStrictBonus": 0,
+              "adjustment": 3.9294444444444445
+            }
+          }
+        ]
+      },
+      {
+        "source": "aatdalgra",
+        "target": "اعتدالگرا",
+        "actual": "آتدالگرا",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "آتدالگرا",
+            "rank": 5.025213075613769,
+            "baseRank": -0.5047869243862311,
+            "penalty": 0.12,
+            "rerank": {
+              "roundTrip": "aatdalgra",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.53
+            }
+          },
+          {
+            "text": "اتدالگرا",
+            "rank": 4.34327421533153,
+            "baseRank": 0.12105199310930714,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "atdalgra",
+              "known": false,
+              "strictSimilarity": 0.8888888888888888,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.222222222222222
+            }
+          },
+          {
+            "text": "آتدالگرع",
+            "rank": 3.7215934993963606,
+            "baseRank": -2.0334065006036393,
+            "penalty": 1.02,
+            "rerank": {
+              "roundTrip": "aatdalgra",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.755
+            }
+          },
+          {
+            "text": "اتدالگر",
+            "rank": 3.594342596664209,
+            "baseRank": -0.18510184778023583,
+            "penalty": 0.33999999999999997,
+            "rerank": {
+              "roundTrip": "atdalgr",
+              "known": false,
+              "strictSimilarity": 0.7777777777777778,
+              "variantSimilarity": 0.875,
+              "exactStrictBonus": 0,
+              "adjustment": 3.7794444444444446
+            }
+          },
+          {
+            "text": "آطدالگرا",
+            "rank": 3.3493730426206647,
+            "baseRank": -2.2931269573793354,
+            "penalty": 0.5700000000000001,
+            "rerank": {
+              "roundTrip": "aatdalgra",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.6425
+            }
+          }
+        ]
+      },
+      {
+        "source": "nazaat",
+        "target": "نازعات",
+        "actual": "نازات",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "نازات",
+            "rank": 4.896533468094457,
+            "baseRank": 0.8132001347611236,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "nazat",
+              "known": false,
+              "strictSimilarity": 0.8333333333333334,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.083333333333334
+            }
+          },
+          {
+            "text": "نازآت",
+            "rank": 4.098419245991403,
+            "baseRank": -1.4315807540085967,
+            "penalty": 0.12,
+            "rerank": {
+              "roundTrip": "nazaat",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.53
+            }
+          },
+          {
+            "text": "نازاط",
+            "rank": 3.494793582674836,
+            "baseRank": -0.7010397506584977,
+            "penalty": 0.45,
+            "rerank": {
+              "roundTrip": "nazat",
+              "known": false,
+              "strictSimilarity": 0.8333333333333334,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.195833333333334
+            }
+          },
+          {
+            "text": "نزات",
+            "rank": 3.355925774353348,
+            "baseRank": -0.14574089231331877,
+            "penalty": 0.9400000000000001,
+            "rerank": {
+              "roundTrip": "nzat",
+              "known": false,
+              "strictSimilarity": 0.6666666666666667,
+              "variantSimilarity": 0.8,
+              "exactStrictBonus": 0,
+              "adjustment": 3.501666666666667
+            }
+          },
+          {
+            "text": "نازآط",
+            "rank": 3.178615947191331,
+            "baseRank": -2.463884052808669,
+            "penalty": 0.5700000000000001,
+            "rerank": {
+              "roundTrip": "nazaat",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.6425
+            }
+          }
+        ]
+      },
+      {
+        "source": "tlaalv",
+        "target": "تلآلو",
+        "actual": "تلالو",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": true,
+        "top": [
+          {
+            "text": "تلالو",
+            "rank": 8.167241172563173,
+            "baseRank": 0.0839078392298398,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "tlalv",
+              "known": true,
+              "strictSimilarity": 0.8333333333333334,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 8.083333333333334
+            }
+          },
+          {
+            "text": "تلآلو",
+            "rank": 7.472136980830866,
+            "baseRank": -2.057863019169133,
+            "penalty": 0.12,
+            "rerank": {
+              "roundTrip": "tlaalv",
+              "known": true,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 9.53
+            }
+          },
+          {
+            "text": "طلالو",
+            "rank": 3.842333720082202,
+            "baseRank": -0.3534996132511319,
+            "penalty": 0.45,
+            "rerank": {
+              "roundTrip": "tlalv",
+              "known": false,
+              "strictSimilarity": 0.8333333333333334,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.195833333333334
+            }
+          },
+          {
+            "text": "طلآلو",
+            "rank": 3.173461862605556,
+            "baseRank": -2.469038137394444,
+            "penalty": 0.5700000000000001,
+            "rerank": {
+              "roundTrip": "tlaalv",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.6425
+            }
+          }
+        ]
+      },
+      {
+        "source": "vazhknndh",
+        "target": "واضحکننده",
+        "actual": "واژکننده",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "واژکننده",
+            "rank": 5.6648709584091215,
+            "baseRank": 0.16487095840912103,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "vazhknndh",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.5
+            }
+          },
+          {
+            "text": "وعژکننده",
+            "rank": 3.8318745327676123,
+            "baseRank": -1.8931254672323876,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "vazhknndh",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.725
+            }
+          },
+          {
+            "text": "واژکنندح",
+            "rank": 3.5583789588361783,
+            "baseRank": -2.1041210411638214,
+            "penalty": 0.65,
+            "rerank": {
+              "roundTrip": "vazhknndh",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.6625
+            }
+          },
+          {
+            "text": "وژکننده",
+            "rank": 2.852171401777478,
+            "baseRank": -1.3828285982225221,
+            "penalty": 0.9400000000000001,
+            "rerank": {
+              "roundTrip": "vzhknndh",
+              "known": false,
+              "strictSimilarity": 0.8888888888888888,
+              "variantSimilarity": 0.8888888888888888,
+              "exactStrictBonus": 0,
+              "adjustment": 4.235
+            }
+          },
+          {
+            "text": "وآژکننده",
+            "rank": 2.511167207487374,
+            "baseRank": -1.913832792512626,
+            "penalty": 0.7,
+            "rerank": {
+              "roundTrip": "vaazhknndh",
+              "known": false,
+              "strictSimilarity": 0.9,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.425
+            }
+          }
+        ]
+      },
+      {
+        "source": "dlzafh",
+        "target": "دلضعفه",
+        "actual": "dlzafh",
+        "changed": false,
+        "reason": "insufficient-finglish-margin",
+        "targetCandidatePresent": true,
+        "top": [
+          {
+            "text": "دلضعفه",
+            "rank": 5.654190903630663,
+            "baseRank": -4.233309096369337,
+            "penalty": 1.55,
+            "rerank": {
+              "roundTrip": "dlzafh",
+              "known": true,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 9.8875
+            }
+          },
+          {
+            "text": "دلزافه",
+            "rank": 4.921938904045867,
+            "baseRank": -0.5780610959541326,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "dlzafh",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.5
+            }
+          },
+          {
+            "text": "دلضافه",
+            "rank": 3.2962305592042576,
+            "baseRank": -2.366269440795742,
+            "penalty": 0.65,
+            "rerank": {
+              "roundTrip": "dlzafh",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.6625
+            }
+          },
+          {
+            "text": "دلزافح",
+            "rank": 3.072190991945926,
+            "baseRank": -2.590309008054074,
+            "penalty": 0.65,
+            "rerank": {
+              "roundTrip": "dlzafh",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.6625
+            }
+          },
+          {
+            "text": "دلذافه",
+            "rank": 3.0206643854782627,
+            "baseRank": -2.6168356145217375,
+            "penalty": 0.55,
+            "rerank": {
+              "roundTrip": "dlzafh",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.6375
+            }
+          }
+        ]
+      },
+      {
+        "source": "rahlh",
+        "target": "راحله",
+        "actual": "راهله",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": true,
+        "top": [
+          {
+            "text": "راهله",
+            "rank": 9.563281072743786,
+            "baseRank": 0.06328107274378614,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "rahlh",
+              "known": true,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 9.5
+            }
+          },
+          {
+            "text": "راحله",
+            "rank": 9.00963768984367,
+            "baseRank": -0.6528623101563293,
+            "penalty": 0.65,
+            "rerank": {
+              "roundTrip": "rahlh",
+              "known": true,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 9.6625
+            }
+          },
+          {
+            "text": "راهلح",
+            "rank": 3.9420586088758336,
+            "baseRank": -1.7204413911241663,
+            "penalty": 0.65,
+            "rerank": {
+              "roundTrip": "rahlh",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.6625
+            }
+          },
+          {
+            "text": "رعهله",
+            "rank": 3.587472350621627,
+            "baseRank": -2.137527649378373,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "rahlh",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.725
+            }
+          },
+          {
+            "text": "راحلح",
+            "rank": 3.352015935698776,
+            "baseRank": -2.472984064301224,
+            "penalty": 1.3,
+            "rerank": {
+              "roundTrip": "rahlh",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.825
+            }
+          }
+        ]
+      },
+      {
+        "source": "chrtkhandazi",
+        "target": "چرتکهاندازی",
+        "actual": "چرتخاندازی",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "چرتخاندازی",
+            "rank": 5.95752527700799,
+            "baseRank": 0.45752527700799056,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "chrtkhandazi",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.5
+            }
+          },
+          {
+            "text": "چرطخاندازی",
+            "rank": 4.976513474698175,
+            "baseRank": -0.635986525301825,
+            "penalty": 0.45,
+            "rerank": {
+              "roundTrip": "chrtkhandazi",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.6125
+            }
+          },
+          {
+            "text": "چرتخانداضی",
+            "rank": 4.685939353288017,
+            "baseRank": -0.9765606467119827,
+            "penalty": 0.65,
+            "rerank": {
+              "roundTrip": "chrtkhandazi",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.6625
+            }
+          },
+          {
+            "text": "چرتخانداذی",
+            "rank": 4.305461950981878,
+            "baseRank": -1.332038049018122,
+            "penalty": 0.55,
+            "rerank": {
+              "roundTrip": "chrtkhandazi",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.6375
+            }
+          },
+          {
+            "text": "چرتخاندعزی",
+            "rank": 4.2234259383344135,
+            "baseRank": -1.5015740616655857,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "chrtkhandazi",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.725
+            }
+          }
+        ]
+      },
+      {
+        "source": "stizhkar",
+        "target": "ستیزهکار",
+        "actual": "ستیژکار",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "ستیژکار",
+            "rank": 4.1971068250966646,
+            "baseRank": -1.3028931749033354,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "stizhkar",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.5
+            }
+          },
+          {
+            "text": "سطیژکار",
+            "rank": 3.140268450111762,
+            "baseRank": -2.472231549888238,
+            "penalty": 0.45,
+            "rerank": {
+              "roundTrip": "stizhkar",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.6125
+            }
+          },
+          {
+            "text": "ستیژکعر",
+            "rank": 2.397275573812505,
+            "baseRank": -3.3277244261874945,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "stizhkar",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.725
+            }
+          },
+          {
+            "text": "صتیژکار",
+            "rank": 2.2788748083797534,
+            "baseRank": -3.3461251916202466,
+            "penalty": 0.5,
+            "rerank": {
+              "roundTrip": "stizhkar",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.625
+            }
+          },
+          {
+            "text": "ثتیژکار",
+            "rank": 2.0676294617561704,
+            "baseRank": -3.6198705382438296,
+            "penalty": 0.75,
+            "rerank": {
+              "roundTrip": "stizhkar",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.6875
+            }
+          }
+        ]
+      },
+      {
+        "source": "shrnaz",
+        "target": "سحرناز",
+        "actual": "شرناز",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "شرناز",
+            "rank": 5.100085871489272,
+            "baseRank": -0.39991412851072783,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "shrnaz",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.5
+            }
+          },
+          {
+            "text": "شرناظ",
+            "rank": 3.716964790459021,
+            "baseRank": -1.9580352095409788,
+            "penalty": 0.7,
+            "rerank": {
+              "roundTrip": "shrnaz",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.675
+            }
+          },
+          {
+            "text": "شرناض",
+            "rank": 3.2698972414303125,
+            "baseRank": -2.392602758569687,
+            "penalty": 0.65,
+            "rerank": {
+              "roundTrip": "shrnaz",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.6625
+            }
+          },
+          {
+            "text": "شرناذ",
+            "rank": 2.520031757018357,
+            "baseRank": -3.1174682429816434,
+            "penalty": 0.55,
+            "rerank": {
+              "roundTrip": "shrnaz",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.6375
+            }
+          },
+          {
+            "text": "شرنعز",
+            "rank": 1.6821477330535561,
+            "baseRank": -4.0428522669464435,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "shrnaz",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.725
+            }
+          }
+        ]
+      },
+      {
+        "source": "shba",
+        "target": "صهبا",
+        "actual": "شب",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "شب",
+            "rank": 6.602497764015927,
+            "baseRank": -0.8575022359840735,
+            "penalty": 0.33999999999999997,
+            "rerank": {
+              "roundTrip": "shb",
+              "known": true,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 0.75,
+              "exactStrictBonus": 0,
+              "adjustment": 7.46
+            }
+          },
+          {
+            "text": "شبا",
+            "rank": 5.40167802654161,
+            "baseRank": -0.09832197345838967,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "shba",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.5
+            }
+          },
+          {
+            "text": "شبع",
+            "rank": 2.970233285167779,
+            "baseRank": -2.7547667148322206,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "shba",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.725
+            }
+          },
+          {
+            "text": "شبآ",
+            "rank": -0.03484786824540098,
+            "baseRank": -4.209847868245401,
+            "penalty": 0.7,
+            "rerank": {
+              "roundTrip": "shbaa",
+              "known": false,
+              "strictSimilarity": 0.8,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.175
+            }
+          }
+        ]
+      },
+      {
+        "source": "matadin",
+        "target": "معتادین",
+        "actual": "matadin",
+        "changed": false,
+        "reason": "insufficient-finglish-margin",
+        "targetCandidatePresent": true,
+        "top": [
+          {
+            "text": "معتادین",
+            "rank": 9.823485440837207,
+            "baseRank": 0.0984854408372064,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "matadin",
+              "known": true,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 9.725
+            }
+          },
+          {
+            "text": "متدین",
+            "rank": 7.0769529536518,
+            "baseRank": -0.6073327606339141,
+            "penalty": 1.8800000000000001,
+            "rerank": {
+              "roundTrip": "mtdin",
+              "known": true,
+              "strictSimilarity": 0.7142857142857143,
+              "variantSimilarity": 0.7142857142857143,
+              "exactStrictBonus": 0,
+              "adjustment": 7.684285714285714
+            }
+          },
+          {
+            "text": "ماتادین",
+            "rank": 6.601747350493606,
+            "baseRank": 1.1017473504936062,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "matadin",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.5
+            }
+          },
+          {
+            "text": "ماتعدین",
+            "rank": 5.036438504378111,
+            "baseRank": -0.6885614956218888,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "matadin",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.725
+            }
+          },
+          {
+            "text": "ماطادین",
+            "rank": 4.833522981546263,
+            "baseRank": -0.778977018453737,
+            "penalty": 0.45,
+            "rerank": {
+              "roundTrip": "matadin",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.6125
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "variant": {
+    "total": 2000,
+    "candidateHits": 1905,
+    "candidateRecall": 0.9525,
+    "exact": 1858,
+    "exactRate": 0.929,
+    "failures": [
+      {
+        "source": "flyph",
+        "target": "فلیپه",
+        "actual": "فلیف",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "فلیف",
+            "rank": 1.6253764590269764,
+            "baseRank": -0.6196235409730237,
+            "penalty": 0.18,
+            "rerank": {
+              "roundTrip": "flif",
+              "known": false,
+              "strictSimilarity": 0.4,
+              "variantSimilarity": 0.6,
+              "exactStrictBonus": 0,
+              "adjustment": 2.245
+            }
+          }
+        ]
+      },
+      {
+        "source": "khwaan",
+        "target": "خوآن",
+        "actual": "خوان",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": true,
+        "top": [
+          {
+            "text": "خوان",
+            "rank": 9.422355154321783,
+            "baseRank": 1.7306884876551167,
+            "penalty": 0.1,
+            "rerank": {
+              "roundTrip": "khvan",
+              "known": true,
+              "strictSimilarity": 0.6666666666666667,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 7.691666666666667
+            }
+          },
+          {
+            "text": "خوآن",
+            "rank": 5.75111738697893,
+            "baseRank": -2.3872159463544036,
+            "penalty": 0.22,
+            "rerank": {
+              "roundTrip": "khvaan",
+              "known": true,
+              "strictSimilarity": 0.8333333333333334,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 8.138333333333334
+            }
+          }
+        ]
+      },
+      {
+        "source": "fryzh",
+        "target": "فریضه",
+        "actual": "فریژ",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "فریژ",
+            "rank": 2.220584483979917,
+            "baseRank": -1.7794155160200829,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "frizh",
+              "known": false,
+              "strictSimilarity": 0.8,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4
+            }
+          }
+        ]
+      },
+      {
+        "source": "aatmadsazy",
+        "target": "اعتمادسازی",
+        "actual": "اتمادسازی",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "اتمادسازی",
+            "rank": 4.573846141832792,
+            "baseRank": 0.5738461418327925,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "atmadsazi",
+              "known": false,
+              "strictSimilarity": 0.8,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4
+            }
+          },
+          {
+            "text": "آتمادسازی",
+            "rank": 4.191454756902461,
+            "baseRank": -0.08854524309753965,
+            "penalty": 0.12,
+            "rerank": {
+              "roundTrip": "aatmadsazi",
+              "known": false,
+              "strictSimilarity": 0.9,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.28
+            }
+          },
+          {
+            "text": "اتمدسازی",
+            "rank": 3.710236737440545,
+            "baseRank": -0.05254104033723228,
+            "penalty": 0.9400000000000001,
+            "rerank": {
+              "roundTrip": "atmdsazi",
+              "known": false,
+              "strictSimilarity": 0.7,
+              "variantSimilarity": 0.8888888888888888,
+              "exactStrictBonus": 0,
+              "adjustment": 3.7627777777777776
+            }
+          },
+          {
+            "text": "اطمادسازی",
+            "rank": 3.685767845322917,
+            "baseRank": -0.42673215467708303,
+            "penalty": 0.45,
+            "rerank": {
+              "roundTrip": "atmadsazi",
+              "known": false,
+              "strictSimilarity": 0.8,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.1125
+            }
+          },
+          {
+            "text": "اتمعدسازی",
+            "rank": 3.4648790888766348,
+            "baseRank": -0.7601209111233647,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "atmadsazi",
+              "known": false,
+              "strictSimilarity": 0.8,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.225
+            }
+          }
+        ]
+      },
+      {
+        "source": "mos",
+        "target": "موس",
+        "actual": "mos",
+        "changed": false,
+        "reason": "insufficient-finglish-margin",
+        "targetCandidatePresent": true,
+        "top": [
+          {
+            "text": "موس",
+            "rank": 8.142656456510384,
+            "baseRank": 0.4759897898437162,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "mvs",
+              "known": true,
+              "strictSimilarity": 0.6666666666666667,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 7.666666666666667
+            }
+          },
+          {
+            "text": "مس",
+            "rank": 6.825891927621277,
+            "baseRank": -0.35410807237872266,
+            "penalty": 0.72,
+            "rerank": {
+              "roundTrip": "ms",
+              "known": true,
+              "strictSimilarity": 0.6666666666666667,
+              "variantSimilarity": 0.6666666666666667,
+              "exactStrictBonus": 0,
+              "adjustment": 7.18
+            }
+          },
+          {
+            "text": "موث",
+            "rank": 1.4974460709987447,
+            "baseRank": -2.3567205956679222,
+            "penalty": 0.75,
+            "rerank": {
+              "roundTrip": "mvs",
+              "known": false,
+              "strictSimilarity": 0.6666666666666667,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 3.854166666666667
+            }
+          },
+          {
+            "text": "موص",
+            "rank": 0.8284923418783792,
+            "baseRank": -2.963174324788288,
+            "penalty": 0.5,
+            "rerank": {
+              "roundTrip": "mvs",
+              "known": false,
+              "strictSimilarity": 0.6666666666666667,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 3.791666666666667
+            }
+          },
+          {
+            "text": "مص",
+            "rank": 0.3658078161426688,
+            "baseRank": -2.939192183857332,
+            "penalty": 1.22,
+            "rerank": {
+              "roundTrip": "ms",
+              "known": false,
+              "strictSimilarity": 0.6666666666666667,
+              "variantSimilarity": 0.6666666666666667,
+              "exactStrictBonus": 0,
+              "adjustment": 3.3050000000000006
+            }
+          }
+        ]
+      },
+      {
+        "source": "mors",
+        "target": "مورس",
+        "actual": "mors",
+        "changed": false,
+        "reason": "insufficient-finglish-margin",
+        "targetCandidatePresent": true,
+        "top": [
+          {
+            "text": "مورس",
+            "rank": 8.271090389977688,
+            "baseRank": 0.3960903899776891,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "mvrs",
+              "known": true,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 7.875
+            }
+          },
+          {
+            "text": "مرس",
+            "rank": 7.34716680504316,
+            "baseRank": -0.2078331949568396,
+            "penalty": 0.72,
+            "rerank": {
+              "roundTrip": "mrs",
+              "known": true,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 0.75,
+              "exactStrictBonus": 0,
+              "adjustment": 7.555
+            }
+          },
+          {
+            "text": "مورث",
+            "rank": 2.1923149125825994,
+            "baseRank": -1.8701850874174009,
+            "penalty": 0.75,
+            "rerank": {
+              "roundTrip": "mvrs",
+              "known": false,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.0625
+            }
+          },
+          {
+            "text": "مورص",
+            "rank": 1.6645749369018468,
+            "baseRank": -2.3354250630981532,
+            "penalty": 0.5,
+            "rerank": {
+              "roundTrip": "mvrs",
+              "known": false,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4
+            }
+          },
+          {
+            "text": "مرث",
+            "rank": 0.8938607950421669,
+            "baseRank": -2.8486392049578333,
+            "penalty": 1.47,
+            "rerank": {
+              "roundTrip": "mrs",
+              "known": false,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 0.75,
+              "exactStrictBonus": 0,
+              "adjustment": 3.7425
+            }
+          }
+        ]
+      },
+      {
+        "source": "alyalghaadh",
+        "target": "علیالقاعده",
+        "actual": "الیالقاده",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "الیالقاده",
+            "rank": 4.700549004367424,
+            "baseRank": 0.6250944589128791,
+            "penalty": 0.12,
+            "rerank": {
+              "roundTrip": "alialghadh",
+              "known": false,
+              "strictSimilarity": 0.8181818181818181,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.075454545454545
+            }
+          },
+          {
+            "text": "علیالقاده",
+            "rank": 4.1989055787854666,
+            "baseRank": -0.1015489666690787,
+            "penalty": 1.02,
+            "rerank": {
+              "roundTrip": "alialghadh",
+              "known": false,
+              "strictSimilarity": 0.8181818181818181,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.300454545454545
+            }
+          },
+          {
+            "text": "الیالغاده",
+            "rank": 4.158296658218148,
+            "baseRank": 0.11284211276360367,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "alialghadh",
+              "known": false,
+              "strictSimilarity": 0.8181818181818181,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.045454545454545
+            }
+          },
+          {
+            "text": "لیالقاده",
+            "rank": 3.99107292797609,
+            "baseRank": 0.2578911097942719,
+            "penalty": 0.45999999999999996,
+            "rerank": {
+              "roundTrip": "lialghadh",
+              "known": false,
+              "strictSimilarity": 0.7272727272727273,
+              "variantSimilarity": 0.9,
+              "exactStrictBonus": 0,
+              "adjustment": 3.7331818181818184
+            }
+          },
+          {
+            "text": "آلیالقاده",
+            "rank": 3.875718717676201,
+            "baseRank": -0.1474631005056175,
+            "penalty": 0.82,
+            "rerank": {
+              "roundTrip": "aalialghadh",
+              "known": false,
+              "strictSimilarity": 0.7272727272727273,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.023181818181818
+            }
+          }
+        ]
+      },
+      {
+        "source": "abdan",
+        "target": "آبدان",
+        "actual": "بدان",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": true,
+        "top": [
+          {
+            "text": "بدان",
+            "rank": 9.200426688601336,
+            "baseRank": 1.5154266886013357,
+            "penalty": 0.33999999999999997,
+            "rerank": {
+              "roundTrip": "bdan",
+              "known": true,
+              "strictSimilarity": 0.8,
+              "variantSimilarity": 0.8,
+              "exactStrictBonus": 0,
+              "adjustment": 7.685
+            }
+          },
+          {
+            "text": "آبدان",
+            "rank": 8.706023097462484,
+            "baseRank": 0.44768976412915007,
+            "penalty": 0.7,
+            "rerank": {
+              "roundTrip": "aabdan",
+              "known": true,
+              "strictSimilarity": 0.8333333333333334,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 8.258333333333335
+            }
+          },
+          {
+            "text": "بدن",
+            "rank": 7.148674476951992,
+            "baseRank": 0.12867447695199163,
+            "penalty": 1.28,
+            "rerank": {
+              "roundTrip": "bdn",
+              "known": true,
+              "strictSimilarity": 0.6,
+              "variantSimilarity": 0.6,
+              "exactStrictBonus": 0,
+              "adjustment": 7.0200000000000005
+            }
+          },
+          {
+            "text": "ابدان",
+            "rank": 6.823352122823522,
+            "baseRank": 1.3233521228235223,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "abdan",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.5
+            }
+          },
+          {
+            "text": "عبدان",
+            "rank": 6.159491188383112,
+            "baseRank": 0.4344911883831125,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "abdan",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.725
+            }
+          }
+        ]
+      },
+      {
+        "source": "mons",
+        "target": "مونس",
+        "actual": "mons",
+        "changed": false,
+        "reason": "insufficient-finglish-margin",
+        "targetCandidatePresent": true,
+        "top": [
+          {
+            "text": "مونس",
+            "rank": 8.151844635245535,
+            "baseRank": 0.27684463524553415,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "mvns",
+              "known": true,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 7.875
+            }
+          },
+          {
+            "text": "مونث",
+            "rank": 5.403091176628967,
+            "baseRank": -2.6594088233710327,
+            "penalty": 0.75,
+            "rerank": {
+              "roundTrip": "mvns",
+              "known": true,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 8.0625
+            }
+          },
+          {
+            "text": "منس",
+            "rank": 3.1879724353354724,
+            "baseRank": -0.3670275646645277,
+            "penalty": 0.72,
+            "rerank": {
+              "roundTrip": "mns",
+              "known": false,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 0.75,
+              "exactStrictBonus": 0,
+              "adjustment": 3.555
+            }
+          },
+          {
+            "text": "مونص",
+            "rank": 1.6904327158658452,
+            "baseRank": -2.309567284134155,
+            "penalty": 0.5,
+            "rerank": {
+              "roundTrip": "mvns",
+              "known": false,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4
+            }
+          },
+          {
+            "text": "منص",
+            "rank": 1.3561797944988618,
+            "baseRank": -2.3238202055011383,
+            "penalty": 1.22,
+            "rerank": {
+              "roundTrip": "mns",
+              "known": false,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 0.75,
+              "exactStrictBonus": 0,
+              "adjustment": 3.68
+            }
+          }
+        ]
+      },
+      {
+        "source": "ngzary",
+        "target": "نگزاری",
+        "actual": "نگذاری",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": true,
+        "top": [
+          {
+            "text": "نگذاری",
+            "rank": 9.399601101150303,
+            "baseRank": 1.178767767816969,
+            "penalty": 0.55,
+            "rerank": {
+              "roundTrip": "ngzari",
+              "known": true,
+              "strictSimilarity": 0.8333333333333334,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 8.220833333333333
+            }
+          },
+          {
+            "text": "نگزاری",
+            "rank": 9.384089051398893,
+            "baseRank": 1.3007557180655591,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "ngzari",
+              "known": true,
+              "strictSimilarity": 0.8333333333333334,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 8.083333333333334
+            }
+          },
+          {
+            "text": "نگذری",
+            "rank": 7.836503668988223,
+            "baseRank": 0.1306703356548884,
+            "penalty": 1.4900000000000002,
+            "rerank": {
+              "roundTrip": "ngzri",
+              "known": true,
+              "strictSimilarity": 0.6666666666666667,
+              "variantSimilarity": 0.8333333333333334,
+              "exactStrictBonus": 0,
+              "adjustment": 7.705833333333334
+            }
+          },
+          {
+            "text": "نگزری",
+            "rank": 2.9364379183063902,
+            "baseRank": -0.6318954150269436,
+            "penalty": 0.9400000000000001,
+            "rerank": {
+              "roundTrip": "ngzri",
+              "known": false,
+              "strictSimilarity": 0.6666666666666667,
+              "variantSimilarity": 0.8333333333333334,
+              "exactStrictBonus": 0,
+              "adjustment": 3.568333333333334
+            }
+          },
+          {
+            "text": "نگضاری",
+            "rank": 2.7989494382167193,
+            "baseRank": -1.4468838951166143,
+            "penalty": 0.65,
+            "rerank": {
+              "roundTrip": "ngzari",
+              "known": false,
+              "strictSimilarity": 0.8333333333333334,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.245833333333334
+            }
+          }
+        ]
+      },
+      {
+        "source": "arotism",
+        "target": "اروتیسم",
+        "actual": "arotism",
+        "changed": false,
+        "reason": "insufficient-finglish-margin",
+        "targetCandidatePresent": true,
+        "top": [
+          {
+            "text": "اروتیسم",
+            "rank": 8.560076090488318,
+            "baseRank": 0.41721894763117495,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "arvtism",
+              "known": true,
+              "strictSimilarity": 0.8571428571428572,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 8.142857142857142
+            }
+          },
+          {
+            "text": "ارتیسم",
+            "rank": 4.080304025488789,
+            "baseRank": 0.04316116834593137,
+            "penalty": 0.72,
+            "rerank": {
+              "roundTrip": "artism",
+              "known": false,
+              "strictSimilarity": 0.8571428571428572,
+              "variantSimilarity": 0.8571428571428572,
+              "exactStrictBonus": 0,
+              "adjustment": 4.037142857142857
+            }
+          },
+          {
+            "text": "عروتیسم",
+            "rank": 3.7705505171018228,
+            "baseRank": -0.5973066257553203,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "arvtism",
+              "known": false,
+              "strictSimilarity": 0.8571428571428572,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.367857142857143
+            }
+          },
+          {
+            "text": "روتیسم",
+            "rank": 3.7303284965300105,
+            "baseRank": 0.14532849653001073,
+            "penalty": 0.33999999999999997,
+            "rerank": {
+              "roundTrip": "rvtism",
+              "known": false,
+              "strictSimilarity": 0.7142857142857143,
+              "variantSimilarity": 0.8571428571428572,
+              "exactStrictBonus": 0,
+              "adjustment": 3.585
+            }
+          },
+          {
+            "text": "آروتیسم",
+            "rank": 3.636361185249629,
+            "baseRank": -0.4136388147503711,
+            "penalty": 0.7,
+            "rerank": {
+              "roundTrip": "aarvtism",
+              "known": false,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.05
+            }
+          }
+        ]
+      },
+      {
+        "source": "ayazi",
+        "target": "عیاضی",
+        "actual": "ایازی",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": true,
+        "top": [
+          {
+            "text": "ایازی",
+            "rank": 9.527908476976599,
+            "baseRank": 1.5279084769765996,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "aiazi",
+              "known": true,
+              "strictSimilarity": 0.8,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 8
+            }
+          },
+          {
+            "text": "یازی",
+            "rank": 8.238515134669376,
+            "baseRank": 1.0535151346693756,
+            "penalty": 0.33999999999999997,
+            "rerank": {
+              "roundTrip": "iazi",
+              "known": true,
+              "strictSimilarity": 0.6,
+              "variantSimilarity": 0.8,
+              "exactStrictBonus": 0,
+              "adjustment": 7.185
+            }
+          },
+          {
+            "text": "ایاز",
+            "rank": 8.113586226804431,
+            "baseRank": 0.903586226804431,
+            "penalty": 0.44,
+            "rerank": {
+              "roundTrip": "aiaz",
+              "known": true,
+              "strictSimilarity": 0.6,
+              "variantSimilarity": 0.8,
+              "exactStrictBonus": 0,
+              "adjustment": 7.21
+            }
+          },
+          {
+            "text": "ایزی",
+            "rank": 7.940811072498258,
+            "baseRank": 0.6058110724982585,
+            "penalty": 0.9400000000000001,
+            "rerank": {
+              "roundTrip": "aizi",
+              "known": true,
+              "strictSimilarity": 0.6,
+              "variantSimilarity": 0.8,
+              "exactStrictBonus": 0,
+              "adjustment": 7.335
+            }
+          },
+          {
+            "text": "عیاضی",
+            "rank": 6.7154087041120185,
+            "baseRank": -1.6720912958879808,
+            "penalty": 1.55,
+            "rerank": {
+              "roundTrip": "aiazi",
+              "known": true,
+              "strictSimilarity": 0.8,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 8.3875
+            }
+          }
+        ]
+      },
+      {
+        "source": "trqh",
+        "target": "طرقه",
+        "actual": "ترقه",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": true,
+        "top": [
+          {
+            "text": "ترقه",
+            "rank": 7.30461388489797,
+            "baseRank": -0.19538611510202997,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "trghh",
+              "known": true,
+              "strictSimilarity": 0.6,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 7.5
+            }
+          },
+          {
+            "text": "طرقه",
+            "rank": 5.6656883714610355,
+            "baseRank": -1.9468116285389647,
+            "penalty": 0.45,
+            "rerank": {
+              "roundTrip": "trghh",
+              "known": true,
+              "strictSimilarity": 0.6,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 7.6125
+            }
+          },
+          {
+            "text": "ترقح",
+            "rank": 0.6249187972455799,
+            "baseRank": -3.0375812027544202,
+            "penalty": 0.65,
+            "rerank": {
+              "roundTrip": "trghh",
+              "known": false,
+              "strictSimilarity": 0.6,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 3.6625
+            }
+          },
+          {
+            "text": "طرقح",
+            "rank": -1.0140067161913549,
+            "baseRank": -4.789006716191355,
+            "penalty": 1.1,
+            "rerank": {
+              "roundTrip": "trghh",
+              "known": false,
+              "strictSimilarity": 0.6,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 3.775
+            }
+          }
+        ]
+      },
+      {
+        "source": "shgwsh",
+        "target": "سهگوش",
+        "actual": "شگوش",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "شگوش",
+            "rank": 3.485556527597092,
+            "baseRank": -0.6227768057362421,
+            "penalty": 0.1,
+            "rerank": {
+              "roundTrip": "shgvsh",
+              "known": false,
+              "strictSimilarity": 0.8333333333333334,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.108333333333334
+            }
+          },
+          {
+            "text": "شقوش",
+            "rank": 1.4163018042426287,
+            "baseRank": -2.3336981957573713,
+            "penalty": 1,
+            "rerank": {
+              "roundTrip": "shghvsh",
+              "known": false,
+              "strictSimilarity": 0.7142857142857143,
+              "variantSimilarity": 0.8571428571428572,
+              "exactStrictBonus": 0,
+              "adjustment": 3.75
+            }
+          }
+        ]
+      },
+      {
+        "source": "kyshtnan",
+        "target": "کیسهتنان",
+        "actual": "کیشتنان",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "کیشتنان",
+            "rank": 4.772001737265693,
+            "baseRank": 0.5845017372656938,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "kishtnan",
+              "known": false,
+              "strictSimilarity": 0.875,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.1875
+            }
+          },
+          {
+            "text": "کیشتنن",
+            "rank": 3.087432244854135,
+            "baseRank": -0.772567755145865,
+            "penalty": 0.9400000000000001,
+            "rerank": {
+              "roundTrip": "kishtnn",
+              "known": false,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 0.875,
+              "exactStrictBonus": 0,
+              "adjustment": 3.86
+            }
+          },
+          {
+            "text": "کیشطنان",
+            "rank": 2.787880159546403,
+            "baseRank": -1.5121198404535967,
+            "penalty": 0.45,
+            "rerank": {
+              "roundTrip": "kishtnan",
+              "known": false,
+              "strictSimilarity": 0.875,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.3
+            }
+          },
+          {
+            "text": "کیشتنآن",
+            "rank": 2.224987869580446,
+            "baseRank": -1.8944565748639985,
+            "penalty": 0.7,
+            "rerank": {
+              "roundTrip": "kishtnaan",
+              "known": false,
+              "strictSimilarity": 0.7777777777777778,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.1194444444444445
+            }
+          },
+          {
+            "text": "کیشتنعن",
+            "rank": 1.9838063981372929,
+            "baseRank": -2.4286936018627068,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "kishtnan",
+              "known": false,
+              "strictSimilarity": 0.875,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.4125
+            }
+          }
+        ]
+      },
+      {
+        "source": "alamnshdh",
+        "target": "اعلامنشده",
+        "actual": "الامنشده",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "الامنشده",
+            "rank": 6.330599980625103,
+            "baseRank": 0.8305999806251029,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "alamnshdh",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.5
+            }
+          },
+          {
+            "text": "علامنشده",
+            "rank": 5.748869348774641,
+            "baseRank": 0.023869348774641475,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "alamnshdh",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.725
+            }
+          },
+          {
+            "text": "العمنشده",
+            "rank": 5.0463348873184515,
+            "baseRank": -0.6786651126815479,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "alamnshdh",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.725
+            }
+          },
+          {
+            "text": "لامنشده",
+            "rank": 4.597673418350321,
+            "baseRank": 0.5126734183503211,
+            "penalty": 0.33999999999999997,
+            "rerank": {
+              "roundTrip": "lamnshdh",
+              "known": false,
+              "strictSimilarity": 0.8888888888888888,
+              "variantSimilarity": 0.8888888888888888,
+              "exactStrictBonus": 0,
+              "adjustment": 4.085
+            }
+          },
+          {
+            "text": "آلامنشده",
+            "rank": 4.553154177753879,
+            "baseRank": 0.1281541777538796,
+            "penalty": 0.7,
+            "rerank": {
+              "roundTrip": "aalamnshdh",
+              "known": false,
+              "strictSimilarity": 0.9,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.425
+            }
+          }
+        ]
+      },
+      {
+        "source": "baakhlaq",
+        "target": "بااخلاق",
+        "actual": "باخلاق",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "باخلاق",
+            "rank": 3.663291409626254,
+            "baseRank": 0.10079140962625377,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "bakhlagh",
+              "known": false,
+              "strictSimilarity": 0.625,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 3.5625
+            }
+          },
+          {
+            "text": "باخلق",
+            "rank": 2.834039360181624,
+            "baseRank": -0.7134606398183758,
+            "penalty": 0.9400000000000001,
+            "rerank": {
+              "roundTrip": "bakhlgh",
+              "known": false,
+              "strictSimilarity": 0.625,
+              "variantSimilarity": 0.875,
+              "exactStrictBonus": 0,
+              "adjustment": 3.5475
+            }
+          },
+          {
+            "text": "باخلعق",
+            "rank": 1.692954177634972,
+            "baseRank": -2.094545822365028,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "bakhlagh",
+              "known": false,
+              "strictSimilarity": 0.625,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 3.7875
+            }
+          },
+          {
+            "text": "بآخلاق",
+            "rank": 1.274600688277821,
+            "baseRank": -2.6998437561666235,
+            "penalty": 0.12,
+            "rerank": {
+              "roundTrip": "baakhlagh",
+              "known": false,
+              "strictSimilarity": 0.7777777777777778,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 3.9744444444444444
+            }
+          },
+          {
+            "text": "باخلآق",
+            "rank": 0.9974527105300166,
+            "baseRank": -2.566436178358872,
+            "penalty": 0.7,
+            "rerank": {
+              "roundTrip": "bakhlaagh",
+              "known": false,
+              "strictSimilarity": 0.5555555555555556,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 3.5638888888888887
+            }
+          }
+        ]
+      },
+      {
+        "source": "lwvrdraph",
+        "target": "لووردراپه",
+        "actual": "لووردراف",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "لووردراف",
+            "rank": 3.217960609390963,
+            "baseRank": -0.07426161283125915,
+            "penalty": 0.28,
+            "rerank": {
+              "roundTrip": "lvvrdraf",
+              "known": false,
+              "strictSimilarity": 0.6666666666666667,
+              "variantSimilarity": 0.7777777777777778,
+              "exactStrictBonus": 0,
+              "adjustment": 3.292222222222222
+            }
+          },
+          {
+            "text": "لووردرف",
+            "rank": 2.0349625514018888,
+            "baseRank": -0.9922596708203338,
+            "penalty": 1.22,
+            "rerank": {
+              "roundTrip": "lvvrdrf",
+              "known": false,
+              "strictSimilarity": 0.5555555555555556,
+              "variantSimilarity": 0.6666666666666667,
+              "exactStrictBonus": 0,
+              "adjustment": 3.0272222222222225
+            }
+          },
+          {
+            "text": "لووردرآف",
+            "rank": 2.028319623231759,
+            "baseRank": -1.4389025989904636,
+            "penalty": 0.98,
+            "rerank": {
+              "roundTrip": "lvvrdraaf",
+              "known": false,
+              "strictSimilarity": 0.6666666666666667,
+              "variantSimilarity": 0.7777777777777778,
+              "exactStrictBonus": 0,
+              "adjustment": 3.4672222222222224
+            }
+          },
+          {
+            "text": "لووردرعف",
+            "rank": 1.3031916551320246,
+            "baseRank": -2.2140305670901976,
+            "penalty": 1.18,
+            "rerank": {
+              "roundTrip": "lvvrdraf",
+              "known": false,
+              "strictSimilarity": 0.6666666666666667,
+              "variantSimilarity": 0.7777777777777778,
+              "exactStrictBonus": 0,
+              "adjustment": 3.5172222222222222
+            }
+          }
+        ]
+      },
+      {
+        "source": "bqridid",
+        "target": "بغریدید",
+        "actual": "بقریدید",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "بقریدید",
+            "rank": 5.025254559886755,
+            "baseRank": 1.150254559886755,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "bghridid",
+              "known": false,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 3.875
+            }
+          },
+          {
+            "text": "بقردید",
+            "rank": 3.199595503015781,
+            "baseRank": -0.18397592555564735,
+            "penalty": 0.82,
+            "rerank": {
+              "roundTrip": "bghrdid",
+              "known": false,
+              "strictSimilarity": 0.5714285714285714,
+              "variantSimilarity": 0.875,
+              "exactStrictBonus": 0,
+              "adjustment": 3.3835714285714285
+            }
+          },
+          {
+            "text": "بقریدد",
+            "rank": 2.788350563702843,
+            "baseRank": -0.5952208648685853,
+            "penalty": 0.82,
+            "rerank": {
+              "roundTrip": "bghridd",
+              "known": false,
+              "strictSimilarity": 0.5714285714285714,
+              "variantSimilarity": 0.875,
+              "exactStrictBonus": 0,
+              "adjustment": 3.3835714285714285
+            }
+          },
+          {
+            "text": "بقردد",
+            "rank": 0.8502890400927394,
+            "baseRank": -2.1311395313358323,
+            "penalty": 1.64,
+            "rerank": {
+              "roundTrip": "bghrdd",
+              "known": false,
+              "strictSimilarity": 0.4285714285714286,
+              "variantSimilarity": 0.75,
+              "exactStrictBonus": 0,
+              "adjustment": 2.9814285714285718
+            }
+          }
+        ]
+      },
+      {
+        "source": "thor",
+        "target": "تهور",
+        "actual": "thor",
+        "changed": false,
+        "reason": "insufficient-finglish-margin",
+        "targetCandidatePresent": true,
+        "top": [
+          {
+            "text": "تهور",
+            "rank": 8.090083700060067,
+            "baseRank": 0.21508370006006694,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "thvr",
+              "known": true,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 7.875
+            }
+          },
+          {
+            "text": "طهور",
+            "rank": 6.4073267266592335,
+            "baseRank": -1.5801732733407658,
+            "penalty": 0.45,
+            "rerank": {
+              "roundTrip": "thvr",
+              "known": true,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 7.9875
+            }
+          },
+          {
+            "text": "تحور",
+            "rank": 3.4826129287247305,
+            "baseRank": -0.5548870712752692,
+            "penalty": 0.65,
+            "rerank": {
+              "roundTrip": "thvr",
+              "known": false,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.0375
+            }
+          },
+          {
+            "text": "تهر",
+            "rank": 3.1150893070336183,
+            "baseRank": -0.43991069296638186,
+            "penalty": 0.72,
+            "rerank": {
+              "roundTrip": "thr",
+              "known": false,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 0.75,
+              "exactStrictBonus": 0,
+              "adjustment": 3.555
+            }
+          },
+          {
+            "text": "طهر",
+            "rank": 1.9314026972262957,
+            "baseRank": -1.7360973027737043,
+            "penalty": 1.17,
+            "rerank": {
+              "roundTrip": "thr",
+              "known": false,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 0.75,
+              "exactStrictBonus": 0,
+              "adjustment": 3.6675
+            }
+          }
+        ]
+      },
+      {
+        "source": "almi",
+        "target": "اعلمی",
+        "actual": "علمی",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "علمی",
+            "rank": 9.502497085392852,
+            "baseRank": -0.22250291460714766,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "almi",
+              "known": true,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 9.725
+            }
+          },
+          {
+            "text": "الم",
+            "rank": 7.977875474944105,
+            "baseRank": 0.4928754749441049,
+            "penalty": 0.44,
+            "rerank": {
+              "roundTrip": "alm",
+              "known": true,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 0.75,
+              "exactStrictBonus": 0,
+              "adjustment": 7.485
+            }
+          },
+          {
+            "text": "لمی",
+            "rank": 7.906001987263536,
+            "baseRank": 0.44600198726353535,
+            "penalty": 0.33999999999999997,
+            "rerank": {
+              "roundTrip": "lmi",
+              "known": true,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 0.75,
+              "exactStrictBonus": 0,
+              "adjustment": 7.46
+            }
+          },
+          {
+            "text": "علم",
+            "rank": 6.77502308314931,
+            "baseRank": -0.9349769168506905,
+            "penalty": 1.34,
+            "rerank": {
+              "roundTrip": "alm",
+              "known": true,
+              "strictSimilarity": 0.75,
+              "variantSimilarity": 0.75,
+              "exactStrictBonus": 0,
+              "adjustment": 7.71
+            }
+          },
+          {
+            "text": "المی",
+            "rank": 6.514514973385053,
+            "baseRank": 1.0145149733850527,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "almi",
+              "known": false,
+              "strictSimilarity": 1,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 1,
+              "adjustment": 5.5
+            }
+          }
+        ]
+      },
+      {
+        "source": "zhnpror",
+        "target": "ذهنپرور",
+        "actual": "ژنپرور",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "ژنپرور",
+            "rank": 3.5998318584991886,
+            "baseRank": -0.5430252843579547,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "zhnprvr",
+              "known": false,
+              "strictSimilarity": 0.8571428571428572,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.142857142857143
+            }
+          },
+          {
+            "text": "ژنپرر",
+            "rank": 1.8820150944265621,
+            "baseRank": -2.1551277627162952,
+            "penalty": 0.72,
+            "rerank": {
+              "roundTrip": "zhnprr",
+              "known": false,
+              "strictSimilarity": 0.8571428571428572,
+              "variantSimilarity": 0.8571428571428572,
+              "exactStrictBonus": 0,
+              "adjustment": 4.037142857142857
+            }
+          }
+        ]
+      },
+      {
+        "source": "hmiaaqazd",
+        "target": "همیآغازد",
+        "actual": "همیاقازد",
+        "changed": true,
+        "reason": "generalized-finglish",
+        "targetCandidatePresent": false,
+        "top": [
+          {
+            "text": "همیاقازد",
+            "rank": 4.868498090244148,
+            "baseRank": 0.9240536457997036,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "hmiaghazd",
+              "known": false,
+              "strictSimilarity": 0.7777777777777778,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 3.9444444444444446
+            }
+          },
+          {
+            "text": "همیآقازد",
+            "rank": 4.282274622029815,
+            "baseRank": 0.2522746220298149,
+            "penalty": 0.12,
+            "rerank": {
+              "roundTrip": "hmiaaghazd",
+              "known": false,
+              "strictSimilarity": 0.8,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.03
+            }
+          },
+          {
+            "text": "حمیاقازد",
+            "rank": 3.81950690193104,
+            "baseRank": -0.2874375425134043,
+            "penalty": 0.65,
+            "rerank": {
+              "roundTrip": "hmiaghazd",
+              "known": false,
+              "strictSimilarity": 0.7777777777777778,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.106944444444444
+            }
+          },
+          {
+            "text": "هماقازد",
+            "rank": 3.674835102139203,
+            "baseRank": 0.07539065769475856,
+            "penalty": 0.62,
+            "rerank": {
+              "roundTrip": "hmaghazd",
+              "known": false,
+              "strictSimilarity": 0.6666666666666667,
+              "variantSimilarity": 0.8888888888888888,
+              "exactStrictBonus": 0,
+              "adjustment": 3.5994444444444444
+            }
+          },
+          {
+            "text": "همیاقعزد",
+            "rank": 3.427798577921336,
+            "baseRank": -0.7416458665231087,
+            "penalty": 0.9,
+            "rerank": {
+              "roundTrip": "hmiaghazd",
+              "known": false,
+              "strictSimilarity": 0.7777777777777778,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.169444444444444
+            }
+          }
+        ]
+      },
+      {
+        "source": "tatary",
+        "target": "تاتاری",
+        "actual": "tatary",
+        "changed": false,
+        "reason": "insufficient-finglish-margin",
+        "targetCandidatePresent": true,
+        "top": [
+          {
+            "text": "تاتاری",
+            "rank": 9.099240112945289,
+            "baseRank": 1.0159067796119554,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "tatari",
+              "known": true,
+              "strictSimilarity": 0.8333333333333334,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 8.083333333333334
+            }
+          },
+          {
+            "text": "طاتاری",
+            "rank": 3.9836515081477253,
+            "baseRank": -0.21218182518560832,
+            "penalty": 0.45,
+            "rerank": {
+              "roundTrip": "tatari",
+              "known": false,
+              "strictSimilarity": 0.8333333333333334,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.195833333333334
+            }
+          },
+          {
+            "text": "تاطاری",
+            "rank": 3.8824393141200457,
+            "baseRank": -0.3133940192132879,
+            "penalty": 0.45,
+            "rerank": {
+              "roundTrip": "tatari",
+              "known": false,
+              "strictSimilarity": 0.8333333333333334,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.195833333333334
+            }
+          },
+          {
+            "text": "تاتری",
+            "rank": 3.8480062254547933,
+            "baseRank": 0.2796728921214595,
+            "penalty": 0.9400000000000001,
+            "rerank": {
+              "roundTrip": "tatri",
+              "known": false,
+              "strictSimilarity": 0.6666666666666667,
+              "variantSimilarity": 0.8333333333333334,
+              "exactStrictBonus": 0,
+              "adjustment": 3.568333333333334
+            }
+          },
+          {
+            "text": "تعطاری",
+            "rank": 3.8170691812266457,
+            "baseRank": -0.6037641521066885,
+            "penalty": 1.35,
+            "rerank": {
+              "roundTrip": "tatari",
+              "known": false,
+              "strictSimilarity": 0.8333333333333334,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 4.420833333333334
+            }
+          }
+        ]
+      },
+      {
+        "source": "lindon",
+        "target": "لیندون",
+        "actual": "lindon",
+        "changed": false,
+        "reason": "insufficient-finglish-margin",
+        "targetCandidatePresent": true,
+        "top": [
+          {
+            "text": "لیندون",
+            "rank": 8.80586040206961,
+            "baseRank": 0.7225270687362764,
+            "penalty": 0,
+            "rerank": {
+              "roundTrip": "lindvn",
+              "known": true,
+              "strictSimilarity": 0.8333333333333334,
+              "variantSimilarity": 1,
+              "exactStrictBonus": 0,
+              "adjustment": 8.083333333333334
+            }
+          },
+          {
+            "text": "لندن",
+            "rank": 7.380718311987874,
+            "baseRank": -0.004281688012125806,
+            "penalty": 1.54,
+            "rerank": {
+              "roundTrip": "lndn",
+              "known": true,
+              "strictSimilarity": 0.6666666666666667,
+              "variantSimilarity": 0.6666666666666667,
+              "exactStrictBonus": 0,
+              "adjustment": 7.385
+            }
+          },
+          {
+            "text": "لیندن",
+            "rank": 4.648284466871637,
+            "baseRank": 0.7182844668716369,
+            "penalty": 0.72,
+            "rerank": {
+              "roundTrip": "lindn",
+              "known": false,
+              "strictSimilarity": 0.8333333333333334,
+              "variantSimilarity": 0.8333333333333334,
+              "exactStrictBonus": 0,
+              "adjustment": 3.93
+            }
+          },
+          {
+            "text": "لندون",
+            "rank": 3.516105094585552,
+            "baseRank": -0.02222823874778207,
+            "penalty": 0.82,
+            "rerank": {
+              "roundTrip": "lndvn",
+              "known": false,
+              "strictSimilarity": 0.6666666666666667,
+              "variantSimilarity": 0.8333333333333334,
+              "exactStrictBonus": 0,
+              "adjustment": 3.538333333333334
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "curated": {
+    "total": 9,
+    "pass": 9,
+    "rate": 1,
+    "results": [
+      {
+        "source": "salam",
+        "expected": "سلام",
+        "actual": "سلام",
+        "pass": true,
+        "reason": "trusted-beam-backed-finglish-prior",
+        "evidence": [
+          "beam-transliteration",
+          "persian-statistical-language-shape",
+          "dictionary-independent-finglish",
+          "generalized-lexical-roundtrip-rerank",
+          "trusted-word-map-finglish-prior",
+          "trusted-prior-is-generated-beam-candidate",
+          "surrounding-persian-context",
+          "strong-monolingual-persian-context",
+          "field-language-hint:fa",
+          "page-language-hint:fa",
+          "browser-language-hint:fa",
+          "rtl-field-prior"
+        ]
+      },
+      {
+        "source": "salaam",
+        "expected": "سلام",
+        "actual": "سلام",
+        "pass": true,
+        "reason": "trusted-beam-backed-finglish-prior",
+        "evidence": [
+          "beam-transliteration",
+          "persian-statistical-language-shape",
+          "dictionary-independent-finglish",
+          "generalized-lexical-roundtrip-rerank",
+          "trusted-word-map-finglish-prior",
+          "trusted-prior-is-generated-beam-candidate",
+          "surrounding-persian-context",
+          "strong-monolingual-persian-context",
+          "field-language-hint:fa",
+          "page-language-hint:fa",
+          "browser-language-hint:fa",
+          "rtl-field-prior"
+        ]
+      },
+      {
+        "source": "chetori",
+        "expected": "چطوری",
+        "actual": "چطوری",
+        "pass": true,
+        "reason": "trusted-beam-backed-finglish-prior",
+        "evidence": [
+          "beam-transliteration",
+          "persian-statistical-language-shape",
+          "dictionary-independent-finglish",
+          "generalized-lexical-roundtrip-rerank",
+          "trusted-word-map-finglish-prior",
+          "trusted-prior-is-generated-beam-candidate",
+          "surrounding-persian-context",
+          "strong-monolingual-persian-context",
+          "field-language-hint:fa",
+          "page-language-hint:fa",
+          "browser-language-hint:fa",
+          "rtl-field-prior"
+        ]
+      },
+      {
+        "source": "khobi",
+        "expected": "خوبی",
+        "actual": "خوبی",
+        "pass": true,
+        "reason": "trusted-beam-backed-finglish-prior",
+        "evidence": [
+          "beam-transliteration",
+          "persian-statistical-language-shape",
+          "dictionary-independent-finglish",
+          "generalized-lexical-roundtrip-rerank",
+          "trusted-word-map-finglish-prior",
+          "trusted-prior-is-generated-beam-candidate",
+          "surrounding-persian-context",
+          "strong-monolingual-persian-context",
+          "field-language-hint:fa",
+          "page-language-hint:fa",
+          "browser-language-hint:fa",
+          "rtl-field-prior"
+        ]
+      },
+      {
+        "source": "khoobi",
+        "expected": "خوبی",
+        "actual": "خوبی",
+        "pass": true,
+        "reason": "trusted-beam-backed-finglish-prior",
+        "evidence": [
+          "beam-transliteration",
+          "persian-statistical-language-shape",
+          "dictionary-independent-finglish",
+          "generalized-lexical-roundtrip-rerank",
+          "trusted-word-map-finglish-prior",
+          "trusted-prior-is-generated-beam-candidate",
+          "surrounding-persian-context",
+          "strong-monolingual-persian-context",
+          "field-language-hint:fa",
+          "page-language-hint:fa",
+          "browser-language-hint:fa",
+          "rtl-field-prior"
+        ]
+      },
+      {
+        "source": "daneshgah",
+        "expected": "دانشگاه",
+        "actual": "دانشگاه",
+        "pass": true,
+        "reason": "trusted-beam-backed-finglish-prior",
+        "evidence": [
+          "beam-transliteration",
+          "persian-statistical-language-shape",
+          "dictionary-independent-finglish",
+          "generalized-lexical-roundtrip-rerank",
+          "trusted-word-map-finglish-prior",
+          "trusted-prior-is-generated-beam-candidate",
+          "surrounding-persian-context",
+          "strong-monolingual-persian-context",
+          "field-language-hint:fa",
+          "page-language-hint:fa",
+          "browser-language-hint:fa",
+          "rtl-field-prior"
+        ]
+      },
+      {
+        "source": "barname",
+        "expected": "برنامه",
+        "actual": "برنامه",
+        "pass": true,
+        "reason": "trusted-beam-backed-finglish-prior",
+        "evidence": [
+          "beam-transliteration",
+          "persian-statistical-language-shape",
+          "dictionary-independent-finglish",
+          "generalized-lexical-roundtrip-rerank",
+          "trusted-word-map-finglish-prior",
+          "trusted-prior-is-generated-beam-candidate",
+          "surrounding-persian-context",
+          "strong-monolingual-persian-context",
+          "field-language-hint:fa",
+          "page-language-hint:fa",
+          "browser-language-hint:fa",
+          "rtl-field-prior"
+        ]
+      },
+      {
+        "source": "kharid",
+        "expected": "خرید",
+        "actual": "خرید",
+        "pass": true,
+        "reason": "trusted-beam-backed-finglish-prior",
+        "evidence": [
+          "beam-transliteration",
+          "persian-statistical-language-shape",
+          "dictionary-independent-finglish",
+          "generalized-lexical-roundtrip-rerank",
+          "trusted-word-map-finglish-prior",
+          "trusted-prior-is-generated-beam-candidate",
+          "surrounding-persian-context",
+          "strong-monolingual-persian-context",
+          "field-language-hint:fa",
+          "page-language-hint:fa",
+          "browser-language-hint:fa",
+          "rtl-field-prior"
+        ]
+      },
+      {
+        "source": "khanevade",
+        "expected": "خانواده",
+        "actual": "خانواده",
+        "pass": true,
+        "reason": "trusted-beam-backed-finglish-prior",
+        "evidence": [
+          "beam-transliteration",
+          "persian-statistical-language-shape",
+          "dictionary-independent-finglish",
+          "generalized-lexical-roundtrip-rerank",
+          "trusted-word-map-finglish-prior",
+          "trusted-prior-is-generated-beam-candidate",
+          "surrounding-persian-context",
+          "strong-monolingual-persian-context",
+          "field-language-hint:fa",
+          "page-language-hint:fa",
+          "browser-language-hint:fa",
+          "rtl-field-prior"
+        ]
+      }
+    ]
+  },
+  "englishProtection": {
+    "total": 1000,
+    "falsePositive": 0,
+    "falsePositiveRate": 0,
+    "failures": []
+  },
+  "gates": {
+    "canonicalCandidateRecall": true,
+    "canonicalExact": true,
+    "variantCandidateRecall": true,
+    "variantExact": true,
+    "curated": true,
+    "englishFalsePositive": true
+  },
+  "decision": "PASS"
+}
