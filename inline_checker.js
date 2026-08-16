@@ -6,8 +6,11 @@ let activeInput = null;
 let suggestionElements = {
     host: null,
     action: null,
+    actions: [],
     prefix: null,
+    prefixes: [],
     correctedText: '',
+    correctedTexts: [],
     mode: '',
     inputElement: null
 };
@@ -94,24 +97,79 @@ function refreshSuggestionLanguage() {
 
     if (!action) return;
 
-    const direction = uiLanguage === 'en' ? 'ltr' : 'rtl';
-    action.style.direction = direction;
-    action.setAttribute?.(
-        'aria-label',
-        inlineUiText(
-            'inline.replaceWith',
-            { text: suggestionElements.correctedText }
-        )
+    const direction =
+        uiLanguage === 'en'
+            ? 'ltr'
+            : 'rtl';
+
+    const actions =
+        Array.isArray(
+            suggestionElements.actions
+        ) &&
+        suggestionElements.actions.length > 0
+            ? suggestionElements.actions
+            : [action];
+
+    const prefixes =
+        Array.isArray(
+            suggestionElements.prefixes
+        ) &&
+        suggestionElements.prefixes.length > 0
+            ? suggestionElements.prefixes
+            : (
+                prefix
+                    ? [prefix]
+                    : []
+            );
+
+    const correctedTexts =
+        Array.isArray(
+            suggestionElements.correctedTexts
+        ) &&
+        suggestionElements.correctedTexts.length > 0
+            ? suggestionElements.correctedTexts
+            : [
+                suggestionElements.correctedText
+            ];
+
+    actions.forEach(
+        (
+            suggestionAction,
+            index
+        ) => {
+            suggestionAction.style.direction =
+                direction;
+
+            suggestionAction.setAttribute?.(
+                'aria-label',
+                inlineUiText(
+                    'inline.replaceWith',
+                    {
+                        text:
+                            correctedTexts[
+                                index
+                            ] ||
+                            suggestionElements.correctedText
+                    }
+                )
+            );
+        }
     );
 
-    if (prefix) {
-        prefix.textContent = inlineUiText(
-            suggestionElements.mode === 'undo'
-                ? 'inline.undoPrefix'
-                : 'inline.correctionPrefix'
-        );
-        prefix.style.direction = direction;
-    }
+    prefixes.forEach(
+        (suggestionPrefix) => {
+            suggestionPrefix.textContent =
+                inlineUiText(
+                    suggestionElements.mode ===
+                        'undo'
+                        ? 'inline.undoPrefix'
+                        : 'inline.correctionPrefix'
+                );
+
+            suggestionPrefix.style.direction =
+                direction;
+        }
+    );
 }
 
 function normalizeAssistantHost(value) {
@@ -514,6 +572,49 @@ function computeEditingSuggestion(
                     tokenIntentContext
                 );
 
+        const spellingAnalysis =
+            !explicitSelection &&
+            typeof analyzeFsaSpellingIntent ===
+                'function'
+                ? analyzeFsaSpellingIntent(
+                    originalText,
+                    tokenIntentContext
+                )
+                : null;
+
+        const spellingAlternatives =
+            spellingAnalysis?.changed &&
+            spellingAnalysis.corrected ===
+                correctedText &&
+            Array.isArray(
+                spellingAnalysis.candidates
+            )
+                ? spellingAnalysis.candidates
+                    .slice(0, 3)
+                    .map(
+                        (
+                            candidate,
+                            index
+                        ) => ({
+                            fieldText: value,
+                            start:
+                                primaryRange.start,
+                            end:
+                                primaryRange.end,
+                            originalText,
+                            correctedText:
+                                candidate.text,
+                            intentAnalysis:
+                                spellingAnalysis,
+                            mode: 'token',
+                            suggestionKind:
+                                'spelling',
+                            candidateRank:
+                                index + 1
+                        })
+                    )
+                : [];
+
         if (correctedText && correctedText !== originalText) {
             return {
                 fieldText: value,
@@ -522,6 +623,11 @@ function computeEditingSuggestion(
                 originalText,
                 correctedText,
                 intentAnalysis,
+                spellingAnalysis,
+                alternatives:
+                    spellingAlternatives.length > 1
+                        ? spellingAlternatives
+                        : [],
                 mode: explicitSelection ? 'selection' : 'token'
             };
         }
@@ -1843,6 +1949,357 @@ function createSuggestionSurface() {
     return { host, root };
 }
 
+function styleSuggestionPanel(panel) {
+    panel.style.all = 'initial';
+    panel.style.position = 'fixed';
+    panel.style.display = 'flex';
+    panel.style.flexDirection = 'column';
+    panel.style.gap = '4px';
+    panel.style.boxSizing = 'border-box';
+    panel.style.width =
+        'min(280px, calc(100vw - 8px))';
+    panel.style.pointerEvents = 'auto';
+    panel.style.zIndex = '2147483647';
+}
+
+function getSuggestionPanelViewportPosition(
+    inputElement,
+    panel,
+    itemCount,
+    gap = 6,
+    margin = 4
+) {
+    const inputRect =
+        inputElement.getBoundingClientRect();
+    const viewport =
+        getViewportSize();
+
+    const width =
+        Number(panel.offsetWidth) > 0
+            ? Number(panel.offsetWidth)
+            : 240;
+
+    const height =
+        Number(panel.offsetHeight) > 0
+            ? Number(panel.offsetHeight)
+            : (
+                Math.max(
+                    1,
+                    Number(itemCount) || 1
+                ) * 40 +
+                Math.max(
+                    0,
+                    (
+                        Number(itemCount) || 1
+                    ) - 1
+                ) * 4
+            );
+
+    const maxLeft =
+        Math.max(
+            margin,
+            viewport.width -
+                width -
+                margin
+        );
+
+    const maxTop =
+        Math.max(
+            margin,
+            viewport.height -
+                height -
+                margin
+        );
+
+    const inputLeft =
+        Number.isFinite(
+            inputRect.left
+        )
+            ? inputRect.left
+            : 0;
+
+    const inputRight =
+        Number.isFinite(
+            inputRect.right
+        )
+            ? inputRect.right
+            : inputLeft;
+
+    const preferredLeft =
+        inputRight - width;
+    const below =
+        inputRect.bottom + gap;
+    const above =
+        inputRect.top -
+        height -
+        gap;
+
+    const top =
+        below + height <=
+            viewport.height - margin
+            ? below
+            : above;
+
+    return {
+        left:
+            clampViewportCoordinate(
+                preferredLeft,
+                margin,
+                maxLeft
+            ),
+        top:
+            clampViewportCoordinate(
+                top,
+                margin,
+                maxTop
+            )
+    };
+}
+
+function showSpellingSuggestionAlternatives(
+    alternatives,
+    inputElement,
+    surface
+) {
+    const options =
+        alternatives
+            .filter(
+                (item) =>
+                    item &&
+                    item.correctedText &&
+                    item.correctedText !==
+                        item.originalText
+            )
+            .slice(0, 3);
+
+    if (options.length < 2) {
+        return false;
+    }
+
+    const panel =
+        document.createElement('div');
+
+    panel.className =
+        'farsi-smart-suggestion-panel';
+
+    styleSuggestionPanel(panel);
+
+    const actions = [];
+    const prefixes = [];
+    const correctedTexts = [];
+
+    options.forEach(
+        (
+            option,
+            index
+        ) => {
+            const alternativeAction =
+                document.createElement(
+                    'button'
+                );
+
+            alternativeAction.type =
+                'button';
+            alternativeAction.className =
+                'farsi-smart-suggestion-action';
+
+            alternativeAction.setAttribute?.(
+                'aria-label',
+                inlineUiText(
+                    'inline.replaceWith',
+                    {
+                        text:
+                            option.correctedText
+                    }
+                )
+            );
+
+            styleSuggestionAction(
+                alternativeAction
+            );
+
+            alternativeAction.style.position =
+                'relative';
+            alternativeAction.style.top =
+                'auto';
+            alternativeAction.style.left =
+                'auto';
+            alternativeAction.style.width =
+                '100%';
+            alternativeAction.style.maxWidth =
+                '100%';
+
+            const optionMarker =
+                document.createElement(
+                    'span'
+                );
+
+            optionMarker.textContent =
+                String(index + 1);
+            optionMarker.style.all =
+                'initial';
+            optionMarker.style.display =
+                'inline-grid';
+            optionMarker.style.placeItems =
+                'center';
+            optionMarker.style.flex =
+                '0 0 auto';
+            optionMarker.style.width =
+                '20px';
+            optionMarker.style.height =
+                '20px';
+            optionMarker.style.borderRadius =
+                '50%';
+            optionMarker.style.background =
+                '#0b57d0';
+            optionMarker.style.color =
+                '#ffffff';
+            optionMarker.style.fontFamily =
+                'Arial, Tahoma, sans-serif';
+            optionMarker.style.fontSize =
+                '12px';
+            optionMarker.style.fontWeight =
+                '700';
+            optionMarker.style.lineHeight =
+                '20px';
+
+            const optionPrefix =
+                document.createElement(
+                    'span'
+                );
+
+            optionPrefix.textContent =
+                inlineUiText(
+                    'inline.correctionPrefix'
+                );
+            optionPrefix.style.all =
+                'initial';
+            optionPrefix.style.color =
+                '#4a4a4a';
+            optionPrefix.style.fontFamily =
+                'Arial, Tahoma, sans-serif';
+            optionPrefix.style.fontSize =
+                '13px';
+            optionPrefix.style.fontWeight =
+                '500';
+            optionPrefix.style.direction =
+                uiLanguage === 'en'
+                    ? 'ltr'
+                    : 'rtl';
+
+            const optionText =
+                document.createElement(
+                    'strong'
+                );
+
+            optionText.textContent =
+                option.correctedText;
+            optionText.style.all =
+                'initial';
+            optionText.style.color =
+                '#0b57d0';
+            optionText.style.fontFamily =
+                'Arial, Tahoma, sans-serif';
+            optionText.style.fontSize =
+                '14px';
+            optionText.style.fontWeight =
+                '700';
+            optionText.style.direction =
+                'auto';
+
+            alternativeAction.appendChild(
+                optionMarker
+            );
+            alternativeAction.appendChild(
+                optionPrefix
+            );
+            alternativeAction.appendChild(
+                optionText
+            );
+
+            alternativeAction.onmousedown =
+                (event) => {
+                    event.preventDefault?.();
+                };
+
+            alternativeAction.onpointerdown =
+                (event) => {
+                    event.preventDefault?.();
+                };
+
+            alternativeAction.onclick =
+                (event) => {
+                    event.preventDefault?.();
+                    event.stopPropagation?.();
+
+                    const applied =
+                        inputElement
+                            ? applyEditingSuggestion(
+                                inputElement,
+                                option
+                            )
+                            : false;
+
+                    hideSuggestion();
+
+                    if (
+                        !applied &&
+                        inputElement
+                    ) {
+                        scheduleCorrectionCheck(
+                            inputElement,
+                            0
+                        );
+                    }
+                };
+
+            panel.appendChild(
+                alternativeAction
+            );
+
+            actions.push(
+                alternativeAction
+            );
+            prefixes.push(
+                optionPrefix
+            );
+            correctedTexts.push(
+                option.correctedText
+            );
+        }
+    );
+
+    surface.root.appendChild(panel);
+
+    const position =
+        getSuggestionPanelViewportPosition(
+            inputElement,
+            panel,
+            options.length
+        );
+
+    panel.style.top =
+        `${position.top}px`;
+
+    panel.style.left =
+        `${position.left}px`;
+
+    suggestionElements = {
+        host: surface.host,
+        action: actions[0],
+        actions,
+        prefix: prefixes[0],
+        prefixes,
+        correctedText:
+            correctedTexts[0],
+        correctedTexts,
+        mode: 'suggestion',
+        inputElement
+    };
+
+    return true;
+}
+
 function getSuggestionActionViewportPosition(
     inputElement,
     action,
@@ -1911,6 +2368,21 @@ function showSuggestion(
     const surface = createSuggestionSurface();
 
     if (!surface) return;
+
+    if (
+        surfaceMode === 'suggestion' &&
+        Array.isArray(
+            suggestion?.alternatives
+        ) &&
+        suggestion.alternatives.length > 1 &&
+        showSpellingSuggestionAlternatives(
+            suggestion.alternatives,
+            inputElement,
+            surface
+        )
+    ) {
+        return;
+    }
 
     const action = document.createElement('button');
     action.type = 'button';
@@ -2031,8 +2503,13 @@ function showSuggestion(
     suggestionElements = {
         host: surface.host,
         action,
+        actions: [action],
         prefix,
+        prefixes: [prefix],
         correctedText,
+        correctedTexts: [
+            correctedText
+        ],
         mode: surfaceMode,
         inputElement
     };
@@ -2057,8 +2534,11 @@ function hideSuggestion() {
     suggestionElements = {
         host: null,
         action: null,
+        actions: [],
         prefix: null,
+        prefixes: [],
         correctedText: '',
+        correctedTexts: [],
         mode: '',
         inputElement: null
     };

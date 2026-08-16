@@ -1,0 +1,1171 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "FSA v4.9.0 M2B-S top-3 spelling suggestion product-facing gate",
+  "release": {
+    "version": "4.9.0-m2b-s",
+    "sha": "91b2685249aea1794b39e3ebfcb56bfcccaf1fd4"
+  },
+  "seed": 480815,
+  "requestedSamplesPerCategory": 300,
+  "dictionaryPopulation": {
+    "english": 44244,
+    "persian": 94204
+  },
+  "metrics": {
+    "englishKeyboardLayout": {
+      "name": "English target typed with Persian keyboard",
+      "total": 300,
+      "pass": 300,
+      "fail": 0,
+      "rate": 1,
+      "failures": []
+    },
+    "persianKeyboardLayout": {
+      "name": "Persian target typed with English keyboard",
+      "total": 300,
+      "pass": 287,
+      "fail": 13,
+      "rate": 0.9566666666666667,
+      "failures": [
+        {
+          "source": "'ldahfhn",
+          "expected": "گمیشآباد",
+          "actual": "گمیشاباد",
+          "meta": {
+            "route": "smart-auto-intent",
+            "kind": "layout",
+            "reason": "confidence-score",
+            "confidence": 0.99,
+            "evidence": [
+              "statistical-persian-language-shape",
+              "dictionary-independent-language-margin",
+              "minimum-length",
+              "persian-layout-punctuation",
+              "smart-auto-layout-safe"
+            ]
+          }
+        },
+        {
+          "source": "svhamcd",
+          "expected": "سرآشپزی",
+          "actual": "سوهامکد",
+          "meta": {
+            "route": "smart-auto-intent",
+            "kind": "finglish",
+            "reason": "generalized-finglish",
+            "confidence": 0.97,
+            "evidence": [
+              "beam-transliteration",
+              "persian-statistical-language-shape",
+              "dictionary-independent-finglish",
+              "generalized-lexical-roundtrip-rerank",
+              "surrounding-persian-context",
+              "strong-monolingual-persian-context",
+              "field-language-hint:fa",
+              "page-language-hint:fa",
+              "rtl-field-prior",
+              "smart-auto-finglish-safe",
+              "source-intent-finglish-preempts-layout"
+            ]
+          }
+        },
+        {
+          "source": "h,dcdn",
+          "expected": "آویزید",
+          "actual": "اویزید",
+          "meta": {
+            "route": "smart-auto-intent",
+            "kind": "layout",
+            "reason": "confidence-score",
+            "confidence": 0.99,
+            "evidence": [
+              "statistical-persian-language-shape",
+              "dictionary-independent-language-margin",
+              "minimum-length",
+              "latin-without-vowels",
+              "smart-auto-layout-safe"
+            ]
+          }
+        },
+        {
+          "source": "ildmClvnihdn",
+          "expected": "همیپژمردهاید",
+          "actual": "یلدمسلونیهدن",
+          "meta": {
+            "route": "smart-auto-intent",
+            "kind": "finglish",
+            "reason": "generalized-finglish",
+            "confidence": 0.97,
+            "evidence": [
+              "beam-transliteration",
+              "persian-statistical-language-shape",
+              "dictionary-independent-finglish",
+              "generalized-lexical-roundtrip-rerank",
+              "surrounding-persian-context",
+              "strong-monolingual-persian-context",
+              "field-language-hint:fa",
+              "page-language-hint:fa",
+              "rtl-field-prior",
+              "smart-auto-finglish-suggestion-only"
+            ]
+          }
+        },
+        {
+          "source": "nvhldckn",
+          "expected": "درآمیزند",
+          "actual": "نوحلدسکن",
+          "meta": {
+            "route": "smart-auto-intent",
+            "kind": "finglish",
+            "reason": "generalized-finglish",
+            "confidence": 0.97,
+            "evidence": [
+              "beam-transliteration",
+              "persian-statistical-language-shape",
+              "dictionary-independent-finglish",
+              "generalized-lexical-roundtrip-rerank",
+              "surrounding-persian-context",
+              "strong-monolingual-persian-context",
+              "field-language-hint:fa",
+              "page-language-hint:fa",
+              "rtl-field-prior",
+              "smart-auto-finglish-safe",
+              "source-intent-finglish-preempts-layout"
+            ]
+          }
+        },
+        {
+          "source": "h,vn[,d",
+          "expected": "آوردجوی",
+          "actual": "اوردجوی",
+          "meta": {
+            "route": "smart-auto-intent",
+            "kind": "layout",
+            "reason": "confidence-score",
+            "confidence": 0.99,
+            "evidence": [
+              "statistical-persian-language-shape",
+              "dictionary-independent-language-margin",
+              "minimum-length",
+              "persian-layout-punctuation",
+              "latin-without-vowels",
+              "smart-auto-layout-safe"
+            ]
+          }
+        },
+        {
+          "source": "khndh",
+          "expected": "نادیا",
+          "actual": "خنده",
+          "meta": {
+            "route": "smart-auto-intent",
+            "kind": "finglish",
+            "reason": "generalized-finglish",
+            "confidence": 0.97,
+            "evidence": [
+              "beam-transliteration",
+              "persian-statistical-language-shape",
+              "dictionary-independent-finglish",
+              "generalized-lexical-roundtrip-rerank",
+              "surrounding-persian-context",
+              "strong-monolingual-persian-context",
+              "field-language-hint:fa",
+              "page-language-hint:fa",
+              "rtl-field-prior",
+              "smart-auto-finglish-safe",
+              "source-intent-finglish-preempts-layout"
+            ]
+          }
+        },
+        {
+          "source": "ildh;knl",
+          "expected": "همیآکندم",
+          "actual": "همیاکندم",
+          "meta": {
+            "route": "smart-auto-intent",
+            "kind": "layout",
+            "reason": "confidence-score",
+            "confidence": 0.99,
+            "evidence": [
+              "statistical-persian-language-shape",
+              "dictionary-independent-language-margin",
+              "minimum-length",
+              "persian-layout-punctuation",
+              "smart-auto-layout-safe"
+            ]
+          }
+        },
+        {
+          "source": "o,khahl",
+          "expected": "خونآشام",
+          "actual": "خوناشام",
+          "meta": {
+            "route": "smart-auto-intent",
+            "kind": "layout",
+            "reason": "confidence-score",
+            "confidence": 0.99,
+            "evidence": [
+              "statistical-persian-language-shape",
+              "dictionary-independent-language-margin",
+              "minimum-length",
+              "smart-auto-layout-safe"
+            ]
+          }
+        },
+        {
+          "source": "Cdgfv",
+          "expected": "ژیلبر",
+          "actual": "زیلبر",
+          "meta": {
+            "route": "smart-auto-intent",
+            "kind": "unclassified",
+            "reason": "smart-converter-difference",
+            "confidence": 0.75,
+            "evidence": [
+              "unclassified-suggestion-only"
+            ]
+          }
+        },
+        {
+          "source": "hvhsjiani",
+          "expected": "آراستهشده",
+          "actual": "هوهسجیانی",
+          "meta": {
+            "route": "smart-auto-intent",
+            "kind": "finglish",
+            "reason": "generalized-finglish",
+            "confidence": 0.97,
+            "evidence": [
+              "beam-transliteration",
+              "persian-statistical-language-shape",
+              "dictionary-independent-finglish",
+              "generalized-lexical-roundtrip-rerank",
+              "surrounding-persian-context",
+              "strong-monolingual-persian-context",
+              "field-language-hint:fa",
+              "page-language-hint:fa",
+              "rtl-field-prior",
+              "smart-auto-finglish-safe",
+              "source-intent-finglish-preempts-layout"
+            ]
+          }
+        },
+        {
+          "source": "oa,kjhldc",
+          "expected": "خشونتآمیز",
+          "actual": "خشونتامیز",
+          "meta": {
+            "route": "smart-auto-intent",
+            "kind": "layout",
+            "reason": "confidence-score",
+            "confidence": 0.99,
+            "evidence": [
+              "statistical-persian-language-shape",
+              "dictionary-independent-language-margin",
+              "minimum-length",
+              "smart-auto-layout-safe"
+            ]
+          }
+        },
+        {
+          "source": "hnl;",
+          "expected": "آدمک",
+          "actual": "ادمک",
+          "meta": {
+            "route": "smart-auto-intent",
+            "kind": "layout",
+            "reason": "confidence-score",
+            "confidence": 0.99,
+            "evidence": [
+              "statistical-persian-language-shape",
+              "dictionary-independent-language-margin",
+              "minimum-length",
+              "persian-layout-punctuation",
+              "latin-without-vowels",
+              "smart-auto-layout-safe"
+            ]
+          }
+        }
+      ]
+    },
+    "validEnglishProtection": {
+      "name": "Valid English must remain unchanged",
+      "total": 300,
+      "pass": 300,
+      "fail": 0,
+      "rate": 1,
+      "failures": []
+    },
+    "validPersianProtection": {
+      "name": "Valid Persian must remain unchanged",
+      "total": 300,
+      "pass": 300,
+      "fail": 0,
+      "rate": 1,
+      "failures": []
+    },
+    "englishGenericTypo": {
+      "name": "Generic English spelling typo",
+      "total": 300,
+      "pass": 282,
+      "fail": 18,
+      "rate": 0.94,
+      "failures": [
+        {
+          "source": "srap",
+          "expected": "strap",
+          "actual": "scrap",
+          "meta": null
+        },
+        {
+          "source": "janise",
+          "expected": "janie",
+          "actual": "janice",
+          "meta": null
+        },
+        {
+          "source": "codol",
+          "expected": "cobol",
+          "actual": "cool",
+          "meta": null
+        },
+        {
+          "source": "hwpper",
+          "expected": "hopper",
+          "actual": "hepper",
+          "meta": null
+        },
+        {
+          "source": "csss",
+          "expected": "cusss",
+          "actual": "css",
+          "meta": null
+        },
+        {
+          "source": "urly",
+          "expected": "curly",
+          "actual": "burly",
+          "meta": null
+        },
+        {
+          "source": "prawda",
+          "expected": "prada",
+          "actual": "pravda",
+          "meta": null
+        },
+        {
+          "source": "dateg",
+          "expected": "dater",
+          "actual": "dated",
+          "meta": null
+        },
+        {
+          "source": "irote",
+          "expected": "rote",
+          "actual": "irate",
+          "meta": null
+        },
+        {
+          "source": "crus",
+          "expected": "crust",
+          "actual": "cruse",
+          "meta": null
+        },
+        {
+          "source": "carel",
+          "expected": "carrel",
+          "actual": "carpel",
+          "meta": null
+        },
+        {
+          "source": "fone",
+          "expected": "fore",
+          "actual": "fine",
+          "meta": null
+        },
+        {
+          "source": "fich",
+          "expected": "fichu",
+          "actual": "fiche",
+          "meta": null
+        },
+        {
+          "source": "sundy",
+          "expected": "sundry",
+          "actual": "sunday",
+          "meta": null
+        },
+        {
+          "source": "tqro",
+          "expected": "tyro",
+          "actual": "taro",
+          "meta": null
+        },
+        {
+          "source": "selectmnn",
+          "expected": "selectmen",
+          "actual": "selectman",
+          "meta": null
+        },
+        {
+          "source": "eeds",
+          "expected": "seeds",
+          "actual": "leeds",
+          "meta": null
+        },
+        {
+          "source": "tamraa",
+          "expected": "tamara",
+          "actual": "tamra",
+          "meta": null
+        }
+      ]
+    },
+    "persianGenericTypo": {
+      "name": "Generic Persian spelling typo",
+      "total": 300,
+      "pass": 258,
+      "fail": 42,
+      "rate": 0.86,
+      "failures": [
+        {
+          "source": "گجانب",
+          "expected": "مجانب",
+          "actual": "اجانب",
+          "meta": null
+        },
+        {
+          "source": "پالایب",
+          "expected": "پالایش",
+          "actual": "پالاید",
+          "meta": null
+        },
+        {
+          "source": "سبکدستق",
+          "expected": "سبکدست",
+          "actual": "سبکدستی",
+          "meta": null
+        },
+        {
+          "source": "بغالت",
+          "expected": "بغلت",
+          "actual": "بطالت",
+          "meta": null
+        },
+        {
+          "source": "برعوس",
+          "expected": "بروس",
+          "actual": "برعکس",
+          "meta": null
+        },
+        {
+          "source": "نمینرامیده",
+          "expected": "نمینامیده",
+          "actual": "نمیآرامیده",
+          "meta": null
+        },
+        {
+          "source": "بتمول",
+          "expected": "تمول",
+          "actual": "متمول",
+          "meta": null
+        },
+        {
+          "source": "عاغر",
+          "expected": "لاغر",
+          "actual": "عابر",
+          "meta": null
+        },
+        {
+          "source": "بظاییدند",
+          "expected": "بساییدند",
+          "actual": "بخاییدند",
+          "meta": null
+        },
+        {
+          "source": "هیدهایم",
+          "expected": "رهیدهایم",
+          "actual": "جهیدهایم",
+          "meta": null
+        },
+        {
+          "source": "همیوشیدهاید",
+          "expected": "همیدوشیدهاید",
+          "actual": "همیجوشیدهاید",
+          "meta": null
+        },
+        {
+          "source": "نمخراشاندهایم",
+          "expected": "نخراشاندهایم",
+          "actual": "نمیخراشاندهایم",
+          "meta": null
+        },
+        {
+          "source": "همیسراندد",
+          "expected": "همیسراندند",
+          "actual": "همیسراند",
+          "meta": null
+        },
+        {
+          "source": "اتکاغ",
+          "expected": "اتکا",
+          "actual": "اتکال",
+          "meta": null
+        },
+        {
+          "source": "گیرین",
+          "expected": "دیرین",
+          "actual": "خیرین",
+          "meta": null
+        },
+        {
+          "source": "قکندی",
+          "expected": "کندی",
+          "actual": "نکندی",
+          "meta": null
+        },
+        {
+          "source": "چریکه",
+          "expected": "چلیکه",
+          "actual": "چریده",
+          "meta": null
+        },
+        {
+          "source": "جهانیدد",
+          "expected": "جهاندید",
+          "actual": "جهانید",
+          "meta": null
+        },
+        {
+          "source": "نیامزم",
+          "expected": "نیامیزم",
+          "actual": "نیامرزم",
+          "meta": null
+        },
+        {
+          "source": "ماهد",
+          "expected": "ماده",
+          "actual": "مهاد",
+          "meta": null
+        },
+        {
+          "source": "نچاپیز",
+          "expected": "نچاپی",
+          "actual": "نچاپید",
+          "meta": null
+        },
+        {
+          "source": "اارد",
+          "expected": "یارد",
+          "actual": "بارد",
+          "meta": null
+        },
+        {
+          "source": "میدوطید",
+          "expected": "میدوید",
+          "actual": "میدوزید",
+          "meta": null
+        },
+        {
+          "source": "نمیرازیدهای",
+          "expected": "نمینازیدهای",
+          "actual": "نمیارزیدهای",
+          "meta": null
+        },
+        {
+          "source": "سخامی",
+          "expected": "سامی",
+          "actual": "سخایی",
+          "meta": null
+        },
+        {
+          "source": "آببود",
+          "expected": "آببند",
+          "actual": "ببود",
+          "meta": null
+        },
+        {
+          "source": "راسان",
+          "expected": "هراسان",
+          "actual": "خراسان",
+          "meta": null
+        },
+        {
+          "source": "فرونیامدز",
+          "expected": "فرونیامد",
+          "actual": "فرونیامدم",
+          "meta": null
+        },
+        {
+          "source": "امرییه",
+          "expected": "امیریه",
+          "actual": "امریه",
+          "meta": null
+        },
+        {
+          "source": "سریلم",
+          "expected": "سریم",
+          "actual": "سریدم",
+          "meta": null
+        },
+        {
+          "source": "نخماندگد",
+          "expected": "نخماندید",
+          "actual": "نخماندند",
+          "meta": null
+        },
+        {
+          "source": "نذمر",
+          "expected": "نذور",
+          "actual": "نشمر",
+          "meta": null
+        },
+        {
+          "source": "همیخواستهاد",
+          "expected": "همیخواستهاید",
+          "actual": "همیخواستهاند",
+          "meta": null
+        },
+        {
+          "source": "نمیریانید",
+          "expected": "نمیگریانید",
+          "actual": "نمیرویانید",
+          "meta": null
+        },
+        {
+          "source": "چندر",
+          "expected": "چندلر",
+          "actual": "چغندر",
+          "meta": null
+        },
+        {
+          "source": "نمیفرستیک",
+          "expected": "نمیفرستیم",
+          "actual": "نمیفرستید",
+          "meta": null
+        },
+        {
+          "source": "درنرفتد",
+          "expected": "درنرفتید",
+          "actual": "درنرفتند",
+          "meta": null
+        },
+        {
+          "source": "بیتمدم",
+          "expected": "بیتمدن",
+          "actual": "بیامدم",
+          "meta": null
+        },
+        {
+          "source": "بازگده",
+          "expected": "بازنده",
+          "actual": "بازشده",
+          "meta": null
+        },
+        {
+          "source": "ببارز",
+          "expected": "ببراز",
+          "actual": "بارز",
+          "meta": null
+        }
+      ]
+    },
+    "finglishCanonical": {
+      "name": "Canonical Finglish to Persian",
+      "total": 300,
+      "pass": 289,
+      "fail": 11,
+      "rate": 0.9633333333333334,
+      "failures": [
+        {
+          "source": "printr",
+          "expected": "پرینتر",
+          "actual": "printr",
+          "meta": {
+            "changed": false,
+            "reason": "insufficient-finglish-margin",
+            "confidence": 0,
+            "margin": -0.48967296037395786,
+            "threshold": -0.44999999999999996
+          }
+        },
+        {
+          "source": "arizh",
+          "expected": "عریضه",
+          "actual": "اریژ",
+          "meta": {
+            "changed": true,
+            "reason": "generalized-finglish",
+            "confidence": 0.907527285945146,
+            "margin": 0.050779598432741935,
+            "threshold": -0.44999999999999996
+          }
+        },
+        {
+          "source": "badazzhri",
+          "expected": "بعدازظهری",
+          "actual": "بادازژری",
+          "meta": {
+            "changed": true,
+            "reason": "generalized-finglish",
+            "confidence": 0.97,
+            "margin": 1.7190031448844847,
+            "threshold": -0.7
+          }
+        },
+        {
+          "source": "natl",
+          "expected": "ناتل",
+          "actual": "natl",
+          "meta": {
+            "changed": false,
+            "reason": "insufficient-finglish-margin",
+            "confidence": 0,
+            "margin": 0.006908633117718832,
+            "threshold": 0.1499999999999999
+          }
+        },
+        {
+          "source": "aatzali",
+          "expected": "اعتزالی",
+          "actual": "آتزالی",
+          "meta": {
+            "changed": true,
+            "reason": "generalized-finglish",
+            "confidence": 0.9567960429962556,
+            "margin": 1.4584583713215886,
+            "threshold": -0.44999999999999996
+          }
+        },
+        {
+          "source": "maamlhgr",
+          "expected": "معاملهگر",
+          "actual": "مآملهگر",
+          "meta": {
+            "changed": true,
+            "reason": "generalized-finglish",
+            "confidence": 0.97,
+            "margin": 3.6183075703335854,
+            "threshold": -0.7
+          }
+        },
+        {
+          "source": "aihaalnas",
+          "expected": "ایهاالناس",
+          "actual": "شهاششمدشس",
+          "meta": {
+            "changed": true,
+            "reason": "generalized-finglish",
+            "confidence": 0.97,
+            "margin": 2.3276602231001515,
+            "threshold": -0.7
+          }
+        },
+        {
+          "source": "maamlh",
+          "expected": "معامله",
+          "actual": "مامله",
+          "meta": {
+            "changed": true,
+            "reason": "generalized-finglish",
+            "confidence": 0.97,
+            "margin": 4.63159724969902,
+            "threshold": -0.44999999999999996
+          }
+        },
+        {
+          "source": "astaarh",
+          "expected": "استعاره",
+          "actual": "ستاره",
+          "meta": {
+            "changed": true,
+            "reason": "generalized-finglish",
+            "confidence": 0.97,
+            "margin": 2.620908674901595,
+            "threshold": -0.44999999999999996
+          }
+        },
+        {
+          "source": "tizhvsh",
+          "expected": "تیزهوش",
+          "actual": "تیژوش",
+          "meta": {
+            "changed": true,
+            "reason": "generalized-finglish",
+            "confidence": 0.97,
+            "margin": 1.983913141432259,
+            "threshold": -0.44999999999999996
+          }
+        },
+        {
+          "source": "aadiat",
+          "expected": "عادیات",
+          "actual": "ادات",
+          "meta": {
+            "changed": true,
+            "reason": "generalized-finglish",
+            "confidence": 0.9636846035823692,
+            "margin": 1.655274388067694,
+            "threshold": -0.44999999999999996
+          }
+        }
+      ]
+    },
+    "finglishVariant": {
+      "name": "Variant Finglish to Persian",
+      "total": 300,
+      "pass": 286,
+      "fail": 14,
+      "rate": 0.9533333333333334,
+      "failures": [
+        {
+          "source": "aqtnam",
+          "expected": "اغتنام",
+          "actual": "اقتنام",
+          "meta": {
+            "canonical": "aghtnam",
+            "changed": true,
+            "reason": "generalized-finglish",
+            "confidence": 0.97
+          }
+        },
+        {
+          "source": "poria",
+          "expected": "پوریا",
+          "actual": "poria",
+          "meta": {
+            "canonical": "pvria",
+            "changed": false,
+            "reason": "insufficient-finglish-margin",
+            "confidence": 0
+          }
+        },
+        {
+          "source": "aryzh",
+          "expected": "عریضه",
+          "actual": "اریژ",
+          "meta": {
+            "canonical": "arizh",
+            "changed": true,
+            "reason": "generalized-finglish",
+            "confidence": 0.97
+          }
+        },
+        {
+          "source": "badazzhry",
+          "expected": "بعدازظهری",
+          "actual": "بادازژری",
+          "meta": {
+            "canonical": "badazzhri",
+            "changed": true,
+            "reason": "generalized-finglish",
+            "confidence": 0.9695222361597144
+          }
+        },
+        {
+          "source": "atzali",
+          "expected": "اعتزالی",
+          "actual": "شفظشمه",
+          "meta": {
+            "canonical": "aatzali",
+            "changed": true,
+            "reason": "generalized-finglish",
+            "confidence": 0.932715466935196
+          }
+        },
+        {
+          "source": "mamlhgr",
+          "expected": "معاملهگر",
+          "actual": "ماملهگر",
+          "meta": {
+            "canonical": "maamlhgr",
+            "changed": true,
+            "reason": "generalized-finglish",
+            "confidence": 0.97
+          }
+        },
+        {
+          "source": "ayhaalnas",
+          "expected": "ایهاالناس",
+          "actual": "ایهالناس",
+          "meta": {
+            "canonical": "aihaalnas",
+            "changed": true,
+            "reason": "generalized-finglish",
+            "confidence": 0.97
+          }
+        },
+        {
+          "source": "mamlh",
+          "expected": "معامله",
+          "actual": "مامله",
+          "meta": {
+            "canonical": "maamlh",
+            "changed": true,
+            "reason": "generalized-finglish",
+            "confidence": 0.97
+          }
+        },
+        {
+          "source": "astarh",
+          "expected": "استعاره",
+          "actual": "ستاره",
+          "meta": {
+            "canonical": "astaarh",
+            "changed": true,
+            "reason": "generalized-finglish",
+            "confidence": 0.9342915325554995
+          }
+        },
+        {
+          "source": "tyzhvsh",
+          "expected": "تیزهوش",
+          "actual": "تیژوش",
+          "meta": {
+            "canonical": "tizhvsh",
+            "changed": true,
+            "reason": "generalized-finglish",
+            "confidence": 0.97
+          }
+        },
+        {
+          "source": "adiat",
+          "expected": "عادیات",
+          "actual": "دیات",
+          "meta": {
+            "canonical": "aadiat",
+            "changed": true,
+            "reason": "generalized-finglish",
+            "confidence": 0.8985912938719847
+          }
+        },
+        {
+          "source": "atsabat",
+          "expected": "اعتصابات",
+          "actual": "اتسابات",
+          "meta": {
+            "canonical": "aatsabat",
+            "changed": true,
+            "reason": "generalized-finglish",
+            "confidence": 0.924077163950187
+          }
+        },
+        {
+          "source": "tnazat",
+          "expected": "تنازعات",
+          "actual": "تنازات",
+          "meta": {
+            "canonical": "tnazaat",
+            "changed": true,
+            "reason": "generalized-finglish",
+            "confidence": 0.9695882153705786
+          }
+        },
+        {
+          "source": "atat",
+          "expected": "اطاعت",
+          "actual": "atat",
+          "meta": {
+            "canonical": "ataat",
+            "changed": false,
+            "reason": "insufficient-finglish-margin",
+            "confidence": 0
+          }
+        }
+      ]
+    },
+    "persianUnicodeNormalization": {
+      "name": "Persian Unicode normalization",
+      "total": 300,
+      "pass": 300,
+      "fail": 0,
+      "rate": 1,
+      "failures": []
+    }
+  },
+  "adversarialResults": [
+    {
+      "category": "english-typo",
+      "source": "tehcnology",
+      "expected": "technology",
+      "actual": "technology",
+      "pass": true
+    },
+    {
+      "category": "english-typo",
+      "source": "recieve",
+      "expected": "receive",
+      "actual": "receive",
+      "pass": true
+    },
+    {
+      "category": "english-typo",
+      "source": "adress",
+      "expected": "address",
+      "actual": "address",
+      "pass": true
+    },
+    {
+      "category": "english-typo",
+      "source": "pyhton",
+      "expected": "python",
+      "actual": "python",
+      "pass": true
+    },
+    {
+      "category": "english-typo",
+      "source": "javscript",
+      "expected": "javascript",
+      "actual": "javascript",
+      "pass": true
+    },
+    {
+      "category": "english-typo",
+      "source": "databse",
+      "expected": "database",
+      "actual": "database",
+      "pass": true
+    },
+    {
+      "category": "persian-typo",
+      "source": "دانشکاه",
+      "expected": "دانشگاه",
+      "actual": "دانشگاه",
+      "pass": true
+    },
+    {
+      "category": "persian-typo",
+      "source": "برنانه",
+      "expected": "برنامه",
+      "actual": "برنامه",
+      "pass": true
+    },
+    {
+      "category": "persian-typo",
+      "source": "اینترننت",
+      "expected": "اینترنت",
+      "actual": "اینترنت",
+      "pass": true
+    },
+    {
+      "category": "persian-typo",
+      "source": "مرورگرر",
+      "expected": "مرورگر",
+      "actual": "مرورگر",
+      "pass": true
+    },
+    {
+      "category": "persian-typo",
+      "source": "موسقی",
+      "expected": "موسیقی",
+      "actual": "موسیقی",
+      "pass": true
+    },
+    {
+      "category": "finglish",
+      "source": "salaam",
+      "expected": "سلام",
+      "actual": "سلام",
+      "pass": true
+    },
+    {
+      "category": "finglish",
+      "source": "chetori",
+      "expected": "چطوری",
+      "actual": "چطوری",
+      "pass": true
+    },
+    {
+      "category": "finglish",
+      "source": "khoobi",
+      "expected": "خوبی",
+      "actual": "خوبی",
+      "pass": true
+    },
+    {
+      "category": "finglish",
+      "source": "daneshgah",
+      "expected": "دانشگاه",
+      "actual": "دانشگاه",
+      "pass": true
+    },
+    {
+      "category": "finglish",
+      "source": "barname",
+      "expected": "برنامه",
+      "actual": "برنامه",
+      "pass": true
+    },
+    {
+      "category": "finglish",
+      "source": "kharid",
+      "expected": "خرید",
+      "actual": "خرید",
+      "pass": true
+    },
+    {
+      "category": "finglish",
+      "source": "khanevade",
+      "expected": "خانواده",
+      "actual": "خانواده",
+      "pass": true
+    }
+  ],
+  "gates": {
+    "englishKeyboardLayout": {
+      "rate": 1,
+      "threshold": 0.97,
+      "pass": true
+    },
+    "persianKeyboardLayout": {
+      "rate": 0.9566666666666667,
+      "threshold": 0.97,
+      "pass": false
+    },
+    "validEnglishProtection": {
+      "rate": 1,
+      "threshold": 0.995,
+      "pass": true
+    },
+    "validPersianProtection": {
+      "rate": 1,
+      "threshold": 0.995,
+      "pass": true
+    },
+    "englishGenericTypo": {
+      "rate": 0.94,
+      "threshold": 0.9,
+      "pass": true
+    },
+    "persianGenericTypo": {
+      "rate": 0.86,
+      "threshold": 0.9,
+      "pass": false
+    },
+    "finglishCanonical": {
+      "rate": 0.9633333333333334,
+      "threshold": 0.85,
+      "pass": true
+    },
+    "finglishVariant": {
+      "rate": 0.9533333333333334,
+      "threshold": 0.75,
+      "pass": true
+    },
+    "persianUnicodeNormalization": {
+      "rate": 1,
+      "threshold": 1,
+      "pass": true
+    },
+    "adversarial": {
+      "rate": 1,
+      "threshold": 0.95,
+      "pass": true
+    }
+  },
+  "decision": "FAIL",
+  "interpretation": {
+    "pass": "Strict product-goal stress thresholds were met for this deterministic sample. This does not mathematically prove all possible words.",
+    "fail": "At least one product-goal category is below threshold. Inspect failures before Store publication."
+  }
+}

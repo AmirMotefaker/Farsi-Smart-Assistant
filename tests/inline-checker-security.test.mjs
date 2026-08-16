@@ -255,3 +255,225 @@ test('stale suggestion cannot overwrite newer field text', () => {
   assert.equal(harness.input.value, 'teh newer');
   assert.deepEqual(harness.input.dispatchedEvents, []);
 });
+
+test(
+  'M2B-S top-3 spelling surface renders three safe independent actions',
+  () => {
+    const harness =
+      buildHarness();
+
+    harness.context.__suggestion = {
+      fieldText: 'teh',
+      start: 0,
+      end: 3,
+      originalText: 'teh',
+      correctedText: 'the',
+      mode: 'token',
+      alternatives: [
+        {
+          fieldText: 'teh',
+          start: 0,
+          end: 3,
+          originalText: 'teh',
+          correctedText: 'the',
+          mode: 'token',
+          suggestionKind: 'spelling',
+          candidateRank: 1
+        },
+        {
+          fieldText: 'teh',
+          start: 0,
+          end: 3,
+          originalText: 'teh',
+          correctedText: 'tech',
+          mode: 'token',
+          suggestionKind: 'spelling',
+          candidateRank: 2
+        },
+        {
+          fieldText: 'teh',
+          start: 0,
+          end: 3,
+          originalText: 'teh',
+          correctedText: 'ten',
+          mode: 'token',
+          suggestionKind: 'spelling',
+          candidateRank: 3
+        }
+      ]
+    };
+
+    vm.runInContext(
+      `
+        showSuggestion(
+          __suggestion.correctedText,
+          __suggestion.originalText,
+          __input,
+          __suggestion,
+          'suggestion'
+        );
+      `,
+      harness.context
+    );
+
+    const host =
+      harness.body.children.find(
+        (element) =>
+          element.className ===
+          'farsi-smart-assistant-overlay-host'
+      );
+
+    assert.ok(host);
+
+    const panel =
+      host.children.find(
+        (element) =>
+          element.className ===
+          'farsi-smart-suggestion-panel'
+      );
+
+    assert.ok(panel);
+
+    const actions =
+      panel.children.filter(
+        (element) =>
+          element.className ===
+          'farsi-smart-suggestion-action'
+      );
+
+    assert.equal(
+      actions.length,
+      3
+    );
+
+    assert.equal(
+      actions[0].children[2].textContent,
+      'the'
+    );
+
+    assert.equal(
+      actions[1].children[2].textContent,
+      'tech'
+    );
+
+    assert.equal(
+      actions[2].children[2].textContent,
+      'ten'
+    );
+
+    actions[1].onclick(
+      new FakeEvent('click')
+    );
+
+    assert.equal(
+      harness.input.value,
+      'tech'
+    );
+
+    assert.deepEqual(
+      harness.input.dispatchedEvents,
+      ['input']
+    );
+  }
+);
+
+test(
+  'M2B-S Undo surface stays single-action even when alternatives exist',
+  () => {
+    const harness =
+      buildHarness();
+
+    harness.context.__suggestion = {
+      fieldText: 'teh',
+      start: 0,
+      end: 3,
+      originalText: 'teh',
+      correctedText: 'the',
+      mode: 'undo',
+      alternatives: [
+        {
+          fieldText: 'teh',
+          start: 0,
+          end: 3,
+          originalText: 'teh',
+          correctedText: 'the',
+          mode: 'token'
+        },
+        {
+          fieldText: 'teh',
+          start: 0,
+          end: 3,
+          originalText: 'teh',
+          correctedText: 'tech',
+          mode: 'token'
+        }
+      ]
+    };
+
+    vm.runInContext(
+      `
+        showSuggestion(
+          'the',
+          'teh',
+          __input,
+          __suggestion,
+          'undo'
+        );
+      `,
+      harness.context
+    );
+
+    const host =
+      harness.body.children.find(
+        (element) =>
+          element.className ===
+          'farsi-smart-assistant-overlay-host'
+      );
+
+    assert.ok(host);
+
+    const panel =
+      host.children.find(
+        (element) =>
+          element.className ===
+          'farsi-smart-suggestion-panel'
+      );
+
+    assert.equal(
+      panel,
+      undefined
+    );
+
+    const actions =
+      host.children.filter(
+        (element) =>
+          element.className ===
+          'farsi-smart-suggestion-action'
+      );
+
+    assert.equal(
+      actions.length,
+      1
+    );
+  }
+);
+
+test(
+  'M2B-S source caps spelling alternatives at three and only suggestion mode activates the panel',
+  () => {
+    assert.match(
+      source,
+      /spellingAnalysis\.candidates\s*\n\s*\.slice\(0, 3\)/u
+    );
+
+    assert.match(
+      source,
+      /surfaceMode\s*===\s*'suggestion'/u
+    );
+
+    assert.match(
+      source,
+      /suggestion\?\.alternatives/u
+    );
+  }
+);
