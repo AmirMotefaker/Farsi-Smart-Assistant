@@ -4,7 +4,7 @@ This file is preparation material only. Store credentials, signing keys, account
 
 ## Product single purpose
 
-Farsi Smart Assistant helps Persian/English users recover text typed with the wrong keyboard layout and apply high-confidence corrections in ordinary editable web fields while preserving user control.
+Farsi Smart Assistant helps Persian/English users correct typing mistakes locally in ordinary editable web fields, including wrong keyboard layout, spelling mistakes, and Finglish-to-Persian correction, while preserving user control.
 
 ## Chrome Web Store draft
 
@@ -14,64 +14,54 @@ Farsi Smart Assistant
 
 ### Short description
 
-اصلاح هوشمند اشتباه کیبورد فارسی و انگلیسی در فیلدهای متنی وب، با کنترل کامل کاربر.
+اصلاح محلی و هوشمند تایپ فارسی و انگلیسی در فیلدهای متنی وب، با کنترل کامل کاربر.
 
 ### Detailed description points
 
 - تشخیص اشتباه زبان کیبورد فارسی/انگلیسی
-- پیشنهاد اصلاح بدون ارسال متن به سرور اختصاصی توسعه‌دهنده
-- اصلاح current token/selection با حفظ متن اطراف
+- پیشنهاد املایی فارسی و انگلیسی
+- تبدیل فینگلیش به فارسی
+- Smart Auto محافظه‌کارانه با Undo
 - دیکشنری شخصی
 - فعال/غیرفعال‌سازی برای هر سایت
-- رابط فارسی RTL با Light/Dark mode
-- پشتیبانی معماری Chromium و Firefox
+- رابط فارسی/English با RTL/LTR و Light/Dark
+- پردازش اصلاح متن به صورت محلی، بدون ارسال متن اصلاحی به سرویس جست‌وجو یا دانش ثالث
 
 ### Privacy practices
 
-Use `docs/PRIVACY.md` as the source of truth when completing the dashboard privacy fields. Declarations must match the submitted package behavior exactly.
+Use `docs/PRIVACY.md` as the source of truth. Dashboard declarations must match the submitted v4.9.1 package exactly.
 
 ### Permission justification
 
-Use the permission table in `docs/PRIVACY.md`. Do not request permissions that are not exercised by product behavior.
+Use the permission table in `docs/PRIVACY.md`. The Store-safe target is `storage` + `activeTab` with universal content-script matching for the core inline-correction purpose.
 
 ### Listing visual checklist
 
-Prepare clean current-version captures for:
+Prepare clean current-version captures for popup FA/light, popup EN/dark, Persian top-4 suggestions, English top-3 suggestions, Settings, and Site Management.
 
-- main popup in light mode
-- main popup in dark mode
-- browser support row
-- inline correction on a representative text field
-- Settings / custom dictionary
-- Site Management
-
-Do not upload screenshots containing private user content, account data, secrets, or unrelated browser tabs.
+Do not upload screenshots containing private user content, account data, secrets, local paths, or unrelated browser tabs.
 
 ## Firefox / AMO draft
 
-Use the same product purpose and privacy description, with Firefox-specific notes:
-
 - Manifest V3 Firefox package is generated from canonical source.
-- The package uses the stable Gecko extension ID defined by the build pipeline.
-- The current package declares the Firefox data-collection permission required by the existing search-term behavior.
-- Public distribution should use Mozilla's signing/submission flow; temporary `about:debugging` loading is for development/testing only.
+- Stable Gecko ID remains `@farsi-smart-assistant.amirmotefaker`.
+- Firefox 140+ built-in data declaration is `required: [none]` because the Store-safe runtime does not transmit user correction/search data.
+- Submit the deterministic AMO reviewer source archive and build instructions alongside the end-user package when requested.
+- Public distribution uses Mozilla signing/review.
 
 ## Submission checklist
 
-- [ ] exact release version in manifest/package metadata
-- [ ] release gate PASS
-- [ ] SHA256SUMS verified
-- [ ] no dev-only files in ZIP
-- [ ] no remote runtime JavaScript
-- [ ] privacy declarations match actual behavior
-- [ ] permission rationale reviewed
-- [ ] current screenshots prepared
-- [ ] support/privacy URLs finalized
-- [ ] credentials/signing keys remain outside Git
-- [ ] GitHub exact-SHA release published with artifacts
+- [ ] exact v4.9.1 release version
+- [ ] release + Store gates PASS
+- [ ] deterministic Chromium/Firefox ZIPs
+- [ ] deterministic AMO reviewer source ZIP
+- [ ] no third-party correction/search-term transmission
+- [ ] permissions/privacy declarations match runtime
+- [ ] Chrome screenshot + 440x280 promo assets prepared
+- [ ] Firefox listing screenshots prepared
+- [ ] manual Chrome Store-safe acceptance PASS
+- [ ] manual Firefox Store-safe acceptance PASS
+- [ ] exact-SHA GitHub Release published
+- [ ] real Store upload validators PASS
 
-## Official references
-
-- Chrome Web Store publishing: https://developer.chrome.com/docs/webstore/publish/
-- Chrome Manifest V3 store requirements: https://developer.chrome.com/docs/webstore/program-policies/mv3-requirements/
-- Firefox temporary installation: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Your_first_WebExtension
+Store publication is NOT CLAIMED until actual Store dashboards confirm it.

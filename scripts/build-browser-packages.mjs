@@ -49,6 +49,7 @@ const excludedFiles = new Set([
   '.gitattributes',
   '.gitignore',
   'inline_styles.css',
+  'AMO-REVIEWER-BUILD.md',
   'package.json',
   'package-lock.json'
 ]);
@@ -94,19 +95,7 @@ function buildFirefoxManifest(canonicalManifest) {
   const firefoxManifest = structuredClone(canonicalManifest);
 
   firefoxManifest.background = {
-    scripts: [
-      'language_profiles.js',
-      'keyboard_layout.js',
-      'context_intent.js',
-      'normalization_intent.js',
-      'lexical_priors.js',
-      'finglish_source_model.js',
-      'transliteration_intent.js',
-      'spell_correction.js',
-      'universal_correction.js',
-      'logic.js',
-      'background.js'
-    ]
+    scripts: ['background.js']
   };
 
   firefoxManifest.browser_specific_settings = {
@@ -114,7 +103,7 @@ function buildFirefoxManifest(canonicalManifest) {
       id: '@farsi-smart-assistant.amirmotefaker',
       strict_min_version: '140.0',
       data_collection_permissions: {
-        required: ['searchTerms']
+        required: ['none']
       }
     }
   };

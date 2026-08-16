@@ -50,7 +50,7 @@ test('manifest declares the real store icon set', () => {
 test('store audit is a first-class package command', () => {
   assert.equal(
     packageJson.scripts['audit:store'],
-    'npm run build:release && node scripts/audit-store-submission.mjs'
+    'npm run build:release && npm run build:amo-source && node scripts/audit-store-submission.mjs'
   );
 });
 

@@ -127,7 +127,7 @@ test('v4.8.0 polish enlarges the footer in both locales through shared CSS', () 
 test('v4.8.0 polish requires no new permission for favicons or site state', () => {
   assert.deepEqual(
     manifest.permissions,
-    ['storage', 'contextMenus', 'tabs', 'webNavigation']
+    ['storage', 'activeTab']
   );
 });
 test('v4.8.0 current-site favicon is clean, larger, and source-targeted', () => {

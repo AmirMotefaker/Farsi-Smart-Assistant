@@ -31,8 +31,7 @@ test('M4 popup declares Persian RTL and required product surfaces', () => {
     'manageSitesLink',
     'settingsLink',
     'reportIssueLink',
-    'inputText',
-    'mainButton'
+    'inputText'
   ]) {
     assert.match(
       popupHtml,
@@ -94,7 +93,7 @@ test('M4 popup keeps Safe-DOM rendering invariants', () => {
   }
 
   assert.match(popupJs, /\.textContent\s*=/u);
-  assert.match(popupJs, /replaceChildren/u);
+  assert.match(popupJs, /correctedTextBox\.value\s*=\s*correctedText/u);
 });
 
 test('M4 enable state is persistent and enforced by inline engine', () => {

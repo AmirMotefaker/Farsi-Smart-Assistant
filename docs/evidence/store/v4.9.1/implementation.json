@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "exactBootstrapHead": "6bb4af2475f5cd8d91b3c46e9af30302cfd675ee",
+  "targetVersion": "4.9.1",
+  "remediationIssue": 49,
+  "parentStoreIssue": 24,
+  "draftPr": 50,
+  "runtime": {
+    "correctionOnly": true,
+    "wikipediaLookupRemoved": true,
+    "googleSearchTransmissionRemoved": true,
+    "googleSearchInterceptionRemoved": true,
+    "contextMenuSearchRemoved": true,
+    "omniboxRemoved": true,
+    "permissions": [
+      "storage",
+      "activeTab"
+    ],
+    "thirdPartyHostPermissions": []
+  },
+  "firefox": {
+    "dataCollectionRequired": [
+      "none"
+    ],
+    "reviewerSourceImplemented": true,
+    "reviewerSourceSha256": "83651FCA4AF6EDDF9D756E85D384E439C3CD9FF723982017E81DC84BAAFBF3D8"
+  },
+  "deterministicArtifacts": {
+    "chromiumSha256": "2A599ABDDBA31CB5FFF500060E447EEEB81DD56E3280AC6166790965D7C1DAC1",
+    "firefoxSha256": "759DBB0658D22D43B72283AEC1FB59DD686F06537193329102D6BBC9CA29F457",
+    "amoReviewerSourceSha256": "83651FCA4AF6EDDF9D756E85D384E439C3CD9FF723982017E81DC84BAAFBF3D8"
+  },
+  "gates": {
+    "generatedModelsReproducible": "PASS",
+    "fullRegression": "PASS",
+    "releaseAB": "PASS",
+    "reviewerSourceAB": "PASS",
+    "verifyRelease": "PASS",
+    "auditStore": "PASS"
+  },
+  "manualChromeAcceptance": "PENDING",
+  "manualFirefoxAcceptance": "PENDING",
+  "listingAssets": "PENDING",
+  "storeUpload": "NOT PERFORMED",
+  "storeSubmission": "NOT PERFORMED",
+  "storePublication": "NOT CLAIMED"
+}
