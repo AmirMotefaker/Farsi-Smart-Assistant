@@ -7,8 +7,8 @@ const FSA_FINGLISH_SOURCE_MODEL = Object.freeze({
     schemaVersion: 2,
     salt: 'v6.2-blind',
     binCount: 8192,
-    threshold: 1.625628,
-    calibrationRecall: 0.669875,
+    threshold: 1.699019,
+    calibrationRecall: 0.722,
     calibrationFalsePositiveRate: 0.007038,
     calibrationFalsePositiveUpper95: 0.009818
 });

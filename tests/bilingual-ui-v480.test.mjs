@@ -135,9 +135,21 @@ test('v4.8.0 inline Correction and Undo localize without coupling Smart Auto dec
   );
 });
 
-test('v4.8.0 metadata and release packaging include the i18n runtime', () => {
-  assert.equal(manifest.version, '4.8.0');
-  assert.equal(packageJson.version, '4.8.0');
-  assert.match(packageJson.scripts.check, /node --check ui_i18n\.js/u);
-  assert.match(buildBrowser, /'ui_i18n\.js'/u);
+test('release metadata and packaging include the i18n runtime', () => {
+  assert.equal(
+    manifest.version,
+    packageJson.version
+  );
+  assert.match(
+    packageJson.version,
+    /^\d+\.\d+\.\d+$/u
+  );
+  assert.match(
+    packageJson.scripts.check,
+    /node --check ui_i18n\.js/u
+  );
+  assert.match(
+    buildBrowser,
+    /'ui_i18n\.js'/u
+  );
 });
