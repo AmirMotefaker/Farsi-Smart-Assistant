@@ -1,5 +1,5 @@
 const FSA_FINGLISH_ENGINE_VERSION =
-    '4.9.0-generalized-finglish-rerank-v3';
+    '4.9.0-generalized-finglish-rerank-v4-flexible-segmentation';
 
 const FSA_FINGLISH_MULTI = Object.freeze({
     kh: [['خ', 0]],
@@ -428,25 +428,45 @@ function getFsaFinglishSegmentOptions(
     value,
     index
 ) {
-    const pair = value.slice(index, index + 2);
+    const segments = [];
+    const pair =
+        value.slice(
+            index,
+            index + 2
+        );
 
-    if (Object.hasOwn(FSA_FINGLISH_MULTI, pair)) {
-        return {
+    if (
+        Object.hasOwn(
+            FSA_FINGLISH_MULTI,
+            pair
+        )
+    ) {
+        segments.push({
             length: 2,
-            options: FSA_FINGLISH_MULTI[pair]
-        };
+            options:
+                FSA_FINGLISH_MULTI[pair],
+            sourceKind: 'multi'
+        });
     }
 
-    const char = value[index];
+    const char =
+        value[index];
 
-    if (Object.hasOwn(FSA_FINGLISH_SINGLE, char)) {
-        return {
+    if (
+        Object.hasOwn(
+            FSA_FINGLISH_SINGLE,
+            char
+        )
+    ) {
+        segments.push({
             length: 1,
-            options: FSA_FINGLISH_SINGLE[char]
-        };
+            options:
+                FSA_FINGLISH_SINGLE[char],
+            sourceKind: 'single'
+        });
     }
 
-    return null;
+    return segments;
 }
 
 function dedupeFsaFinglishBeams(
@@ -547,35 +567,50 @@ function generateFsaFinglishCandidates(
                 continue;
             }
 
-            const segment =
+            const segments =
                 getFsaFinglishSegmentOptions(
                     value,
                     beam.index
                 );
 
-            if (!segment) continue;
+            if (
+                !Array.isArray(
+                    segments
+                ) ||
+                segments.length === 0
+            ) {
+                continue;
+            }
 
             for (
-                const [replacement, penalty]
-                of segment.options
+                const segment
+                of segments
             ) {
-                expanded.push({
-                    index:
-                        beam.index +
-                        segment.length,
-                    text:
-                        beam.text +
+                for (
+                    const [
                         replacement,
-                    penalty:
-                        beam.penalty +
-                        getFsaFinglishTransitionPenalty(
-                            value,
-                            beam.index,
+                        penalty
+                    ]
+                    of segment.options
+                ) {
+                    expanded.push({
+                        index:
+                            beam.index +
                             segment.length,
+                        text:
+                            beam.text +
                             replacement,
-                            penalty
-                        )
-                });
+                        penalty:
+                            beam.penalty +
+                            getFsaFinglishTransitionPenalty(
+                                value,
+                                beam.index,
+                                segment.length,
+                                replacement,
+                                penalty
+                            )
+                    });
+                }
             }
         }
 

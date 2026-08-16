@@ -257,7 +257,7 @@ test('stale suggestion cannot overwrite newer field text', () => {
 });
 
 test(
-  'M2B-S top-3 spelling surface renders three safe independent actions',
+  'M3 final spelling surface renders four safe independent Persian actions',
   () => {
     const harness =
       buildHarness();
@@ -299,6 +299,16 @@ test(
           mode: 'token',
           suggestionKind: 'spelling',
           candidateRank: 3
+        },
+        {
+          fieldText: 'teh',
+          start: 0,
+          end: 3,
+          originalText: 'teh',
+          correctedText: 'tea',
+          mode: 'token',
+          suggestionKind: 'spelling',
+          candidateRank: 4
         }
       ]
     };
@@ -343,7 +353,7 @@ test(
 
     assert.equal(
       actions.length,
-      3
+      4
     );
 
     assert.equal(
@@ -361,13 +371,18 @@ test(
       'ten'
     );
 
-    actions[1].onclick(
+    assert.equal(
+      actions[3].children[2].textContent,
+      'tea'
+    );
+
+    actions[3].onclick(
       new FakeEvent('click')
     );
 
     assert.equal(
       harness.input.value,
-      'tech'
+      'tea'
     );
 
     assert.deepEqual(
@@ -459,21 +474,26 @@ test(
 );
 
 test(
-  'M2B-S source caps spelling alternatives at three and only suggestion mode activates the panel',
+  'M3 final source uses Persian top-4 and English top-3 spelling suggestion limits',
   () => {
     assert.match(
       source,
-      /spellingAnalysis\.candidates\s*\n\s*\.slice\(0, 3\)/u
+      /spellingSuggestionLimit\s*=\s*\n\s*spellingAnalysis\?\.language\s*===\s*\n\s*'fa'\s*\n\s*\?\s*4\s*\n\s*:\s*3/u
+    );
+
+    assert.match(
+      source,
+      /\.slice\(\s*\n\s*0,\s*\n\s*spellingSuggestionLimit\s*\n\s*\)/u
+    );
+
+    assert.match(
+      source,
+      /\.slice\(0, 4\)/u
     );
 
     assert.match(
       source,
       /surfaceMode\s*===\s*'suggestion'/u
-    );
-
-    assert.match(
-      source,
-      /suggestion\?\.alternatives/u
     );
   }
 );

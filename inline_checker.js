@@ -582,6 +582,12 @@ function computeEditingSuggestion(
                 )
                 : null;
 
+        const spellingSuggestionLimit =
+            spellingAnalysis?.language ===
+                'fa'
+                ? 4
+                : 3;
+
         const spellingAlternatives =
             spellingAnalysis?.changed &&
             spellingAnalysis.corrected ===
@@ -590,7 +596,10 @@ function computeEditingSuggestion(
                 spellingAnalysis.candidates
             )
                 ? spellingAnalysis.candidates
-                    .slice(0, 3)
+                    .slice(
+                        0,
+                        spellingSuggestionLimit
+                    )
                     .map(
                         (
                             candidate,
@@ -2070,7 +2079,7 @@ function showSpellingSuggestionAlternatives(
                     item.correctedText !==
                         item.originalText
             )
-            .slice(0, 3);
+            .slice(0, 4);
 
     if (options.length < 2) {
         return false;

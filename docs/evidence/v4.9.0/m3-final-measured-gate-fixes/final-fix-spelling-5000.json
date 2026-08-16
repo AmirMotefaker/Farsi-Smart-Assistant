@@ -1,0 +1,4919 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "FSA v4.9.0 M3 final-fix independent spelling suggestion validation",
+  "exactHead": "91b2685249aea1794b39e3ebfcb56bfcccaf1fd4",
+  "seed": 507815,
+  "sampleCountPerLanguage": 5000,
+  "maxK": 8,
+  "english": {
+    "total": 5000,
+    "candidateRecall": 1,
+    "candidateMissing": 0,
+    "ambiguousRate": 0.078,
+    "topKRecall": {
+      "1": 0.9152,
+      "2": 0.9674,
+      "3": 0.982,
+      "4": 0.9904,
+      "5": 0.9938,
+      "6": 0.9954,
+      "7": 0.9974,
+      "8": 0.9982
+    },
+    "minimalK97": 3,
+    "byOperation": {
+      "transpose": {
+        "total": 1196,
+        "candidateHits": 1196,
+        "candidateRecall": 1,
+        "topKRecall": {
+          "1": 0.9933110367892977,
+          "2": 1,
+          "3": 1,
+          "4": 1,
+          "5": 1,
+          "6": 1,
+          "7": 1,
+          "8": 1
+        }
+      },
+      "substitute": {
+        "total": 1391,
+        "candidateHits": 1391,
+        "candidateRecall": 1,
+        "topKRecall": {
+          "1": 0.8454349388928828,
+          "2": 0.9202012940330697,
+          "3": 0.9511143062544932,
+          "4": 0.9705248023005032,
+          "5": 0.9813084112149533,
+          "6": 0.98705966930266,
+          "7": 0.9920920201294033,
+          "8": 0.9942487419122933
+        }
+      },
+      "insert": {
+        "total": 1299,
+        "candidateHits": 1299,
+        "candidateRecall": 1,
+        "topKRecall": {
+          "1": 0.9337952270977675,
+          "2": 0.9799846035411856,
+          "3": 0.993841416474211,
+          "4": 0.9976905311778291,
+          "5": 0.9984603541185527,
+          "6": 0.9984603541185527,
+          "7": 1,
+          "8": 1
+        }
+      },
+      "delete": {
+        "total": 1114,
+        "candidateHits": 1114,
+        "candidateRecall": 1,
+        "topKRecall": {
+          "1": 0.8967684021543986,
+          "2": 0.9766606822262118,
+          "3": 0.9874326750448833,
+          "4": 0.9964093357271095,
+          "5": 0.9973070017953322,
+          "6": 0.9973070017953322,
+          "7": 0.9982046678635548,
+          "8": 0.9991023339317774
+        }
+      }
+    },
+    "failures": [
+      {
+        "source": "aemen",
+        "target": "yemen",
+        "operation": "substitute",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "semen",
+            "score": 1.4599999999999997,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "a",
+              "to": "s",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "admen",
+            "score": 1.45,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "e",
+              "to": "d",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "amen",
+            "score": 1.355,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 1,
+              "removed": "e",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "yemen",
+            "score": 1.325,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "a",
+              "to": "y",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "ieeper",
+        "target": "weeper",
+        "operation": "substitute",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "keeper",
+            "score": 1.4149999999999998,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "i",
+              "to": "k",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "beeper",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "i",
+              "to": "b",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "peeper",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "i",
+              "to": "p",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "weeper",
+            "score": 1.325,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "i",
+              "to": "w",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "leus",
+        "target": "lexus",
+        "operation": "delete",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "lens",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "u",
+              "to": "n",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "less",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "u",
+              "to": "s",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "lepus",
+            "score": 1.4,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 2,
+              "inserted": "p"
+            }
+          },
+          {
+            "text": "lexus",
+            "score": 1.4,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 2,
+              "inserted": "x"
+            }
+          },
+          {
+            "text": "les",
+            "score": 1.355,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 2,
+              "removed": "u",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "zeus",
+            "score": 1.265,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "l",
+              "to": "z",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "mokt",
+        "target": "moet",
+        "operation": "substitute",
+        "targetRank": 6,
+        "top8": [
+          {
+            "text": "mont",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "k",
+              "to": "n",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "most",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "k",
+              "to": "s",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "molt",
+            "score": 1.39,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "k",
+              "to": "l",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "moot",
+            "score": 1.39,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "k",
+              "to": "o",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "moat",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "k",
+              "to": "a",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "moet",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "k",
+              "to": "e",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "mort",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "k",
+              "to": "r",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "mott",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "k",
+              "to": "t",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "redish",
+        "target": "redis",
+        "operation": "insert",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "reddish",
+            "score": 1.46,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 2,
+              "inserted": "d"
+            }
+          },
+          {
+            "text": "relish",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "d",
+              "to": "l",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "radish",
+            "score": 1.36,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "e",
+              "to": "a",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "redis",
+            "score": 1.3199999999999998,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 5,
+              "removed": "h",
+              "repeatedNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "syore",
+        "target": "swore",
+        "operation": "substitute",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "shore",
+            "score": 1.4949999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "y",
+              "to": "h",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "store",
+            "score": 1.4949999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "y",
+              "to": "t",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "score",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "y",
+              "to": "c",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "swore",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "y",
+              "to": "w",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "snore",
+            "score": 1.36,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "y",
+              "to": "n",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "spore",
+            "score": 1.36,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "y",
+              "to": "p",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "sore",
+            "score": 1.355,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 1,
+              "removed": "y",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "yore",
+            "score": 1.3199999999999998,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 0,
+              "removed": "s",
+              "repeatedNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "gaua",
+        "target": "gaza",
+        "operation": "substitute",
+        "targetRank": 5,
+        "top8": [
+          {
+            "text": "gaia",
+            "score": 1.345,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "u",
+              "to": "i",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "gaga",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "u",
+              "to": "g",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "gala",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "u",
+              "to": "l",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "gama",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "u",
+              "to": "m",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "gaza",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "u",
+              "to": "z",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "gaul",
+            "score": 1.265,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "a",
+              "to": "l",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "gaea",
+            "score": 1.2550000000000001,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "u",
+              "to": "e",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "lewer",
+        "target": "lexer",
+        "operation": "substitute",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "leper",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "w",
+              "to": "p",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "lever",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "w",
+              "to": "v",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "leger",
+            "score": 1.36,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "w",
+              "to": "g",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "lexer",
+            "score": 1.36,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "w",
+              "to": "x",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "lower",
+            "score": 1.36,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "e",
+              "to": "o",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "leer",
+            "score": 1.355,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 2,
+              "removed": "w",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "hewer",
+            "score": 1.325,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "l",
+              "to": "h",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "sewer",
+            "score": 1.325,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "l",
+              "to": "s",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "moce",
+        "target": "move",
+        "operation": "substitute",
+        "targetRank": 6,
+        "top8": [
+          {
+            "text": "mice",
+            "score": 1.4949999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "o",
+              "to": "i",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "mace",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "o",
+              "to": "a",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "mope",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "c",
+              "to": "p",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "more",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "c",
+              "to": "r",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "mode",
+            "score": 1.39,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "c",
+              "to": "d",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "move",
+            "score": 1.39,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "c",
+              "to": "v",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "moue",
+            "score": 1.3750000000000002,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "c",
+              "to": "u",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "mole",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "c",
+              "to": "l",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "suffy",
+        "target": "huffy",
+        "operation": "substitute",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "stuffy",
+            "score": 1.355,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 1,
+              "inserted": "t"
+            }
+          },
+          {
+            "text": "duffy",
+            "score": 1.3549999999999998,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "s",
+              "to": "d",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "buffy",
+            "score": 1.265,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "s",
+              "to": "b",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "huffy",
+            "score": 1.265,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "s",
+              "to": "h",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "puffy",
+            "score": 1.265,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "s",
+              "to": "p",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "moct",
+        "target": "mort",
+        "operation": "substitute",
+        "targetRank": 7,
+        "top8": [
+          {
+            "text": "mont",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "c",
+              "to": "n",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "most",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "c",
+              "to": "s",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "moat",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "c",
+              "to": "a",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "moet",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "c",
+              "to": "e",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "molt",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "c",
+              "to": "l",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "moot",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "c",
+              "to": "o",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "mort",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "c",
+              "to": "r",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "mott",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "c",
+              "to": "t",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "brot",
+        "target": "brut",
+        "operation": "substitute",
+        "targetRank": 10,
+        "top8": [
+          {
+            "text": "brit",
+            "score": 1.4949999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "o",
+              "to": "i",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "broth",
+            "score": 1.4249999999999998,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 4,
+              "inserted": "h"
+            }
+          },
+          {
+            "text": "brat",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "o",
+              "to": "a",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "bros",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "t",
+              "to": "s",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "bro",
+            "score": 1.3199999999999998,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 3,
+              "removed": "t",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "rot",
+            "score": 1.3199999999999998,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 0,
+              "removed": "b",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "blot",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "r",
+              "to": "l",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "boot",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "r",
+              "to": "o",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "brot",
+        "target": "bret",
+        "operation": "substitute",
+        "targetRank": 9,
+        "top8": [
+          {
+            "text": "brit",
+            "score": 1.4949999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "o",
+              "to": "i",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "broth",
+            "score": 1.4249999999999998,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 4,
+              "inserted": "h"
+            }
+          },
+          {
+            "text": "brat",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "o",
+              "to": "a",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "bros",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "t",
+              "to": "s",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "bro",
+            "score": 1.3199999999999998,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 3,
+              "removed": "t",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "rot",
+            "score": 1.3199999999999998,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 0,
+              "removed": "b",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "blot",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "r",
+              "to": "l",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "boot",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "r",
+              "to": "o",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "nume",
+        "target": "nude",
+        "operation": "substitute",
+        "targetRank": 5,
+        "top8": [
+          {
+            "text": "name",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "u",
+              "to": "a",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "nome",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "u",
+              "to": "o",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "nuke",
+            "score": 1.39,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "m",
+              "to": "k",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "hume",
+            "score": 1.3549999999999998,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "n",
+              "to": "h",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "nude",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "m",
+              "to": "d",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "fume",
+            "score": 1.265,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "n",
+              "to": "f",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "numb",
+            "score": 1.265,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "e",
+              "to": "b",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "groad",
+        "target": "goad",
+        "operation": "insert",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "broad",
+            "score": 1.3549999999999998,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "g",
+              "to": "b",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "groan",
+            "score": 1.325,
+            "operation": "substitute",
+            "metadata": {
+              "index": 4,
+              "from": "d",
+              "to": "n",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "groat",
+            "score": 1.325,
+            "operation": "substitute",
+            "metadata": {
+              "index": 4,
+              "from": "d",
+              "to": "t",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "goad",
+            "score": 1.25,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 1,
+              "removed": "r",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "grad",
+            "score": 1.25,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 2,
+              "removed": "o",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "road",
+            "score": 1.2149999999999999,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 0,
+              "removed": "g",
+              "repeatedNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "liot",
+        "target": "lint",
+        "operation": "substitute",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "loot",
+            "score": 1.4949999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "i",
+              "to": "o",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "eliot",
+            "score": 1.4699999999999998,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 0,
+              "inserted": "e"
+            }
+          },
+          {
+            "text": "lift",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "o",
+              "to": "f",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "lint",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "o",
+              "to": "n",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "list",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "o",
+              "to": "s",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "lilt",
+            "score": 1.39,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "o",
+              "to": "l",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "lion",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "t",
+              "to": "n",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "riot",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "l",
+              "to": "r",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "gaqe",
+        "target": "gaze",
+        "operation": "substitute",
+        "targetRank": 7,
+        "top8": [
+          {
+            "text": "gale",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "q",
+              "to": "l",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "gape",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "q",
+              "to": "p",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "gate",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "q",
+              "to": "t",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "gage",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "q",
+              "to": "g",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "game",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "q",
+              "to": "m",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "gave",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "q",
+              "to": "v",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "gaze",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "q",
+              "to": "z",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "gamry",
+        "target": "camry",
+        "operation": "substitute",
+        "targetRank": 5,
+        "top8": [
+          {
+            "text": "garry",
+            "score": 1.36,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "m",
+              "to": "r",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "gary",
+            "score": 1.355,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 2,
+              "removed": "m",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "gamay",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "r",
+              "to": "a",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "gammy",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "r",
+              "to": "m",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "camry",
+            "score": 1.265,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "g",
+              "to": "c",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "gamy",
+            "score": 1.25,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 3,
+              "removed": "r",
+              "repeatedNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "dawe",
+        "target": "dare",
+        "operation": "substitute",
+        "targetRank": 6,
+        "top8": [
+          {
+            "text": "dawes",
+            "score": 1.4249999999999998,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 4,
+              "inserted": "s"
+            }
+          },
+          {
+            "text": "dace",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "w",
+              "to": "c",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "dale",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "w",
+              "to": "l",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "dame",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "w",
+              "to": "m",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "dane",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "w",
+              "to": "n",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "dare",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "w",
+              "to": "r",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "date",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "w",
+              "to": "t",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "dave",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "w",
+              "to": "v",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "pris",
+        "target": "prius",
+        "operation": "delete",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "paris",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 1,
+              "inserted": "a"
+            }
+          },
+          {
+            "text": "prism",
+            "score": 1.4249999999999998,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 4,
+              "inserted": "m"
+            }
+          },
+          {
+            "text": "pres",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "i",
+              "to": "e",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "prius",
+            "score": 1.4,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 3,
+              "inserted": "u"
+            }
+          },
+          {
+            "text": "eris",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "p",
+              "to": "e",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "gris",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "p",
+              "to": "g",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "iris",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "p",
+              "to": "i",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "kris",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "p",
+              "to": "k",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "liae",
+        "target": "life",
+        "operation": "substitute",
+        "targetRank": 9,
+        "top8": [
+          {
+            "text": "liar",
+            "score": 1.4599999999999997,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "e",
+              "to": "r",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "lice",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "a",
+              "to": "c",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "lime",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "a",
+              "to": "m",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "line",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "a",
+              "to": "n",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "lire",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "a",
+              "to": "r",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "lite",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "a",
+              "to": "t",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "live",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "a",
+              "to": "v",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "lie",
+            "score": 1.325,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 2,
+              "removed": "a",
+              "repeatedNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "marni",
+        "target": "mani",
+        "operation": "insert",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "marin",
+            "score": 1.6199999999999999,
+            "operation": "transpose",
+            "metadata": {
+              "index": 3
+            }
+          },
+          {
+            "text": "marne",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 4,
+              "from": "i",
+              "to": "e",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "marci",
+            "score": 1.36,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "n",
+              "to": "c",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "mani",
+            "score": 1.355,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 2,
+              "removed": "r",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "mari",
+            "score": 1.355,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 3,
+              "removed": "n",
+              "repeatedNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "maoe",
+        "target": "make",
+        "operation": "substitute",
+        "targetRank": 7,
+        "top8": [
+          {
+            "text": "male",
+            "score": 1.4949999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "o",
+              "to": "l",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "mace",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "o",
+              "to": "c",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "made",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "o",
+              "to": "d",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "mane",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "o",
+              "to": "n",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "mare",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "o",
+              "to": "r",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "mate",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "o",
+              "to": "t",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "make",
+            "score": 1.39,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "o",
+              "to": "k",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "mae",
+            "score": 1.325,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 2,
+              "removed": "o",
+              "repeatedNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "paye",
+        "target": "payer",
+        "operation": "delete",
+        "targetRank": 9,
+        "top8": [
+          {
+            "text": "pate",
+            "score": 1.4949999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "y",
+              "to": "t",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "pale",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "y",
+              "to": "l",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "pane",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "y",
+              "to": "n",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "pare",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "y",
+              "to": "r",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "payee",
+            "score": 1.4,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 3,
+              "inserted": "e"
+            }
+          },
+          {
+            "text": "payne",
+            "score": 1.4,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 3,
+              "inserted": "n"
+            }
+          },
+          {
+            "text": "page",
+            "score": 1.39,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "y",
+              "to": "g",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "payed",
+            "score": 1.3649999999999998,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 4,
+              "inserted": "d"
+            }
+          }
+        ]
+      },
+      {
+        "source": "urier",
+        "target": "prier",
+        "operation": "substitute",
+        "targetRank": 5,
+        "top8": [
+          {
+            "text": "crier",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "u",
+              "to": "c",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "uriel",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 4,
+              "from": "r",
+              "to": "l",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "brier",
+            "score": 1.325,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "u",
+              "to": "b",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "drier",
+            "score": 1.325,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "u",
+              "to": "d",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "prier",
+            "score": 1.325,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "u",
+              "to": "p",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "trier",
+            "score": 1.325,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "u",
+              "to": "t",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "curfy",
+        "target": "turfy",
+        "operation": "substitute",
+        "targetRank": 5,
+        "top8": [
+          {
+            "text": "curry",
+            "score": 1.45,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "f",
+              "to": "r",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "curvy",
+            "score": 1.45,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "f",
+              "to": "v",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "curly",
+            "score": 1.36,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "f",
+              "to": "l",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "scurfy",
+            "score": 1.3199999999999998,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 0,
+              "inserted": "s"
+            }
+          },
+          {
+            "text": "turfy",
+            "score": 1.265,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "c",
+              "to": "t",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "maqt",
+        "target": "matt",
+        "operation": "substitute",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "malt",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "q",
+              "to": "l",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "mart",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "q",
+              "to": "r",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "mast",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "q",
+              "to": "s",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "matt",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "q",
+              "to": "t",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "mat",
+            "score": 1.355,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 2,
+              "removed": "q",
+              "repeatedNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "algo",
+        "target": "algol",
+        "operation": "delete",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "alto",
+            "score": 1.4949999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "g",
+              "to": "t",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "aldo",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "g",
+              "to": "d",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "also",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "g",
+              "to": "s",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "algol",
+            "score": 1.3649999999999998,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 4,
+              "inserted": "l"
+            }
+          },
+          {
+            "text": "alpo",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "g",
+              "to": "p",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "argo",
+            "score": 1.3,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "l",
+              "to": "r",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "alga",
+            "score": 1.265,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "o",
+              "to": "a",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "ago",
+            "score": 1.205,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 1,
+              "removed": "l",
+              "repeatedNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "aple",
+        "target": "ample",
+        "operation": "delete",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "pale",
+            "score": 1.6199999999999999,
+            "operation": "transpose",
+            "metadata": {
+              "index": 0
+            }
+          },
+          {
+            "text": "apple",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 1,
+              "inserted": "p"
+            }
+          },
+          {
+            "text": "maple",
+            "score": 1.4699999999999998,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 0,
+              "inserted": "m"
+            }
+          },
+          {
+            "text": "ample",
+            "score": 1.46,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 1,
+              "inserted": "m"
+            }
+          },
+          {
+            "text": "able",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "p",
+              "to": "b",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "apse",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "l",
+              "to": "s",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "ale",
+            "score": 1.355,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 1,
+              "removed": "p",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "ape",
+            "score": 1.355,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 2,
+              "removed": "l",
+              "repeatedNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "kase",
+        "target": "kaye",
+        "operation": "substitute",
+        "targetRank": 12,
+        "top8": [
+          {
+            "text": "lase",
+            "score": 1.4599999999999997,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "k",
+              "to": "l",
+              "keyboardNeighbor": true
+            }
+          },
+          {
+            "text": "kasey",
+            "score": 1.4249999999999998,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 4,
+              "inserted": "y"
+            }
+          },
+          {
+            "text": "ukase",
+            "score": 1.4249999999999998,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 0,
+              "inserted": "u"
+            }
+          },
+          {
+            "text": "kale",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "s",
+              "to": "l",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "kane",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "s",
+              "to": "n",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "kate",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "s",
+              "to": "t",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "base",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "k",
+              "to": "b",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "case",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "k",
+              "to": "c",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "persian": {
+    "total": 5000,
+    "candidateRecall": 0.9992,
+    "candidateMissing": 4,
+    "ambiguousRate": 0.1512,
+    "topKRecall": {
+      "1": 0.8388,
+      "2": 0.9308,
+      "3": 0.9662,
+      "4": 0.9792,
+      "5": 0.9874,
+      "6": 0.9924,
+      "7": 0.9946,
+      "8": 0.9954
+    },
+    "minimalK97": 4,
+    "byOperation": {
+      "insert": {
+        "total": 1237,
+        "candidateHits": 1237,
+        "candidateRecall": 1,
+        "topKRecall": {
+          "1": 0.856911883589329,
+          "2": 0.9320937752627324,
+          "3": 0.9805982215036378,
+          "4": 0.9911075181891673,
+          "5": 0.9935327405012127,
+          "6": 0.994341147938561,
+          "7": 0.9959579628132579,
+          "8": 0.9975747776879548
+        }
+      },
+      "substitute": {
+        "total": 1516,
+        "candidateHits": 1515,
+        "candidateRecall": 0.9993403693931399,
+        "topKRecall": {
+          "1": 0.7440633245382586,
+          "2": 0.8944591029023746,
+          "3": 0.9412928759894459,
+          "4": 0.9643799472295514,
+          "5": 0.9802110817941952,
+          "6": 0.9887862796833773,
+          "7": 0.9907651715039578,
+          "8": 0.9907651715039578
+        }
+      },
+      "delete": {
+        "total": 1006,
+        "candidateHits": 1003,
+        "candidateRecall": 0.9970178926441352,
+        "topKRecall": {
+          "1": 0.8041749502982107,
+          "2": 0.9035785288270378,
+          "3": 0.9463220675944334,
+          "4": 0.9622266401590457,
+          "5": 0.9751491053677932,
+          "6": 0.9860834990059643,
+          "7": 0.9920477137176938,
+          "8": 0.9940357852882704
+        }
+      },
+      "transpose": {
+        "total": 1241,
+        "candidateHits": 1241,
+        "candidateRecall": 1,
+        "topKRecall": {
+          "1": 0.9645447219983884,
+          "2": 0.9959709911361805,
+          "3": 0.9983883964544722,
+          "4": 0.9991941982272361,
+          "5": 1,
+          "6": 1,
+          "7": 1,
+          "8": 1
+        }
+      }
+    },
+    "failures": [
+      {
+        "source": "کوبک",
+        "target": "کوکب",
+        "operation": "transpose",
+        "targetRank": 5,
+        "top8": [
+          {
+            "text": "کورک",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ب",
+              "to": "ر",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "کوبا",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "ک",
+              "to": "ا",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "کوبه",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "ک",
+              "to": "ه",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "کوبی",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "ک",
+              "to": "ی",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "کوکب",
+            "score": 1.335,
+            "operation": "transpose",
+            "metadata": {
+              "index": 2
+            }
+          },
+          {
+            "text": "کودک",
+            "score": 1.225,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ب",
+              "to": "د",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "کوشک",
+            "score": 1.225,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ب",
+              "to": "ش",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "لوبک",
+            "score": 1.19,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "ک",
+              "to": "ل",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "شرونی",
+        "target": "شیونی",
+        "operation": "substitute",
+        "targetRank": 6,
+        "top8": [
+          {
+            "text": "شروین",
+            "score": 1.6199999999999999,
+            "operation": "transpose",
+            "metadata": {
+              "index": 3
+            }
+          },
+          {
+            "text": "شروانی",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 3,
+              "inserted": "ا"
+            }
+          },
+          {
+            "text": "شروینی",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 3,
+              "inserted": "ی"
+            }
+          },
+          {
+            "text": "شجونی",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "ر",
+              "to": "ج",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "شروری",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "ن",
+              "to": "ر",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "شیونی",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "ر",
+              "to": "ی",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "آرونی",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "ش",
+              "to": "آ",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "درونی",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "ش",
+              "to": "د",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "ببهند",
+        "target": "بجهند",
+        "operation": "substitute",
+        "targetRank": 6,
+        "top8": [
+          {
+            "text": "ببرند",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ه",
+              "to": "ر",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "ببیند",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ه",
+              "to": "ی",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "برهند",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "ب",
+              "to": "ر",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بدهند",
+            "score": 1.3150000000000002,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "ب",
+              "to": "د",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بنهند",
+            "score": 1.3150000000000002,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "ب",
+              "to": "ن",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بجهند",
+            "score": 1.225,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "ب",
+              "to": "ج",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "ببند",
+            "score": 1.175,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 2,
+              "removed": "ه",
+              "repeatedNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "بصوشیدم",
+        "target": "بکوشیدم",
+        "operation": "substitute",
+        "targetRank": 5,
+        "top8": [
+          {
+            "text": "بجوشیدم",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "ص",
+              "to": "ج",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بدوشیدم",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "ص",
+              "to": "د",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بنوشیدم",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "ص",
+              "to": "ن",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بپوشیدم",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "ص",
+              "to": "پ",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بکوشیدم",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "ص",
+              "to": "ک",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "صحفه",
+        "target": "صحنه",
+        "operation": "substitute",
+        "targetRank": 5,
+        "top8": [
+          {
+            "text": "صفحه",
+            "score": 1.475,
+            "operation": "transpose",
+            "metadata": {
+              "index": 1
+            }
+          },
+          {
+            "text": "صرفه",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "ح",
+              "to": "ر",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "صفه",
+            "score": 1.355,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 1,
+              "removed": "ح",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "صحیفه",
+            "score": 1.325,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 2,
+              "inserted": "ی"
+            }
+          },
+          {
+            "text": "صحنه",
+            "score": 1.225,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ف",
+              "to": "ن",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "تحفه",
+            "score": 1.19,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "ص",
+              "to": "ت",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "صحفی",
+            "score": 1.19,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "ه",
+              "to": "ی",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "صحه",
+            "score": 1.07,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 2,
+              "removed": "ف",
+              "repeatedNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "میپاییدث",
+        "target": "میپایید",
+        "operation": "insert",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "میپاییدم",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 7,
+              "from": "ث",
+              "to": "م",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "میپاییده",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 7,
+              "from": "ث",
+              "to": "ه",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "میپاییدی",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 7,
+              "from": "ث",
+              "to": "ی",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "میپایید",
+            "score": 1.3199999999999998,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 7,
+              "removed": "ث",
+              "repeatedNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "بسیدی",
+        "target": "چسیدی",
+        "operation": "substitute",
+        "targetRank": 14,
+        "top8": [
+          {
+            "text": "برسیدی",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 1,
+              "inserted": "ر"
+            }
+          },
+          {
+            "text": "بسریدی",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 2,
+              "inserted": "ر"
+            }
+          },
+          {
+            "text": "بوسیدی",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 1,
+              "inserted": "و"
+            }
+          },
+          {
+            "text": "بسزیدی",
+            "score": 1.415,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 2,
+              "inserted": "ز"
+            }
+          },
+          {
+            "text": "بچسیدی",
+            "score": 1.415,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 1,
+              "inserted": "چ"
+            }
+          },
+          {
+            "text": "بایدی",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "س",
+              "to": "ا",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بریدی",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "س",
+              "to": "ر",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "رسیدی",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "ب",
+              "to": "ر",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "عابیه",
+        "target": "عالیه",
+        "operation": "substitute",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "بابیه",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "ع",
+              "to": "ب",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "عابده",
+            "score": 1.3150000000000002,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "ی",
+              "to": "د",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "عاریه",
+            "score": 1.3150000000000002,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ب",
+              "to": "ر",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "عالیه",
+            "score": 1.3150000000000002,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ب",
+              "to": "ل",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "عنبیه",
+            "score": 1.225,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "ا",
+              "to": "ن",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "بدشت",
+        "target": "بدقت",
+        "operation": "substitute",
+        "targetRank": 10,
+        "top8": [
+          {
+            "text": "بداشت",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 2,
+              "inserted": "ا"
+            }
+          },
+          {
+            "text": "برشت",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "د",
+              "to": "ر",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بهشت",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "د",
+              "to": "ه",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بکشت",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "د",
+              "to": "ک",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بشدت",
+            "score": 1.37,
+            "operation": "transpose",
+            "metadata": {
+              "index": 1
+            }
+          },
+          {
+            "text": "دشت",
+            "score": 1.23,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 0,
+              "removed": "ب",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "بدست",
+            "score": 1.225,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ش",
+              "to": "س",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بگشت",
+            "score": 1.225,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "د",
+              "to": "گ",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "بشمارگ",
+        "target": "بشمار",
+        "operation": "insert",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "بشمارد",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 5,
+              "from": "گ",
+              "to": "د",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بشمارم",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 5,
+              "from": "گ",
+              "to": "م",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بشماری",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 5,
+              "from": "گ",
+              "to": "ی",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بشمار",
+            "score": 1.3199999999999998,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 5,
+              "removed": "گ",
+              "repeatedNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "دریدهم",
+        "target": "دریدیم",
+        "operation": "substitute",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "درمیدهم",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 2,
+              "inserted": "م"
+            }
+          },
+          {
+            "text": "دریدهام",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 5,
+              "inserted": "ا"
+            }
+          },
+          {
+            "text": "درندهم",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ی",
+              "to": "ن",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "دریدیم",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 4,
+              "from": "ه",
+              "to": "ی",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "دردهم",
+            "score": 1.355,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 2,
+              "removed": "ی",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "دریدم",
+            "score": 1.355,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 4,
+              "removed": "ه",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "دریده",
+            "score": 1.3199999999999998,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 5,
+              "removed": "م",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "دربدهم",
+            "score": 1.225,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ی",
+              "to": "ب",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "بفتند",
+        "target": "بگفتند",
+        "operation": "delete",
+        "targetRank": 7,
+        "top8": [
+          {
+            "text": "بافتند",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 1,
+              "inserted": "ا"
+            }
+          },
+          {
+            "text": "برفتند",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 1,
+              "inserted": "ر"
+            }
+          },
+          {
+            "text": "بسفتند",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 1,
+              "inserted": "س"
+            }
+          },
+          {
+            "text": "بیفتند",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 1,
+              "inserted": "ی"
+            }
+          },
+          {
+            "text": "بتفتند",
+            "score": 1.415,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 1,
+              "inserted": "ت"
+            }
+          },
+          {
+            "text": "بخفتند",
+            "score": 1.415,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 1,
+              "inserted": "خ"
+            }
+          },
+          {
+            "text": "بگفتند",
+            "score": 1.415,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 1,
+              "inserted": "گ"
+            }
+          },
+          {
+            "text": "برتند",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "ف",
+              "to": "ر",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "میرطیدی",
+        "target": "میریدی",
+        "operation": "insert",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "میرسیدی",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "ط",
+              "to": "س",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "میرمیدی",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "ط",
+              "to": "م",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "میرهیدی",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "ط",
+              "to": "ه",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "میریدی",
+            "score": 1.355,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 3,
+              "removed": "ط",
+              "repeatedNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "جلهه",
+        "target": "جلگه",
+        "operation": "substitute",
+        "targetRank": 5,
+        "top8": [
+          {
+            "text": "جبهه",
+            "score": 1.225,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "ل",
+              "to": "ب",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "جلسه",
+            "score": 1.225,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ه",
+              "to": "س",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "الهه",
+            "score": 1.19,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "ج",
+              "to": "ا",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "جلوه",
+            "score": 1.12,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ه",
+              "to": "و",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "جلگه",
+            "score": 1.12,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ه",
+              "to": "گ",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "بیغا",
+        "target": "بیغال",
+        "operation": "delete",
+        "targetRank": 5,
+        "top8": [
+          {
+            "text": "بیغذا",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 3,
+              "inserted": "ذ"
+            }
+          },
+          {
+            "text": "بیتا",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "غ",
+              "to": "ت",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بینا",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "غ",
+              "to": "ن",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بیغار",
+            "score": 1.38,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 4,
+              "inserted": "ر"
+            }
+          },
+          {
+            "text": "بیغال",
+            "score": 1.38,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 4,
+              "inserted": "ل"
+            }
+          },
+          {
+            "text": "بیا",
+            "score": 1.355,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 2,
+              "removed": "غ",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "بیجا",
+            "score": 1.225,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "غ",
+              "to": "ج",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بیضا",
+            "score": 1.225,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "غ",
+              "to": "ض",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "مااد",
+        "target": "ماجد",
+        "operation": "substitute",
+        "targetRank": 12,
+        "top8": [
+          {
+            "text": "ماد",
+            "score": 1.835,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 1,
+              "removed": "ا",
+              "repeatedNeighbor": true
+            }
+          },
+          {
+            "text": "مازاد",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 2,
+              "inserted": "ز"
+            }
+          },
+          {
+            "text": "ماسد",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ا",
+              "to": "س",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "مالد",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ا",
+              "to": "ل",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "ماند",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ا",
+              "to": "ن",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "مباد",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "ا",
+              "to": "ب",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "مداد",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "ا",
+              "to": "د",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "مراد",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "ا",
+              "to": "ر",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "بیعق",
+        "target": "بیعقل",
+        "operation": "delete",
+        "targetRank": 5,
+        "top8": [
+          {
+            "text": "بیعشق",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 3,
+              "inserted": "ش"
+            }
+          },
+          {
+            "text": "بیرق",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ع",
+              "to": "ر",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بیق",
+            "score": 1.355,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 2,
+              "removed": "ع",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "بیعمق",
+            "score": 1.325,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 3,
+              "inserted": "م"
+            }
+          },
+          {
+            "text": "بیعقل",
+            "score": 1.2899999999999998,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 4,
+              "inserted": "ل"
+            }
+          },
+          {
+            "text": "بیع",
+            "score": 1.23,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 3,
+              "removed": "ق",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "بیهق",
+            "score": 1.225,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ع",
+              "to": "ه",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بیعت",
+            "score": 1.19,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "ق",
+              "to": "ت",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "میدی",
+        "target": "عمیدی",
+        "operation": "delete",
+        "targetRank": 0,
+        "top8": [
+          {
+            "text": "مریدی",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 1,
+              "inserted": "ر"
+            }
+          },
+          {
+            "text": "مویدی",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 1,
+              "inserted": "و"
+            }
+          },
+          {
+            "text": "میدری",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 3,
+              "inserted": "ر"
+            }
+          },
+          {
+            "text": "میدمی",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 3,
+              "inserted": "م"
+            }
+          },
+          {
+            "text": "میدهی",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 3,
+              "inserted": "ه"
+            }
+          },
+          {
+            "text": "میدوی",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 3,
+              "inserted": "و"
+            }
+          },
+          {
+            "text": "میزدی",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 2,
+              "inserted": "ز"
+            }
+          },
+          {
+            "text": "امیدی",
+            "score": 1.4699999999999998,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 0,
+              "inserted": "ا"
+            }
+          }
+        ]
+      },
+      {
+        "source": "میگرفتت",
+        "target": "میگرفتی",
+        "operation": "substitute",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "میگرفت",
+            "score": 1.835,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 5,
+              "removed": "ت",
+              "repeatedNeighbor": true
+            }
+          },
+          {
+            "text": "میگرفتم",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 6,
+              "from": "ت",
+              "to": "م",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "میگرفته",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 6,
+              "from": "ت",
+              "to": "ه",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "میگرفتی",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 6,
+              "from": "ت",
+              "to": "ی",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "نمیکشیدص",
+        "target": "نمیکشید",
+        "operation": "insert",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "نمیکشیدم",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 7,
+              "from": "ص",
+              "to": "م",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "نمیکشیده",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 7,
+              "from": "ص",
+              "to": "ه",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "نمیکشیدی",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 7,
+              "from": "ص",
+              "to": "ی",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "نمیکشید",
+            "score": 1.3199999999999998,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 7,
+              "removed": "ص",
+              "repeatedNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "نمیهم",
+        "target": "نمیجهم",
+        "operation": "delete",
+        "targetRank": 6,
+        "top8": [
+          {
+            "text": "نمیدهم",
+            "score": 1.415,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 3,
+              "inserted": "د"
+            }
+          },
+          {
+            "text": "نمیرهم",
+            "score": 1.415,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 3,
+              "inserted": "ر"
+            }
+          },
+          {
+            "text": "نمینهم",
+            "score": 1.415,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 3,
+              "inserted": "ن"
+            }
+          },
+          {
+            "text": "نمیرم",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "ه",
+              "to": "ر",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "نمیهلم",
+            "score": 1.325,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 4,
+              "inserted": "ل"
+            }
+          },
+          {
+            "text": "نمیجهم",
+            "score": 1.22,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 3,
+              "inserted": "ج"
+            }
+          }
+        ]
+      },
+      {
+        "source": "نمیظرود",
+        "target": "نمیرود",
+        "operation": "insert",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "نمیدرود",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "ظ",
+              "to": "د",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "نمیسرود",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "ظ",
+              "to": "س",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "نمیگرود",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "ظ",
+              "to": "گ",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "نمیرود",
+            "score": 1.355,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 3,
+              "removed": "ظ",
+              "repeatedNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "واطر",
+        "target": "وایر",
+        "operation": "substitute",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "واشر",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ط",
+              "to": "ش",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "وافر",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ط",
+              "to": "ف",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "واکر",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ط",
+              "to": "ک",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "وایر",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ط",
+              "to": "ی",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "خاطر",
+            "score": 1.19,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "و",
+              "to": "خ",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "فاطر",
+            "score": 1.19,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "و",
+              "to": "ف",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "قاطر",
+            "score": 1.19,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "و",
+              "to": "ق",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "شاطر",
+            "score": 1.085,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "و",
+              "to": "ش",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "برآدی",
+        "target": "برآمدی",
+        "operation": "delete",
+        "targetRank": 5,
+        "top8": [
+          {
+            "text": "برآید",
+            "score": 1.53,
+            "operation": "transpose",
+            "metadata": {
+              "index": 3
+            }
+          },
+          {
+            "text": "برندی",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "آ",
+              "to": "ن",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بریدی",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "آ",
+              "to": "ی",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "بردی",
+            "score": 1.355,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 2,
+              "removed": "آ",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "برآمدی",
+            "score": 1.325,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 3,
+              "inserted": "م"
+            }
+          },
+          {
+            "text": "برآیی",
+            "score": 1.3150000000000002,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "د",
+              "to": "ی",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "چینس",
+        "target": "چیپس",
+        "operation": "substitute",
+        "targetRank": 9,
+        "top8": [
+          {
+            "text": "چیند",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "س",
+              "to": "د",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "چینش",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "س",
+              "to": "ش",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "چینه",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "س",
+              "to": "ه",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "چینو",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "س",
+              "to": "و",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "چینی",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 3,
+              "from": "س",
+              "to": "ی",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "گینس",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "چ",
+              "to": "گ",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "چین",
+            "score": 1.23,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 3,
+              "removed": "س",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "ینس",
+            "score": 1.23,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 0,
+              "removed": "چ",
+              "repeatedNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "افمند",
+        "target": "افگند",
+        "operation": "substitute",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "افتند",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "م",
+              "to": "ت",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "افرند",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "م",
+              "to": "ر",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "افکند",
+            "score": 1.225,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "م",
+              "to": "ک",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "افگند",
+            "score": 1.225,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "م",
+              "to": "گ",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "موارج",
+        "target": "موارد",
+        "operation": "substitute",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "مخارج",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "و",
+              "to": "خ",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "مدارج",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "و",
+              "to": "د",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "خوارج",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 0,
+              "from": "م",
+              "to": "خ",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "موارد",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 4,
+              "from": "ج",
+              "to": "د",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "مواج",
+            "score": 1.355,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 3,
+              "removed": "ر",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "معارج",
+            "score": 1.3150000000000002,
+            "operation": "substitute",
+            "metadata": {
+              "index": 1,
+              "from": "و",
+              "to": "ع",
+              "keyboardNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "سردن",
+        "target": "سپردن",
+        "operation": "delete",
+        "targetRank": 6,
+        "top8": [
+          {
+            "text": "سرند",
+            "score": 1.6199999999999999,
+            "operation": "transpose",
+            "metadata": {
+              "index": 2
+            }
+          },
+          {
+            "text": "ستردن",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 1,
+              "inserted": "ت"
+            }
+          },
+          {
+            "text": "سرزدن",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 2,
+              "inserted": "ز"
+            }
+          },
+          {
+            "text": "سرودن",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 2,
+              "inserted": "و"
+            }
+          },
+          {
+            "text": "سریدن",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 2,
+              "inserted": "ی"
+            }
+          },
+          {
+            "text": "سپردن",
+            "score": 1.505,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 1,
+              "inserted": "پ"
+            }
+          },
+          {
+            "text": "فسردن",
+            "score": 1.4699999999999998,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 0,
+              "inserted": "ف"
+            }
+          },
+          {
+            "text": "سردکن",
+            "score": 1.415,
+            "operation": "insert-missing",
+            "metadata": {
+              "index": 3,
+              "inserted": "ک"
+            }
+          }
+        ]
+      },
+      {
+        "source": "نروفتنم",
+        "target": "نروفتم",
+        "operation": "insert",
+        "targetRank": 4,
+        "top8": [
+          {
+            "text": "نروفتند",
+            "score": 1.3699999999999999,
+            "operation": "substitute",
+            "metadata": {
+              "index": 6,
+              "from": "م",
+              "to": "د",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "نروفتیم",
+            "score": 1.3150000000000002,
+            "operation": "substitute",
+            "metadata": {
+              "index": 5,
+              "from": "ن",
+              "to": "ی",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "نروفتن",
+            "score": 1.23,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 6,
+              "removed": "م",
+              "repeatedNeighbor": false
+            }
+          },
+          {
+            "text": "نروفتم",
+            "score": 1.175,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 5,
+              "removed": "ن",
+              "repeatedNeighbor": false
+            }
+          }
+        ]
+      },
+      {
+        "source": "ساضس",
+        "target": "ساکس",
+        "operation": "substitute",
+        "targetRank": 5,
+        "top8": [
+          {
+            "text": "سادس",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ض",
+              "to": "د",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "سالس",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ض",
+              "to": "ل",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "سانس",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ض",
+              "to": "ن",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "ساوس",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ض",
+              "to": "و",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "ساکس",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ض",
+              "to": "ک",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "سایس",
+            "score": 1.405,
+            "operation": "substitute",
+            "metadata": {
+              "index": 2,
+              "from": "ض",
+              "to": "ی",
+              "keyboardNeighbor": false
+            }
+          },
+          {
+            "text": "ساس",
+            "score": 1.355,
+            "operation": "delete-extra",
+            "metadata": {
+              "index": 2,
+              "removed": "ض",
+              "repeatedNeighbor": false
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "fixedCases": [
+    {
+      "language": "en",
+      "source": "tehcnology",
+      "target": "technology",
+      "rank": 1,
+      "top5": [
+        "technology"
+      ]
+    },
+    {
+      "language": "en",
+      "source": "recieve",
+      "target": "receive",
+      "rank": 1,
+      "top5": [
+        "receive",
+        "relieve"
+      ]
+    },
+    {
+      "language": "en",
+      "source": "adress",
+      "target": "address",
+      "rank": 1,
+      "top5": [
+        "address",
+        "dress"
+      ]
+    },
+    {
+      "language": "en",
+      "source": "pyhton",
+      "target": "python",
+      "rank": 1,
+      "top5": [
+        "python"
+      ]
+    },
+    {
+      "language": "en",
+      "source": "javscript",
+      "target": "javascript",
+      "rank": 1,
+      "top5": [
+        "javascript"
+      ]
+    },
+    {
+      "language": "en",
+      "source": "databse",
+      "target": "database",
+      "rank": 1,
+      "top5": [
+        "database"
+      ]
+    },
+    {
+      "language": "fa",
+      "source": "دانشکاه",
+      "target": "دانشگاه",
+      "rank": 1,
+      "top5": [
+        "دانشگاه",
+        "دانشکده"
+      ]
+    },
+    {
+      "language": "fa",
+      "source": "برنانه",
+      "target": "برنامه",
+      "rank": 1,
+      "top5": [
+        "برنامه",
+        "برننه"
+      ]
+    },
+    {
+      "language": "fa",
+      "source": "اینترننت",
+      "target": "اینترنت",
+      "rank": 1,
+      "top5": [
+        "اینترنت",
+        "اینترانت"
+      ]
+    },
+    {
+      "language": "fa",
+      "source": "مرورگرر",
+      "target": "مرورگر",
+      "rank": 1,
+      "top5": [
+        "مرورگر"
+      ]
+    },
+    {
+      "language": "fa",
+      "source": "موسقی",
+      "target": "موسیقی",
+      "rank": 1,
+      "top5": [
+        "موسیقی",
+        "موسسی",
+        "موسوی",
+        "موسی",
+        "موثقی"
+      ]
+    }
+  ],
+  "fixedAllWithin5": true,
+  "releaseGateInterpretation": {
+    "gate": "English/Persian typo suggestion recall >=97%",
+    "englishMinimalK97": 3,
+    "persianMinimalK97": 4,
+    "productConstraint": "Only suggestions actually surfaced to the user count. Smart Auto remains separately gated and must not auto-apply lower-ranked alternatives."
+  },
+  "recommendation": "MULTI-SUGGESTION-UI-READY-FOR-GUARDED-M2B-S"
+}
