@@ -68,8 +68,9 @@ test('distribution and privacy documentation cover release behavior', () => {
   assert.match(distribution, /npm run release:gate/u);
   assert.match(distribution, /SHA256/u);
   assert.match(privacy, /chrome\.storage\.sync/u);
-  assert.match(privacy, /Wikipedia/u);
-  assert.match(privacy, /Google/u);
+  assert.match(privacy, /local-first/u);
+  assert.match(privacy, /activeTab/u);
+  assert.match(privacy, /does not send typed correction text or search terms/u);
   assert.match(storeListing, /Chrome Web Store/u);
   assert.match(storeListing, /Firefox/u);
 });

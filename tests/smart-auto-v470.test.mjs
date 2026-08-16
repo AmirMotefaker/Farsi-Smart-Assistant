@@ -595,3 +595,97 @@ test('v4.7 v6 holdout false-positive sample is rejected without a conservative t
     'پیشدستی'
   );
 });
+test('v4.9.1 Google-like English field: physical sghl recovers سلام', () => {
+  const analysis =
+    engine.analyzeFsaSmartAutoIntent(
+      'sghl',
+      {
+        beforeText: '',
+        afterText: ' ',
+        fieldLanguage: '',
+        pageLanguage: 'en',
+        direction: 'ltr',
+        browserLanguage: 'en-US',
+        keyboardEvidence: {
+          latinKeys: 4,
+          persianKeys: 0,
+          physicalAlphaKeys: 4
+        }
+      }
+    );
+
+  assert.equal(
+    analysis.corrected,
+    'سلام'
+  );
+
+  assert.equal(
+    analysis.autoEligible,
+    true
+  );
+
+  assert.equal(
+    analysis.kind,
+    'physical-keyboard-evidence-layout'
+  );
+
+  assert.match(
+    (analysis.evidence || []).join(' '),
+    /known-persian-layout-target/u
+  );
+});
+
+test('v4.9.1 Google-like English field: physical-key override protects known English', () => {
+  const analysis =
+    engine.analyzeFsaSmartAutoIntent(
+      'server',
+      {
+        beforeText: '',
+        afterText: ' ',
+        fieldLanguage: '',
+        pageLanguage: 'en',
+        direction: 'ltr',
+        browserLanguage: 'en-US',
+        keyboardEvidence: {
+          latinKeys: 6,
+          persianKeys: 0,
+          physicalAlphaKeys: 6
+        }
+      }
+    );
+
+  assert.equal(
+    analysis.changed,
+    false
+  );
+
+  assert.equal(
+    analysis.corrected,
+    'server'
+  );
+});
+
+test('v4.9.1 Google-like English field: unknown Latin token is not forced unless Persian layout target is known', () => {
+  const analysis =
+    engine.analyzeFsaSmartAutoIntent(
+      'asdf',
+      {
+        beforeText: '',
+        afterText: ' ',
+        fieldLanguage: '',
+        pageLanguage: 'en',
+        direction: 'ltr',
+        browserLanguage: 'en-US',
+        keyboardEvidence: {
+          latinKeys: 4,
+          persianKeys: 0,
+          physicalAlphaKeys: 4
+        }
+      }
+    );
+
+  assert.notEqual(
+    analysis.kind,
+    'physical-keyboard-evidence-layout'
+  );
+});

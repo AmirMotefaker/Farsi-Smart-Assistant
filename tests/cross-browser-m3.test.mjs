@@ -95,21 +95,7 @@ test('M3 Firefox build uses MV3 background scripts in dependency order', async (
     assert.equal(firefox.manifest_version, 3);
     assert.deepEqual(
       firefox.background,
-      {
-        scripts: [
-          'language_profiles.js',
-          'keyboard_layout.js',
-          'context_intent.js',
-          'normalization_intent.js',
-          'lexical_priors.js',
-          'finglish_source_model.js',
-          'transliteration_intent.js',
-          'spell_correction.js',
-          'universal_correction.js',
-          'logic.js',
-          'background.js'
-        ]
-      }
+      { scripts: ['background.js'] }
     );
 
     assert.equal(
@@ -147,7 +133,7 @@ test('M3 Firefox build contains signing/privacy metadata', async () => {
         .gecko
         .data_collection_permissions
         .required,
-      ['searchTerms']
+      ['none']
     );
   });
 });
@@ -252,29 +238,14 @@ test('M3 generated packages contain runtime files and exclude dev-only content',
   });
 });
 
-test('M3 shared background is safe in both worker and document contexts', async () => {
+test('M3 shared background is Store-safe and cross-browser toolbar-only', async () => {
   const source = await readFile(
     path.join(repositoryRoot, 'background.js'),
     'utf8'
   );
 
-  assert.match(
-    source,
-    /typeof importScripts === ['"]function['"]/u
-  );
-
-  assert.match(
-    source,
-    /function getSyncStorage\(keys\)/u
-  );
-
-  assert.match(
-    source,
-    /chrome\.storage\.sync\.get\(keys,\s*\(data\)\s*=>/u
-  );
-
-  assert.doesNotMatch(
-    source,
-    /await\s+chrome\.storage\.sync\.get/u
-  );
+  assert.match(source, /function getSyncStorage\(keys\)/u);
+  assert.match(source, /chrome\.storage\.sync\.get/u);
+  assert.match(source, /setToolbarIconForLocale/u);
+  assert.doesNotMatch(source, /importScripts|contextMenus|webNavigation|google\.com|wikipedia\.org/u);
 });

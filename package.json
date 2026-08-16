@@ -1,15 +1,15 @@
 {
   "name": "farsi-smart-assistant",
-  "version": "4.9.0",
+  "version": "4.9.1",
   "private": true,
   "description": "Local-first quality gates and statistical intent engine for Farsi Smart Assistant.",
   "scripts": {
     "build:browsers": "node scripts/build-browser-packages.mjs",
     "build:release": "node scripts/build-release-artifacts.mjs",
     "verify:release": "node scripts/verify-release-artifacts.mjs",
-    "audit:store": "npm run build:release && node scripts/audit-store-submission.mjs",
+    "audit:store": "npm run build:release && npm run build:amo-source && node scripts/audit-store-submission.mjs",
     "release:gate": "npm run test:product && npm run build:release && npm run verify:release",
-    "check": "node --check ui_i18n.js && node --check language_profiles.js && node --check keyboard_layout.js && node --check context_intent.js && node --check inline_checker.js && node --check popup.js && node --check background.js && node --check content_script.js && node --check logic.js && node --check options.js && node --check site_management.js && node --check evaluation/load-converter.mjs && node --check evaluation/run-evaluation.mjs && node --check scripts/build-browser-packages.mjs && node --check scripts/build-release-artifacts.mjs && node --check scripts/verify-release-artifacts.mjs && node --check scripts/audit-store-submission.mjs && node --check scripts/build-language-profiles.mjs && node --check scripts/evaluate-universal-intent.mjs && node --check transliteration_intent.js && node --check normalization_intent.js && node --check scripts/evaluate-finglish-generalization.mjs && node --check smart_auto_intent.js && node --check scripts/evaluate-smart-auto-safety.mjs && node --check lexical_priors.js && node --check scripts/build-lexical-priors.mjs && node --check finglish_source_model.js && node --check scripts/build-finglish-source-model.mjs && node --check spell_correction.js && node --check universal_correction.js && node --check scripts/evaluate-spelling-v490.mjs",
+    "check": "node --check ui_i18n.js && node --check language_profiles.js && node --check keyboard_layout.js && node --check context_intent.js && node --check inline_checker.js && node --check popup.js && node --check background.js && node --check content_script.js && node --check logic.js && node --check options.js && node --check site_management.js && node --check evaluation/load-converter.mjs && node --check evaluation/run-evaluation.mjs && node --check scripts/build-browser-packages.mjs && node --check scripts/build-release-artifacts.mjs && node --check scripts/verify-release-artifacts.mjs && node --check scripts/audit-store-submission.mjs && node --check scripts/build-language-profiles.mjs && node --check scripts/evaluate-universal-intent.mjs && node --check transliteration_intent.js && node --check normalization_intent.js && node --check scripts/evaluate-finglish-generalization.mjs && node --check smart_auto_intent.js && node --check scripts/evaluate-smart-auto-safety.mjs && node --check lexical_priors.js && node --check scripts/build-lexical-priors.mjs && node --check finglish_source_model.js && node --check scripts/build-finglish-source-model.mjs && node --check spell_correction.js && node --check universal_correction.js && node --check scripts/evaluate-spelling-v490.mjs && node --check scripts/build-firefox-reviewer-source.mjs",
     "test": "node --test tests/*.test.mjs",
     "eval": "node evaluation/run-evaluation.mjs",
     "test:product": "npm run check && npm test && npm run eval",
@@ -19,10 +19,14 @@
     "smart-auto:eval": "node scripts/evaluate-smart-auto-safety.mjs",
     "lexical:build": "node scripts/build-lexical-priors.mjs",
     "finglish-source:build": "node scripts/build-finglish-source-model.mjs",
-    "spell:eval": "node scripts/evaluate-spelling-v490.mjs"
+    "spell:eval": "node scripts/evaluate-spelling-v490.mjs",
+    "build:amo-source": "node scripts/build-firefox-reviewer-source.mjs",
+    "test:browsers": "node scripts/automated-dual-browser-acceptance.mjs"
   },
   "devDependencies": {
     "dictionary-en": "4.0.0",
-    "dictionary-fa": "2.0.0"
+    "dictionary-fa": "2.0.0",
+    "puppeteer": "25.4.0",
+    "selenium-webdriver": "4.46.0"
   }
 }

@@ -1,27 +1,22 @@
 # Privacy and Data Handling
 
-Farsi Smart Assistant is designed around local-first typing correction.
+Farsi Smart Assistant v4.9.1 is designed as a local-first typing correction extension.
 
 ## What is processed locally
 
 - Text in supported editable web fields is analyzed locally by the extension correction engine.
-- The custom dictionary, theme, assistant state, and disabled-site list are stored with `chrome.storage.sync`.
-- The extension can inspect the current page hostname locally to show and manage per-site enable/disable state.
-- Top-level navigation events are observed locally so the existing Google-search correction behavior can act on Google search URLs.
+- Custom dictionary entries, theme, UI language, assistant state, and disabled-site settings are stored with `chrome.storage.sync`.
+- When the user opens the extension popup, `activeTab` is used temporarily to read the current page URL/hostname and favicon for per-site controls.
 
 `chrome.storage.sync` may be synchronized by the browser vendor through the user's signed-in browser account. It is not a developer-operated Farsi Smart Assistant server.
 
-## When text can leave the browser extension
+## Correction text does not leave the extension
 
-Farsi Smart Assistant does not require a developer-controlled text or keystroke API for its correction engine.
+The v4.9.1 Store-safe correction runtime does not send typed correction text or search terms to Google, Wikipedia, or a developer-operated text API.
 
-Some explicit product features intentionally interact with third-party services:
+The popup no longer performs remote knowledge lookup, Google search actions, selected-text search, or automatic search-navigation interception.
 
-- Wikipedia knowledge lookup can send the user's lookup/search term to Wikipedia.
-- Google search actions can navigate a corrected query to Google.
-- The context-menu search action corrects selected text locally, then opens a Google search for the resulting query.
-
-Those requests are governed by the privacy terms of the destination service.
+Static user-invoked links such as the project GitHub/report page can still open in a browser tab, but the extension does not append correction text to those URLs.
 
 ## Sensitive fields
 
@@ -32,17 +27,13 @@ The product test contract excludes password, email, URL, and numeric fields from
 | Permission | Purpose |
 |---|---|
 | `storage` | Save user dictionary and extension preferences. |
-| `contextMenus` | Provide the selected-text smart search action. |
-| `tabs` | Identify the active page for site controls and open/update product search tabs. |
-| `webNavigation` | Preserve the existing Google-search correction behavior for top-level navigation. |
-| `<all_urls>` content-script matches | Offer inline correction in ordinary editable web fields where browser extension APIs permit. |
-| `https://*.wikipedia.org/` | Support the knowledge lookup feature. |
-| `https://*.google.com/` | Support Google search correction/navigation behavior. |
+| `activeTab` | Temporarily read the current tab URL/title/favicon when the user opens the popup, for current-site controls. |
+| `<all_urls>` content-script matches | Offer local inline correction in ordinary editable web fields where browser extension APIs permit. |
 
-The unused `scripting` permission was removed in v4.5.0.
+The Store-safe package does not declare `contextMenus`, `tabs`, `webNavigation`, Google/Wikipedia host permissions, or an omnibox keyword.
 
 ## Security policy
 
 - No remote JavaScript runtime dependency is required by the extension package.
-- Do not add analytics, advertising, telemetry, store credentials, signing keys, or secrets without an explicit product/security review.
-- Store signing credentials and private keys must remain outside the public repository.
+- No developer-operated analytics, advertising, telemetry, or keystroke-processing API is used.
+- Do not add Store credentials, signing keys, tokens, or secrets to the public repository.

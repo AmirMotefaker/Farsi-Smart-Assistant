@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-08-16T13:52:43.9968541+03:30",
+  "parentStoreIssue": 24,
+  "remediationIssue": 49,
+  "remediationIssueUrl": "https://github.com/AmirMotefaker/Farsi-Smart-Assistant/issues/49",
+  "exactBootstrapBase": "612c6c2591749e4ad47f9c0b2577d1bbb548a6f3",
+  "sourceVersion": "4.9.0",
+  "targetVersion": "4.9.1",
+  "branch": "agent/v4.9.1-store-compliance-14050525-135237",
+  "runtimeChangedByBootstrap": false,
+  "storeUpload": "NOT PERFORMED",
+  "storeSubmission": "NOT PERFORMED",
+  "storePublication": "NOT CLAIMED"
+}
