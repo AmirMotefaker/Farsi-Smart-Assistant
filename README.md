@@ -1,5 +1,10 @@
 # NeveshtYar · نوشت‌یار
 
+<!-- farsio-product-logo:v1 -->
+<p align="center">
+  <img src="./assets/brand/neveshtyar-mark.png" alt="NeveshtYar · نوشت‌یار" width="160" />
+</p>
+
 <!-- farsio-brand:v1 -->
 **Farsi Smart Assistant by Farsio**
 
@@ -10,10 +15,10 @@ Persian & English writing assistant, keyboard-layout recovery and Finglish corre
 ---
 
 <p align="center">
-  <a href="https://github.com/FarsioIR/NeveshtYar/releases/latest"><img src="https://img.shields.io/github/v/release/AmirMotefaker/Farsi-Smart-Assistant" alt="آخرین نسخه"></a>
-  <a href="https://github.com/FarsioIR/NeveshtYar/stargazers"><img src="https://img.shields.io/github/stars/AmirMotefaker/Farsi-Smart-Assistant?style=flat&logo=github" alt="ستاره‌های گیت‌هاب"></a>
-  <a href="https://github.com/FarsioIR/NeveshtYar/network/members"><img src="https://img.shields.io/github/forks/AmirMotefaker/Farsi-Smart-Assistant?style=flat&logo=github" alt="فورک‌های گیت‌هاب"></a>
-  <a href="https://github.com/FarsioIR/NeveshtYar/blob/main/LICENSE"><img src="https://img.shields.io/github/license/AmirMotefaker/Farsi-Smart-Assistant" alt="مجوز"></a>
+  <a href="https://github.com/FarsioIR/NeveshtYar/releases/latest"><img src="https://img.shields.io/github/v/release/FarsioIR/NeveshtYar" alt="آخرین نسخه"></a>
+  <a href="https://github.com/FarsioIR/NeveshtYar/stargazers"><img src="https://img.shields.io/github/stars/FarsioIR/NeveshtYar?style=flat&logo=github" alt="ستاره‌های گیت‌هاب"></a>
+  <a href="https://github.com/FarsioIR/NeveshtYar/network/members"><img src="https://img.shields.io/github/forks/FarsioIR/NeveshtYar?style=flat&logo=github" alt="فورک‌های گیت‌هاب"></a>
+  <a href="https://github.com/FarsioIR/NeveshtYar/blob/main/LICENSE"><img src="https://img.shields.io/github/license/FarsioIR/NeveshtYar" alt="مجوز"></a>
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="مشارکت آزاد است">
 </p>
 
