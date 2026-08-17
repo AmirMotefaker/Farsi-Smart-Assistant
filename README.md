@@ -1,10 +1,19 @@
-# دستیار هوشمند فارسی (Farsi Smart Assistant)
+# NeveshtYar · نوشت‌یار
+
+<!-- farsio-brand:v1 -->
+**Farsi Smart Assistant by Farsio**
+
+Persian & English writing assistant, keyboard-layout recovery and Finglish correction.
+
+**بنویس، درست و روان**
+
+---
 
 <p align="center">
-  <a href="https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/latest"><img src="https://img.shields.io/github/v/release/AmirMotefaker/Farsi-Smart-Assistant" alt="آخرین نسخه"></a>
-  <a href="https://github.com/AmirMotefaker/Farsi-Smart-Assistant/stargazers"><img src="https://img.shields.io/github/stars/AmirMotefaker/Farsi-Smart-Assistant?style=flat&logo=github" alt="ستاره‌های گیت‌هاب"></a>
-  <a href="https://github.com/AmirMotefaker/Farsi-Smart-Assistant/network/members"><img src="https://img.shields.io/github/forks/AmirMotefaker/Farsi-Smart-Assistant?style=flat&logo=github" alt="فورک‌های گیت‌هاب"></a>
-  <a href="https://github.com/AmirMotefaker/Farsi-Smart-Assistant/blob/main/LICENSE"><img src="https://img.shields.io/github/license/AmirMotefaker/Farsi-Smart-Assistant" alt="مجوز"></a>
+  <a href="https://github.com/FarsioIR/NeveshtYar/releases/latest"><img src="https://img.shields.io/github/v/release/AmirMotefaker/Farsi-Smart-Assistant" alt="آخرین نسخه"></a>
+  <a href="https://github.com/FarsioIR/NeveshtYar/stargazers"><img src="https://img.shields.io/github/stars/AmirMotefaker/Farsi-Smart-Assistant?style=flat&logo=github" alt="ستاره‌های گیت‌هاب"></a>
+  <a href="https://github.com/FarsioIR/NeveshtYar/network/members"><img src="https://img.shields.io/github/forks/AmirMotefaker/Farsi-Smart-Assistant?style=flat&logo=github" alt="فورک‌های گیت‌هاب"></a>
+  <a href="https://github.com/FarsioIR/NeveshtYar/blob/main/LICENSE"><img src="https://img.shields.io/github/license/AmirMotefaker/Farsi-Smart-Assistant" alt="مجوز"></a>
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="مشارکت آزاد است">
 </p>
 
@@ -73,7 +82,7 @@
 - `Farsi-Smart-Assistant-v4.9.1-firefox.zip` برای Firefox
 - `SHA256SUMS.txt` برای اعتبارسنجی فایل‌ها
 
-صفحه انتشارها: **[GitHub Releases](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases)**
+صفحه انتشارها: **[GitHub Releases](https://github.com/FarsioIR/NeveshtYar/releases)**
 
 > [!NOTE]
 > انتشار عمومی در Chrome Web Store / Firefox Add-ons یک مرحله مستقل از آماده‌سازی بسته‌هاست. لینک رسمی Store پس از تکمیل submission و review در همین README اضافه می‌شود.
@@ -104,67 +113,67 @@
 
 ## 🔄 تاریخچه نسخه‌ها (Changelog)
 
-خلاصه‌ای از مهم‌ترین تغییرات در هر نسخه. برای جزئیات کامل، به صفحه **[Releases](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases)** مراجعه کنید.
+خلاصه‌ای از مهم‌ترین تغییرات در هر نسخه. برای جزئیات کامل، به صفحه **[Releases](https://github.com/FarsioIR/NeveshtYar/releases)** مراجعه کنید.
 
-**[نسخه ۳.۶ - یادگیری پیشرفته و پایداری](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/tag/v3.6)**
+**[نسخه ۳.۶ - یادگیری پیشرفته و پایداری](https://github.com/FarsioIR/NeveshtYar/releases/tag/v3.6)**
 * **قابلیت یادگیری پیشرفته:** یک سیستم یادگیری هوشمند با دکمه‌های تایید (👍) و رد (👎) اضافه شد.
 * **افزایش هوشمندی در جستجوی گوگل:** منطق جستجو برای نتایج بهتر بهبود یافت.
 * **پایداری دیکشنری:** مشکلات مربوط به استفاده از دیکشنری شخصی در تمام بخش‌های افزونه برطرف شد.
 
-**[نسخه ۳.۵ - یادگیری پیشرفته از کاربر](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/tag/v3.5)**
+**[نسخه ۳.۵ - یادگیری پیشرفته از کاربر](https://github.com/FarsioIR/NeveshtYar/releases/tag/v3.5)**
 * **رابط کاربری یادگیری هوشمند:** دکمه‌های تایید (👍) و رد (👎) برای تجربه یادگیری سریع‌تر و شهودی‌تر اضافه شد.
 * **ویرایش در پاپ‌آپ:** کاربران اکنون می‌توانند اصلاحات را مستقیماً در پاپ‌آپ ویرایش کرده و در دیکشنری شخصی خود ذخیره کنند.
 
-**[نسخه ۳.۴ - اصلاحات نهایی و پایداری](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/tag/v3.4)**
+**[نسخه ۳.۴ - اصلاحات نهایی و پایداری](https://github.com/FarsioIR/NeveshtYar/releases/tag/v3.4)**
 * **اصلاح فوتر:** لوگوی گیت‌هاب کنار نام توسعه‌دهنده و هم‌تراز با آن قرار گرفت.
 * **بهبود صفحه تنظیمات:** رابط کاربری صفحه تنظیمات به طور کامل بازطراحی شد.
 * **آیکون جدید:** آیکون اصلی افزونه با طرح لامپ جایگزین شد.
 
-**[نسخه ۳.۳ - بهبودهای نهایی رابط کاربری](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/tag/v3.3)**
+**[نسخه ۳.۳ - بهبودهای نهایی رابط کاربری](https://github.com/FarsioIR/NeveshtYar/releases/tag/v3.3)**
 * **اصلاح فوتر:** لوگوی گیت‌هاب کنار نام توسعه‌دهنده و هم‌تراز با آن قرار گرفت.
 * **بهبود صفحه تنظیمات:** رابط کاربری صفحه تنظیمات به طور کامل بازطراحی شد.
 * **آیکون جدید:** آیکون اصلی افزونه با طرح لامپ جایگزین شد.
 
-**[نسخه ۳.۲ - اصلاحات نهایی و پایداری](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/tag/v3.2)**
+**[نسخه ۳.۲ - اصلاحات نهایی و پایداری](https://github.com/FarsioIR/NeveshtYar/releases/tag/v3.2)**
 * رفع باگ‌های اساسی در منطق تشخیص و تبدیل کلمات صحیح فارسی و انگلیسی.
 * بهبود پایداری و عملکرد قابلیت‌های real-time.
 * اصلاح نمایش لیست معانی برای کلمات چندمعنایی.
 
-**[نسخه ۳.۱ - بهبودهای پایداری](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/tag/v3.1)**
+**[نسخه ۳.۱ - بهبودهای پایداری](https://github.com/FarsioIR/NeveshtYar/releases/tag/v3.1)**
 * رفع باگ‌های اساسی در منطق تشخیص و تبدیل کلمات صحیح.
 * بهبود پایداری و عملکرد قابلیت‌های real-time.
 * اصلاح نمایش لیست معانی برای کلمات چندمعنایی.
 
-**[نسخه ۳.۰ - دستیار یکپارچه وب](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/tag/v3.0)**
+**[نسخه ۳.۰ - دستیار یکپارچه وب](https://github.com/FarsioIR/NeveshtYar/releases/tag/v3.0)**
 * **ادغام با نوار آدرس (Omnibox):** قابلیت جستجوی هوشمند با استفاده از کلیدواژه `fa`.
 * **قابلیت تبدیل متن درجا (Inline):** افزودن آیکون شناور برای تمام سایت‌ها.
 * **افزوده شدن منوی راست‌کلیک** برای جستجوی سریع.
 * **پیاده‌سازی صفحه تنظیمات** و دیکشنری شخصی کاربر.
 
-**[نسخه ۲.۰ - دستیار هوشمند دانش](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/tag/v2.0)**
+**[نسخه ۲.۰ - دستیار هوشمند دانش](https://github.com/FarsioIR/NeveshtYar/releases/tag/v2.0)**
 * **اتصال به ویکی‌پدیا** برای نمایش خلاصه مقالات.
 * **مدیریت هوشمند کلمات چندمعنایی** (ابهام‌زدایی).
 * **بازطراحی کامل رابط کاربری** با طراحی فلت و مدرن.
 * **افزوده شدن فونت زیبای وزیرمتن**.
 
-**[نسخه ۱.۰ - انتشار اولیه](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/releases/tag/v1.0)**
+**[نسخه ۱.۰ - انتشار اولیه](https://github.com/FarsioIR/NeveshtYar/releases/tag/v1.0)**
 * **ایجاد موتور تبدیل هوشمند سه‌گانه** (فینگلیش و خطاهای کیبورد).
 * **ساخت رابط کاربری اولیه** و پاپ‌آپ.
 * **انتشار اولین نسخه پایدار** پروژه.
 
 ## 🤝 مشارکت در پروژه
 
-از هرگونه مشارکت در این پروژه استقبال می‌شود. شما می‌توانید از طریق بخش [Issues](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/issues) مشکلات را گزارش داده یا ایده‌های جدید مطرح کنید.
+از هرگونه مشارکت در این پروژه استقبال می‌شود. شما می‌توانید از طریق بخش [Issues](https://github.com/FarsioIR/NeveshtYar/issues) مشکلات را گزارش داده یا ایده‌های جدید مطرح کنید.
 
 ## 📜 مجوز (لایسنس)
 
-این پروژه تحت مجوز [MIT](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/blob/main/LICENSE) منتشر شده است.
+این پروژه تحت مجوز [MIT](https://github.com/FarsioIR/NeveshtYar/blob/main/LICENSE) منتشر شده است.
 <!-- phase9-community-start -->
 ## 💬 جامعه، پرسش و مشارکت
 
-- برای سؤال‌های نحوه استفاده، تجربه کاربری و پرسش‌های فنی از [GitHub Discussions](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/discussions) استفاده کنید.
+- برای سؤال‌های نحوه استفاده، تجربه کاربری و پرسش‌های فنی از [GitHub Discussions](https://github.com/FarsioIR/NeveshtYar/discussions) استفاده کنید.
 - سؤال‌هایی که پاسخ مشخص دارند را در دسته **Q&A** مطرح کنید تا پاسخ مفید بتواند به‌عنوان answer علامت‌گذاری شود.
-- باگ قابل بازتولید یا درخواست قابلیتِ آماده‌ی اجرا را در [Issues](https://github.com/AmirMotefaker/Farsi-Smart-Assistant/issues) ثبت کنید.
+- باگ قابل بازتولید یا درخواست قابلیتِ آماده‌ی اجرا را در [Issues](https://github.com/FarsioIR/NeveshtYar/issues) ثبت کنید.
 - برای مشارکت کد یا مستندات، ابتدا [CONTRIBUTING.md](CONTRIBUTING.md) را بخوانید.
 - برای آسیب‌پذیری امنیتی از مسیر خصوصی ذکرشده در [SECURITY.md](SECURITY.md) استفاده کنید و جزئیات حساس را عمومی نکنید.
 
